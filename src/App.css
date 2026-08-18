@@ -1,480 +1,253 @@
-/* =========================================
-   PRODUCT RECOMMENDATIONS
-========================================= */
+/* =========================================================
+   AYURAI — MAIN APPLICATION STYLES
+   ========================================================= */
 
-.recommendations {
-  margin-top: 45px;
-  padding: 35px 25px;
-  border-top: 1px solid rgba(201, 162, 74, 0.3);
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --forest: #063f2f;
+  --forest-light: #0b4d3b;
+  --forest-dark: #032d22;
+
+  --gold: #c9a13b;
+  --gold-light: #dfbd65;
+  --gold-dark: #a98127;
+
+  --cream: #f8f3e8;
+  --cream-dark: #e9dfca;
+
+  --text-light: #f7f1e3;
+  --text-muted: #c9d4cc;
+
+  --border: rgba(201, 161, 59, 0.25);
 }
 
-.recommendations h2 {
-  margin-bottom: 10px;
-  font-size: 28px;
-  color: #c9a24a;
-}
-
-.recommendations > p {
-  margin-bottom: 30px;
-  color: #aaa;
-  font-size: 15px;
-}
-
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 22px;
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.product-card {
-  padding: 25px;
-  border: 1px solid rgba(201, 162, 74, 0.3);
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.03);
-  text-align: left;
-  transition: transform 0.3s ease, border-color 0.3s ease;
-}
-
-.product-card:hover {
-  transform: translateY(-5px);
-  border-color: #c9a24a;
-}
-
-.product-card h3 {
-  margin-bottom: 10px;
-  color: #c9a24a;
-  font-size: 21px;
-}
-
-.product-card p {
-  color: #bbb;
-  line-height: 1.6;
-  margin-bottom: 15px;
-}
-
-.product-card button {
-  padding: 11px 20px;
-  border: 1px solid #c9a24a;
-  border-radius: 25px;
-  background: transparent;
-  color: #c9a24a;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.product-card button:hover {
-  background: #c9a24a;
-  color: #111;
-}
-
-/* Mobile */
-@media (max-width: 700px) {
-  .product-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .recommendations {
-    padding: 25px 10px;
-  }
-
-  .recommendations h2 {
-    font-size: 23px;
-  }
-}
-/* --- Navigation Bar --- */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 18px 50px;
-  background-color: rgba(6, 59, 42, 0.85);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid var(--border);
-}
-
-.navbar .logo {
-  font-family: var(--heading);
-  font-size: 25px;
-  color: var(--text-h);
-  font-weight: 700;
-  letter-spacing: 2px;
-}
-
-.navbar nav {
-  display: flex;
-  gap: 28px;
-}
-
-.navbar a {
-  color: var(--text);
-  text-decoration: none;
-  font-size: 14px;
-  transition: color 0.2s ease;
-  font-weight: 500;
-}
-
-.navbar a:hover {
-  color: var(--accent);
-}
-
-/* --- Hero Section --- */
-.hero {
-  text-align: center;
-  padding: 60px 20px 40px;
-}
-
-.hero h1 {
-  font-size: 52px;
-  margin-bottom: 16px;
-}
-
-.hero p {
-  color: var(--text);
-  font-size: 18px;
-  max-width: 600px;
-  margin: 0 auto 28px;
-}
-
-/* --- Buttons --- */
-button, .btn-primary {
-  background: linear-gradient(135deg, #c9a24a 0%, #b08935 100%);
-  color: #04291d;
-  border: none;
-  padding: 12px 28px;
-  border-radius: 6px;
-  font-weight: 600;
-  font-size: 15px;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  text-decoration: none;
-  display: inline-block;
-}
-
-button:hover, .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(201, 162, 74, 0.4);
-}
-
-/* --- Quick Action Cards Grid --- */
-.quick-actions-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;
-  padding: 20px 40px;
-  margin-bottom: 40px;
-}
-
-.skin-scan-card {
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 24px;
-  background: rgba(255, 255, 255, 0.03);
-  text-align: center;
-}
-
-.dropzone {
-  border: 2px dashed #b8860b;
-  border-radius: 8px;
-  padding: 40px 20px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.dropzone:hover {
-  background: rgba(184, 134, 11, 0.08);
-}
-
-.image-wrapper {
-  position: relative;
-  max-width: 300px;
-  margin: 0 auto 16px;
-  overflow: hidden;
-  border-radius: 8px;
-}
-
-.image-wrapper img {
-  width: 100%;
-  display: block;
-}
-
-.scan-line {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background: #00ffcc;
-  box-shadow: 0 0 10px #00ffcc;
-  animation: scan 2s infinite ease-in-out;
-}
-
-@keyframes scan {
-  0% { top: 0%; }
-  50% { top: 100%; }
-  100% { top: 0%; }
-}
-
-.scan-results {
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
-  padding: 16px;
-  text-align: left;
-  margin-top: 16px;
-}
-
-.scan-results ul {
-  list-style: none;
+* {
+  box-sizing: border-box;
+  margin: 0;
   padding: 0;
 }
 
-.scan-results li {
-  margin-bottom: 8px;
+html {
+  scroll-behavior: smooth;
 }
 
-/* --- Product Catalog Grid --- */
-.featured-products {
-  padding: 20px 40px 60px;
+body {
+  background: var(--forest);
+  color: var(--text-light);
+  font-family: "Inter", sans-serif;
 }
 
-.featured-products .section-title {
-  font-size: 32px;
-  margin-bottom: 24px;
-  text-align: left;
+button,
+a {
+  font-family: inherit;
 }
 
-.product-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 24px;
+a {
+  text-decoration: none;
 }
 
-.product-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 20px;
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+.app {
+  min-height: 100vh;
+  background:
+    radial-gradient(
+      circle at 85% 15%,
+      rgba(201, 161, 59, 0.08),
+      transparent 30%
+    ),
+    var(--forest);
 }
 
-.product-card h3 {
-  color: var(--text-h);
-  font-size: 18px;
-  margin-bottom: 6px;
+/* =========================================================
+   HERO / SECTIONS
+   ========================================================= */
+
+main {
+  overflow: hidden;
 }
 
-.product-card p {
+.intro-section,
+.products-section {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 110px 60px;
+}
+
+.section-label {
+  color: var(--gold-light);
   font-size: 13px;
-  color: var(--text);
-  margin-bottom: 16px;
-}
-
-.product-card .price {
-  color: var(--accent);
   font-weight: 700;
-  font-size: 16px;
+  letter-spacing: 4px;
+  margin-bottom: 18px;
 }
 
-/* =========================================
-   PERSONALIZED RECOMMENDATIONS
-========================================= */
-
-.recommendations {
-  margin-top: 50px;
-  padding: 50px 20px;
-  border-top: 1px solid rgba(201, 162, 74, 0.25);
+.intro-section h2,
+.products-section h2,
+.personalized-section h2 {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(42px, 5vw, 68px);
+  line-height: 0.98;
+  font-weight: 600;
+  color: var(--cream);
+  max-width: 750px;
 }
 
-.recommendation-header {
-  text-align: center;
-  max-width: 650px;
-  margin: 0 auto 40px;
+.section-description {
+  max-width: 720px;
+  margin-top: 22px;
+  color: var(--text-muted);
+  font-size: 17px;
+  line-height: 1.8;
 }
 
-.recommendation-label {
-  display: block;
-  margin-bottom: 12px;
-  color: #c9a24a;
-  font-size: 12px;
-  letter-spacing: 3px;
+/* =========================================================
+   PERSONALIZED SECTION
+   ========================================================= */
+
+.personalized-section {
+  margin: 30px 60px 100px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,0.025),
+      rgba(201,161,59,0.06)
+    );
 }
 
-.recommendation-header h2 {
-  margin: 0;
+.personalized-content {
+  max-width: 1160px;
+  margin: auto;
+  padding: 100px 40px;
+}
+
+.personalized-content > p {
+  max-width: 700px;
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin-top: 25px;
+  font-size: 17px;
+}
+
+.feature-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin-top: 60px;
+}
+
+.feature-row > div {
+  padding: 28px;
+  border: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.08);
+  transition: 0.3s ease;
+}
+
+.feature-row > div:hover {
+  transform: translateY(-6px);
+  border-color: var(--gold);
+}
+
+.feature-number {
+  color: var(--gold-light);
+  font-size: 13px;
+  letter-spacing: 2px;
+}
+
+.feature-row h3 {
+  margin-top: 18px;
+  font-family: "Cormorant Garamond", serif;
   font-size: 30px;
 }
 
-.recommendation-header h2 span {
-  color: #c9a24a;
-}
-
-.recommendation-header p {
-  margin-top: 15px;
-  color: #aaa;
-  line-height: 1.7;
-}
-
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 25px;
-  max-width: 900px;
-  margin: auto;
-}
-
-.recommendation-card {
-  overflow: hidden;
-  border: 1px solid rgba(201, 162, 74, 0.25);
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.03);
-  transition: transform 0.3s ease, border-color 0.3s ease;
-}
-
-.recommendation-card:hover {
-  transform: translateY(-7px);
-  border-color: #c9a24a;
-}
-
-.product-image-placeholder {
-  height: 220px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(201, 162, 74, 0.08);
-}
-
-.product-image-placeholder span {
-  color: #c9a24a;
-  letter-spacing: 4px;
-  font-size: 13px;
-}
-
-.recommendation-info {
-  padding: 25px;
-}
-
-.product-category {
-  font-size: 10px;
-  letter-spacing: 2px;
-  color: #c9a24a;
-}
-
-.recommendation-info h3 {
-  margin: 10px 0;
-  font-size: 22px;
-}
-
-.recommendation-info p {
-  color: #aaa;
+.feature-row p {
+  color: var(--text-muted);
   line-height: 1.6;
+  margin-top: 8px;
 }
 
-.product-bottom {
+/* =========================================================
+   PRODUCTS
+   ========================================================= */
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  margin-top: 50px;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 55px 60px;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 15px;
-  margin-top: 25px;
+
+  background: var(--forest-dark);
 }
 
-.product-bottom strong {
-  color: #c9a24a;
+.footer h2 {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 35px;
+  color: var(--cream);
 }
 
-.product-bottom button {
-  border: 1px solid #c9a24a;
-  border-radius: 25px;
-  padding: 9px 16px;
-  background: transparent;
-  color: #c9a24a;
-  cursor: pointer;
+.footer p {
+  margin-top: 8px;
+  color: var(--text-muted);
 }
 
-.product-bottom button:hover {
-  background: #c9a24a;
-  color: #111;
-}
-
-@media (max-width: 700px) {
-  .product-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .product-bottom {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .dosha-section {
-  padding: 90px 8%;
-  text-align: center;
-}
-
-.dosha-heading span {
+.footer-right {
+  color: var(--gold-light);
   font-size: 12px;
   letter-spacing: 3px;
-  font-weight: 600;
 }
 
-.dosha-heading h2 {
-  font-size: 38px;
-  margin: 12px 0;
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .intro-section,
+  .products-section {
+    padding: 80px 30px;
+  }
+
+  .personalized-section {
+    margin: 20px 30px 70px;
+  }
+
+  .feature-row,
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
-.dosha-heading p {
-  max-width: 600px;
-  margin: 0 auto 45px;
-  line-height: 1.7;
+@media (max-width: 600px) {
+  .intro-section,
+  .products-section {
+    padding: 65px 20px;
+  }
+
+  .personalized-section {
+    margin: 10px 20px 60px;
+  }
+
+  .personalized-content {
+    padding: 70px 25px;
+  }
+
+  .footer {
+    padding: 40px 25px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 25px;
+  }
 }
-/* Fix blue link text inside the button */
-.dosha-test-button,
-.btn-outline-link,
-a.dosha-test-button {
-  color: #063B2A !important; /* Deep Ayurvedic Green text */
-  text-decoration: none !important;
-  font-weight: 600;
-}
-
-/* Ensure the card background stays dark green with light text */
-.dosha-result-card {
-  background-color: transparent; /* Or #063B2A */
-  color: #F8F3E8; /* Light cream text */
-  padding: 2rem 0;
-}
-
-/* Ensure headings inside the section stay readable */
-.dosha-result-card h3,
-.dosha-result-card p {
-  color: #F8F3E8;
-}
-/* Button styling with dark green text overriding blue links */
-.dosha-test-button {
-  display: inline-block;
-  background-color: #C9A24A !important;
-  color: #063B2A !important;
-  padding: 0.75rem 1.5rem;
-  font-weight: 600;
-  border-radius: 6px;
-  text-decoration: none !important;
-  margin-top: 1rem;
-  border: none;
-  cursor: pointer;
-  transition: transform 0.2s ease, background-color 0.2s ease;
-}
-
-.dosha-test-button:hover {
-  background-color: #D4AF37 !important;
-  color: #063B2A !important;
-  transform: translateY(-2px);
-}
-
-}
-
-
-
-

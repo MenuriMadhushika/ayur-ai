@@ -1,0 +1,500 @@
+/* =========================================================
+   AYURAI — DOSHA TEST
+   Premium Ayurvedic Quiz Interface
+   ========================================================= */
+
+.dosha-test-page {
+  min-height: calc(100vh - 88px);
+
+  padding: 80px 25px 100px;
+
+  background:
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(201, 161, 59, 0.07),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 85% 80%,
+      rgba(201, 161, 59, 0.05),
+      transparent 30%
+    ),
+    #063f2f;
+
+  color: #f8f3e8;
+}
+
+/* =========================================================
+   MAIN QUIZ CONTAINER
+   ========================================================= */
+
+.dosha-test-container {
+  width: 100%;
+  max-width: 900px;
+
+  margin: 0 auto;
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.quiz-header {
+  text-align: center;
+
+  margin-bottom: 45px;
+}
+
+.quiz-label {
+  display: block;
+
+  color: #dfbd65;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 4px;
+
+  margin-bottom: 18px;
+}
+
+.quiz-header h1 {
+  font-family: "Cormorant Garamond", serif;
+
+  color: #f8f3e8;
+
+  font-size: clamp(48px, 6vw, 72px);
+
+  line-height: 0.95;
+
+  font-weight: 600;
+}
+
+.quiz-header p {
+  max-width: 620px;
+
+  margin: 20px auto 0;
+
+  color: #b9c8bf;
+
+  font-size: 16px;
+
+  line-height: 1.7;
+}
+
+/* =========================================================
+   PROGRESS
+   ========================================================= */
+
+.quiz-progress-area {
+  margin-bottom: 35px;
+}
+
+.quiz-progress-info {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 10px;
+}
+
+.quiz-progress-info span {
+  color: #aebdb4;
+
+  font-size: 11px;
+
+  letter-spacing: 1px;
+}
+
+.quiz-progress-info strong {
+  color: #dfbd65;
+
+  font-size: 12px;
+}
+
+.quiz-progress-bar {
+  width: 100%;
+
+  height: 3px;
+
+  background: rgba(248, 243, 232, 0.12);
+
+  overflow: hidden;
+}
+
+.quiz-progress-fill {
+  height: 100%;
+
+  background: #c9a13b;
+
+  transition: width 0.5s ease;
+}
+
+/* =========================================================
+   QUESTION CARD
+   ========================================================= */
+
+.question-card {
+  position: relative;
+
+  padding: 50px;
+
+  border: 1px solid rgba(201, 161, 59, 0.28);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.045),
+      rgba(0, 0, 0, 0.12)
+    );
+
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.18);
+}
+
+/* Decorative gold line */
+
+.question-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 80px;
+  height: 2px;
+
+  background: #c9a13b;
+}
+
+/* =========================================================
+   QUESTION NUMBER
+   ========================================================= */
+
+.question-number {
+  color: #dfbd65;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 3px;
+
+  margin-bottom: 20px;
+}
+
+/* =========================================================
+   QUESTION
+   ========================================================= */
+
+.question-text {
+  font-family: "Cormorant Garamond", serif;
+
+  color: #f8f3e8;
+
+  font-size: clamp(30px, 4vw, 46px);
+
+  line-height: 1.05;
+
+  font-weight: 600;
+
+  margin-bottom: 35px;
+}
+
+/* =========================================================
+   ANSWER OPTIONS
+   ========================================================= */
+
+.options-container {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 15px;
+}
+
+.answer-option {
+  position: relative;
+
+  min-height: 82px;
+
+  padding: 20px 24px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 16px;
+
+  cursor: pointer;
+
+  border: 1px solid rgba(201, 161, 59, 0.20);
+
+  background:
+    rgba(3, 45, 34, 0.65);
+
+  color: #dfe7e1;
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.answer-option:hover {
+  transform: translateY(-3px);
+
+  border-color: rgba(201, 161, 59, 0.65);
+
+  background:
+    rgba(201, 161, 59, 0.08);
+
+  color: #f8f3e8;
+}
+
+/* =========================================================
+   OPTION ICON / NUMBER
+   ========================================================= */
+
+.answer-icon {
+  min-width: 38px;
+
+  width: 38px;
+  height: 38px;
+
+  border: 1px solid rgba(201, 161, 59, 0.35);
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  color: #dfbd65;
+
+  font-size: 13px;
+
+  transition: 0.25s ease;
+}
+
+.answer-option:hover .answer-icon {
+  background: #c9a13b;
+
+  color: #063f2f;
+
+  border-color: #c9a13b;
+}
+
+/* =========================================================
+   ANSWER TEXT
+   ========================================================= */
+
+.answer-text {
+  color: #d9e2dc;
+
+  font-size: 14px;
+
+  line-height: 1.5;
+
+  font-weight: 500;
+}
+
+/* =========================================================
+   SELECTED ANSWER
+   ========================================================= */
+
+.answer-option.selected {
+  border-color: #c9a13b;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(201, 161, 59, 0.16),
+      rgba(201, 161, 59, 0.05)
+    );
+
+  box-shadow:
+    0 0 0 1px rgba(201, 161, 59, 0.12),
+    0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.answer-option.selected .answer-icon {
+  background: #c9a13b;
+
+  color: #063f2f;
+
+  border-color: #c9a13b;
+}
+
+.answer-option.selected .answer-text {
+  color: #f8f3e8;
+
+  font-weight: 600;
+}
+
+/* =========================================================
+   CHECK MARK
+   ========================================================= */
+
+.answer-check {
+  margin-left: auto;
+
+  color: #dfbd65;
+
+  font-size: 18px;
+}
+
+/* =========================================================
+   NAVIGATION BUTTONS
+   ========================================================= */
+
+.quiz-navigation {
+  margin-top: 35px;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+}
+
+.quiz-back-button,
+.quiz-next-button {
+  padding: 14px 25px;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.3s ease;
+}
+
+.quiz-back-button {
+  border: 1px solid rgba(201, 161, 59, 0.3);
+
+  background: transparent;
+
+  color: #b9c8bf;
+}
+
+.quiz-back-button:hover {
+  border-color: #c9a13b;
+
+  color: #dfbd65;
+}
+
+.quiz-next-button {
+  border: none;
+
+  background: #c9a13b;
+
+  color: #063f2f;
+}
+
+.quiz-next-button:hover {
+  background: #dfbd65;
+
+  transform: translateY(-2px);
+}
+
+/* =========================================================
+   RESULT
+   ========================================================= */
+
+.quiz-result {
+  text-align: center;
+
+  padding: 70px 45px;
+
+  border: 1px solid rgba(201, 161, 59, 0.35);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(201, 161, 59, 0.08),
+      rgba(0, 0, 0, 0.1)
+    );
+}
+
+.quiz-result-label {
+  color: #dfbd65;
+
+  font-size: 11px;
+
+  letter-spacing: 4px;
+}
+
+.quiz-result h2 {
+  margin-top: 15px;
+
+  font-family: "Cormorant Garamond", serif;
+
+  font-size: 60px;
+
+  color: #f8f3e8;
+}
+
+.quiz-result p {
+  max-width: 600px;
+
+  margin: 20px auto;
+
+  color: #b9c8bf;
+
+  line-height: 1.8;
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  .dosha-test-page {
+    padding: 60px 18px 80px;
+  }
+
+  .question-card {
+    padding: 30px 22px;
+  }
+
+  .options-container {
+    grid-template-columns: 1fr;
+  }
+
+  .question-text {
+    font-size: 34px;
+  }
+
+  .quiz-navigation {
+    gap: 15px;
+  }
+
+}
+
+@media (max-width: 450px) {
+
+  .quiz-header h1 {
+    font-size: 45px;
+  }
+
+  .answer-option {
+    padding: 17px;
+  }
+
+  .quiz-result {
+    padding: 50px 25px;
+  }
+
+  .quiz-result h2 {
+    font-size: 48px;
+  }
+
+}

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
+import "./DoshaSelector.css";
 
 const DoshaSelector = () => {
+
   const [selectedDosha, setSelectedDosha] = useState(null);
 
   const doshas = [
@@ -10,121 +11,121 @@ const DoshaSelector = () => {
       id: "vata",
       name: "VATA",
       icon: "🌬️",
-      short: "Dry",
-      element: "Air & Space",
+      element: "AIR & SPACE",
+      type: "Dry & Delicate",
       description:
-        "Vata skin often feels dry, delicate, rough, or dehydrated. It benefits from gentle, nourishing and hydrating skincare.",
-      care: "Hydration • Nourishment • Gentle care",
+        "Vata skin tends to feel dry, delicate and dehydrated.",
+      care: "Hydration • Nourishment • Gentle Care",
     },
     {
       id: "pitta",
       name: "PITTA",
       icon: "🔥",
-      short: "Sensitive",
-      element: "Fire & Water",
+      element: "FIRE & WATER",
+      type: "Sensitive & Reactive",
       description:
-        "Pitta skin can feel sensitive, warm, or reactive and may be prone to redness. It benefits from calming and gentle skincare.",
-      care: "Calming • Cooling • Gentle care",
+        "Pitta skin can be warm, sensitive and prone to redness.",
+      care: "Cooling • Soothing • Calming Care",
     },
     {
       id: "kapha",
       name: "KAPHA",
       icon: "🌿",
-      short: "Oily",
-      element: "Earth & Water",
+      element: "EARTH & WATER",
+      type: "Oily & Congested",
       description:
-        "Kapha skin may feel oily or heavy and can be prone to congestion. It benefits from lightweight and balancing skincare.",
-      care: "Balancing • Lightweight • Refreshing care",
+        "Kapha skin often produces more oil and may become congested.",
+      care: "Balancing • Clarifying • Lightweight Care",
     },
   ];
 
   return (
-    <section className="dosha-section">
+    <div className="dosha-wrapper">
 
-      <div className="dosha-heading">
-        <span>AYURVEDIC SKINCARE</span>
+      <div className="dosha-grid">
 
-        <h2>What is your Ayurvedic type?</h2>
+        {doshas.map((dosha) => {
 
-        <p>
-          <p>
-  Ayurveda describes three natural mind-body energies called Doshas.
-  Explore each one to understand your skin better.
-</p>
-        </p>
-      </div>
+          const selected = selectedDosha === dosha.id;
 
-      <div className="dosha-cards">
-        {doshas.map((dosha) => (
-          <button
-            key={dosha.id}
-            className={`dosha-card ${
-              selectedDosha === dosha.id ? "selected" : ""
-            }`}
-            onClick={() => setSelectedDosha(dosha.id)}
-          >
-            <div className="dosha-icon">{dosha.icon}</div>
+          return (
+            <div
+              key={dosha.id}
+              className={`dosha-card ${
+                selected ? "selected" : ""
+              }`}
+              onClick={() => setSelectedDosha(dosha.id)}
+            >
 
-            <h3>{dosha.name}</h3>
+              <div className="dosha-card-top">
+                <span className="dosha-icon">
+                  {dosha.icon}
+                </span>
 
-            <p>{dosha.short}</p>
+                <span className="dosha-element">
+                  {dosha.element}
+                </span>
+              </div>
 
-            <span className="dosha-explore">
-              {selectedDosha === dosha.id
-                ? "Selected ✓"
-                : "Explore →"}
-            </span>
-          </button>
-        ))}
+              <div className="dosha-name">
+                {dosha.name}
+              </div>
+
+              <div className="dosha-type">
+                {dosha.type}
+              </div>
+
+              <p>
+                {dosha.description}
+              </p>
+
+              <div className="dosha-care">
+                {dosha.care}
+              </div>
+
+              <button className="dosha-explore">
+                {selected ? "Selected ✓" : "Explore →"}
+              </button>
+
+            </div>
+          );
+        })}
+
       </div>
 
       {selectedDosha && (
-        <div className="dosha-info">
+        <div className="dosha-result">
 
-          {doshas
-            .filter((dosha) => dosha.id === selectedDosha)
-            .map((dosha) => (
-              <div key={dosha.id} className="dosha-info-content">
+          <div>
 
-                <div className="info-icon">
-                  {dosha.icon}
-                </div>
+            <span className="result-label">
+              YOUR CURRENT SELECTION
+            </span>
 
-                <div>
-                  <p className="info-label">
-                    ABOUT THIS DOSHA
-                  </p>
+            <h3>
+              {doshas.find(
+                (d) => d.id === selectedDosha
+              )?.name}
+            </h3>
 
-                  <h3>
-                    {dosha.name} — {dosha.element}
-                  </h3>
+            <p>
+              Ready to discover your personalized
+              Ayurvedic skin profile?
+            </p>
 
-                  <p className="info-description">
-                    {dosha.description}
-                  </p>
+          </div>
 
-                  <p className="care-text">
-                    <strong>AyurAI Care:</strong>{" "}
-                    {dosha.care}
-                  </p>
-
-                  <Link
-                    to="/dosha-test"
-                    className="btn-outline-link"
-                  > <a href="#dosha-test" className="btn-primary-link">
-  Take the Dosha Test →
-</a>
-                    
-                  </Link>
-                </div>
-
-              </div>
-            ))}
+          <Link
+            to="/dosha-test"
+            className="result-button"
+          >
+            Take Full Dosha Test →
+          </Link>
 
         </div>
       )}
 
-    </section>
+    </div>
   );
 };
 

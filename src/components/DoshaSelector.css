@@ -1,0 +1,311 @@
+/* =========================================================
+   DOSHA SELECTOR
+   ========================================================= */
+
+.dosha-wrapper {
+  margin-top: 55px;
+}
+
+/* =========================================================
+   DOSHA GRID
+   ========================================================= */
+
+.dosha-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 20px;
+}
+
+.dosha-card {
+  min-height: 390px;
+
+  padding: 32px;
+
+  position: relative;
+
+  cursor: pointer;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,0.045),
+      rgba(0,0,0,0.08)
+    );
+
+  border: 1px solid rgba(201,161,59,0.25);
+
+  transition:
+    transform 0.35s ease,
+    border-color 0.35s ease,
+    background 0.35s ease;
+
+  overflow: hidden;
+}
+
+.dosha-card::after {
+  content: "";
+
+  position: absolute;
+
+  width: 150px;
+  height: 150px;
+
+  right: -70px;
+  bottom: -70px;
+
+  border-radius: 50%;
+
+  background: rgba(201,161,59,0.08);
+
+  transition: 0.4s ease;
+}
+
+.dosha-card:hover {
+  transform: translateY(-8px);
+
+  border-color: rgba(201,161,59,0.7);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(201,161,59,0.09),
+      rgba(0,0,0,0.08)
+    );
+}
+
+.dosha-card:hover::after {
+  transform: scale(1.5);
+}
+
+/* =========================================================
+   SELECTED
+   ========================================================= */
+
+.dosha-card.selected {
+  border-color: #c9a13b;
+
+  box-shadow:
+    0 0 0 1px rgba(201,161,59,0.15),
+    0 20px 60px rgba(0,0,0,0.18);
+}
+
+.dosha-card.selected::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  width: 4px;
+  height: 100%;
+
+  background: #c9a13b;
+}
+
+/* =========================================================
+   TOP
+   ========================================================= */
+
+.dosha-card-top {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-start;
+}
+
+.dosha-icon {
+  font-size: 34px;
+}
+
+.dosha-element {
+  color: #aebdb4;
+
+  font-size: 9px;
+
+  letter-spacing: 2px;
+
+  text-align: right;
+}
+
+/* =========================================================
+   NAME
+   ========================================================= */
+
+.dosha-name {
+  margin-top: 55px;
+
+  font-family: "Cormorant Garamond", serif;
+
+  font-size: 48px;
+
+  font-weight: 600;
+
+  color: #f8f3e8;
+}
+
+.dosha-type {
+  margin-top: 3px;
+
+  color: #dfbd65;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+/* =========================================================
+   DESCRIPTION
+   ========================================================= */
+
+.dosha-card p {
+  margin-top: 25px;
+
+  color: #b8c7be;
+
+  font-size: 14px;
+
+  line-height: 1.7;
+
+  max-width: 270px;
+}
+
+.dosha-care {
+  margin-top: 20px;
+
+  padding-top: 18px;
+
+  border-top: 1px solid rgba(201,161,59,0.16);
+
+  color: #dfbd65;
+
+  font-size: 11px;
+
+  letter-spacing: 1px;
+
+  line-height: 1.6;
+}
+
+/* =========================================================
+   BUTTON
+   ========================================================= */
+
+.dosha-explore {
+  margin-top: 28px;
+
+  padding: 0;
+
+  border: none;
+
+  background: transparent;
+
+  color: #f8f3e8;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.dosha-explore:hover {
+  color: #dfbd65;
+}
+
+/* =========================================================
+   RESULT
+   ========================================================= */
+
+.dosha-result {
+  margin-top: 25px;
+
+  padding: 30px 35px;
+
+  border: 1px solid rgba(201,161,59,0.35);
+
+  background: rgba(201,161,59,0.06);
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 30px;
+}
+
+.result-label {
+  color: #dfbd65;
+
+  font-size: 9px;
+
+  letter-spacing: 3px;
+}
+
+.dosha-result h3 {
+  margin-top: 8px;
+
+  font-family: "Cormorant Garamond", serif;
+
+  font-size: 36px;
+}
+
+.dosha-result p {
+  margin-top: 4px;
+
+  color: #aebdb4;
+}
+
+.result-button {
+  padding: 15px 22px;
+
+  background: #c9a13b;
+
+  color: #062f24;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+
+  transition: 0.3s ease;
+}
+
+.result-button:hover {
+  background: #dfbd65;
+
+  transform: translateY(-2px);
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 950px) {
+  .dosha-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dosha-card {
+    min-height: auto;
+  }
+
+  .dosha-result {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 600px) {
+  .dosha-card {
+    padding: 25px;
+  }
+
+  .dosha-name {
+    font-size: 40px;
+  }
+}

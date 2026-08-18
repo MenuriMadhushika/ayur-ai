@@ -1,0 +1,368 @@
+/* =========================================================
+   AYURAI PREMIUM NAVBAR
+   ========================================================= */
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  width: 100%;
+
+  background: rgba(3, 45, 34, 0.94);
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  border-bottom: 1px solid rgba(201, 161, 59, 0.2);
+}
+
+/* =========================================================
+   INNER NAVBAR
+   ========================================================= */
+
+.navbar-inner {
+  max-width: 1400px;
+
+  height: 88px;
+
+  margin: 0 auto;
+
+  padding: 0 55px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+}
+
+/* =========================================================
+   LOGO
+   ========================================================= */
+
+.navbar-logo {
+  display: flex;
+
+  align-items: baseline;
+
+  gap: 2px;
+
+  color: #f8f3e8;
+
+  font-family: "Cormorant Garamond", serif;
+
+  font-size: 36px;
+
+  font-weight: 700;
+
+  letter-spacing: -1px;
+
+  transition: 0.3s ease;
+}
+
+.navbar-logo:hover {
+  transform: translateY(-1px);
+}
+
+.logo-main {
+  color: #f8f3e8;
+}
+
+.logo-ai {
+  color: #c9a13b;
+
+  font-style: italic;
+}
+
+/* =========================================================
+   DESKTOP NAV
+   ========================================================= */
+
+.desktop-nav {
+  display: flex;
+
+  align-items: center;
+
+  gap: 38px;
+
+  margin-left: auto;
+
+  margin-right: 45px;
+}
+
+.nav-link {
+  position: relative;
+
+  color: #c9d4cc;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.3px;
+
+  padding: 32px 0;
+
+  transition: 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #dfbd65;
+}
+
+.nav-link::after {
+  content: "";
+
+  position: absolute;
+
+  left: 50%;
+
+  bottom: 22px;
+
+  width: 0;
+
+  height: 1px;
+
+  background: #c9a13b;
+
+  transform: translateX(-50%);
+
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+.nav-link.active {
+  color: #f8f3e8;
+}
+
+/* =========================================================
+   RIGHT ACTIONS
+   ========================================================= */
+
+.navbar-actions {
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+}
+
+/* =========================================================
+   CTA
+   ========================================================= */
+
+.nav-cta {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 13px 18px;
+
+  background: #c9a13b;
+
+  color: #062f24;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+
+  transition: 0.3s ease;
+}
+
+.nav-cta span {
+  font-size: 17px;
+
+  transition: transform 0.3s ease;
+}
+
+.nav-cta:hover {
+  background: #dfbd65;
+
+  transform: translateY(-2px);
+}
+
+.nav-cta:hover span {
+  transform: translateX(4px);
+}
+
+/* =========================================================
+   MENU BUTTON
+   ========================================================= */
+
+.menu-button {
+  width: 48px;
+  height: 48px;
+
+  border: 1px solid rgba(201, 161, 59, 0.5);
+
+  background: transparent;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  align-items: center;
+
+  gap: 5px;
+
+  cursor: pointer;
+
+  transition: 0.3s ease;
+}
+
+.menu-button span {
+  width: 17px;
+  height: 1px;
+
+  background: #dfbd65;
+
+  transition: 0.3s ease;
+}
+
+.menu-button:hover {
+  background: rgba(201, 161, 59, 0.1);
+
+  border-color: #c9a13b;
+}
+
+/* =========================================================
+   MENU OPEN ANIMATION
+   ========================================================= */
+
+.menu-button.open span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.menu-button.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-button.open span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* =========================================================
+   MOBILE MENU
+   ========================================================= */
+
+.mobile-menu {
+  display: none;
+
+  max-width: 1400px;
+
+  margin: 0 auto;
+
+  padding: 25px 30px 30px;
+
+  border-top: 1px solid rgba(201, 161, 59, 0.12);
+
+  background: rgba(3, 45, 34, 0.98);
+}
+
+.mobile-menu a {
+  display: block;
+
+  padding: 16px 0;
+
+  border-bottom: 1px solid rgba(201, 161, 59, 0.12);
+
+  color: #c9d4cc;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+.mobile-menu a:hover {
+  color: #dfbd65;
+}
+
+.mobile-menu.show {
+  display: block;
+}
+
+.mobile-cta {
+  margin-top: 20px;
+
+  padding: 15px !important;
+
+  text-align: center;
+
+  background: #c9a13b;
+
+  color: #062f24 !important;
+
+  border: none !important;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+  .navbar-inner {
+    padding: 0 35px;
+  }
+
+  .desktop-nav {
+    gap: 22px;
+
+    margin-right: 25px;
+  }
+
+  .nav-cta {
+    display: none;
+  }
+
+}
+
+@media (max-width: 800px) {
+
+  .navbar-inner {
+    height: 76px;
+
+    padding: 0 25px;
+  }
+
+  .navbar-logo {
+    font-size: 32px;
+  }
+
+  .desktop-nav {
+    display: none;
+  }
+
+  .navbar-actions {
+    margin-left: auto;
+  }
+
+}
+
+@media (max-width: 450px) {
+
+  .navbar-inner {
+    padding: 0 18px;
+  }
+
+  .navbar-logo {
+    font-size: 29px;
+  }
+
+  .menu-button {
+    width: 44px;
+    height: 44px;
+  }
+
+}

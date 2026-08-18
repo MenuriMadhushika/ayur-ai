@@ -1,93 +1,151 @@
-import ProductDetails from "./components/ProductDetails";
-import "./App.css";
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-
+import "./App.css";
 
 // Components
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
-import SkinScanCard from "./components/SkinScanCard";
 import DoshaSelector from "./components/DoshaSelector";
+import SkinScanCard from "./components/SkinScanCard";
 import ProductCard from "./components/ProductCard";
+import ProductDetails from "./components/ProductDetails";
 import DoshaQuestion from "./components/DoshaQuestion";
 
 const products = [
   {
     id: 1,
-    name: "True Turmeric",
-    description: "Brightening and nourishing skincare",
-    price: "LKR 5,950"
+    name: "Virgin Coconut Body Oil",
+    dosha: "vata",
+    description: "Deeply nourishing care for dry and dehydrated skin.",
+    image: "/images/coconut-oil.jpg",
   },
   {
     id: 2,
-    name: "White Mint",
-    description: "Refreshing and cooling skincare",
-    price: "LKR 2,950"
+    name: "Neem & Turmeric Face Care",
+    dosha: "pitta",
+    description: "Gentle Ayurvedic care for sensitive skin.",
+    image: "/images/neem.jpg",
   },
   {
     id: 3,
-    name: "Neem & Tea Tree",
-    description: "Purifying skincare for blemish-prone skin",
-    price: "LKR 3,950"
-  }
+    name: "Sandalwood Face Care",
+    dosha: "kapha",
+    description: "Refreshing care for oily and congested skin.",
+    image: "/images/sandalwood.jpg",
+  },
 ];
 
-// 1. Home Page View
 function Home() {
   return (
-    <main className="home-container">
-      <Hero />
+    <div className="app">
+      <Navbar />
 
-      <DoshaSelector />
+      <main>
+        <Hero />
 
-      <div className="quick-actions-grid">
+        <section className="intro-section">
+          <div className="section-label">AYURVEDIC SKINCARE</div>
+
+          <h2>Discover Your Ayurvedic Skin Balance</h2>
+
+          <p className="section-description">
+            Ayurveda describes three natural energies called Doshas.
+            Discover yours and understand what your skin truly needs.
+          </p>
+
+          <DoshaSelector />
+        </section>
+
         <SkinScanCard />
-      </div>
 
-      <section className="featured-products">
-        ...
-      </section>
-    </main>
-  );
-}
+        <section className="personalized-section">
+          <div className="personalized-content">
+            <span className="section-label">PERSONALIZED CARE</span>
 
-// 2. Dosha Assessment View
-function DoshaTestPage() {
-  return (
-    <div className="dosha-test-container">
-      <DoshaQuestion />
+            <h2>Beauty Guided by Ayurveda</h2>
+
+            <p>
+              AyurAI combines Ayurvedic principles with intelligent
+              technology to help you discover skincare that fits your
+              unique skin balance.
+            </p>
+
+            <div className="feature-row">
+              <div>
+                <span className="feature-number">01</span>
+                <h3>Discover</h3>
+                <p>Understand your Ayurvedic skin type.</p>
+              </div>
+
+              <div>
+                <span className="feature-number">02</span>
+                <h3>Analyse</h3>
+                <p>Use AI-powered skin analysis.</p>
+              </div>
+
+              <div>
+                <span className="feature-number">03</span>
+                <h3>Personalize</h3>
+                <p>Receive skincare recommendations.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="products-section">
+          <div className="section-label">CURATED FOR YOU</div>
+
+          <h2>Ayurvedic Skincare Collection</h2>
+
+          <p className="section-description">
+            Explore carefully selected products based on your skin needs.
+          </p>
+
+          <div className="products-grid">
+            {products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        </section>
+      </main>
+
+      <footer className="footer">
+        <div>
+          <h2>AyurAI</h2>
+          <p>
+            Intelligent skincare inspired by the wisdom of Ayurveda.
+          </p>
+        </div>
+
+        <div className="footer-right">
+          <span>AI • AYURVEDA • BEAUTY</span>
+        </div>
+      </footer>
     </div>
   );
 }
 
-// 3. Skin Scan View Placeholder
-function SkinScanPage() {
-  return (
-    <div className="skin-scan-container">
-      <h2>AI Skin Scan</h2>
-      <p>Position your face within the camera frame for instant analysis.</p>
-    </div>
-  );
-}
-
-// Main Routing Architecture
 function App() {
   return (
-    <div className="app-shell">
-      {/* Navbar stays fixed across all page routes */}
-      <Navbar />
-      
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/skin-scan" element={<SkinScanPage />} />
-        <Route path="/dosha-test" element={<DoshaTestPage />} />
-        <Route path="/product/:id" element={<ProductDetails />} />
-      </Routes>
-    </div>
+    <Routes>
+      <Route path="/" element={<Home />} />
+
+      <Route
+        path="/dosha-test"
+        element={<DoshaQuestion />}
+      />
+
+      <Route
+        path="/products"
+        element={<ProductCard />}
+      />
+
+      <Route
+        path="/product/:id"
+        element={<ProductDetails />}
+      />
+    </Routes>
   );
 }
-
-
 
 export default App;

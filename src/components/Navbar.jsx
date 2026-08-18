@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import "./Navbar.css";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -10,41 +11,137 @@ const Navbar = () => {
 
   return (
     <header className="navbar">
-      <Link to="/" className="logo" onClick={closeMenu}>
-        AyurAI
-      </Link>
 
-      <nav className={menuOpen ? "nav-links active" : "nav-links"}>
-        <Link to="/" onClick={closeMenu}>
-          Home
+      <div className="navbar-inner">
+
+        {/* LOGO */}
+        <Link to="/" className="navbar-logo" onClick={closeMenu}>
+          <span className="logo-main">Ayur</span>
+          <span className="logo-ai">AI</span>
         </Link>
 
-        <Link to="/dosha-test" onClick={closeMenu}>
-          Dosha Test
-        </Link>
+        {/* DESKTOP NAVIGATION */}
+        <nav className="desktop-nav">
 
-        <Link to="/skin-scan" onClick={closeMenu}>
-          Skin Scan
-        </Link>
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              isActive ? "nav-link active" : "nav-link"
+            }
+          >
+            Home
+          </NavLink>
 
-        <Link to="/products" onClick={closeMenu}>
-          Products
-        </Link>
+          <NavLink
+            to="/dosha-test"
+            className={({ isActive }) =>
+              isActive ? "nav-link active" : "nav-link"
+            }
+          >
+            Dosha Test
+          </NavLink>
 
-        <Link to="/dashboard" onClick={closeMenu}>
-          Dashboard
-        </Link>
+          <a
+            href="/#skin-scan"
+            className="nav-link"
+          >
+            Skin Scan
+          </a>
 
-        
-      </nav>
+          <NavLink
+            to="/products"
+            className={({ isActive }) =>
+              isActive ? "nav-link active" : "nav-link"
+            }
+          >
+            Products
+          </NavLink>
 
-      <button
-        className="menu-button"
-        onClick={() => setMenuOpen(!menuOpen)}
-        aria-label="Toggle navigation menu"
+          <a href="#dashboard" className="nav-link">
+            Dashboard
+          </a>
+
+        </nav>
+
+        {/* RIGHT SIDE */}
+        <div className="navbar-actions">
+
+          <Link
+            to="/dosha-test"
+            className="nav-cta"
+          >
+            Find My Skin Type
+            <span>→</span>
+          </Link>
+
+          <button
+            className={`menu-button ${
+              menuOpen ? "open" : ""
+            }`}
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Open navigation menu"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+
+        </div>
+
+      </div>
+
+      {/* MOBILE MENU */}
+      <div
+        className={`mobile-menu ${
+          menuOpen ? "show" : ""
+        }`}
       >
-        ☰
-      </button>
+
+        <NavLink
+          to="/"
+          onClick={closeMenu}
+        >
+          Home
+        </NavLink>
+
+        <NavLink
+          to="/dosha-test"
+          onClick={closeMenu}
+        >
+          Dosha Test
+        </NavLink>
+
+        <a
+          href="/#skin-scan"
+          onClick={closeMenu}
+        >
+          Skin Scan
+        </a>
+
+        <NavLink
+          to="/products"
+          onClick={closeMenu}
+        >
+          Products
+        </NavLink>
+
+        <a
+          href="#dashboard"
+          onClick={closeMenu}
+        >
+          Dashboard
+        </a>
+
+        <Link
+          to="/dosha-test"
+          className="mobile-cta"
+          onClick={closeMenu}
+        >
+          Find My Skin Type →
+        </Link>
+
+      </div>
+
     </header>
   );
 };
