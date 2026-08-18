@@ -1,462 +1,700 @@
-/* =========================================================
+/* =========================================
    AYURAI HERO
-   ========================================================= */
+========================================= */
 
 .hero {
-  min-height: 720px;
+  min-height: 90vh;
 
-  max-width: 1400px;
-  margin: 0 auto;
-
-  padding: 100px 70px;
+  padding: 80px 7%;
 
   display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
+  grid-template-columns: 1fr 0.9fr;
 
   align-items: center;
 
-  position: relative;
+  gap: 70px;
 
-  border-bottom: 1px solid rgba(201, 161, 59, 0.2);
+  background:
+    radial-gradient(
+      circle at 80% 30%,
+      rgba(201, 162, 74, 0.12),
+      transparent 35%
+    ),
+    #0d0d0d;
+
+  color: white;
+
+  overflow: hidden;
 }
 
-/* =========================================================
+
+/* =========================================
    HERO CONTENT
-   ========================================================= */
+========================================= */
 
 .hero-content {
-  position: relative;
-  z-index: 3;
+  max-width: 650px;
 }
 
 .hero-label {
-  color: #dfbd65;
+  color: #c9a24a;
+
   font-size: 12px;
+
   font-weight: 700;
-  letter-spacing: 4px;
-  margin-bottom: 25px;
+
+  letter-spacing: 3px;
 }
 
-.hero h1 {
-  font-family: "Cormorant Garamond", serif;
+.hero-content h1 {
+  margin: 22px 0;
 
-  font-size: clamp(70px, 8vw, 120px);
+  font-size: clamp(55px, 7vw, 90px);
 
-  line-height: 0.82;
+  line-height: 0.98;
 
-  font-weight: 600;
+  font-weight: 500;
 
-  text-transform: uppercase;
-
-  color: #f8f3e8;
+  letter-spacing: -4px;
 }
 
-.hero h1 span {
-  color: #c9a13b;
-  font-style: italic;
+.hero-content h1 span {
+  color: #c9a24a;
 }
 
-.hero-description {
-  max-width: 560px;
+.hero-content p {
+  max-width: 580px;
 
-  margin-top: 35px;
+  color: #999;
 
-  color: #c9d4cc;
+  font-size: 16px;
 
-  font-size: 19px;
+  line-height: 1.8;
 
-  line-height: 1.7;
+  margin-bottom: 35px;
 }
 
-/* =========================================================
-   BUTTONS
-   ========================================================= */
+
+/* =========================================
+   HERO BUTTONS
+========================================= */
 
 .hero-buttons {
   display: flex;
-  gap: 15px;
 
-  margin-top: 35px;
+  gap: 15px;
 
   flex-wrap: wrap;
 }
 
 .hero-primary-button,
 .hero-secondary-button {
-  padding: 16px 25px;
+  min-height: 52px;
 
-  font-size: 14px;
+  padding: 0 25px;
+
+  border-radius: 30px;
+
+  font-size: 13px;
+
   font-weight: 700;
 
-  transition: 0.3s ease;
-}
+  cursor: pointer;
 
-.hero-primary-button {
-  background: #c9a13b;
-  color: #062f24;
+  transition: all 0.3s ease;
 
   display: flex;
-  gap: 20px;
+
   align-items: center;
+
+  gap: 12px;
+}
+
+
+/* PRIMARY */
+
+.hero-primary-button {
+  border: none;
+
+  background: #c9a24a;
+
+  color: #111;
 }
 
 .hero-primary-button:hover {
-  background: #dfbd65;
+  background: #e1bd63;
+
   transform: translateY(-3px);
+
+  box-shadow:
+    0 12px 35px rgba(201, 162, 74, 0.3);
 }
 
-.hero-primary-button span {
-  font-size: 20px;
-}
+
+/* SECONDARY */
 
 .hero-secondary-button {
-  border: 1px solid rgba(201, 161, 59, 0.6);
-  color: #f8f3e8;
+  border: 1px solid rgba(201, 162, 74, 0.6);
+
+  background: transparent;
+
+  color: #c9a24a;
 }
 
 .hero-secondary-button:hover {
-  background: rgba(201, 161, 59, 0.1);
+  background: #c9a24a;
+
+  color: #111;
+
+  transform: translateY(-3px);
 }
 
-/* =========================================================
-   HERO STATS
-   ========================================================= */
 
-.hero-stats {
-  display: flex;
+/* =========================================
+   AYURVISION CARD
+========================================= */
 
-  gap: 45px;
-
-  margin-top: 65px;
-}
-
-.hero-stats div {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.hero-stats strong {
-  font-family: "Cormorant Garamond", serif;
-  color: #dfbd65;
-  font-size: 28px;
-}
-
-.hero-stats span {
-  color: #9fb0a6;
-  font-size: 11px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-
-/* =========================================================
-   HERO VISUAL
-   ========================================================= */
-
-.hero-visual {
-  height: 520px;
-
+.ayurvision-card {
   position: relative;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+  width: min(100%, 480px);
 
-.hero-circle {
-  position: absolute;
+  height: 540px;
 
-  width: 440px;
-  height: 440px;
+  margin: auto;
 
-  border-radius: 50%;
+  border-radius: 35px;
 
-  border: 1px solid rgba(201, 161, 59, 0.4);
+  overflow: hidden;
+
+  cursor: pointer;
+
+  border: 1px solid rgba(201, 162, 74, 0.45);
+
+  background:
+    radial-gradient(
+      circle at 50% 40%,
+      rgba(201, 162, 74, 0.16),
+      transparent 40%
+    ),
+    linear-gradient(
+      145deg,
+      #171717,
+      #090909
+    );
 
   box-shadow:
-    0 0 80px rgba(201, 161, 59, 0.08),
-    inset 0 0 80px rgba(201, 161, 59, 0.04);
+    0 30px 80px rgba(0, 0, 0, 0.5);
+
+  transition:
+    transform 0.5s ease,
+    border-color 0.5s ease,
+    box-shadow 0.5s ease;
 }
 
-.hero-circle::before {
-  content: "";
+.ayurvision-card:hover {
+  transform: translateY(-10px) scale(1.015);
 
-  position: absolute;
+  border-color: #c9a24a;
 
-  inset: 35px;
-
-  border-radius: 50%;
-
-  border: 1px dashed rgba(201, 161, 59, 0.25);
+  box-shadow:
+    0 35px 100px rgba(201, 162, 74, 0.15);
 }
 
-.hero-glow {
+
+/* =========================================
+   AI GLOW
+========================================= */
+
+.ai-glow {
   position: absolute;
 
   width: 300px;
   height: 300px;
 
-  background: rgba(201, 161, 59, 0.08);
+  left: 50%;
+  top: 35%;
 
-  filter: blur(60px);
+  transform: translate(-50%, -50%);
 
   border-radius: 50%;
-}
-
-/* =========================================================
-   AI CARD
-   ========================================================= */
-
-.hero-card {
-  width: 270px;
-  height: 360px;
-
-  position: relative;
-  z-index: 2;
-
-  border: 1px solid rgba(201, 161, 59, 0.45);
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(255,255,255,0.07),
-      rgba(0,0,0,0.15)
-    );
-
-  backdrop-filter: blur(12px);
-
-  display: flex;
-  flex-direction: column;
-
-  align-items: center;
-
-  padding-top: 25px;
-
-  box-shadow:
-    0 30px 80px rgba(0,0,0,0.25);
-}
-
-.hero-card > span {
-  color: #dfbd65;
-
-  font-size: 10px;
-
-  letter-spacing: 4px;
-}
-
-/* =========================================================
-   FACE PLACEHOLDER
-   ========================================================= */
-
-.face-placeholder {
-  width: 190px;
-  height: 250px;
-
-  margin-top: 15px;
-
-  position: relative;
-
-  border-radius: 48% 48% 45% 45%;
 
   background:
     radial-gradient(
-      ellipse at center,
-      rgba(201,161,59,0.20),
-      transparent 65%
+      circle,
+      rgba(201, 162, 74, 0.18),
+      transparent 70%
     );
 
-  border: 1px solid rgba(201,161,59,0.25);
+  filter: blur(10px);
+
+  animation: aiGlow 4s ease-in-out infinite;
 }
 
-.face-line {
+@keyframes aiGlow {
+
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(0.9);
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: translate(-50%, -50%) scale(1.15);
+    opacity: 1;
+  }
+}
+
+
+/* =========================================
+   SCAN RINGS
+========================================= */
+
+.scan-ring {
   position: absolute;
 
-  width: 1px;
-  height: 180px;
+  left: 50%;
+  top: 40%;
 
-  background: rgba(201,161,59,0.25);
+  transform: translate(-50%, -50%);
+
+  border: 1px solid rgba(201, 162, 74, 0.25);
+
+  border-radius: 50%;
+
+  pointer-events: none;
+}
+
+.ring-one {
+  width: 270px;
+  height: 270px;
+
+  animation: ringPulse 3s infinite;
+}
+
+.ring-two {
+  width: 340px;
+  height: 340px;
+
+  animation: ringPulse 3s 0.6s infinite;
+}
+
+.ring-three {
+  width: 410px;
+  height: 410px;
+
+  animation: ringPulse 3s 1.2s infinite;
+}
+
+@keyframes ringPulse {
+
+  0% {
+    opacity: 0.1;
+
+    transform:
+      translate(-50%, -50%)
+      scale(0.9);
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 0;
+
+    transform:
+      translate(-50%, -50%)
+      scale(1.08);
+  }
+}
+
+
+/* =========================================
+   AI FACE
+========================================= */
+
+.ai-face {
+  position: absolute;
+
+  top: 70px;
 
   left: 50%;
-  top: 35px;
+
+  transform: translateX(-50%);
+
+  width: 260px;
+
+  height: 320px;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
 }
+
+.face-outline {
+  width: 200px;
+
+  height: 270px;
+
+  border: 1px solid rgba(201, 162, 74, 0.55);
+
+  border-radius:
+    48%
+    48%
+    45%
+    45%;
+
+  position: relative;
+
+  box-shadow:
+    0 0 35px rgba(201, 162, 74, 0.08);
+
+  animation: facePulse 3s ease-in-out infinite;
+}
+
+@keyframes facePulse {
+
+  0%,
+  100% {
+    transform: scale(0.98);
+
+    opacity: 0.65;
+  }
+
+  50% {
+    transform: scale(1.02);
+
+    opacity: 1;
+  }
+}
+
+
+/* =========================================
+   FACE DETAILS
+========================================= */
 
 .face-eye {
   position: absolute;
 
-  width: 7px;
-  height: 7px;
-
-  border-radius: 50%;
-
-  background: #dfbd65;
-
   top: 105px;
 
-  box-shadow: 0 0 12px rgba(201,161,59,0.8);
+  width: 22px;
+
+  height: 8px;
+
+  border-top: 1px solid #c9a24a;
+
+  border-radius: 50%;
 }
 
-.face-eye.left {
-  left: 65px;
+.left-eye {
+  left: 48px;
 }
 
-.face-eye.right {
-  right: 65px;
+.right-eye {
+  right: 48px;
+}
+
+.face-nose {
+  position: absolute;
+
+  width: 1px;
+
+  height: 55px;
+
+  background: rgba(201, 162, 74, 0.5);
+
+  left: 50%;
+
+  top: 115px;
 }
 
 .face-mouth {
   position: absolute;
 
-  width: 35px;
-  height: 12px;
+  width: 45px;
 
-  border-bottom: 1px solid #dfbd65;
-
-  border-radius: 50%;
-
-  bottom: 70px;
+  height: 15px;
 
   left: 50%;
 
+  bottom: 55px;
+
   transform: translateX(-50%);
+
+  border-bottom: 1px solid #c9a24a;
+
+  border-radius: 50%;
 }
 
-/* =========================================================
-   SCAN LINE
-   ========================================================= */
 
-.scan-line {
+/* =========================================
+   DETECTION POINTS
+========================================= */
+
+.hero-point {
   position: absolute;
 
-  width: 220px;
-  height: 1px;
+  width: 7px;
 
-  background: #dfbd65;
+  height: 7px;
 
-  top: 170px;
+  border-radius: 50%;
 
-  box-shadow: 0 0 12px #c9a13b;
+  background: #d9b45a;
 
-  animation: scan 3s infinite ease-in-out;
+  box-shadow:
+    0 0 8px #d9b45a,
+    0 0 20px rgba(201, 162, 74, 0.8);
+
+  animation: pointPulse 1.5s infinite;
 }
 
-@keyframes scan {
+.hero-point-one {
+  top: 30%;
+  left: 39%;
+}
+
+.hero-point-two {
+  top: 31%;
+  right: 39%;
+
+  animation-delay: 0.3s;
+}
+
+.hero-point-three {
+  top: 43%;
+  left: 50%;
+
+  animation-delay: 0.6s;
+}
+
+.hero-point-four {
+  top: 55%;
+  left: 44%;
+
+  animation-delay: 0.9s;
+}
+
+@keyframes pointPulse {
+
   0%,
   100% {
-    top: 100px;
-    opacity: 0.3;
+    transform: scale(0.7);
+
+    opacity: 0.4;
   }
 
   50% {
-    top: 280px;
+    transform: scale(1.4);
+
     opacity: 1;
   }
 }
 
-.hero-card p {
-  color: #9fb0a6;
 
-  font-size: 9px;
+/* =========================================
+   HERO SCAN LINE
+========================================= */
+
+.hero-scan-line {
+  position: absolute;
+
+  left: 12%;
+
+  right: 12%;
+
+  top: 20%;
+
+  height: 1px;
+
+  background: #d9b45a;
+
+  box-shadow:
+    0 0 10px #d9b45a,
+    0 0 25px rgba(201, 162, 74, 0.8);
+
+  animation: heroScan 3s ease-in-out infinite;
+
+  z-index: 5;
+}
+
+@keyframes heroScan {
+
+  0% {
+    top: 18%;
+
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  85% {
+    opacity: 1;
+  }
+
+  100% {
+    top: 68%;
+
+    opacity: 0;
+  }
+}
+
+
+/* =========================================
+   AYURVISION CONTENT
+========================================= */
+
+.ayurvision-content {
+  position: absolute;
+
+  left: 30px;
+
+  right: 30px;
+
+  bottom: 30px;
+
+  padding: 25px;
+
+  border-radius: 22px;
+
+  background:
+    rgba(5, 5, 5, 0.82);
+
+  backdrop-filter: blur(12px);
+
+  border: 1px solid rgba(201, 162, 74, 0.25);
+
+  z-index: 10;
+}
+
+.ayurvision-label {
+  color: #c9a24a;
+
+  font-size: 10px;
 
   letter-spacing: 3px;
 
-  margin-top: -5px;
+  font-weight: 700;
 }
 
-/* =========================================================
-   FLOATING DOSHAS
-   ========================================================= */
+.ayurvision-content h3 {
+  margin: 10px 0;
 
-.floating-dosha {
-  position: absolute;
+  font-size: 25px;
 
-  z-index: 5;
+  font-weight: 500;
+}
 
-  min-width: 85px;
+.ayurvision-content p {
+  margin: 0 0 18px;
 
-  padding: 12px;
+  color: #999;
 
-  background: rgba(6, 63, 47, 0.9);
+  font-size: 13px;
+}
 
-  border: 1px solid rgba(201, 161, 59, 0.35);
+.ayurvision-action {
+  color: #c9a24a;
+
+  font-size: 13px;
+
+  font-weight: 700;
 
   display: flex;
 
-  flex-direction: column;
-
   align-items: center;
 
-  gap: 5px;
-
-  font-size: 18px;
-
-  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+  justify-content: space-between;
 }
 
-.floating-dosha span {
-  color: #dfbd65;
+.ayurvision-action span {
+  font-size: 20px;
 
-  font-size: 9px;
-
-  letter-spacing: 2px;
+  transition: transform 0.3s ease;
 }
 
-.floating-dosha.vata {
-  left: 0;
-  top: 100px;
+.ayurvision-card:hover
+.ayurvision-action span {
+  transform: translateX(6px);
 }
 
-.floating-dosha.pitta {
-  right: 5px;
-  top: 55px;
-}
 
-.floating-dosha.kapha {
-  right: 0;
-  bottom: 85px;
-}
-
-/* =========================================================
+/* =========================================
    RESPONSIVE
-   ========================================================= */
+========================================= */
 
-@media (max-width: 950px) {
+@media (max-width: 900px) {
+
   .hero {
     grid-template-columns: 1fr;
-    padding: 80px 35px;
+
+    text-align: center;
+
+    padding-top: 70px;
   }
 
-  .hero-visual {
-    margin-top: 70px;
+  .hero-content {
+    margin: auto;
   }
 
-  .hero h1 {
-    font-size: 70px;
+  .hero-content p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-buttons {
+    justify-content: center;
+  }
+
+  .ayurvision-card {
+    width: min(100%, 450px);
   }
 }
 
+
 @media (max-width: 600px) {
+
   .hero {
-    padding: 65px 20px;
+    padding: 60px 5%;
   }
 
-  .hero h1 {
-    font-size: 55px;
+  .hero-content h1 {
+    font-size: 52px;
+
+    letter-spacing: -2px;
   }
 
-  .hero-stats {
-    gap: 20px;
+  .hero-buttons {
+    flex-direction: column;
   }
 
-  .hero-circle {
-    width: 330px;
-    height: 330px;
+  .hero-primary-button,
+  .hero-secondary-button {
+    width: 100%;
+
+    justify-content: center;
   }
 
-  .hero-card {
-    transform: scale(0.85);
+  .ayurvision-card {
+    height: 480px;
   }
 
-  .floating-dosha {
-    display: none;
+  .ai-face {
+    transform: translateX(-50%) scale(0.85);
+  }
+
+  .ring-three {
+    width: 350px;
+    height: 350px;
   }
 }

@@ -48,18 +48,27 @@ const Navbar = () => {
             Skin Scan
           </a>
 
-          <NavLink
-            to="/products"
-            className={({ isActive }) =>
-              isActive ? "nav-link active" : "nav-link"
-            }
-          >
-            Products
-          </NavLink>
+                <NavLink
+        to="/products"
+        className={({ isActive }) =>
+          isActive ? "nav-link active" : "nav-link"
+        }
+      >
+        Products
+      </NavLink>
 
-          <a href="#dashboard" className="nav-link">
-            Dashboard
-          </a>
+      <NavLink
+        to="/profile"
+        className={({ isActive }) =>
+          isActive ? "nav-link active" : "nav-link"
+        }
+      >
+        Profile
+      </NavLink>
+
+      <a href="#dashboard" className="nav-link">
+        Dashboard
+      </a>
 
         </nav>
 

@@ -1,106 +1,164 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import "./Hero.css";
 
 const Hero = () => {
+
+  // Go to AI Skin Analysis section
+  const handleSkinAnalysis = () => {
+    const skinScanSection = document.getElementById("skin-scan");
+
+    if (skinScanSection) {
+      skinScanSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
+
   return (
     <section className="hero">
 
+      {/* =========================
+          LEFT SIDE
+      ========================= */}
+
       <div className="hero-content">
 
-        <div className="hero-label">
-          AI × AYURVEDA × SKINCARE
-        </div>
+        <span className="hero-label">
+          AI • AYURVEDA • BEAUTY
+        </span>
 
         <h1>
-          Discover
+          Your Skin.
           <br />
-          Your <span>Skin Balance</span>
+          <span>Your Balance.</span>
         </h1>
 
-        <p className="hero-description">
-          Intelligent Ayurvedic skincare personalized
-          to your unique skin needs.
+        <p>
+          Discover intelligent skincare inspired by
+          the ancient wisdom of Ayurveda. Understand
+          your skin, discover your Dosha, and receive
+          personalized care.
         </p>
 
         <div className="hero-buttons">
 
-          <Link
-            to="/dosha-test"
+          {/* DOSHA BUTTON */}
+
+          <button
             className="hero-primary-button"
+            onClick={() => {
+              const doshaSection =
+                document.querySelector(".intro-section");
+
+              if (doshaSection) {
+                doshaSection.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                });
+              }
+            }}
           >
-            Take Dosha Test
+            Discover Your Dosha
             <span>→</span>
-          </Link>
+          </button>
 
-          <a
-            href="#skin-scan"
+
+          {/* SKIN ANALYSIS BUTTON */}
+
+          <button
             className="hero-secondary-button"
+            onClick={handleSkinAnalysis}
           >
-            Try AI Skin Scan
-          </a>
-
-        </div>
-
-        <div className="hero-stats">
-
-          <div>
-            <strong>03</strong>
-            <span>Doshas</span>
-          </div>
-
-          <div>
-            <strong>AI</strong>
-            <span>Skin Analysis</span>
-          </div>
-
-          <div>
-            <strong>∞</strong>
-            <span>Personalized Care</span>
-          </div>
+            Analyse My Skin
+            <span>✦</span>
+          </button>
 
         </div>
 
       </div>
 
-      <div className="hero-visual">
 
-        <div className="hero-circle"></div>
+      {/* =========================
+          AYURVISION AI CARD
+      ========================= */}
 
-        <div className="hero-glow"></div>
+      <div
+        className="ayurvision-card"
+        onClick={handleSkinAnalysis}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            handleSkinAnalysis();
+          }
+        }}
+      >
 
-        <div className="hero-card">
+        {/* AI GLOW */}
 
-          <span>AYURVISION</span>
+        <div className="ai-glow"></div>
 
-          <div className="face-placeholder">
-            <div className="face-line"></div>
-            <div className="face-eye left"></div>
-            <div className="face-eye right"></div>
+
+        {/* SCAN RINGS */}
+
+        <div className="scan-ring ring-one"></div>
+        <div className="scan-ring ring-two"></div>
+        <div className="scan-ring ring-three"></div>
+
+
+        {/* FACE / AI VISUAL */}
+
+        <div className="ai-face">
+
+          <div className="face-outline">
+
+            <div className="face-eye left-eye"></div>
+            <div className="face-eye right-eye"></div>
+
+            <div className="face-nose"></div>
+
             <div className="face-mouth"></div>
+
           </div>
 
-          <div className="scan-line"></div>
+        </div>
+
+
+        {/* DETECTION POINTS */}
+
+        <span className="hero-point hero-point-one"></span>
+        <span className="hero-point hero-point-two"></span>
+        <span className="hero-point hero-point-three"></span>
+        <span className="hero-point hero-point-four"></span>
+
+
+        {/* MOVING SCAN LINE */}
+
+        <div className="hero-scan-line"></div>
+
+
+        {/* CARD CONTENT */}
+
+        <div className="ayurvision-content">
+
+          <span className="ayurvision-label">
+            AYURVISION AI
+          </span>
+
+          <h3>
+            AI Skin Analysis
+          </h3>
 
           <p>
-            AI SKIN ANALYSIS
+            Discover what your skin is telling you.
           </p>
 
-        </div>
+          <div className="ayurvision-action">
+            Analyse Your Skin
+            <span>→</span>
+          </div>
 
-        <div className="floating-dosha vata">
-          🌬️
-          <span>VATA</span>
-        </div>
-
-        <div className="floating-dosha pitta">
-          🔥
-          <span>PITTA</span>
-        </div>
-
-        <div className="floating-dosha kapha">
-          🌿
-          <span>KAPHA</span>
         </div>
 
       </div>
