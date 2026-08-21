@@ -1,0 +1,276 @@
+/* =========================================================
+   AYURAI — HOME REMEDIES
+   ========================================================= */
+
+.home-remedies-section {
+
+  padding: 110px 7%;
+
+  background: var(--soft-background);
+}
+
+
+/* =========================================================
+   HEADING
+   ========================================================= */
+
+.home-remedies-heading {
+
+  max-width: 760px;
+
+  margin: 0 auto 60px;
+
+  text-align: center;
+}
+
+.home-remedies-heading h2 {
+
+  font-family: "Cormorant Garamond", serif;
+
+  font-size: clamp(42px, 5vw, 64px);
+
+  line-height: 1;
+
+  color: var(--forest);
+
+  margin: 15px 0;
+}
+
+.home-remedies-heading h2 span {
+
+  color: var(--forest-light);
+}
+
+.home-remedies-heading p {
+
+  max-width: 650px;
+
+  margin: auto;
+
+  color: var(--text-muted);
+
+  line-height: 1.8;
+
+  font-size: 16px;
+}
+
+
+/* =========================================================
+   GRID
+   ========================================================= */
+
+.remedies-grid {
+
+  max-width: 1150px;
+
+  margin: auto;
+
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 20px;
+}
+
+
+/* =========================================================
+   CARD
+   ========================================================= */
+
+.remedy-card {
+
+  position: relative;
+
+  min-height: 300px;
+
+  padding: 28px;
+
+  background: var(--white);
+
+  border: 1px solid var(--border);
+
+  border-radius: 20px;
+
+  transition: all 0.35s ease;
+}
+
+.remedy-card:hover {
+
+  transform: translateY(-7px);
+
+  border-color: rgba(183,154,90,0.45);
+
+  box-shadow:
+    0 20px 45px rgba(22,63,50,0.08);
+}
+
+
+/* =========================================================
+   TOP
+   ========================================================= */
+
+.remedy-top {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-start;
+
+  margin-bottom: 30px;
+}
+
+.remedy-number {
+
+  color: var(--gold);
+
+  font-size: 11px;
+
+  letter-spacing: 2px;
+
+  font-weight: 700;
+}
+
+.remedy-icon {
+
+  width: 50px;
+
+  height: 50px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: var(--sage-light);
+
+  font-size: 24px;
+}
+
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.remedy-card h3 {
+
+  font-family: "Cormorant Garamond", serif;
+
+  font-size: 30px;
+
+  color: var(--forest);
+
+  margin-bottom: 12px;
+}
+
+.remedy-card p {
+
+  color: var(--text-muted);
+
+  line-height: 1.7;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   SUITABLE
+   ========================================================= */
+
+.remedy-suitable {
+
+  display: inline-block;
+
+  margin-top: 22px;
+
+  padding: 7px 12px;
+
+  border-radius: 20px;
+
+  background: var(--sage-light);
+
+  color: var(--forest-light);
+
+  font-size: 10px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.5px;
+}
+
+
+/* =========================================================
+   NOTE
+   ========================================================= */
+
+.remedies-note {
+
+  max-width: 900px;
+
+  margin: 40px auto 0;
+
+  padding: 18px 22px;
+
+  display: flex;
+
+  gap: 12px;
+
+  align-items: flex-start;
+
+  border-left: 3px solid var(--gold);
+
+  background: var(--white);
+
+  border-radius: 0 12px 12px 0;
+}
+
+.remedies-note span {
+
+  color: var(--gold);
+
+  font-size: 18px;
+}
+
+.remedies-note p {
+
+  color: var(--text-muted);
+
+  font-size: 12px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+  .remedies-grid {
+
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+@media (max-width: 600px) {
+
+  .home-remedies-section {
+
+    padding: 75px 5%;
+  }
+
+  .remedies-grid {
+
+    grid-template-columns: 1fr;
+  }
+
+  .home-remedies-heading h2 {
+
+    font-size: 42px;
+  }
+}

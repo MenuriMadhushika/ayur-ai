@@ -3,9 +3,30 @@ import "./Hero.css";
 
 const Hero = () => {
 
-  // Go to AI Skin Analysis section
+  // ==============================
+  // GO TO DOSHA SECTION
+  // ==============================
+
+  const handleDosha = () => {
+    const doshaSection =
+      document.querySelector(".intro-section");
+
+    if (doshaSection) {
+      doshaSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
+
+
+  // ==============================
+  // GO TO SKIN ANALYSIS
+  // ==============================
+
   const handleSkinAnalysis = () => {
-    const skinScanSection = document.getElementById("skin-scan");
+    const skinScanSection =
+      document.getElementById("skin-scan");
 
     if (skinScanSection) {
       skinScanSection.scrollIntoView({
@@ -15,12 +36,13 @@ const Hero = () => {
     }
   };
 
+
   return (
     <section className="hero">
 
-      {/* =========================
-          LEFT SIDE
-      ========================= */}
+      {/* =================================
+          HERO CONTENT
+      ================================= */}
 
       <div className="hero-content">
 
@@ -28,60 +50,89 @@ const Hero = () => {
           AI • AYURVEDA • BEAUTY
         </span>
 
+
         <h1>
           Your Skin.
           <br />
           <span>Your Balance.</span>
         </h1>
 
+
         <p>
           Discover intelligent skincare inspired by
           the ancient wisdom of Ayurveda. Understand
-          your skin, discover your Dosha, and receive
-          personalized care.
+          your skin, discover your Dosha, and explore
+          personalized Ayurvedic care.
         </p>
+
+
+        {/* =================================
+            BUTTONS
+        ================================= */}
 
         <div className="hero-buttons">
 
-          {/* DOSHA BUTTON */}
-
           <button
+            type="button"
             className="hero-primary-button"
-            onClick={() => {
-              const doshaSection =
-                document.querySelector(".intro-section");
-
-              if (doshaSection) {
-                doshaSection.scrollIntoView({
-                  behavior: "smooth",
-                  block: "start",
-                });
-              }
-            }}
+            onClick={handleDosha}
           >
-            Discover Your Dosha
-            <span>→</span>
+            <span>
+              Discover Your Dosha
+            </span>
+
+            <span className="button-arrow">
+              →
+            </span>
           </button>
 
 
-          {/* SKIN ANALYSIS BUTTON */}
-
           <button
+            type="button"
             className="hero-secondary-button"
             onClick={handleSkinAnalysis}
           >
-            Analyse My Skin
-            <span>✦</span>
+            <span>
+              Analyse My Skin
+            </span>
+
+            <span className="button-spark">
+              ✦
+            </span>
           </button>
+
+        </div>
+
+
+        {/* =================================
+            TRUST / FEATURE LINE
+        ================================= */}
+
+        <div className="hero-features">
+
+          <span>
+            <b>✓</b>
+            Ayurvedic Guidance
+          </span>
+
+          <span>
+            <b>✓</b>
+            AI Skin Analysis
+          </span>
+
+          <span>
+            <b>✓</b>
+            Personalized Care
+          </span>
 
         </div>
 
       </div>
 
 
-      {/* =========================
+      {/* =================================
           AYURVISION AI CARD
-      ========================= */}
+      ================================= */}
 
       <div
         className="ayurvision-card"
@@ -89,31 +140,43 @@ const Hero = () => {
         role="button"
         tabIndex={0}
         onKeyDown={(event) => {
-          if (event.key === "Enter" || event.key === " ") {
+          if (
+            event.key === "Enter" ||
+            event.key === " "
+          ) {
             handleSkinAnalysis();
           }
         }}
       >
 
-        {/* AI GLOW */}
+        {/* =================================
+            BACKGROUND GLOW
+        ================================= */}
 
         <div className="ai-glow"></div>
 
 
-        {/* SCAN RINGS */}
+        {/* =================================
+            DECORATIVE RINGS
+        ================================= */}
 
         <div className="scan-ring ring-one"></div>
+
         <div className="scan-ring ring-two"></div>
+
         <div className="scan-ring ring-three"></div>
 
 
-        {/* FACE / AI VISUAL */}
+        {/* =================================
+            AI FACE
+        ================================= */}
 
         <div className="ai-face">
 
           <div className="face-outline">
 
             <div className="face-eye left-eye"></div>
+
             <div className="face-eye right-eye"></div>
 
             <div className="face-nose"></div>
@@ -125,38 +188,61 @@ const Hero = () => {
         </div>
 
 
-        {/* DETECTION POINTS */}
+        {/* =================================
+            DETECTION POINTS
+        ================================= */}
 
         <span className="hero-point hero-point-one"></span>
+
         <span className="hero-point hero-point-two"></span>
+
         <span className="hero-point hero-point-three"></span>
+
         <span className="hero-point hero-point-four"></span>
 
 
-        {/* MOVING SCAN LINE */}
+        {/* =================================
+            SCAN LINE
+        ================================= */}
 
         <div className="hero-scan-line"></div>
 
 
-        {/* CARD CONTENT */}
+        {/* =================================
+            AI CARD CONTENT
+        ================================= */}
 
         <div className="ayurvision-content">
+
+          <div className="ai-status">
+
+            <span className="ai-status-dot"></span>
+
+            AI READY
+
+          </div>
+
 
           <span className="ayurvision-label">
             AYURVISION AI
           </span>
 
+
           <h3>
             AI Skin Analysis
           </h3>
 
+
           <p>
-            Discover what your skin is telling you.
+            Discover what your skin
+            is telling you.
           </p>
 
+
           <div className="ayurvision-action">
-            Analyse Your Skin
-            <span>→</span>
+
+           
+
           </div>
 
         </div>
