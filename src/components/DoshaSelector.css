@@ -1,10 +1,18 @@
 /* =========================================================
-   DOSHA SELECTOR
+   AYURAI — DOSHA SELECTOR
+   Forest • Cream • Natural Ayurvedic Accents
+   ========================================================= */
+
+
+/* =========================================================
+   WRAPPER
    ========================================================= */
 
 .dosha-wrapper {
+  width: 100%;
   margin-top: 55px;
 }
+
 
 /* =========================================================
    DOSHA GRID
@@ -12,300 +20,646 @@
 
 .dosha-grid {
   display: grid;
-
   grid-template-columns: repeat(3, 1fr);
-
-  gap: 20px;
+  gap: 26px;
+  width: 100%;
 }
 
+
+/* =========================================================
+   BASE CARD
+   ========================================================= */
+
 .dosha-card {
-  min-height: 390px;
-
-  padding: 32px;
-
   position: relative;
+
+  min-height: 430px;
+  padding: 34px;
+
+  background: #ffffff;
+
+  border: 1px solid #dfe7e1;
+  border-radius: 24px;
+
+  overflow: hidden;
 
   cursor: pointer;
 
-  background:
-    linear-gradient(
-      145deg,
-      rgba(255,255,255,0.045),
-      rgba(0,0,0,0.08)
-    );
-
-  border: 1px solid rgba(201,161,59,0.25);
+  display: flex;
+  flex-direction: column;
 
   transition:
     transform 0.35s ease,
+    box-shadow 0.35s ease,
     border-color 0.35s ease,
     background 0.35s ease;
 
-  overflow: hidden;
+  box-shadow:
+    0 12px 35px rgba(6, 63, 47, 0.07);
 }
 
-.dosha-card::after {
+
+/* =========================================================
+   TOP ACCENT LINE
+   ========================================================= */
+
+.dosha-card::before {
   content: "";
 
   position: absolute;
 
-  width: 150px;
-  height: 150px;
+  top: 0;
+  left: 0;
 
-  right: -70px;
-  bottom: -70px;
+  width: 100%;
+  height: 4px;
 
-  border-radius: 50%;
+  background: #245c4a;
 
-  background: rgba(201,161,59,0.08);
+  transform: scaleX(0);
+  transform-origin: left;
 
-  transition: 0.4s ease;
+  transition:
+    transform 0.45s ease;
 }
+
+
+/* =========================================================
+   HOVER
+   ========================================================= */
 
 .dosha-card:hover {
-  transform: translateY(-8px);
+  transform: translateY(-9px);
 
-  border-color: rgba(201,161,59,0.7);
+  border-color: #b9cbc0;
 
-  background:
-    linear-gradient(
-      145deg,
-      rgba(201,161,59,0.09),
-      rgba(0,0,0,0.08)
-    );
+  box-shadow:
+    0 22px 55px rgba(6, 63, 47, 0.13);
 }
 
-.dosha-card:hover::after {
-  transform: scale(1.5);
+.dosha-card:hover::before {
+  transform: scaleX(1);
 }
+
 
 /* =========================================================
    SELECTED
    ========================================================= */
 
 .dosha-card.selected {
-  border-color: #c9a13b;
+  transform: translateY(-6px);
+
+  border-color: #245c4a;
 
   box-shadow:
-    0 0 0 1px rgba(201,161,59,0.15),
-    0 20px 60px rgba(0,0,0,0.18);
+    0 22px 55px rgba(6, 63, 47, 0.16);
 }
 
 .dosha-card.selected::before {
-  content: "";
-
-  position: absolute;
-
-  left: 0;
-  top: 0;
-
-  width: 4px;
-  height: 100%;
-
-  background: #c9a13b;
+  transform: scaleX(1);
 }
 
+
 /* =========================================================
-   TOP
+   VATA
+   ========================================================= */
+
+.dosha-card.vata::before {
+  background: #71869a;
+}
+
+.dosha-card.vata .dosha-icon {
+  background: #edf2f5;
+  color: #5d7183;
+}
+
+.dosha-card.vata .dosha-element {
+  color: #5d7183;
+}
+
+.dosha-card.vata .dosha-care {
+  color: #5d7183;
+}
+
+.dosha-card.vata .care-dot {
+  background: #71869a;
+}
+
+.dosha-card.vata .dosha-name {
+  color: #536b7d;
+}
+
+.dosha-card.vata .dosha-explore {
+  color: #536b7d;
+  border-color: #c6d2da;
+}
+
+.dosha-card.vata .dosha-explore:hover,
+.dosha-card.vata.selected .dosha-explore {
+  background: #536b7d;
+  border-color: #536b7d;
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   PITTA
+   ========================================================= */
+
+.dosha-card.pitta::before {
+  background: #b86f62;
+}
+
+.dosha-card.pitta .dosha-icon {
+  background: #f8eeeb;
+  color: #a55f53;
+}
+
+.dosha-card.pitta .dosha-element {
+  color: #a55f53;
+}
+
+.dosha-card.pitta .dosha-care {
+  color: #a55f53;
+}
+
+.dosha-card.pitta .care-dot {
+  background: #b86f62;
+}
+
+.dosha-card.pitta .dosha-name {
+  color: #a55f53;
+}
+
+.dosha-card.pitta .dosha-explore {
+  color: #a55f53;
+  border-color: #ddc1bb;
+}
+
+.dosha-card.pitta .dosha-explore:hover,
+.dosha-card.pitta.selected .dosha-explore {
+  background: #a55f53;
+  border-color: #a55f53;
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   KAPHA
+   ========================================================= */
+
+.dosha-card.kapha::before {
+  background: #6f8959;
+}
+
+.dosha-card.kapha .dosha-icon {
+  background: #edf3e9;
+  color: #5d7649;
+}
+
+.dosha-card.kapha .dosha-element {
+  color: #5d7649;
+}
+
+.dosha-card.kapha .dosha-care {
+  color: #5d7649;
+}
+
+.dosha-card.kapha .care-dot {
+  background: #6f8959;
+}
+
+.dosha-card.kapha .dosha-name {
+  color: #5d7649;
+}
+
+.dosha-card.kapha .dosha-explore {
+  color: #5d7649;
+  border-color: #c8d6bd;
+}
+
+.dosha-card.kapha .dosha-explore:hover,
+.dosha-card.kapha.selected .dosha-explore {
+  background: #5d7649;
+  border-color: #5d7649;
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   CARD TOP
    ========================================================= */
 
 .dosha-card-top {
   display: flex;
 
+  align-items: center;
   justify-content: space-between;
 
-  align-items: flex-start;
+  margin-bottom: 32px;
 }
+
+
+/* =========================================================
+   DOSHA ICON
+   ========================================================= */
 
 .dosha-icon {
-  font-size: 34px;
+  width: 60px;
+  height: 60px;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 28px;
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
 }
 
+.dosha-card:hover .dosha-icon {
+  transform: scale(1.08) rotate(3deg);
+}
+
+
+/* =========================================================
+   ELEMENT
+   ========================================================= */
+
 .dosha-element {
-  color: #aebdb4;
+  font-size: 10px;
 
-  font-size: 9px;
+  font-weight: 700;
 
-  letter-spacing: 2px;
+  letter-spacing: 1.7px;
 
   text-align: right;
 }
 
+
 /* =========================================================
-   NAME
+   DOSHA NAME
    ========================================================= */
 
 .dosha-name {
-  margin-top: 55px;
-
-  font-family: "Cormorant Garamond", serif;
+  font-family:
+    "Cormorant Garamond",
+    serif;
 
   font-size: 48px;
 
-  font-weight: 600;
+  line-height: 1;
 
-  color: #f8f3e8;
+  font-weight: 700;
+
+  margin-bottom: 13px;
+
+  letter-spacing: 2px;
+
+  transition:
+    transform 0.3s ease;
 }
+
+.dosha-card:hover .dosha-name {
+  transform: translateX(3px);
+}
+
+
+/* =========================================================
+   DOSHA TYPE
+   ========================================================= */
 
 .dosha-type {
-  margin-top: 3px;
+  display: inline-block;
 
-  color: #dfbd65;
+  width: fit-content;
 
-  font-size: 14px;
+  padding: 7px 14px;
+
+  background: #f3f6f3;
+
+  border-radius: 20px;
+
+  color: #53655d;
+
+  font-size: 11px;
 
   font-weight: 600;
+
+  letter-spacing: 0.5px;
+
+  margin-bottom: 22px;
 }
+
 
 /* =========================================================
    DESCRIPTION
    ========================================================= */
 
 .dosha-card p {
-  margin-top: 25px;
-
-  color: #b8c7be;
+  color: #64736c;
 
   font-size: 14px;
 
-  line-height: 1.7;
+  line-height: 1.8;
 
-  max-width: 270px;
+  margin-bottom: 25px;
+
+  max-width: 330px;
 }
 
+
+/* =========================================================
+   CARE
+   ========================================================= */
+
 .dosha-care {
-  margin-top: 20px;
+  display: flex;
 
-  padding-top: 18px;
+  align-items: center;
 
-  border-top: 1px solid rgba(201,161,59,0.16);
-
-  color: #dfbd65;
+  gap: 9px;
 
   font-size: 11px;
 
-  letter-spacing: 1px;
+  font-weight: 700;
+
+  line-height: 1.5;
+
+  margin-top: auto;
+
+  margin-bottom: 25px;
+
+  letter-spacing: 0.2px;
+}
+
+
+/* =========================================================
+   CARE DOT
+   ========================================================= */
+
+.care-dot {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   EXPLORE BUTTON
+   ========================================================= */
+
+.dosha-explore {
+  width: 100%;
+  height: 50px;
+
+  border: 1px solid #cbd8d0;
+
+  border-radius: 26px;
+
+  background: transparent;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.8px;
+
+  cursor: pointer;
+
+  transition:
+    all 0.3s ease;
+}
+
+
+/* =========================================================
+   BUTTON ARROW
+   ========================================================= */
+
+.dosha-explore:hover {
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   RESULT PANEL
+   ========================================================= */
+
+.dosha-result {
+  margin-top: 30px;
+
+  padding: 30px 34px;
+
+  background: #ffffff;
+
+  border: 1px solid #d4e0d8;
+
+  border-radius: 22px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 30px;
+
+  box-shadow:
+    0 14px 40px rgba(6, 63, 47, 0.08);
+
+  animation:
+    resultAppear 0.5s ease;
+}
+
+
+@keyframes resultAppear {
+
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
+
+/* =========================================================
+   RESULT LABEL
+   ========================================================= */
+
+.result-label {
+  display: block;
+
+  color: #a98127;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 2px;
+
+  margin-bottom: 10px;
+}
+
+
+/* =========================================================
+   RESULT TITLE
+   ========================================================= */
+
+.dosha-result h3 {
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 34px;
+
+  color: #063f2f;
+
+  font-weight: 700;
+
+  margin-bottom: 4px;
+}
+
+
+/* =========================================================
+   RESULT DESCRIPTION
+   ========================================================= */
+
+.dosha-result p {
+  color: #66736d;
+
+  font-size: 13px;
 
   line-height: 1.6;
 }
 
-/* =========================================================
-   BUTTON
-   ========================================================= */
-
-.dosha-explore {
-  margin-top: 28px;
-
-  padding: 0;
-
-  border: none;
-
-  background: transparent;
-
-  color: #f8f3e8;
-
-  font-size: 13px;
-
-  font-weight: 700;
-
-  cursor: pointer;
-}
-
-.dosha-explore:hover {
-  color: #dfbd65;
-}
 
 /* =========================================================
-   RESULT
+   RESULT BUTTON
    ========================================================= */
 
-.dosha-result {
-  margin-top: 25px;
+.result-button {
+  min-width: 230px;
 
-  padding: 30px 35px;
+  height: 52px;
 
-  border: 1px solid rgba(201,161,59,0.35);
+  padding: 0 25px;
 
-  background: rgba(201,161,59,0.06);
+  border-radius: 28px;
+
+  background: #063f2f;
+
+  color: #ffffff;
 
   display: flex;
 
-  justify-content: space-between;
-
   align-items: center;
+  justify-content: center;
 
-  gap: 30px;
-}
+  gap: 12px;
 
-.result-label {
-  color: #dfbd65;
-
-  font-size: 9px;
-
-  letter-spacing: 3px;
-}
-
-.dosha-result h3 {
-  margin-top: 8px;
-
-  font-family: "Cormorant Garamond", serif;
-
-  font-size: 36px;
-}
-
-.dosha-result p {
-  margin-top: 4px;
-
-  color: #aebdb4;
-}
-
-.result-button {
-  padding: 15px 22px;
-
-  background: #c9a13b;
-
-  color: #062f24;
-
-  font-size: 13px;
+  font-size: 12px;
 
   font-weight: 700;
 
-  white-space: nowrap;
+  letter-spacing: 0.5px;
 
-  transition: 0.3s ease;
+  transition:
+    all 0.3s ease;
+
+  box-shadow:
+    0 8px 25px rgba(6, 63, 47, 0.18);
 }
+
 
 .result-button:hover {
-  background: #dfbd65;
+  background: #0b4d3b;
 
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 14px 32px rgba(6, 63, 47, 0.25);
 }
 
+
 /* =========================================================
-   RESPONSIVE
+   TABLET
    ========================================================= */
 
-@media (max-width: 950px) {
+@media (max-width: 1000px) {
+
   .dosha-grid {
     grid-template-columns: 1fr;
   }
 
   .dosha-card {
     min-height: auto;
+    padding: 30px;
   }
 
-  .dosha-result {
-    flex-direction: column;
-    align-items: flex-start;
+  .dosha-card p {
+    max-width: 600px;
   }
+
 }
 
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
 @media (max-width: 600px) {
+
+  .dosha-wrapper {
+    margin-top: 40px;
+  }
+
+  .dosha-grid {
+    gap: 18px;
+  }
+
   .dosha-card {
     padding: 25px;
+    border-radius: 19px;
+  }
+
+  .dosha-card-top {
+    margin-bottom: 25px;
+  }
+
+  .dosha-icon {
+    width: 54px;
+    height: 54px;
+
+    font-size: 25px;
   }
 
   .dosha-name {
     font-size: 40px;
   }
+
+  .dosha-result {
+    padding: 25px;
+
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 22px;
+  }
+
+  .result-button {
+    width: 100%;
+  }
+
 }

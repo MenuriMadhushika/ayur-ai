@@ -7,56 +7,41 @@ import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import DoshaSelector from "./components/DoshaSelector";
 import SkinScanCard from "./components/SkinScanCard";
-import ProductCard from "./components/ProductCard";
-import ProductDetails from "./components/ProductDetails";
 import DoshaQuestion from "./components/DoshaQuestion";
 import UserProfile from "./components/UserProfile";
+import AyurvedicRemedies from "./components/AyurvedicRemedies";
 
-const products = [
-  {
-    id: 1,
-    name: "Virgin Coconut Body Oil",
-    dosha: "vata",
-    description: "Deeply nourishing care for dry and dehydrated skin.",
-    image: "/images/coconut-oil.jpg",
-  },
-  {
-    id: 2,
-    name: "Neem & Turmeric Face Care",
-    dosha: "pitta",
-    description: "Gentle Ayurvedic care for sensitive skin.",
-    image: "/images/neem.jpg",
-  },
-  {
-    id: 3,
-    name: "Sandalwood Face Care",
-    dosha: "kapha",
-    description: "Refreshing care for oily and congested skin.",
-    image: "/images/sandalwood.jpg",
-  },
-];
+
+/* =========================================================
+   HOME PAGE
+   ========================================================= */
 
 function Home() {
-  const goToSkinAnalysis = () => {
-    const section = document.getElementById("skin-scan");
-
-    if (section) {
-      section.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
-  };
-
   return (
     <div className="app">
+
+      {/* =========================
+          NAVBAR
+      ========================== */}
+
       <Navbar />
 
+
       <main>
+
+        {/* =========================
+            HERO
+        ========================== */}
+
         <Hero />
 
-        {/* AYURVEDIC SKIN BALANCE */}
+
+        {/* =========================
+            DOSHA SECTION
+        ========================== */}
+
         <section className="intro-section">
+
           <div className="section-label">
             AYURVEDIC SKINCARE
           </div>
@@ -71,15 +56,50 @@ function Home() {
           </p>
 
           <DoshaSelector />
+
         </section>
 
 
-        {/* AI SKIN ANALYSIS */}
+        {/* =========================
+            AI SKIN ANALYSIS
+        ========================== */}
+
         <SkinScanCard />
 
 
-        {/* PERSONALIZED CARE */}
+        {/* =========================
+            HOME REMEDIES
+        ========================== */}
+
+        <section
+          className="home-remedies-section"
+          id="home-remedies"
+        >
+
+          <div className="section-label">
+            AYURVEDIC WELLNESS
+          </div>
+
+          <h2>
+            Natural Care From Your Kitchen
+          </h2>
+
+          <p className="section-description">
+            Discover simple Ayurvedic home remedies inspired by
+            traditional ingredients and personalized to your skin needs.
+          </p>
+
+          <AyurvedicRemedies />
+
+        </section>
+
+
+        {/* =========================
+            PERSONALIZED CARE
+        ========================== */}
+
         <section className="personalized-section">
+
           <div className="personalized-content">
 
             <span className="section-label">
@@ -92,13 +112,17 @@ function Home() {
 
             <p>
               AyurAI combines Ayurvedic principles with intelligent
-              technology to help you discover skincare that fits your
-              unique skin balance.
+              technology to help you understand your skin and discover
+              personalized Ayurvedic care.
             </p>
+
 
             <div className="feature-row">
 
-              <div>
+              {/* FEATURE 01 */}
+
+              <div className="feature-item">
+
                 <span className="feature-number">
                   01
                 </span>
@@ -108,11 +132,16 @@ function Home() {
                 </h3>
 
                 <p>
-                  Understand your Ayurvedic skin type.
+                  Understand your Ayurvedic skin type and Dosha.
                 </p>
+
               </div>
 
-              <div>
+
+              {/* FEATURE 02 */}
+
+              <div className="feature-item">
+
                 <span className="feature-number">
                   02
                 </span>
@@ -122,11 +151,16 @@ function Home() {
                 </h3>
 
                 <p>
-                  Use AI-powered skin analysis.
+                  Explore AI-powered skin analysis for your concerns.
                 </p>
+
               </div>
 
-              <div>
+
+              {/* FEATURE 03 */}
+
+              <div className="feature-item">
+
                 <span className="feature-number">
                   03
                 </span>
@@ -136,51 +170,28 @@ function Home() {
                 </h3>
 
                 <p>
-                  Receive skincare recommendations.
+                  Receive Ayurvedic home-care recommendations.
                 </p>
+
               </div>
 
             </div>
 
           </div>
-        </section>
-
-
-        {/* PRODUCTS */}
-        <section className="products-section">
-
-          <div className="section-label">
-            CURATED FOR YOU
-          </div>
-
-          <h2>
-            Ayurvedic Skincare Collection
-          </h2>
-
-          <p className="section-description">
-            Explore carefully selected products based on your skin needs.
-          </p>
-
-          <div className="products-grid">
-
-            {products.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-              />
-            ))}
-
-          </div>
 
         </section>
+
 
       </main>
 
 
-      {/* FOOTER */}
+      {/* =========================
+          FOOTER
+      ========================== */}
+
       <footer className="footer">
 
-        <div>
+        <div className="footer-brand">
 
           <h2>
             AyurAI
@@ -192,10 +203,13 @@ function Home() {
 
         </div>
 
+
         <div className="footer-right">
+
           <span>
             AI • AYURVEDA • BEAUTY
           </span>
+
         </div>
 
       </footer>
@@ -205,38 +219,43 @@ function Home() {
 }
 
 
+/* =========================================================
+   APP ROUTES
+   ========================================================= */
+
 function App() {
+
   return (
+
     <Routes>
+
+      {/* HOME */}
 
       <Route
         path="/"
         element={<Home />}
       />
 
+
+      {/* DOSHA TEST */}
+
       <Route
         path="/dosha-test"
         element={<DoshaQuestion />}
       />
 
-      <Route
-        path="/products"
-        element={<ProductCard />}
-      />
+
+      {/* USER PROFILE */}
 
       <Route
-        path="/product/:id"
-        element={<ProductDetails />}
+        path="/profile"
+        element={<UserProfile />}
       />
-
-      <Route
-  path="/profile"
-  element={<UserProfile />}
-/>
-      
 
     </Routes>
+
   );
 }
+
 
 export default App;

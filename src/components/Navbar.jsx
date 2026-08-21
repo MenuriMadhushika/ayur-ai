@@ -11,35 +11,49 @@ const Navbar = () => {
 
   return (
     <header className="navbar">
-
       <div className="navbar-inner">
 
-        {/* LOGO */}
-        <Link to="/" className="navbar-logo" onClick={closeMenu}>
+        {/* =========================
+            LOGO
+        ========================= */}
+        <Link
+          to="/"
+          className="navbar-logo"
+          onClick={closeMenu}
+        >
           <span className="logo-main">Ayur</span>
           <span className="logo-ai">AI</span>
         </Link>
 
-        {/* DESKTOP NAVIGATION */}
+
+        {/* =========================
+            DESKTOP NAVIGATION
+        ========================= */}
         <nav className="desktop-nav">
 
           <NavLink
             to="/"
             className={({ isActive }) =>
-              isActive ? "nav-link active" : "nav-link"
+              isActive
+                ? "nav-link active"
+                : "nav-link"
             }
           >
             Home
           </NavLink>
 
+
           <NavLink
             to="/dosha-test"
             className={({ isActive }) =>
-              isActive ? "nav-link active" : "nav-link"
+              isActive
+                ? "nav-link active"
+                : "nav-link"
             }
           >
             Dosha Test
           </NavLink>
+
 
           <a
             href="/#skin-scan"
@@ -48,31 +62,41 @@ const Navbar = () => {
             Skin Scan
           </a>
 
-                <NavLink
-        to="/products"
-        className={({ isActive }) =>
-          isActive ? "nav-link active" : "nav-link"
-        }
-      >
-        Products
-      </NavLink>
 
-      <NavLink
-        to="/profile"
-        className={({ isActive }) =>
-          isActive ? "nav-link active" : "nav-link"
-        }
-      >
-        Profile
-      </NavLink>
+          {/* HOME REMEDIES */}
+          <a
+            href="/#home-remedies"
+            className="nav-link"
+          >
+            Home Remedies
+          </a>
 
-      <a href="#dashboard" className="nav-link">
-        Dashboard
-      </a>
+
+          <NavLink
+            to="/profile"
+            className={({ isActive }) =>
+              isActive
+                ? "nav-link active"
+                : "nav-link"
+            }
+          >
+            Profile
+          </NavLink>
+
+
+          <a
+            href="/#dashboard"
+            className="nav-link"
+          >
+            Dashboard
+          </a>
 
         </nav>
 
-        {/* RIGHT SIDE */}
+
+        {/* =========================
+            RIGHT SIDE
+        ========================= */}
         <div className="navbar-actions">
 
           <Link
@@ -83,12 +107,19 @@ const Navbar = () => {
             <span>→</span>
           </Link>
 
+
+          {/* MOBILE MENU BUTTON */}
           <button
             className={`menu-button ${
               menuOpen ? "open" : ""
             }`}
             onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Open navigation menu"
+            aria-label={
+              menuOpen
+                ? "Close navigation menu"
+                : "Open navigation menu"
+            }
+            aria-expanded={menuOpen}
           >
             <span></span>
             <span></span>
@@ -99,7 +130,10 @@ const Navbar = () => {
 
       </div>
 
-      {/* MOBILE MENU */}
+
+      {/* =========================
+          MOBILE MENU
+      ========================= */}
       <div
         className={`mobile-menu ${
           menuOpen ? "show" : ""
@@ -113,12 +147,14 @@ const Navbar = () => {
           Home
         </NavLink>
 
+
         <NavLink
           to="/dosha-test"
           onClick={closeMenu}
         >
           Dosha Test
         </NavLink>
+
 
         <a
           href="/#skin-scan"
@@ -127,19 +163,30 @@ const Navbar = () => {
           Skin Scan
         </a>
 
-        <NavLink
-          to="/products"
-          onClick={closeMenu}
-        >
-          Products
-        </NavLink>
 
         <a
-          href="#dashboard"
+          href="/#home-remedies"
+          onClick={closeMenu}
+        >
+          Home Remedies
+        </a>
+
+
+        <NavLink
+          to="/profile"
+          onClick={closeMenu}
+        >
+          Profile
+        </NavLink>
+
+
+        <a
+          href="/#dashboard"
           onClick={closeMenu}
         >
           Dashboard
         </a>
+
 
         <Link
           to="/dosha-test"

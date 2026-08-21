@@ -1,26 +1,111 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./UserProfile.css";
 
+const profileIcons = [
+  { id: "lotus", symbol: "🌸", name: "Lotus" },
+  { id: "leaf", symbol: "🍃", name: "Leaf" },
+  { id: "flower", symbol: "🌺", name: "Flower" },
+  { id: "sun", symbol: "☀️", name: "Sun" },
+  { id: "butterfly", symbol: "🦋", name: "Butterfly" },
+  { id: "botanical", symbol: "🌿", name: "Botanical" },
+];
+
+const remediesByDosha = {
+  Vata: [
+    {
+      icon: "🌿",
+      category: "HYDRATING CARE",
+      title: "Aloe Vera & Coconut Care",
+      description:
+        "A gentle moisturizing ritual for dry and dehydrated-looking skin.",
+      ingredients: "Aloe vera gel + a small amount of coconut oil",
+    },
+    {
+      icon: "🥒",
+      category: "NOURISHING CARE",
+      title: "Cucumber & Aloe Mask",
+      description:
+        "A refreshing ritual designed to provide a soothing and hydrated skin feeling.",
+      ingredients: "Fresh cucumber + pure aloe vera gel",
+    },
+    {
+      icon: "🌼",
+      category: "GENTLE CARE",
+      title: "Oat & Honey Mask",
+      description:
+        "A gentle mask for soft and comfortable-looking skin.",
+      ingredients: "Finely ground oats + a small amount of honey",
+    },
+  ],
+
+  Pitta: [
+    {
+      icon: "🌿",
+      category: "COOLING CARE",
+      title: "Aloe Vera Cooling Care",
+      description:
+        "A simple cooling ritual for skin that feels warm or sensitive.",
+      ingredients: "Pure aloe vera gel",
+    },
+    {
+      icon: "🥒",
+      category: "SOOTHING CARE",
+      title: "Cucumber & Aloe Mask",
+      description:
+        "A refreshing combination for a calm and comfortable skin feeling.",
+      ingredients: "Fresh cucumber + pure aloe vera gel",
+    },
+    {
+      icon: "🌾",
+      category: "GENTLE CARE",
+      title: "Oat & Yogurt Care",
+      description:
+        "A gentle home ritual for sensitive-looking skin.",
+      ingredients: "Finely ground oats + plain yogurt",
+    },
+  ],
+
+  Kapha: [
+    {
+      icon: "🌿",
+      category: "BALANCING CARE",
+      title: "Neem & Aloe Care",
+      description:
+        "A botanical-inspired ritual for oily or congested-looking skin.",
+      ingredients: "Aloe vera gel + a small amount of neem powder",
+    },
+    {
+      icon: "🌾",
+      category: "CLARIFYING CARE",
+      title: "Multani Mitti & Rose Water",
+      description:
+        "A traditional clay-based ritual that can absorb excess surface oil.",
+      ingredients: "Multani mitti + rose water",
+    },
+    {
+      icon: "🥒",
+      category: "REFRESHING CARE",
+      title: "Cucumber Refresh",
+      description:
+        "A light and refreshing ritual for a clean skin feeling.",
+      ingredients: "Fresh cucumber",
+    },
+  ],
+};
+
 const UserProfile = () => {
+  const navigate = useNavigate();
 
   // =====================================================
-  // GET SAVED DOSHA RESULT
+  // DOSHA RESULT
   // =====================================================
 
   const getDoshaResult = () => {
     try {
-      const saved = localStorage.getItem(
-        "ayuraiDoshaResult"
-      );
-
+      const saved = localStorage.getItem("ayuraiDoshaResult");
       return saved ? JSON.parse(saved) : null;
-
-    } catch (error) {
-      console.error(
-        "Unable to load Dosha result:",
-        error
-      );
-
+    } catch {
       return null;
     }
   };
@@ -28,116 +113,94 @@ const UserProfile = () => {
   const savedDosha = getDoshaResult();
 
   // =====================================================
-  // USER DATA
+  // USER
   // =====================================================
 
-  const [user, setUser] = useState({
+  const [user, setUser] = useState(() => {
+    const savedUser = localStorage.getItem("ayuraiUser");
 
-    name: "AyurAI User",
+    if (savedUser) {
+      try {
+        return JSON.parse(savedUser);
+      } catch {
+        // use default
+      }
+    }
 
-    email: "user@ayurai.com",
+    return {
+      name: "AyurAI User",
+      email: "user@ayurai.com",
+      age: "23",
+      icon: "lotus",
+      dosha: savedDosha?.dominant || "Not tested",
+      skinType: "Not analyzed",
+      hydration: "Not analyzed",
+      concern: "Not analyzed",
+    };
+  });
 
-    age: "23",
+  const [editing, setEditing] = useState(false);
 
-    dosha:
-      savedDosha?.dominant ||
-      "Not tested",
-
-    skinType:
-      "Not analyzed",
-
-    hydration:
-      "Not analyzed",
-
-    concern:
-      "Not analyzed",
-
+  const [editForm, setEditForm] = useState({
+    name: user.name,
+    email: user.email,
+    age: user.age,
+    icon: user.icon || "lotus",
   });
 
   // =====================================================
-  // EDIT STATE
+  // SAVE USER
   // =====================================================
 
-  const [editing, setEditing] =
-    useState(false);
-
-  const [editForm, setEditForm] =
-    useState({
-
-      name: user.name,
-
-      email: user.email,
-
-      age: user.age,
-
-    });
+  useEffect(() => {
+    localStorage.setItem("ayuraiUser", JSON.stringify(user));
+  }, [user]);
 
   // =====================================================
-  // EDIT PROFILE
+  // EDIT
   // =====================================================
 
   const handleEdit = () => {
-
     setEditForm({
-
       name: user.name,
-
       email: user.email,
-
       age: user.age,
-
+      icon: user.icon || "lotus",
     });
 
     setEditing(true);
   };
 
-  // =====================================================
-  // INPUT CHANGE
-  // =====================================================
-
   const handleChange = (event) => {
-
-    const {
-      name,
-      value,
-    } = event.target;
+    const { name, value } = event.target;
 
     setEditForm((previous) => ({
-
       ...previous,
-
       [name]: value,
-
     }));
   };
 
-  // =====================================================
-  // SAVE PROFILE
-  // =====================================================
+  const handleIconSelect = (iconId) => {
+    setEditForm((previous) => ({
+      ...previous,
+      icon: iconId,
+    }));
+  };
 
   const handleSave = () => {
-
-    setUser((previous) => ({
-
-      ...previous,
-
-      name: editForm.name,
-
-      email: editForm.email,
-
+    const updatedUser = {
+      ...user,
+      name: editForm.name.trim() || "AyurAI User",
+      email: editForm.email.trim() || "user@ayurai.com",
       age: editForm.age,
+      icon: editForm.icon,
+    };
 
-    }));
-
+    setUser(updatedUser);
     setEditing(false);
   };
 
-  // =====================================================
-  // CANCEL
-  // =====================================================
-
   const handleCancel = () => {
-
     setEditing(false);
   };
 
@@ -146,18 +209,11 @@ const UserProfile = () => {
   // =====================================================
 
   const refreshDosha = () => {
-
-    const latestDosha =
-      getDoshaResult();
+    const latestDosha = getDoshaResult();
 
     setUser((previous) => ({
-
       ...previous,
-
-      dosha:
-        latestDosha?.dominant ||
-        "Not tested",
-
+      dosha: latestDosha?.dominant || "Not tested",
     }));
   };
 
@@ -165,23 +221,45 @@ const UserProfile = () => {
   // DOSHA PERCENTAGES
   // =====================================================
 
-  const percentages =
-    savedDosha?.percentages || {
+  const latestDosha = getDoshaResult();
 
-      vata: 0,
+  const percentages = latestDosha?.percentages || {
+    vata: 0,
+    pitta: 0,
+    kapha: 0,
+  };
 
-      pitta: 0,
+  const totalPercentage =
+    percentages.vata +
+    percentages.pitta +
+    percentages.kapha;
 
-      kapha: 0,
+  // =====================================================
+  // PROFILE ICON
+  // =====================================================
 
-    };
+  const selectedIcon =
+    profileIcons.find((item) => item.id === user.icon) ||
+    profileIcons[0];
+
+  // =====================================================
+  // REMEDIES
+  // =====================================================
+
+  const normalizedDosha =
+    user.dosha && user.dosha !== "Not tested"
+      ? user.dosha.charAt(0).toUpperCase() +
+        user.dosha.slice(1).toLowerCase()
+      : "";
+
+  const recommendedRemedies =
+    remediesByDosha[normalizedDosha] || [];
 
   // =====================================================
   // UI
   // =====================================================
 
   return (
-
     <section className="profile-page">
 
       {/* =================================================
@@ -195,80 +273,56 @@ const UserProfile = () => {
         </span>
 
         <h1>
-
           Your Personal
-
           <br />
-
-          <span>
-            Skin Journey
-          </span>
-
+          <span>Skin Journey</span>
         </h1>
 
         <p>
-
-          Your Ayurvedic skin profile,
-          AI analysis and personalized
-          skincare journey in one place.
-
+          Your Ayurvedic profile, skin insights and
+          personalized wellness journey.
         </p>
 
       </div>
 
 
       {/* =================================================
-          PROFILE CARD
+          MAIN PROFILE
       ================================================= */}
 
       <div className="profile-main-card">
 
         <div className="profile-avatar">
-
-          {user.name
-            .charAt(0)
-            .toUpperCase()}
-
+          {selectedIcon.symbol}
         </div>
-
 
         <div className="profile-user-info">
 
-          <h2>
-            {user.name}
-          </h2>
+          <h2>{user.name}</h2>
 
-          <p>
-            {user.email}
-          </p>
+          <p>{user.email}</p>
 
           <span className="profile-age">
             Age {user.age}
           </span>
 
-          <span className="profile-status">
-            ✦ AyurAI Skin Explorer
-          </span>
-
         </div>
-
 
         <button
           className="edit-profile-button"
           onClick={handleEdit}
         >
-          ✎ Edit Profile
+          Edit Profile
         </button>
 
       </div>
 
 
       {/* =================================================
-          EDIT PROFILE MODAL
+          EDIT MODAL
       ================================================= */}
 
       {editing && (
-
         <div className="edit-profile-overlay">
 
           <div className="edit-profile-modal">
@@ -280,33 +334,60 @@ const UserProfile = () => {
               ×
             </button>
 
-
             <div className="profile-modal-header">
 
               <div className="profile-modal-avatar">
-
-                {editForm.name
-                  .charAt(0)
-                  .toUpperCase() || "A"}
-
+                {
+                  profileIcons.find(
+                    (item) => item.id === editForm.icon
+                  )?.symbol
+                }
               </div>
 
-
               <div>
-
                 <span className="profile-modal-label">
-
                   AYURAI • PERSONAL DETAILS
-
                 </span>
 
-                <h2>
-                  Edit Your Profile
-                </h2>
+                <h2>Edit Your Profile</h2>
 
                 <p>
-                  Make your AyurAI experience truly yours.
+                  Personalize your AyurAI profile.
                 </p>
+              </div>
+
+            </div>
+
+
+            {/* PROFILE ICONS */}
+
+            <div className="profile-icon-section">
+
+              <label>
+                CHOOSE YOUR PROFILE SYMBOL
+              </label>
+
+              <div className="profile-icon-grid">
+
+                {profileIcons.map((icon) => (
+
+                  <button
+                    type="button"
+                    key={icon.id}
+                    className={`profile-icon-option ${
+                      editForm.icon === icon.id
+                        ? "selected"
+                        : ""
+                    }`}
+                    onClick={() =>
+                      handleIconSelect(icon.id)
+                    }
+                    title={icon.name}
+                  >
+                    <span>{icon.symbol}</span>
+                  </button>
+
+                ))}
 
               </div>
 
@@ -319,9 +400,7 @@ const UserProfile = () => {
 
               <div className="profile-input-group">
 
-                <label>
-                  ✦ FULL NAME
-                </label>
+                <label>FULL NAME</label>
 
                 <input
                   type="text"
@@ -336,9 +415,7 @@ const UserProfile = () => {
 
               <div className="profile-input-group">
 
-                <label>
-                  ✉ EMAIL ADDRESS
-                </label>
+                <label>EMAIL ADDRESS</label>
 
                 <input
                   type="email"
@@ -353,9 +430,7 @@ const UserProfile = () => {
 
               <div className="profile-input-group">
 
-                <label>
-                  ◌ AGE
-                </label>
+                <label>AGE</label>
 
                 <input
                   type="number"
@@ -374,7 +449,6 @@ const UserProfile = () => {
 
             <div className="profile-modal-divider" />
 
-
             <div className="profile-modal-actions">
 
               <button
@@ -384,117 +458,57 @@ const UserProfile = () => {
                 Cancel
               </button>
 
-
               <button
                 className="profile-save-button"
                 onClick={handleSave}
               >
-                ✓ Save Changes
+                Save Changes
               </button>
 
             </div>
 
-
-            <p className="profile-modal-footer">
-
-              ✦ Your AyurAI journey,
-              beautifully personalized.
-
-            </p>
-
           </div>
 
         </div>
-
       )}
 
 
       {/* =================================================
-          AYURVEDIC PROFILE
+          01 — AYURVEDIC PROFILE
       ================================================= */}
 
       <div className="profile-section">
 
         <div className="profile-section-heading">
-
-          <span>
-            01 • AYURVEDIC PROFILE
-          </span>
-
-          <h2>
-            Understand Your Balance
-          </h2>
-
+          <span>01 • AYURVEDIC PROFILE</span>
+          <h2>Understand Your Balance</h2>
         </div>
 
 
         <div className="profile-stats">
 
           <div className="profile-stat dosha-stat">
-
-            <span>
-              YOUR DOSHA
-            </span>
-
-            <strong>
-              {user.dosha}
-            </strong>
-
-            <small>
-              Ayurvedic balance
-            </small>
-
+            <span>YOUR DOSHA</span>
+            <strong>{user.dosha}</strong>
+            <small>Ayurvedic balance</small>
           </div>
-
 
           <div className="profile-stat skin-stat">
-
-            <span>
-              SKIN TYPE
-            </span>
-
-            <strong>
-              {user.skinType}
-            </strong>
-
-            <small>
-              Based on your AI analysis
-            </small>
-
+            <span>SKIN TYPE</span>
+            <strong>{user.skinType}</strong>
+            <small>Based on your AI analysis</small>
           </div>
-
 
           <div className="profile-stat hydration-stat">
-
-            <span>
-              HYDRATION
-            </span>
-
-            <strong>
-              {user.hydration}
-            </strong>
-
-            <small>
-              Current skin hydration
-            </small>
-
+            <span>HYDRATION</span>
+            <strong>{user.hydration}</strong>
+            <small>Current skin hydration</small>
           </div>
-
 
           <div className="profile-stat concern-stat">
-
-            <span>
-              MAIN CONCERN
-            </span>
-
-            <strong>
-              {user.concern}
-            </strong>
-
-            <small>
-              Visible skin concern
-            </small>
-
+            <span>MAIN CONCERN</span>
+            <strong>{user.concern}</strong>
+            <small>Visible skin concern</small>
           </div>
 
         </div>
@@ -503,133 +517,111 @@ const UserProfile = () => {
 
 
       {/* =================================================
-          DOSHA BREAKDOWN
+          02 — DOSHA BALANCE
       ================================================= */}
 
       <div className="profile-section">
 
         <div className="profile-section-heading">
-
-          <span>
-            02 • DOSHA BALANCE
-          </span>
-
-          <h2>
-            Your Ayurvedic Energy
-          </h2>
-
+          <span>02 • DOSHA BALANCE</span>
+          <h2>Your Ayurvedic Energy</h2>
         </div>
 
 
-        <div className="profile-dosha-card">
+        <div className="dosha-balance-card">
 
-          <div className="profile-dosha-title">
+          <div className="dosha-circle-wrapper">
 
-            <span>
-              PRIMARY DOSHA
-            </span>
+            <div
+              className="dosha-circle"
+              style={{
+                background: `
+                  conic-gradient(
+                    #b68b4c 0 ${percentages.vata}%,
+                    #d47b61 ${percentages.vata}% ${
+                      percentages.vata + percentages.pitta
+                    }%,
+                    #7f9b72 ${
+                      percentages.vata + percentages.pitta
+                    }% 100%
+                  )
+                `,
+              }}
+            >
 
-            <strong>
-              {user.dosha}
-            </strong>
+              <div className="dosha-circle-inner">
+
+                <span>PRIMARY</span>
+
+                <strong>
+                  {user.dosha}
+                </strong>
+
+                <small>
+                  {totalPercentage > 0
+                    ? "Your balance"
+                    : "Take the test"}
+                </small>
+
+              </div>
+
+            </div>
 
           </div>
 
 
-          <div className="profile-dosha-bars">
+          <div className="dosha-legend">
 
-            <div className="profile-dosha-row">
+            <div className="dosha-legend-item">
+
+              <span className="legend-dot vata-dot" />
 
               <div>
-
-                <span>
-                  Vata
-                </span>
-
-                <strong>
+                <strong>Vata</strong>
+                <small>
                   {percentages.vata}%
-                </strong>
-
-              </div>
-
-              <div className="profile-progress">
-
-                <div
-                  style={{
-                    width:
-                      `${percentages.vata}%`,
-                  }}
-                />
-
+                </small>
               </div>
 
             </div>
 
 
-            <div className="profile-dosha-row">
+            <div className="dosha-legend-item">
+
+              <span className="legend-dot pitta-dot" />
 
               <div>
-
-                <span>
-                  Pitta
-                </span>
-
-                <strong>
+                <strong>Pitta</strong>
+                <small>
                   {percentages.pitta}%
-                </strong>
-
-              </div>
-
-              <div className="profile-progress">
-
-                <div
-                  style={{
-                    width:
-                      `${percentages.pitta}%`,
-                  }}
-                />
-
+                </small>
               </div>
 
             </div>
 
 
-            <div className="profile-dosha-row">
+            <div className="dosha-legend-item">
+
+              <span className="legend-dot kapha-dot" />
 
               <div>
-
-                <span>
-                  Kapha
-                </span>
-
-                <strong>
+                <strong>Kapha</strong>
+                <small>
                   {percentages.kapha}%
-                </strong>
-
-              </div>
-
-              <div className="profile-progress">
-
-                <div
-                  style={{
-                    width:
-                      `${percentages.kapha}%`,
-                  }}
-                />
-
+                </small>
               </div>
 
             </div>
+
+
+            <button
+              className="profile-refresh-button"
+              onClick={refreshDosha}
+            >
+              Refresh Dosha Result
+            </button>
 
           </div>
-
-
-          <button
-            className="profile-refresh-button"
-            onClick={refreshDosha}
-          >
-            ↻ Refresh Dosha Result
-          </button>
 
         </div>
 
@@ -637,21 +629,14 @@ const UserProfile = () => {
 
 
       {/* =================================================
-          LATEST ANALYSIS
+          03 — LATEST ANALYSIS
       ================================================= */}
 
       <div className="profile-section">
 
         <div className="profile-section-heading">
-
-          <span>
-            03 • AYURVISION AI
-          </span>
-
-          <h2>
-            Latest Skin Analysis
-          </h2>
-
+          <span>03 • AYURVISION AI</span>
+          <h2>Latest Skin Analysis</h2>
         </div>
 
 
@@ -661,12 +646,9 @@ const UserProfile = () => {
             ✦
           </div>
 
-
           <div className="latest-analysis-content">
 
-            <span>
-              LAST ANALYSIS
-            </span>
+            <span>LAST ANALYSIS</span>
 
             <h3>
               {user.skinType}
@@ -680,8 +662,10 @@ const UserProfile = () => {
 
           </div>
 
-
-          <button className="view-analysis-button">
+          <button
+            className="view-analysis-button"
+            onClick={() => navigate("/")}
+          >
             View Analysis →
           </button>
 
@@ -691,95 +675,102 @@ const UserProfile = () => {
 
 
       {/* =================================================
-          RECOMMENDATIONS
+          04 — HOME REMEDIES
       ================================================= */}
 
       <div className="profile-section">
 
         <div className="profile-section-heading">
 
-          <span>
-            04 • PERSONALIZED CARE
-          </span>
+          <span>04 • PERSONALIZED CARE</span>
 
-          <h2>
-            Recommended For You
-          </h2>
+          <h2>Recommended Home Remedies</h2>
 
-        </div>
-
-
-        <div className="profile-products">
-
-          <div className="profile-product-card">
-
-            <div className="product-placeholder">
-              ✦
-            </div>
-
-            <span>
-              AYURVEDIC CARE
-            </span>
-
-            <h3>
-              Coconut Body Oil
-            </h3>
-
-            <button>
-              View Product →
-            </button>
-
-          </div>
-
-
-          <div className="profile-product-card">
-
-            <div className="product-placeholder">
-              ✦
-            </div>
-
-            <span>
-              CALMING CARE
-            </span>
-
-            <h3>
-              Neem & Turmeric
-            </h3>
-
-            <button>
-              View Product →
-            </button>
-
-          </div>
-
-
-          <div className="profile-product-card">
-
-            <div className="product-placeholder">
-              ✦
-            </div>
-
-            <span>
-              BALANCING CARE
-            </span>
-
-            <h3>
-              Sandalwood Care
-            </h3>
-
-            <button>
-              View Product →
-            </button>
-
-          </div>
+          <p className="profile-section-description">
+            Gentle Ayurvedic-inspired suggestions
+            based on your Dosha balance.
+          </p>
 
         </div>
+
+
+        {recommendedRemedies.length > 0 ? (
+
+          <div className="profile-remedies-grid">
+
+            {recommendedRemedies.map((remedy, index) => (
+
+              <div
+                className="profile-remedy-card"
+                key={index}
+              >
+
+                <div className="remedy-number">
+                  0{index + 1}
+                </div>
+
+                <div className="remedy-icon">
+                  {remedy.icon}
+                </div>
+
+                <span className="remedy-category">
+                  {remedy.category}
+                </span>
+
+                <h3>
+                  {remedy.title}
+                </h3>
+
+                <p>
+                  {remedy.description}
+                </p>
+
+                <div className="remedy-ingredients">
+
+                  <span>INGREDIENTS</span>
+
+                  <p>
+                    {remedy.ingredients}
+                  </p>
+
+                </div>
+
+              </div>
+
+            ))}
+
+          </div>
+
+        ) : (
+
+          <div className="empty-remedies">
+
+            <span>🌸</span>
+
+            <h3>
+              Begin Your AyurAI Journey
+            </h3>
+
+            <p>
+              Complete the Dosha Test to unlock
+              personalized Ayurvedic care suggestions.
+            </p>
+
+            <button
+              onClick={() => navigate("/dosha-test")}
+            >
+              Take Dosha Test →
+            </button>
+
+          </div>
+
+        )}
 
       </div>
 
 
       {/* =================================================
-          DOSHA JOURNEY
+          05 — DOSHA JOURNEY
       ================================================= */}
 
       <div className="profile-section">
@@ -788,33 +779,22 @@ const UserProfile = () => {
 
           <div>
 
-            <span>
-              05 • DOSHA TEST
-            </span>
+            <span>05 • DOSHA TEST</span>
 
-            <h2>
-              Your Dosha Journey
-            </h2>
+            <h2>Your Dosha Journey</h2>
 
             <p>
-
-              Your current dominant
-              Ayurvedic balance is
-
-              <strong>
-                {" "}
-                {user.dosha}
-              </strong>.
-
+              Your current dominant Ayurvedic balance is{" "}
+              <strong>{user.dosha}</strong>.
             </p>
 
           </div>
 
-
-          <button className="retake-button">
-
+          <button
+            className="retake-button"
+            onClick={() => navigate("/dosha-test")}
+          >
             Retake Dosha Test →
-
           </button>
 
         </div>
@@ -823,20 +803,16 @@ const UserProfile = () => {
 
 
       {/* =================================================
-          HISTORY
+          06 — HISTORY
       ================================================= */}
 
       <div className="profile-section">
 
         <div className="profile-section-heading">
 
-          <span>
-            06 • HISTORY
-          </span>
+          <span>06 • HISTORY</span>
 
-          <h2>
-            Skin Analysis History
-          </h2>
+          <h2>Skin Analysis History</h2>
 
         </div>
 
@@ -847,16 +823,10 @@ const UserProfile = () => {
 
             <div className="history-date">
 
-              <strong>
-                18
-              </strong>
-
-              <span>
-                AUG
-              </span>
+              <strong>18</strong>
+              <span>AUG</span>
 
             </div>
-
 
             <div className="history-info">
 
@@ -865,12 +835,10 @@ const UserProfile = () => {
               </h3>
 
               <p>
-                Primary balance •{" "}
-                {user.dosha}
+                Primary balance • {user.dosha}
               </p>
 
             </div>
-
 
             <span className="history-status">
               Completed

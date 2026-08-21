@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import "./DoshaSelector.css";
 
 const DoshaSelector = () => {
-
   const [selectedDosha, setSelectedDosha] = useState(null);
 
   const doshas = [
@@ -16,6 +15,7 @@ const DoshaSelector = () => {
       description:
         "Vata skin tends to feel dry, delicate and dehydrated.",
       care: "Hydration • Nourishment • Gentle Care",
+      accent: "vata",
     },
     {
       id: "pitta",
@@ -26,6 +26,7 @@ const DoshaSelector = () => {
       description:
         "Pitta skin can be warm, sensitive and prone to redness.",
       care: "Cooling • Soothing • Calming Care",
+      accent: "pitta",
     },
     {
       id: "kapha",
@@ -36,54 +37,88 @@ const DoshaSelector = () => {
       description:
         "Kapha skin often produces more oil and may become congested.",
       care: "Balancing • Clarifying • Lightweight Care",
+      accent: "kapha",
     },
   ];
+
+  const selectedData = doshas.find(
+    (dosha) => dosha.id === selectedDosha
+  );
 
   return (
     <div className="dosha-wrapper">
 
+      {/* =========================================
+          DOSHA CARDS
+      ========================================= */}
+
       <div className="dosha-grid">
 
         {doshas.map((dosha) => {
-
           const selected = selectedDosha === dosha.id;
 
           return (
             <div
               key={dosha.id}
-              className={`dosha-card ${
+              className={`dosha-card ${dosha.accent} ${
                 selected ? "selected" : ""
               }`}
               onClick={() => setSelectedDosha(dosha.id)}
             >
 
+              {/* TOP */}
               <div className="dosha-card-top">
-                <span className="dosha-icon">
+
+                <div className="dosha-icon">
                   {dosha.icon}
-                </span>
+                </div>
 
                 <span className="dosha-element">
                   {dosha.element}
                 </span>
+
               </div>
 
-              <div className="dosha-name">
+
+              {/* DOSHA NAME */}
+
+              <h3 className="dosha-name">
                 {dosha.name}
-              </div>
+              </h3>
+
+
+              {/* TYPE */}
 
               <div className="dosha-type">
                 {dosha.type}
               </div>
 
-              <p>
+
+              {/* DESCRIPTION */}
+
+              <p className="dosha-description">
                 {dosha.description}
               </p>
 
+
+              {/* CARE */}
+
               <div className="dosha-care">
+                <span className="care-dot"></span>
                 {dosha.care}
               </div>
 
-              <button className="dosha-explore">
+
+              {/* EXPLORE */}
+
+              <button
+                type="button"
+                className="dosha-explore"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  setSelectedDosha(dosha.id);
+                }}
+              >
                 {selected ? "Selected ✓" : "Explore →"}
               </button>
 
@@ -93,36 +128,58 @@ const DoshaSelector = () => {
 
       </div>
 
-      {selectedDosha && (
+
+      {/* =========================================
+          SELECTED DOSHA
+      ========================================= */}
+
+      {selectedDosha && selectedData && (
+
         <div className="dosha-result">
 
-          <div>
+          <div className="dosha-result-content">
 
             <span className="result-label">
               YOUR CURRENT SELECTION
             </span>
 
-            <h3>
-              {doshas.find(
-                (d) => d.id === selectedDosha
-              )?.name}
-            </h3>
+            <div className="selected-result-row">
 
-            <p>
+              <span className="selected-result-icon">
+                {selectedData.icon}
+              </span>
+
+              <div>
+                <h3>
+                  {selectedData.name}
+                </h3>
+
+                <p>
+                  {selectedData.type} •{" "}
+                  {selectedData.element}
+                </p>
+              </div>
+
+            </div>
+
+            <p className="result-description">
               Ready to discover your personalized
               Ayurvedic skin profile?
             </p>
 
           </div>
 
+
           <Link
             to="/dosha-test"
             className="result-button"
           >
-            Take Full Dosha Test →
+            Take Full Dosha Test
+            <span>→</span>
           </Link>
 
         </div>
+
       )}
 
     </div>

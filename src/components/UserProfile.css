@@ -1,56 +1,63 @@
 /* =====================================================
-   AYURAI — USER PROFILE
-   Matches the current UserProfile.jsx
+   AYURAI USER PROFILE
+   Premium Ayurvedic Editorial Style
 ===================================================== */
 
 .profile-page {
   min-height: 100vh;
   padding: 120px 7% 100px;
   background:
-    radial-gradient(circle at 10% 10%, rgba(201, 162, 74, 0.08), transparent 28%),
-    radial-gradient(circle at 90% 35%, rgba(90, 130, 100, 0.05), transparent 30%),
-    #0d0d0d;
-  color: #fff;
+    radial-gradient(
+      circle at 10% 10%,
+      rgba(201, 162, 74, 0.08),
+      transparent 30%
+    ),
+    #f8f6f0;
+  color: #292720;
 }
+
 
 /* =====================================================
    HEADER
 ===================================================== */
 
 .profile-header {
-  max-width: 760px;
-  margin: 0 auto 65px;
+  max-width: 850px;
+  margin: 0 auto 60px;
   text-align: center;
 }
 
 .profile-label {
   display: inline-block;
   margin-bottom: 18px;
-  color: #c9a24a;
-  font-size: 10px;
-  font-weight: 700;
+  font-size: 11px;
   letter-spacing: 3px;
+  color: #a07b35;
+  font-weight: 600;
 }
 
 .profile-header h1 {
   margin: 0;
-  font-size: clamp(42px, 6vw, 68px);
-  line-height: 1.05;
-  font-weight: 500;
-  letter-spacing: -2px;
+  font-family: Georgia, serif;
+  font-size: clamp(42px, 6vw, 76px);
+  line-height: 1.02;
+  font-weight: 400;
+  color: #292720;
 }
 
 .profile-header h1 span {
-  color: #c9a24a;
+  color: #a17c3e;
+  font-style: italic;
 }
 
 .profile-header p {
-  max-width: 620px;
-  margin: 24px auto 0;
-  color: #858585;
-  font-size: 14px;
+  max-width: 600px;
+  margin: 25px auto 0;
+  color: #777267;
+  font-size: 15px;
   line-height: 1.8;
 }
+
 
 /* =====================================================
    MAIN PROFILE CARD
@@ -58,134 +65,71 @@
 
 .profile-main-card {
   max-width: 1100px;
-  margin: 0 auto 85px;
-  padding: 32px 38px;
-
+  margin: 0 auto 80px;
+  padding: 30px 35px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(160, 123, 53, 0.16);
+  border-radius: 24px;
   display: flex;
   align-items: center;
-  gap: 25px;
-
-  border: 1px solid rgba(201, 162, 74, 0.28);
-  border-radius: 24px;
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(201, 162, 74, 0.08),
-      rgba(255, 255, 255, 0.025)
-    );
-
-  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.3);
-
-  transition: 0.3s ease;
+  gap: 24px;
+  box-shadow: 0 20px 60px rgba(70, 57, 35, 0.08);
+  backdrop-filter: blur(15px);
 }
-
-.profile-main-card:hover {
-  transform: translateY(-3px);
-  border-color: rgba(201, 162, 74, 0.45);
-}
-
-/* =====================================================
-   AVATAR
-===================================================== */
 
 .profile-avatar {
-  width: 82px;
-  height: 82px;
-  min-width: 82px;
-
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-
-  border-radius: 50%;
-
-  background: linear-gradient(
-    145deg,
-    #e1bd63,
-    #8d6b25
-  );
-
-  color: #111;
-  font-size: 32px;
-  font-weight: 600;
-
-  box-shadow:
-    0 10px 30px rgba(201, 162, 74, 0.2);
+  background: #f3ead6;
+  border: 1px solid rgba(166, 128, 63, 0.25);
+  font-size: 40px;
+  flex-shrink: 0;
 }
-
-/* =====================================================
-   USER INFO
-===================================================== */
 
 .profile-user-info {
   flex: 1;
 }
 
 .profile-user-info h2 {
-  margin: 0 0 6px;
-  font-size: 27px;
-  font-weight: 500;
+  margin: 0 0 5px;
+  font-family: Georgia, serif;
+  font-size: 28px;
+  font-weight: 400;
 }
 
 .profile-user-info p {
-  margin: 0 0 12px;
-  color: #777;
-  font-size: 13px;
+  margin: 0 0 10px;
+  color: #777267;
+  font-size: 14px;
 }
 
 .profile-age {
-  display: inline-block;
-  margin-right: 10px;
-  padding: 6px 11px;
-
-  border-radius: 20px;
-
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-
-  color: #888;
-  font-size: 10px;
+  color: #9a7940;
+  font-size: 12px;
+  letter-spacing: 1px;
 }
-
-.profile-status {
-  display: inline-block;
-  padding: 6px 11px;
-
-  border-radius: 20px;
-
-  background: rgba(201, 162, 74, 0.07);
-  border: 1px solid rgba(201, 162, 74, 0.18);
-
-  color: #c9a24a;
-  font-size: 10px;
-}
-
-/* =====================================================
-   EDIT BUTTON
-===================================================== */
 
 .edit-profile-button {
-  padding: 13px 19px;
-
-  border: 1px solid rgba(201, 162, 74, 0.45);
-  border-radius: 25px;
-
+  border: 1px solid #b39151;
   background: transparent;
-
-  color: #c9a24a;
-  font-size: 12px;
-
+  color: #85662f;
+  padding: 12px 20px;
+  border-radius: 30px;
   cursor: pointer;
-
-  transition: 0.3s ease;
+  font-size: 12px;
+  letter-spacing: 1px;
+  transition: 0.3s;
 }
 
 .edit-profile-button:hover {
-  background: #c9a24a;
-  color: #111;
-  transform: translateY(-2px);
+  background: #a78343;
+  color: white;
 }
+
 
 /* =====================================================
    SECTIONS
@@ -193,25 +137,37 @@
 
 .profile-section {
   max-width: 1100px;
-  margin: 0 auto 75px;
+  margin: 0 auto 80px;
 }
 
 .profile-section-heading {
   margin-bottom: 28px;
 }
 
-.profile-section-heading span {
-  color: #c9a24a;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 2.5px;
+.profile-section-heading > span {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: #a17b3c;
+  font-weight: 600;
 }
 
 .profile-section-heading h2 {
-  margin: 10px 0 0;
-  font-size: 30px;
-  font-weight: 500;
+  margin: 0;
+  font-family: Georgia, serif;
+  font-size: 34px;
+  font-weight: 400;
+  color: #2d2a24;
 }
+
+.profile-section-description {
+  max-width: 650px;
+  color: #817d73;
+  line-height: 1.7;
+  font-size: 14px;
+}
+
 
 /* =====================================================
    PROFILE STATS
@@ -220,234 +176,227 @@
 .profile-stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 15px;
+  gap: 16px;
 }
 
 .profile-stat {
-  min-height: 150px;
-  padding: 23px;
-
-  border-radius: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.07);
-
-  background: rgba(255, 255, 255, 0.025);
-
-  transition: 0.3s ease;
+  min-height: 160px;
+  padding: 25px;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  transition: 0.3s;
 }
 
 .profile-stat:hover {
   transform: translateY(-5px);
-  background: rgba(255, 255, 255, 0.04);
 }
 
 .profile-stat > span {
-  display: block;
-  margin-bottom: 22px;
-
-  color: #666;
-  font-size: 9px;
-  letter-spacing: 1.8px;
+  font-size: 10px;
+  letter-spacing: 2px;
+  font-weight: 600;
 }
 
 .profile-stat strong {
   display: block;
-  margin-bottom: 8px;
-
-  font-size: 21px;
-  font-weight: 500;
+  margin-top: 24px;
+  font-family: Georgia, serif;
+  font-size: 24px;
+  font-weight: 400;
 }
 
 .profile-stat small {
-  color: #666;
+  display: block;
+  margin-top: 7px;
   font-size: 11px;
+  opacity: 0.7;
 }
+
+
+/* Different colors */
 
 .dosha-stat {
-  border-color: rgba(201, 162, 74, 0.25);
-}
-
-.dosha-stat strong {
-  color: #c9a24a;
+  background: #eee5d2;
+  color: #795d2f;
 }
 
 .skin-stat {
-  border-color: rgba(111, 165, 111, 0.22);
-}
-
-.skin-stat strong {
-  color: #8fc58f;
+  background: #e9ddd9;
+  color: #895b50;
 }
 
 .hydration-stat {
-  border-color: rgba(80, 170, 210, 0.22);
-}
-
-.hydration-stat strong {
-  color: #68c4e8;
+  background: #dfe8e5;
+  color: #54776f;
 }
 
 .concern-stat {
-  border-color: rgba(220, 125, 110, 0.22);
+  background: #e9e4d3;
+  color: #756d46;
 }
 
-.concern-stat strong {
-  color: #e39a8d;
-}
 
 /* =====================================================
-   DOSHA CARD
+   DOSHA CIRCLE
 ===================================================== */
 
-.profile-dosha-card {
-  padding: 32px;
-
-  border-radius: 23px;
-  border: 1px solid rgba(201, 162, 74, 0.25);
-
-  background:
-    radial-gradient(
-      circle at 0% 50%,
-      rgba(201, 162, 74, 0.08),
-      transparent 35%
-    ),
-    rgba(255, 255, 255, 0.025);
-}
-
-.profile-dosha-title {
+.dosha-balance-card {
+  padding: 45px;
+  border-radius: 28px;
+  background: #fffdf8;
+  border: 1px solid rgba(160, 123, 53, 0.15);
   display: flex;
   align-items: center;
-  justify-content: space-between;
-
-  margin-bottom: 30px;
+  justify-content: center;
+  gap: 80px;
+  box-shadow: 0 20px 60px rgba(60, 50, 35, 0.07);
 }
 
-.profile-dosha-title span {
-  color: #777;
+.dosha-circle-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dosha-circle {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(-90deg);
+  box-shadow:
+    0 15px 35px rgba(50, 40, 20, 0.12);
+}
+
+.dosha-circle-inner {
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  background: #fffdf8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(90deg);
+  text-align: center;
+}
+
+.dosha-circle-inner span {
   font-size: 9px;
   letter-spacing: 2px;
+  color: #918879;
 }
 
-.profile-dosha-title strong {
-  color: #c9a24a;
-  font-size: 22px;
-  font-weight: 500;
+.dosha-circle-inner strong {
+  margin: 7px 0;
+  font-family: Georgia, serif;
+  font-size: 30px;
+  font-weight: 400;
+  color: #876832;
 }
+
+.dosha-circle-inner small {
+  font-size: 11px;
+  color: #918879;
+}
+
 
 /* =====================================================
-   DOSHA BARS
+   DOSHA LEGEND
 ===================================================== */
 
-.profile-dosha-bars {
-  display: grid;
-  gap: 20px;
+.dosha-legend {
+  width: 300px;
 }
 
-.profile-dosha-row > div:first-child {
+.dosha-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 0;
+  border-bottom: 1px solid #ebe6dc;
+}
+
+.legend-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.vata-dot {
+  background: #b68b4c;
+}
+
+.pitta-dot {
+  background: #d47b61;
+}
+
+.kapha-dot {
+  background: #7f9b72;
+}
+
+.dosha-legend-item div {
   display: flex;
   justify-content: space-between;
-
-  margin-bottom: 8px;
+  width: 100%;
 }
 
-.profile-dosha-row span {
-  color: #aaa;
-  font-size: 12px;
+.dosha-legend-item strong {
+  font-family: Georgia, serif;
+  font-weight: 400;
+  font-size: 17px;
 }
 
-.profile-dosha-row strong {
-  color: #c9a24a;
-  font-size: 11px;
-  font-weight: 500;
+.dosha-legend-item small {
+  color: #887f70;
 }
-
-.profile-progress {
-  height: 5px;
-
-  overflow: hidden;
-
-  border-radius: 10px;
-
-  background: rgba(255, 255, 255, 0.07);
-}
-
-.profile-progress div {
-  height: 100%;
-
-  border-radius: 10px;
-
-  background: linear-gradient(
-    90deg,
-    #8d6b25,
-    #c9a24a,
-    #e1bd63
-  );
-
-  transition: width 0.7s ease;
-}
-
-/* =====================================================
-   REFRESH BUTTON
-===================================================== */
 
 .profile-refresh-button {
-  margin-top: 30px;
-  padding: 11px 17px;
-
-  border: 1px solid rgba(201, 162, 74, 0.35);
-  border-radius: 22px;
-
+  width: 100%;
+  margin-top: 25px;
+  padding: 13px;
+  border: 1px solid #c2a66c;
+  border-radius: 30px;
   background: transparent;
-
-  color: #c9a24a;
-  font-size: 11px;
-
+  color: #80632e;
   cursor: pointer;
-
   transition: 0.3s;
 }
 
 .profile-refresh-button:hover {
-  background: #c9a24a;
-  color: #111;
+  background: #a78343;
+  color: white;
 }
+
 
 /* =====================================================
    LATEST ANALYSIS
 ===================================================== */
 
 .latest-analysis-card {
+  padding: 30px;
+  border-radius: 22px;
+  background: #27271f;
+  color: white;
   display: flex;
   align-items: center;
-  gap: 25px;
-
-  padding: 30px;
-
-  border-radius: 23px;
-  border: 1px solid rgba(201, 162, 74, 0.25);
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(201, 162, 74, 0.08),
-      rgba(255, 255, 255, 0.02)
-    );
+  gap: 22px;
 }
 
 .analysis-symbol {
-  width: 70px;
-  height: 70px;
-  min-width: 70px;
-
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
   display: flex;
   align-items: center;
   justify-content: center;
-
-  border-radius: 50%;
-
-  border: 1px solid rgba(201, 162, 74, 0.35);
-
-  color: #c9a24a;
-  font-size: 25px;
+  color: #d0ad67;
+  font-size: 23px;
 }
 
 .latest-analysis-content {
@@ -455,246 +404,222 @@
 }
 
 .latest-analysis-content > span {
-  color: #c9a24a;
   font-size: 9px;
   letter-spacing: 2px;
+  color: #c7a96b;
 }
 
 .latest-analysis-content h3 {
   margin: 8px 0;
-
-  font-size: 23px;
-  font-weight: 500;
+  font-family: Georgia, serif;
+  font-size: 25px;
+  font-weight: 400;
 }
 
 .latest-analysis-content p {
   margin: 0;
-  color: #777;
-  font-size: 12px;
+  color: #aaa69b;
+  font-size: 13px;
 }
 
 .view-analysis-button {
-  padding: 12px 19px;
-
-  border: 1px solid rgba(201, 162, 74, 0.45);
-  border-radius: 24px;
-
+  border: 1px solid #a98a51;
   background: transparent;
-
-  color: #c9a24a;
-  font-size: 11px;
-
+  color: #d2b06c;
+  padding: 12px 20px;
+  border-radius: 30px;
   cursor: pointer;
+}
 
+
+/* =====================================================
+   REMEDIES
+===================================================== */
+
+.profile-remedies-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.profile-remedy-card {
+  background: #fffdf8;
+  border: 1px solid #e8e1d4;
+  border-radius: 22px;
+  padding: 28px;
+  position: relative;
   transition: 0.3s;
 }
 
-.view-analysis-button:hover {
-  background: #c9a24a;
-  color: #111;
+.profile-remedy-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(60, 50, 35, 0.08);
 }
 
-/* =====================================================
-   PRODUCTS
-===================================================== */
-
-.profile-products {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 17px;
+.remedy-number {
+  position: absolute;
+  top: 22px;
+  right: 22px;
+  color: #c5bba9;
+  font-size: 11px;
 }
 
-.profile-product-card {
-  min-height: 230px;
-  padding: 25px;
-
-  position: relative;
-
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.07);
-
-  background: rgba(255, 255, 255, 0.025);
-
-  transition: 0.3s ease;
-}
-
-.profile-product-card:hover {
-  transform: translateY(-6px);
-  border-color: rgba(201, 162, 74, 0.3);
-}
-
-.product-placeholder {
-  width: 58px;
-  height: 58px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
+.remedy-icon {
+  font-size: 30px;
   margin-bottom: 20px;
+}
 
-  border-radius: 50%;
+.remedy-category {
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: #a17c3e;
+}
 
-  background: rgba(201, 162, 74, 0.08);
-
-  color: #c9a24a;
+.profile-remedy-card h3 {
+  margin: 12px 0;
+  font-family: Georgia, serif;
+  font-weight: 400;
   font-size: 22px;
 }
 
-.profile-product-card > span {
-  color: #c9a24a;
+.profile-remedy-card > p {
+  color: #777267;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.remedy-ingredients {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #ebe5da;
+}
+
+.remedy-ingredients span {
   font-size: 8px;
   letter-spacing: 2px;
+  color: #a17c3e;
 }
 
-.profile-product-card h3 {
-  margin: 10px 0;
-
-  font-size: 20px;
-  font-weight: 500;
+.remedy-ingredients p {
+  font-size: 12px;
+  color: #777267;
 }
 
-.profile-product-card button {
-  position: absolute;
-  bottom: 23px;
-  left: 25px;
 
+/* Empty remedies */
+
+.empty-remedies {
+  text-align: center;
+  padding: 60px 20px;
+  background: #fffdf8;
+  border: 1px solid #e8e1d4;
+  border-radius: 24px;
+}
+
+.empty-remedies span {
+  font-size: 40px;
+}
+
+.empty-remedies h3 {
+  font-family: Georgia, serif;
+  font-weight: 400;
+  font-size: 25px;
+}
+
+.empty-remedies p {
+  color: #777267;
+  font-size: 14px;
+}
+
+.empty-remedies button {
+  margin-top: 15px;
   border: none;
-  background: none;
-
-  color: #c9a24a;
-  font-size: 11px;
-
+  background: #292820;
+  color: white;
+  padding: 13px 22px;
+  border-radius: 30px;
   cursor: pointer;
 }
 
-.profile-product-card button:hover {
-  text-decoration: underline;
-}
 
 /* =====================================================
    DOSHA JOURNEY
 ===================================================== */
 
 .dosha-profile-card {
+  padding: 35px;
+  border-radius: 24px;
+  background: #eee8da;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 25px;
-
-  padding: 30px;
-
-  border-radius: 23px;
-
-  border: 1px solid rgba(201, 162, 74, 0.28);
-
-  background: rgba(255, 255, 255, 0.025);
+  gap: 30px;
 }
 
-.dosha-profile-card > div {
-  flex: 1;
-}
-
-.dosha-profile-card span {
-  color: #c9a24a;
+.dosha-profile-card > div > span {
   font-size: 9px;
   letter-spacing: 2px;
+  color: #91723d;
 }
 
 .dosha-profile-card h2 {
-  margin: 9px 0;
-
-  font-size: 25px;
-  font-weight: 500;
+  font-family: Georgia, serif;
+  font-weight: 400;
+  font-size: 30px;
+  margin: 10px 0;
 }
 
 .dosha-profile-card p {
-  margin: 0;
-
-  color: #777;
-
-  font-size: 13px;
-  line-height: 1.6;
-}
-
-.dosha-profile-card p strong {
-  color: #c9a24a;
+  color: #756f64;
 }
 
 .retake-button {
-  padding: 13px 20px;
-
-  border-radius: 25px;
-  border: 1px solid rgba(201, 162, 74, 0.45);
-
-  background: transparent;
-
-  color: #c9a24a;
-  font-size: 11px;
-
+  border: none;
+  background: #292820;
+  color: white;
+  padding: 14px 22px;
+  border-radius: 30px;
   cursor: pointer;
-
-  transition: 0.3s;
+  white-space: nowrap;
 }
 
-.retake-button:hover {
-  background: #c9a24a;
-  color: #111;
-  transform: translateY(-2px);
-}
 
 /* =====================================================
    HISTORY
 ===================================================== */
 
 .history-list {
-  display: grid;
-  gap: 12px;
+  background: #fffdf8;
+  border-radius: 22px;
+  border: 1px solid #e8e1d4;
 }
 
 .history-item {
   display: flex;
   align-items: center;
-  gap: 20px;
-
-  padding: 20px;
-
-  border-radius: 17px;
-
-  border: 1px solid rgba(255, 255, 255, 0.07);
-
-  background: rgba(255, 255, 255, 0.02);
-
-  transition: 0.3s;
-}
-
-.history-item:hover {
-  border-color: rgba(201, 162, 74, 0.3);
-  transform: translateX(4px);
+  padding: 25px;
+  gap: 22px;
 }
 
 .history-date {
   width: 55px;
-  min-width: 55px;
-
-  text-align: center;
-
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  height: 55px;
+  border-radius: 14px;
+  background: #eee5d2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .history-date strong {
-  display: block;
-
-  color: #c9a24a;
-
-  font-size: 22px;
-  font-weight: 500;
+  font-family: Georgia, serif;
+  font-size: 20px;
 }
 
 .history-date span {
-  color: #555;
   font-size: 8px;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
 }
 
 .history-info {
@@ -703,172 +628,144 @@
 
 .history-info h3 {
   margin: 0 0 5px;
-
-  font-size: 16px;
-  font-weight: 500;
+  font-family: Georgia, serif;
+  font-weight: 400;
 }
 
 .history-info p {
   margin: 0;
-
-  color: #777;
-  font-size: 11px;
+  color: #817b70;
+  font-size: 13px;
 }
 
 .history-status {
-  padding: 6px 11px;
-
+  padding: 7px 13px;
   border-radius: 20px;
-
-  background: rgba(111, 165, 111, 0.08);
-  border: 1px solid rgba(111, 165, 111, 0.2);
-
-  color: #8abb8a;
-  font-size: 9px;
+  background: #e1eadf;
+  color: #597052;
+  font-size: 10px;
 }
 
+
 /* =====================================================
-   EDIT PROFILE OVERLAY
+   EDIT MODAL
 ===================================================== */
 
 .edit-profile-overlay {
   position: fixed;
   inset: 0;
-
-  z-index: 9999;
-
+  z-index: 1000;
+  background: rgba(25, 24, 20, 0.65);
   display: flex;
   align-items: center;
   justify-content: center;
-
   padding: 20px;
-
-  background: rgba(0, 0, 0, 0.82);
-
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(8px);
 }
-
-/* =====================================================
-   MODAL
-===================================================== */
 
 .edit-profile-modal {
+  width: min(600px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #fffdf8;
+  border-radius: 26px;
+  padding: 35px;
   position: relative;
-
-  width: min(100%, 540px);
-
-  padding: 38px;
-
-  border-radius: 27px;
-
-  border: 1px solid rgba(201, 162, 74, 0.35);
-
-  background: #111;
-
-  box-shadow: 0 35px 100px rgba(0, 0, 0, 0.7);
-
-  animation: profileModalIn 0.3s ease;
+  box-shadow: 0 30px 100px rgba(0,0,0,0.25);
 }
-
-@keyframes profileModalIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px) scale(0.97);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-/* =====================================================
-   MODAL CLOSE
-===================================================== */
 
 .profile-modal-close {
   position: absolute;
-
-  top: 17px;
-  right: 17px;
-
-  width: 35px;
-  height: 35px;
-
-  border-radius: 50%;
-
-  border: 1px solid rgba(255, 255, 255, 0.1);
-
-  background: rgba(255, 255, 255, 0.03);
-
+  top: 18px;
+  right: 20px;
+  border: none;
+  background: transparent;
+  font-size: 28px;
   color: #777;
-
-  font-size: 20px;
-
   cursor: pointer;
-
-  transition: 0.3s;
 }
-
-.profile-modal-close:hover {
-  color: #c9a24a;
-  border-color: rgba(201, 162, 74, 0.4);
-}
-
-/* =====================================================
-   MODAL HEADER
-===================================================== */
 
 .profile-modal-header {
   display: flex;
-  align-items: center;
   gap: 18px;
-
-  margin-bottom: 32px;
+  align-items: center;
+  margin-bottom: 30px;
 }
 
 .profile-modal-avatar {
-  width: 68px;
-  height: 68px;
-  min-width: 68px;
-
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  background: #f1e6d0;
   display: flex;
   align-items: center;
   justify-content: center;
-
-  border-radius: 50%;
-
-  background: linear-gradient(
-    145deg,
-    #e1bd63,
-    #8d6b25
-  );
-
-  color: #111;
-
-  font-size: 26px;
-  font-weight: 600;
+  font-size: 30px;
 }
 
 .profile-modal-label {
-  color: #c9a24a;
-  font-size: 8px;
+  font-size: 9px;
   letter-spacing: 2px;
+  color: #a17c3e;
 }
 
 .profile-modal-header h2 {
-  margin: 7px 0;
-
-  font-size: 25px;
-  font-weight: 500;
+  margin: 5px 0;
+  font-family: Georgia, serif;
+  font-weight: 400;
 }
 
 .profile-modal-header p {
   margin: 0;
-
-  color: #777;
-  font-size: 11px;
+  color: #817b70;
+  font-size: 12px;
 }
+
+
+/* =====================================================
+   PROFILE ICON CHOOSER
+===================================================== */
+
+.profile-icon-section {
+  margin-bottom: 25px;
+}
+
+.profile-icon-section > label {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: #8b7347;
+}
+
+.profile-icon-grid {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.profile-icon-option {
+  width: 65px;
+  height: 65px;
+  border-radius: 18px;
+  border: 1px solid #e4ddcf;
+  background: #f8f5ed;
+  cursor: pointer;
+  transition: 0.25s;
+  font-size: 28px;
+}
+
+.profile-icon-option:hover {
+  transform: translateY(-3px);
+  border-color: #c4a05d;
+}
+
+.profile-icon-option.selected {
+  background: #efe2c5;
+  border: 2px solid #b08a45;
+  box-shadow: 0 8px 20px rgba(170, 130, 55, 0.16);
+}
+
 
 /* =====================================================
    FORM
@@ -876,76 +773,42 @@
 
 .profile-form {
   display: grid;
-  gap: 19px;
+  gap: 18px;
+}
+
+.profile-input-group {
+  display: grid;
+  gap: 7px;
 }
 
 .profile-input-group label {
-  display: block;
-
-  margin-bottom: 8px;
-
-  color: #777;
-
-  font-size: 8px;
-  font-weight: 700;
-  letter-spacing: 1.8px;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: #887452;
 }
 
 .profile-input-group input {
   width: 100%;
-  height: 52px;
-
   box-sizing: border-box;
-
-  padding: 0 16px;
-
-  border-radius: 13px;
-
-  border: 1px solid rgba(255, 255, 255, 0.08);
-
+  padding: 13px 15px;
+  border-radius: 12px;
+  border: 1px solid #ddd6c9;
+  background: #faf8f2;
   outline: none;
-
-  background: rgba(255, 255, 255, 0.035);
-
-  color: #eee;
-
-  font-size: 13px;
-
-  transition: 0.3s;
+  font-size: 14px;
+  color: #36332c;
 }
 
 .profile-input-group input:focus {
-  border-color: rgba(201, 162, 74, 0.6);
-
-  background: rgba(201, 162, 74, 0.04);
-
-  box-shadow: 0 0 0 3px rgba(201, 162, 74, 0.05);
+  border-color: #b29154;
+  box-shadow: 0 0 0 3px rgba(178, 145, 84, 0.08);
 }
-
-.profile-input-group input::placeholder {
-  color: #555;
-}
-
-/* =====================================================
-   MODAL DIVIDER
-===================================================== */
 
 .profile-modal-divider {
   height: 1px;
-
-  margin: 28px 0;
-
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(201, 162, 74, 0.25),
-    transparent
-  );
+  background: #e8e1d5;
+  margin: 25px 0;
 }
-
-/* =====================================================
-   MODAL ACTIONS
-===================================================== */
 
 .profile-modal-actions {
   display: flex;
@@ -953,65 +816,25 @@
   gap: 10px;
 }
 
-.profile-cancel-button {
-  padding: 12px 19px;
-
-  border-radius: 22px;
-
-  border: 1px solid rgba(255, 255, 255, 0.1);
-
-  background: transparent;
-
-  color: #777;
-
+.profile-cancel-button,
+.profile-save-button {
+  padding: 12px 20px;
+  border-radius: 25px;
   cursor: pointer;
-
-  transition: 0.3s;
 }
 
-.profile-cancel-button:hover {
-  color: #fff;
-  border-color: rgba(255, 255, 255, 0.2);
+.profile-cancel-button {
+  border: 1px solid #d5cec0;
+  background: transparent;
+  color: #6d675c;
 }
 
 .profile-save-button {
-  padding: 12px 20px;
-
   border: none;
-  border-radius: 22px;
-
-  background: linear-gradient(
-    135deg,
-    #c9a24a,
-    #e1bd63
-  );
-
-  color: #111;
-
-  font-size: 11px;
-  font-weight: 700;
-
-  cursor: pointer;
-
-  transition: 0.3s;
+  background: #292820;
+  color: white;
 }
 
-.profile-save-button:hover {
-  transform: translateY(-2px);
-
-  box-shadow:
-    0 10px 25px rgba(201, 162, 74, 0.2);
-}
-
-.profile-modal-footer {
-  margin: 20px 0 0;
-
-  text-align: center;
-
-  color: #555;
-
-  font-size: 9px;
-}
 
 /* =====================================================
    RESPONSIVE
@@ -1023,29 +846,25 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .profile-products {
+  .dosha-balance-card {
+    gap: 40px;
+  }
+
+  .profile-remedies-grid {
     grid-template-columns: 1fr;
   }
 
-  .profile-main-card {
-    padding: 28px;
-  }
 }
 
 @media (max-width: 650px) {
 
   .profile-page {
-    padding: 90px 5% 70px;
-  }
-
-  .profile-header h1 {
-    font-size: 42px;
+    padding: 90px 20px 70px;
   }
 
   .profile-main-card {
     flex-direction: column;
     text-align: center;
-    padding: 30px 22px;
   }
 
   .profile-user-info {
@@ -1060,10 +879,23 @@
     grid-template-columns: 1fr;
   }
 
-  .profile-dosha-title {
-    align-items: flex-start;
+  .dosha-balance-card {
     flex-direction: column;
-    gap: 8px;
+    padding: 30px 20px;
+  }
+
+  .dosha-circle {
+    width: 210px;
+    height: 210px;
+  }
+
+  .dosha-circle-inner {
+    width: 160px;
+    height: 160px;
+  }
+
+  .dosha-legend {
+    width: 100%;
   }
 
   .latest-analysis-card {
@@ -1084,22 +916,16 @@
     width: 100%;
   }
 
+  .history-item {
+    flex-wrap: wrap;
+  }
+
   .history-status {
-    display: none;
+    margin-left: 77px;
   }
 
-  .edit-profile-modal {
-    padding: 30px 22px;
-    max-height: 90vh;
-    overflow-y: auto;
+  .profile-header h1 {
+    font-size: 48px;
   }
 
-  .profile-modal-actions {
-    flex-direction: column-reverse;
-  }
-
-  .profile-cancel-button,
-  .profile-save-button {
-    width: 100%;
-  }
 }
