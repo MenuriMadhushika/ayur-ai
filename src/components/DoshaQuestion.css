@@ -5,6 +5,7 @@
 
 .dosha-page {
   min-height: 100vh;
+
   background:
     radial-gradient(
       circle at top right,
@@ -14,9 +15,11 @@
     #f7f3eb;
 
   color: #25231f;
+
   padding: 70px 20px;
 
   font-family: inherit;
+
   box-sizing: border-box;
 }
 
@@ -47,13 +50,15 @@
 }
 
 .quiz-label,
-.result-top > span {
+.result-label {
   display: inline-block;
 
   font-size: 11px;
+
   letter-spacing: 3px;
 
   color: #a88436;
+
   font-weight: 600;
 
   margin-bottom: 20px;
@@ -63,7 +68,10 @@
 .result-top h1 {
   margin: 0;
 
-  font-family: Georgia, "Times New Roman", serif;
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
 
   font-size: clamp(42px, 7vw, 72px);
 
@@ -76,12 +84,13 @@
 
 .quiz-top h1 span {
   color: #b38b3c;
+
   font-style: italic;
 }
 
 .quiz-top p,
 .result-top p {
-  max-width: 580px;
+  max-width: 600px;
 
   margin: 25px auto 0;
 
@@ -160,6 +169,7 @@
 }
 
 @keyframes cardIn {
+
   from {
     opacity: 0;
 
@@ -177,6 +187,7 @@
   position: absolute;
 
   top: 28px;
+
   right: 35px;
 
   font-family: Georgia, serif;
@@ -335,7 +346,7 @@
 
 
 /* =====================================================
-   DOSHA PERCENTAGE SECTION
+   DOSHA BALANCE SECTION
 ===================================================== */
 
 .percentage-section {
@@ -370,7 +381,7 @@
 
 
 /* =====================================================
-   COMBINED DOSHA BALANCE
+   DOSHA BALANCE WRAPPER
 ===================================================== */
 
 .dosha-balance-wrapper {
@@ -389,11 +400,12 @@
 
 
 /* =====================================================
-   MAIN DOSHA DONUT
+   DOSHA DONUT
 ===================================================== */
 
 .dosha-donut {
   width: 280px;
+
   height: 280px;
 
   position: relative;
@@ -405,17 +417,6 @@
   align-items: center;
 
   justify-content: center;
-
-  /*
-    VATA
-    ↓
-    PITTA
-    ↓
-    KAPHA
-
-    React automatically supplies
-    the three percentage values.
-  */
 
   background:
     conic-gradient(
@@ -438,7 +439,7 @@
 
 
 /* =====================================================
-   DONUT INNER CIRCLE
+   INNER CIRCLE
 ===================================================== */
 
 .dosha-donut::before {
@@ -447,6 +448,7 @@
   position: absolute;
 
   width: 200px;
+
   height: 200px;
 
   background: #fffdf8;
@@ -459,13 +461,17 @@
 
 
 /* =====================================================
-   DONUT CENTER TEXT
+   RESULT INSIDE CIRCLE
 ===================================================== */
 
 .dosha-donut-center {
   position: relative;
 
   z-index: 2;
+
+  width: 180px;
+
+  text-align: center;
 
   display: flex;
 
@@ -479,19 +485,21 @@
 }
 
 .dosha-donut-center span {
-  font-size: 10px;
+  font-size: 8px;
 
-  letter-spacing: 3px;
+  letter-spacing: 2px;
 
   color: #9a9185;
 
-  margin-bottom: 5px;
+  margin-bottom: 8px;
+
+  white-space: nowrap;
 }
 
 .dosha-donut-center strong {
   font-family: Georgia, serif;
 
-  font-size: 29px;
+  font-size: 31px;
 
   font-weight: 400;
 
@@ -501,13 +509,15 @@
 }
 
 .dosha-donut-center small {
-  margin-top: 6px;
+  margin-top: 9px;
 
-  font-size: 9px;
+  font-size: 12px;
 
   letter-spacing: 2px;
 
-  color: #a59c90;
+  color: #a17b35;
+
+  font-weight: 600;
 }
 
 
@@ -516,6 +526,7 @@
 ===================================================== */
 
 @keyframes donutAppear {
+
   from {
     opacity: 0;
 
@@ -535,10 +546,11 @@
 
 
 /* =====================================================
-   RESULT FADE ANIMATION
+   RESULT FADE
 ===================================================== */
 
 @keyframes resultFadeIn {
+
   from {
     opacity: 0;
 
@@ -574,16 +586,12 @@
 
   gap: 15px;
 
-  min-width: 150px;
+  min-width: 180px;
 }
-
-
-/* =====================================================
-   LEGEND DOTS
-===================================================== */
 
 .legend-dot {
   width: 14px;
+
   height: 14px;
 
   border-radius: 50%;
@@ -606,17 +614,12 @@
   background: #78947c;
 }
 
-
-/* =====================================================
-   LEGEND TEXT
-===================================================== */
-
 .legend-item div {
   display: flex;
 
   flex-direction: column;
 
-  gap: 3px;
+  gap: 4px;
 }
 
 .legend-item strong {
@@ -630,16 +633,16 @@
 }
 
 .legend-item div span {
-  font-size: 12px;
+  font-size: 11px;
 
   color: #8b8378;
 
-  letter-spacing: 0.5px;
+  line-height: 1.4;
 }
 
 
 /* =====================================================
-   DOMINANT DOSHA
+   RESULT INTERPRETATION
 ===================================================== */
 
 .dominant-dosha {
@@ -647,7 +650,7 @@
 
   margin-top: 45px;
 
-  padding: 28px 20px;
+  padding: 35px 20px;
 
   animation: resultFadeIn 0.9s ease;
 }
@@ -665,31 +668,90 @@
 }
 
 .dominant-dosha h2 {
-  margin: 10px 0 5px;
+  margin: 10px 0 4px;
 
   font-family: Georgia, serif;
 
-  font-size: 42px;
+  font-size: 46px;
 
   font-weight: 400;
 
   color: #40382f;
 }
 
-.dominant-dosha p {
-  margin: 0;
+.dosha-descriptor {
+  display: block;
+
+  color: #a17b35;
+
+  font-size: 12px;
+
+  letter-spacing: 1.5px;
+
+  text-transform: uppercase;
+}
+
+.dominant-dosha > p {
+  max-width: 600px;
+
+  margin: 18px auto 0;
 
   color: #817a70;
 
-  font-size: 13px;
+  font-size: 14px;
 
-  line-height: 1.7;
+  line-height: 1.8;
 }
 
-.dominant-dosha p strong {
+.dominant-dosha > p strong {
   color: #a17b35;
 
   font-weight: 600;
+}
+
+
+/* =====================================================
+   INTERPRETATION BOX
+===================================================== */
+
+.interpretation-box {
+  max-width: 680px;
+
+  margin: 25px auto 0;
+
+  padding: 22px 25px;
+
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 15px;
+
+  text-align: left;
+
+  background: rgba(255, 253, 248, 0.8);
+
+  border: 1px solid #e6dfd2;
+
+  border-left: 3px solid #b8954d;
+}
+
+.interpretation-icon {
+  color: #b18a40;
+
+  font-size: 16px;
+
+  line-height: 1.5;
+}
+
+.interpretation-box p {
+  margin: 0;
+
+  color: #756e64;
+
+  font-size: 13px;
+
+  line-height: 1.75;
 }
 
 
@@ -716,7 +778,7 @@
 }
 
 .care-section h2 {
-  margin: 12px 0 30px;
+  margin: 12px 0 10px;
 
   font-family: Georgia, serif;
 
@@ -725,6 +787,18 @@
   font-weight: 400;
 
   color: #302d28;
+}
+
+.care-intro {
+  max-width: 600px;
+
+  margin: 0 auto 30px;
+
+  color: #817a70;
+
+  font-size: 13px;
+
+  line-height: 1.7;
 }
 
 
@@ -797,6 +871,49 @@
 
 
 /* =====================================================
+   AI RESULT DISCLAIMER CARD
+===================================================== */
+
+.result-disclaimer-card {
+  max-width: 800px;
+
+  margin: 50px auto 0;
+
+  padding: 25px 28px;
+
+  text-align: left;
+
+  background: rgba(238, 231, 216, 0.55);
+
+  border: 1px solid #ded4c2;
+}
+
+.result-disclaimer-card > span {
+  display: block;
+
+  margin-bottom: 10px;
+
+  color: #9c7837;
+
+  font-size: 9px;
+
+  letter-spacing: 2px;
+
+  font-weight: 600;
+}
+
+.result-disclaimer-card p {
+  margin: 0;
+
+  color: #777067;
+
+  font-size: 12px;
+
+  line-height: 1.7;
+}
+
+
+/* =====================================================
    RESULT ACTIONS
 ===================================================== */
 
@@ -861,7 +978,7 @@
 
 
 /* =====================================================
-   RESULT DISCLAIMER
+   RESULT NOTE
 ===================================================== */
 
 .result-note {
@@ -890,9 +1007,7 @@
   }
 
 
-  /* -----------------------------------------------
-     HEADER
-  ------------------------------------------------ */
+  /* HEADER */
 
   .quiz-top,
   .result-top {
@@ -914,9 +1029,7 @@
   }
 
 
-  /* -----------------------------------------------
-     QUESTION
-  ------------------------------------------------ */
+  /* QUESTION */
 
   .question-card {
     padding: 35px 20px;
@@ -935,9 +1048,7 @@
   }
 
 
-  /* -----------------------------------------------
-     ANSWERS
-  ------------------------------------------------ */
+  /* ANSWERS */
 
   .answer-button {
     grid-template-columns:
@@ -953,9 +1064,7 @@
   }
 
 
-  /* -----------------------------------------------
-     FOOTER
-  ------------------------------------------------ */
+  /* FOOTER */
 
   .quiz-footer {
     flex-direction: column;
@@ -966,9 +1075,7 @@
   }
 
 
-  /* -----------------------------------------------
-     DOSHA BALANCE
-  ------------------------------------------------ */
+  /* DOSHA BALANCE */
 
   .percentage-section {
     margin-top: 35px;
@@ -994,14 +1101,16 @@
     height: 165px;
   }
 
+  .dosha-donut-center {
+    width: 150px;
+  }
+
   .dosha-donut-center strong {
     font-size: 25px;
   }
 
 
-  /* -----------------------------------------------
-     LEGEND
-  ------------------------------------------------ */
+  /* LEGEND */
 
   .dosha-legend {
     width: 100%;
@@ -1032,13 +1141,11 @@
   }
 
   .legend-item div span {
-    font-size: 11px;
+    font-size: 10px;
   }
 
 
-  /* -----------------------------------------------
-     DOMINANT DOSHA
-  ------------------------------------------------ */
+  /* RESULT */
 
   .dominant-dosha {
     margin-top: 30px;
@@ -1050,10 +1157,12 @@
     font-size: 38px;
   }
 
+  .interpretation-box {
+    padding: 20px;
+  }
 
-  /* -----------------------------------------------
-     CARE
-  ------------------------------------------------ */
+
+  /* CARE */
 
   .care-section {
     margin-top: 45px;
@@ -1072,9 +1181,14 @@
   }
 
 
-  /* -----------------------------------------------
-     BUTTONS
-  ------------------------------------------------ */
+  /* DISCLAIMER */
+
+  .result-disclaimer-card {
+    padding: 22px 20px;
+  }
+
+
+  /* BUTTONS */
 
   .result-actions {
     flex-direction: column;
@@ -1088,7 +1202,6 @@
   .secondary-result-button {
     width: 100%;
   }
-
 }
 
 
@@ -1112,7 +1225,7 @@
   }
 
 
-  /* Smaller donut */
+  /* SMALLER DONUT */
 
   .dosha-donut {
     width: 205px;
@@ -1126,20 +1239,26 @@
     height: 145px;
   }
 
+  .dosha-donut-center {
+    width: 130px;
+  }
+
   .dosha-donut-center strong {
     font-size: 22px;
   }
 
   .dosha-donut-center span {
-    font-size: 8px;
+    font-size: 7px;
+
+    letter-spacing: 1.5px;
   }
 
   .dosha-donut-center small {
-    font-size: 8px;
+    font-size: 9px;
   }
 
 
-  /* Smaller legend */
+  /* LEGEND */
 
   .dosha-legend {
     gap: 13px;
@@ -1150,14 +1269,17 @@
   }
 
   .legend-item div span {
-    font-size: 10px;
+    font-size: 9px;
   }
 
 
-  /* Dominant */
+  /* DOMINANT */
 
   .dominant-dosha h2 {
     font-size: 34px;
   }
 
+  .dosha-descriptor {
+    font-size: 10px;
+  }
 }

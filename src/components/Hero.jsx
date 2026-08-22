@@ -97,7 +97,7 @@ const Hero = () => {
             </span>
 
             <span className="button-spark">
-              ✦
+              ⌘
             </span>
           </button>
 
