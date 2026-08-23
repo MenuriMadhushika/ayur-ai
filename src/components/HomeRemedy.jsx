@@ -1,4 +1,4 @@
-```jsx
+
 import React, { useMemo, useState } from "react";
 import "./HomeRemedy.css";
 
@@ -6,7 +6,7 @@ const remedies = [
   {
     id: 1,
     concern: "Acne",
-    icon: "✦",
+    icon: "🫚",
     title: "Turmeric & Honey Care",
     subtitle: "A simple traditional-inspired skin ritual.",
     time: "10–15 min",
@@ -34,7 +34,7 @@ const remedies = [
   {
     id: 2,
     concern: "Dryness",
-    icon: "◌",
+    icon: "🌿",
     title: "Aloe & Honey Hydration",
     subtitle: "A gentle routine for dry-feeling skin.",
     time: "10 min",
@@ -62,7 +62,7 @@ const remedies = [
   {
     id: 3,
     concern: "Dullness",
-    icon: "✧",
+    icon: "🌾",
     title: "Oat & Yogurt Care",
     subtitle: "A gentle skin-refreshing ritual.",
     time: "8–10 min",
@@ -91,7 +91,7 @@ const remedies = [
   {
     id: 4,
     concern: "Oiliness",
-    icon: "◇",
+    icon: "🍃",
     title: "Aloe & Green Tea Refresh",
     subtitle: "A lightweight refreshing skin ritual.",
     time: "10 min",
@@ -119,7 +119,7 @@ const remedies = [
   {
     id: 5,
     concern: "Sensitive Skin",
-    icon: "♡",
+    icon: "🌿",
     title: "Oat & Aloe Soothing Care",
     subtitle: "A minimal routine for sensitive-feeling skin.",
     time: "10 min",
@@ -147,7 +147,7 @@ const remedies = [
   {
     id: 6,
     concern: "Uneven Texture",
-    icon: "◎",
+    icon: "🍯",
     title: "Honey & Oat Care",
     subtitle: "A simple skin-smoothing inspired ritual.",
     time: "10 min",
@@ -239,33 +239,31 @@ function HomeRemedy() {
   return (
     <main className="home-remedy-page">
 
-      {/* HERO */}
+      {/* =========================================
+    COMPACT HERO
+========================================= */}
 
-      <section className="remedy-hero">
+<section className="remedy-hero compact-remedy-hero">
 
-        <div className="remedy-hero-content">
+  <div className="hero-content">
 
-          <span className="remedy-eyebrow">
-            AYURAI • HOME WELLNESS
-          </span>
+    <span className="remedy-eyebrow">
+      AYURAI • HOME WELLNESS
+    </span>
 
-          <h1>
-            Simple Care,
-            <span> Inspired by Nature.</span>
-          </h1>
+    <h1>
+      Simple Care,
+      <span> Inspired by Nature.</span>
+    </h1>
 
-          <p>
-            Explore gentle Ayurvedic-inspired home
-            care ideas based on common skin concerns.
-          </p>
+    <p>
+      Explore gentle Ayurvedic-inspired home care
+      ideas for your everyday skin concerns.
+    </p>
 
-        </div>
+  </div>
 
-        <div className="hero-orbit">
-          ✦
-        </div>
-
-      </section>
+</section>
 
 
       {/* LIBRARY */}
@@ -363,9 +361,12 @@ function HomeRemedy() {
                     {remedy.icon}
                   </div>
 
-                  <span className="remedy-dosha">
-                    {remedy.dosha}
-                  </span>
+                  <span
+  className="remedy-dosha"
+  data-dosha={remedy.dosha}
+>
+  {remedy.dosha}
+</span>
 
                 </div>
 
@@ -716,4 +717,3 @@ function HomeRemedy() {
 }
 
 export default HomeRemedy;
-```

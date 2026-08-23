@@ -89,29 +89,38 @@ const questions = [
 const doshaInfo = {
   vata: {
     name: "Vata",
+    descriptor: "Dry & Delicate",
     focus: [
       "Deep hydration",
       "Gentle cleansing",
       "Moisture-locking care",
     ],
+    description:
+      "Your responses appear most aligned with Vata characteristics, which may suggest that hydration and gentle moisture support could be helpful areas to explore.",
   },
 
   pitta: {
     name: "Pitta",
+    descriptor: "Sensitive & Warm",
     focus: [
       "Calming ingredients",
       "Gentle skincare",
       "Cooling hydration",
     ],
+    description:
+      "Your responses appear most aligned with Pitta characteristics, which may suggest that calming, gentle and cooling skincare could be helpful areas to explore.",
   },
 
   kapha: {
     name: "Kapha",
+    descriptor: "Oily & Balanced",
     focus: [
       "Light hydration",
       "Gentle cleansing",
       "Balancing skincare",
     ],
+    description:
+      "Your responses appear most aligned with Kapha characteristics, which may suggest that lightweight, balancing and gentle cleansing approaches could be helpful areas to explore.",
   },
 };
 
@@ -124,9 +133,9 @@ function DoshaQuestion() {
 
   const question = questions[current];
 
-  // =========================================
+  // =====================================================
   // SELECT ANSWER
-  // =========================================
+  // =====================================================
 
   const selectAnswer = (dosha) => {
     const updatedAnswers = [...answers, dosha];
@@ -135,16 +144,16 @@ function DoshaQuestion() {
 
     if (current < questions.length - 1) {
       setTimeout(() => {
-        setCurrent(current + 1);
+        setCurrent((prev) => prev + 1);
       }, 250);
     } else {
       calculateResult(updatedAnswers);
     }
   };
 
-  // =========================================
+  // =====================================================
   // CALCULATE RESULT
-  // =========================================
+  // =====================================================
 
   const calculateResult = (answerList) => {
     const scores = {
@@ -154,7 +163,9 @@ function DoshaQuestion() {
     };
 
     answerList.forEach((answer) => {
-      scores[answer] += 1;
+      if (scores[answer] !== undefined) {
+        scores[answer] += 1;
+      }
     });
 
     const total = answerList.length;
@@ -172,6 +183,7 @@ function DoshaQuestion() {
     const finalResult = {
       dominant,
       percentages,
+      scores,
       completedAt: new Date().toISOString(),
     };
 
@@ -183,9 +195,9 @@ function DoshaQuestion() {
     setResult(finalResult);
   };
 
-  // =========================================
+  // =====================================================
   // RESTART TEST
-  // =========================================
+  // =====================================================
 
   const restartTest = () => {
     setCurrent(0);
@@ -193,25 +205,24 @@ function DoshaQuestion() {
     setResult(null);
   };
 
-  // =========================================
+  // =====================================================
   // RESULT PAGE
-  // =========================================
+  // =====================================================
 
   if (result) {
     const info = doshaInfo[result.dominant];
 
     return (
       <div className="dosha-page">
-
         <div className="result-container">
 
-          {/* =====================================
+          {/* =================================================
               RESULT HEADER
-          ===================================== */}
+          ================================================= */}
 
           <div className="result-top">
 
-            <span>
+            <span className="result-label">
               AYURAI • YOUR RESULT
             </span>
 
@@ -222,16 +233,16 @@ function DoshaQuestion() {
             </h1>
 
             <p>
-              Your current Ayurvedic skin balance
-              based on your answers.
+              Based on your answers, this is the Dosha
+              pattern your responses appear most aligned with.
             </p>
 
           </div>
 
 
-          {/* =====================================
+          {/* =================================================
               DOSHA BALANCE
-          ===================================== */}
+          ================================================= */}
 
           <div className="percentage-section">
 
@@ -242,17 +253,17 @@ function DoshaQuestion() {
               </span>
 
               <small>
-                Your current Dosha composition
+                An indication based on your responses
               </small>
 
             </div>
 
 
-            {/* =================================
-                COMBINED DOSHA CIRCLE
-            ================================= */}
-
             <div className="dosha-balance-wrapper">
+
+              {/* =================================================
+                  DOSHA CIRCLE
+              ================================================= */}
 
               <div
                 className="dosha-donut"
@@ -266,15 +277,15 @@ function DoshaQuestion() {
                 <div className="dosha-donut-center">
 
                   <span>
-                    YOUR
+                    APPEARS MOST ALIGNED
                   </span>
 
                   <strong>
-                    DOSHA
+                    {info.name}
                   </strong>
 
                   <small>
-                    BALANCE
+                    {result.percentages[result.dominant]}%
                   </small>
 
                 </div>
@@ -282,9 +293,9 @@ function DoshaQuestion() {
               </div>
 
 
-              {/* =================================
-                  DOSHA LEGEND
-              ================================= */}
+              {/* =================================================
+                  LEGEND
+              ================================================= */}
 
               <div className="dosha-legend">
 
@@ -298,7 +309,7 @@ function DoshaQuestion() {
                     </strong>
 
                     <span>
-                      {result.percentages.vata}%
+                      Dry & Delicate • {result.percentages.vata}%
                     </span>
                   </div>
 
@@ -315,7 +326,7 @@ function DoshaQuestion() {
                     </strong>
 
                     <span>
-                      {result.percentages.pitta}%
+                      Sensitive & Warm • {result.percentages.pitta}%
                     </span>
                   </div>
 
@@ -332,7 +343,7 @@ function DoshaQuestion() {
                     </strong>
 
                     <span>
-                      {result.percentages.kapha}%
+                      Oily & Balanced • {result.percentages.kapha}%
                     </span>
                   </div>
 
@@ -345,34 +356,43 @@ function DoshaQuestion() {
           </div>
 
 
-          {/* =====================================
-              DOMINANT DOSHA
-          ===================================== */}
+          {/* =================================================
+              RESULT INTERPRETATION
+          ================================================= */}
 
           <div className="dominant-dosha">
 
-            <span className="result-small-label">
-              DOMINANT DOSHA
-            </span>
-
-            <h2>
-              {info.name}
-            </h2>
-
+          
             <p>
-              Your highest Dosha percentage is{" "}
+              Your responses appear most aligned with{" "}
+              <strong>
+                {info.name}
+              </strong>{" "}
+              at approximately{" "}
               <strong>
                 {result.percentages[result.dominant]}%
               </strong>
               .
             </p>
 
+            <div className="interpretation-box">
+
+              <span className="interpretation-icon">
+                ⌘
+              </span>
+
+              <p>
+                {info.description}
+              </p>
+
+            </div>
+
           </div>
 
 
-          {/* =====================================
+          {/* =================================================
               PERSONALIZED CARE
-          ===================================== */}
+          ================================================= */}
 
           <div className="care-section">
 
@@ -381,8 +401,14 @@ function DoshaQuestion() {
             </span>
 
             <h2>
-              What Your Skin May Need
+              What You May Want to Explore
             </h2>
+
+            <p className="care-intro">
+              Based on your result, these Ayurvedic-inspired
+              skincare approaches may be worth exploring.
+            </p>
+
 
             <div className="care-grid">
 
@@ -402,8 +428,8 @@ function DoshaQuestion() {
                   </h3>
 
                   <p>
-                    A gentle approach that complements
-                    your {info.name} skin balance.
+                    A gentle approach that may complement
+                    your {info.name}-aligned skin balance.
                   </p>
 
                 </div>
@@ -415,9 +441,30 @@ function DoshaQuestion() {
           </div>
 
 
-          {/* =====================================
+          {/* =================================================
+              RESULT CONFIDENCE NOTE
+          ================================================= */}
+
+          <div className="result-disclaimer-card">
+
+            <span>
+              ⌘ AI-ASSISTED INSIGHT
+            </span>
+
+            <p>
+              This result is an indication based on the
+              information you provided. Skin characteristics
+              can change over time, and this assessment
+              should not be considered a medical diagnosis
+              or a definitive determination of your skin type.
+            </p>
+
+          </div>
+
+
+          {/* =================================================
               ACTION BUTTONS
-          ===================================== */}
+          ================================================= */}
 
           <div className="result-actions">
 
@@ -438,36 +485,33 @@ function DoshaQuestion() {
           </div>
 
 
-          {/* =====================================
+          {/* =================================================
               DISCLAIMER
-          ===================================== */}
+          ================================================= */}
 
           <p className="result-note">
-
-            AyurAI provides traditional Ayurvedic-inspired
-            wellness guidance and is not a medical diagnosis.
-
+            AyurAI provides Ayurvedic-inspired wellness
+            guidance for informational purposes only.
           </p>
 
         </div>
-
       </div>
     );
   }
 
 
-  // =========================================
+  // =====================================================
   // QUIZ PAGE
-  // =========================================
+  // =====================================================
 
   return (
     <div className="dosha-page">
 
       <div className="quiz-container">
 
-        {/* =====================================
+        {/* =================================================
             QUIZ HEADER
-        ===================================== */}
+        ================================================= */}
 
         <div className="quiz-top">
 
@@ -485,17 +529,17 @@ function DoshaQuestion() {
           </h1>
 
           <p>
-            Answer a few thoughtful questions and
-            discover which Ayurvedic Dosha best
-            represents your skin.
+            Answer a few thoughtful questions and explore
+            which Ayurvedic Dosha pattern your skin responses
+            may be most aligned with.
           </p>
 
         </div>
 
 
-        {/* =====================================
+        {/* =================================================
             PROGRESS
-        ===================================== */}
+        ================================================= */}
 
         <div className="progress-area">
 
@@ -516,9 +560,7 @@ function DoshaQuestion() {
             <div
               className="progress-fill"
               style={{
-                width: `${
-                  ((current + 1) / questions.length) * 100
-                }%`,
+                width: `${((current + 1) / questions.length) * 100}%`,
               }}
             />
 
@@ -527,25 +569,21 @@ function DoshaQuestion() {
         </div>
 
 
-        {/* =====================================
+        {/* =================================================
             QUESTION CARD
-        ===================================== */}
+        ================================================= */}
 
         <div className="question-card">
 
           <div className="question-number">
-
             {String(current + 1).padStart(2, "0")}
-
           </div>
 
 
           <div className="question-content">
 
             <span className="question-label">
-
               YOUR SKIN • QUESTION {current + 1}
-
             </span>
 
             <h2>
@@ -559,9 +597,9 @@ function DoshaQuestion() {
           </div>
 
 
-          {/* =================================
+          {/* =================================================
               ANSWERS
-          ================================= */}
+          ================================================= */}
 
           <div className="answer-list">
 
@@ -570,27 +608,19 @@ function DoshaQuestion() {
               <button
                 className="answer-button"
                 key={option.dosha}
-                onClick={() =>
-                  selectAnswer(option.dosha)
-                }
+                onClick={() => selectAnswer(option.dosha)}
               >
 
                 <span className="answer-number">
-
                   {String(index + 1).padStart(2, "0")}
-
                 </span>
 
                 <span className="answer-text">
-
                   {option.text}
-
                 </span>
 
                 <span className="answer-arrow">
-
                   →
-
                 </span>
 
               </button>
@@ -602,14 +632,14 @@ function DoshaQuestion() {
         </div>
 
 
-        {/* =====================================
+        {/* =================================================
             QUIZ FOOTER
-        ===================================== */}
+        ================================================= */}
 
         <div className="quiz-footer">
 
           <span>
-            ✦ Take your time
+            ⌘ Take your time
           </span>
 
           <span>
