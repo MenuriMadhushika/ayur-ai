@@ -1,707 +1,191 @@
-/* =========================================================
-   AYURAI — OVERALL RESULT
-   Premium Ayurvedic Editorial Style
-   ========================================================= */
-
 .overall-result-page {
   min-height: 100vh;
-  background: #f7f3eb;
+  padding: 100px 7%;
+  background: #f7f3ea;
   color: #292923;
-  padding: 80px 24px 100px;
 }
-
-.overall-result-container {
-  width: min(1180px, 100%);
-  margin: 0 auto;
-}
-
-/* =========================================================
-   HEADER
-   ========================================================= */
 
 .overall-result-header {
-  text-align: center;
-  max-width: 760px;
+  max-width: 850px;
   margin: 0 auto 60px;
+  text-align: center;
 }
 
-.overall-result-label {
-  display: inline-block;
-  margin-bottom: 18px;
-
-  font-family: Arial, sans-serif;
+.overall-label,
+.card-label {
+  display: block;
+  margin-bottom: 14px;
+  color: #9a7b35;
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 2.5px;
-
-  color: #9b7a3d;
+  letter-spacing: 2px;
 }
 
 .overall-result-header h1 {
-  margin: 0;
-
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(42px, 6vw, 72px);
-  line-height: 1.05;
+  margin: 0 0 18px;
+  font-family: Georgia, serif;
+  font-size: clamp(38px, 5vw, 64px);
   font-weight: 400;
-
-  color: #292923;
-}
-
-.overall-result-header h1 span {
-  color: #9b7a3d;
 }
 
 .overall-result-header p {
-  max-width: 650px;
-  margin: 24px auto 0;
-
-  font-family: Arial, sans-serif;
-  font-size: 15px;
+  max-width: 680px;
+  margin: 0 auto 15px;
+  color: #68675f;
   line-height: 1.8;
-
-  color: #716e65;
 }
 
-/* =========================================================
-   PROFILE HERO
-   ========================================================= */
-
-.overall-profile-card {
-  position: relative;
-
-  padding: 45px;
-
-  background: #fffdf8;
-  border: 1px solid rgba(155, 122, 61, 0.18);
-  border-radius: 24px;
-
-  box-shadow:
-    0 20px 60px rgba(45, 40, 30, 0.07);
-
-  margin-bottom: 35px;
-}
-
-.overall-profile-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 30px;
-}
-
-.profile-label {
-  display: block;
-
-  margin-bottom: 12px;
-
-  font-family: Arial, sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 2px;
-
-  color: #9b7a3d;
-}
-
-.overall-profile-top h2 {
-  margin: 0;
-
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 42px;
-  font-weight: 400;
-
-  color: #292923;
-}
-
-.profile-description {
-  max-width: 650px;
-
-  margin: 18px 0 0;
-
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-  line-height: 1.8;
-
-  color: #716e65;
-}
-
-.profile-score {
-  min-width: 130px;
-
-  text-align: center;
-
-  padding: 20px;
-
-  border-radius: 18px;
-
-  background: #f1eadc;
-}
-
-.profile-score strong {
-  display: block;
-
-  font-family: Georgia, serif;
-  font-size: 38px;
-  font-weight: 400;
-
-  color: #8d6c34;
-}
-
-.profile-score span {
-  display: block;
-
-  margin-top: 5px;
-
-  font-family: Arial, sans-serif;
-  font-size: 9px;
-  letter-spacing: 1.5px;
-
-  color: #777268;
-}
-
-/* =========================================================
-   TWO RESULT CARDS
-   ========================================================= */
-
-.overall-section-label {
-  display: block;
-
-  margin-bottom: 20px;
-
-  font-family: Arial, sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 2px;
-
-  color: #9b7a3d;
+.overall-result-header small {
+  color: #858278;
+  font-size: 12px;
 }
 
 .overall-result-grid {
+  max-width: 1100px;
+  margin: auto;
   display: grid;
-
   grid-template-columns: repeat(2, 1fr);
-
   gap: 25px;
-
-  margin-bottom: 60px;
 }
 
-.overall-data-card {
-  padding: 34px;
-
+.overall-card,
+.combined-result-card {
   background: #fffdf8;
-
-  border: 1px solid rgba(70, 65, 50, 0.1);
-
-  border-radius: 20px;
-
-  box-shadow:
-    0 12px 35px rgba(45, 40, 30, 0.05);
+  border: 1px solid #e7dfcf;
+  border-radius: 18px;
+  padding: 38px;
+  box-shadow: 0 12px 35px rgba(60, 50, 30, 0.06);
 }
 
-.data-number {
-  display: block;
-
-  margin-bottom: 25px;
-
-  font-family: Arial, sans-serif;
-  font-size: 10px;
-  letter-spacing: 2px;
-
-  color: #a08b68;
-}
-
-.data-icon {
-  width: 48px;
-  height: 48px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  margin-bottom: 20px;
-
-  border-radius: 50%;
-
-  background: #f1eadc;
-
-  font-size: 20px;
-
-  color: #8d6c34;
-}
-
-.overall-data-card h3 {
-  margin: 0 0 10px;
-
-  font-family: Georgia, serif;
-  font-size: 27px;
-  font-weight: 400;
-
-  color: #292923;
-}
-
-.overall-data-card p {
-  margin: 0;
-
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-  line-height: 1.7;
-
-  color: #716e65;
-}
-
-/* =========================================================
-   COMBINATION PROFILE
-   ========================================================= */
-
-.combination-card {
-  padding: 45px;
-
-  margin-bottom: 60px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #f3ecdf,
-      #fffdf8
-    );
-
-  border: 1px solid rgba(155, 122, 61, 0.18);
-
-  border-radius: 24px;
-}
-
-.combination-card h2 {
+.overall-card h2,
+.combined-result-card h2 {
   margin: 0 0 15px;
-
   font-family: Georgia, serif;
-  font-size: 36px;
+  font-size: 30px;
   font-weight: 400;
 }
 
-.combination-card > p {
-  max-width: 760px;
-
-  margin: 0;
-
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-  line-height: 1.8;
-
-  color: #716e65;
+.overall-card p,
+.combined-result-card p {
+  color: #6d6b63;
+  line-height: 1.7;
 }
 
-.combination-tags {
-  display: flex;
-  flex-wrap: wrap;
-
+.dosha-percentages {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 10px;
+  margin-top: 30px;
+}
 
+.dosha-percentages div,
+.skin-observations div {
+  padding: 15px;
+  background: #f5f1e7;
+  border-radius: 10px;
+}
+
+.dosha-percentages span,
+.skin-observations span {
+  display: block;
+  margin-bottom: 6px;
+  color: #77736a;
+  font-size: 11px;
+}
+
+.dosha-percentages strong,
+.skin-observations strong {
+  font-size: 18px;
+}
+
+.skin-observations {
+  display: grid;
+  gap: 10px;
   margin-top: 25px;
 }
 
-.combination-tag {
-  padding: 10px 16px;
-
-  border-radius: 50px;
-
-  background: #fffdf8;
-
-  border: 1px solid rgba(155, 122, 61, 0.2);
-
-  font-family: Arial, sans-serif;
-  font-size: 12px;
-
-  color: #665a46;
+.combined-result-card {
+  max-width: 1100px;
+  margin: 25px auto 0;
 }
 
-/* =========================================================
-   CONCERNS
-   ========================================================= */
-
-.overall-concerns {
-  margin-bottom: 60px;
+.combined-result-card h2 {
+  font-size: 36px;
 }
 
-.overall-concern-list {
-  display: grid;
+.result-notice {
+  margin-top: 25px;
+  padding: 17px 20px;
+  border-left: 3px solid #a88a4a;
+  background: #f4efe3;
+  color: #6b675d;
+  font-size: 13px;
+  line-height: 1.7;
+}
 
-  grid-template-columns: repeat(2, 1fr);
-
+.overall-result-actions {
+  max-width: 1100px;
+  margin: 35px auto 0;
+  display: flex;
   gap: 15px;
 }
 
-.overall-concern-item {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-
-  padding: 18px 20px;
-
-  background: #fffdf8;
-
-  border: 1px solid rgba(70, 65, 50, 0.09);
-
-  border-radius: 14px;
-}
-
-.concern-check {
-  width: 28px;
-  height: 28px;
-
-  flex-shrink: 0;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 50%;
-
-  background: #e9eee3;
-
-  color: #68785b;
-
-  font-size: 13px;
-}
-
-.overall-concern-item span:last-child {
-  font-family: Arial, sans-serif;
-  font-size: 13px;
-
-  color: #555249;
-}
-
-/* =========================================================
-   CARE SECTION
-   ========================================================= */
-
-.overall-care-section {
-  margin-bottom: 60px;
-}
-
-.overall-care-section h2 {
-  margin: 0 0 12px;
-
-  font-family: Georgia, serif;
-  font-size: 38px;
-  font-weight: 400;
-}
-
-.care-introduction {
-  max-width: 700px;
-
-  margin-bottom: 30px;
-
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-  line-height: 1.8;
-
-  color: #716e65;
-}
-
-.overall-care-grid {
-  display: grid;
-
-  grid-template-columns: repeat(3, 1fr);
-
-  gap: 18px;
-}
-
-.overall-care-card {
-  padding: 30px;
-
-  background: #fffdf8;
-
-  border: 1px solid rgba(70, 65, 50, 0.1);
-
-  border-radius: 18px;
-
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
-}
-
-.overall-care-card:hover {
-  transform: translateY(-5px);
-
-  box-shadow:
-    0 15px 35px rgba(45, 40, 30, 0.08);
-}
-
-.care-card-number {
-  display: block;
-
-  margin-bottom: 25px;
-
-  font-family: Arial, sans-serif;
-  font-size: 10px;
-  letter-spacing: 2px;
-
-  color: #9b7a3d;
-}
-
-.overall-care-card h3 {
-  margin: 0 0 12px;
-
-  font-family: Georgia, serif;
-  font-size: 22px;
-  font-weight: 400;
-}
-
-.overall-care-card p {
-  margin: 0;
-
-  font-family: Arial, sans-serif;
-  font-size: 13px;
-  line-height: 1.7;
-
-  color: #716e65;
-}
-
-/* =========================================================
-   HOME REMEDIES
-   ========================================================= */
-
-.home-remedies-section {
-  padding: 45px;
-
-  margin-bottom: 50px;
-
-  background: #edf0e8;
-
-  border: 1px solid rgba(103, 119, 88, 0.18);
-
-  border-radius: 24px;
-}
-
-.home-remedies-section h2 {
-  margin: 0 0 12px;
-
-  font-family: Georgia, serif;
-  font-size: 38px;
-  font-weight: 400;
-
-  color: #30352c;
-}
-
-.home-remedies-intro {
-  max-width: 720px;
-
-  margin-bottom: 30px;
-
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-  line-height: 1.8;
-
-  color: #62685b;
-}
-
-.remedies-list {
-  display: grid;
-
-  grid-template-columns: repeat(2, 1fr);
-
-  gap: 15px;
-}
-
-.remedy-card {
-  padding: 22px;
-
-  background: rgba(255, 253, 248, 0.75);
-
-  border: 1px solid rgba(103, 119, 88, 0.12);
-
-  border-radius: 15px;
-}
-
-.remedy-card strong {
-  display: block;
-
-  margin-bottom: 8px;
-
-  font-family: Georgia, serif;
-  font-size: 19px;
-  font-weight: 400;
-
-  color: #3d4437;
-}
-
-.remedy-card p {
-  margin: 0;
-
-  font-family: Arial, sans-serif;
-  font-size: 13px;
-  line-height: 1.7;
-
-  color: #656b60;
-}
-
-/* =========================================================
-   DISCLAIMER
-   ========================================================= */
-
-.overall-disclaimer {
-  padding: 22px 25px;
-
-  margin-bottom: 35px;
-
-  background: #f0ede6;
-
-  border-radius: 14px;
-
-  font-family: Arial, sans-serif;
-  font-size: 11px;
-  line-height: 1.7;
-
-  color: #777268;
-}
-
-/* =========================================================
-   ACTIONS
-   ========================================================= */
-
-.overall-actions {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-
-  margin-top: 35px;
-}
-
-.overall-primary-button,
-.overall-secondary-button {
-  min-height: 52px;
-
-  padding: 0 28px;
-
-  border-radius: 50px;
-
-  font-family: Arial, sans-serif;
-  font-size: 12px;
-  font-weight: 600;
-
-  cursor: pointer;
-
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.overall-primary-button {
+.overall-result-actions button {
   border: none;
-
-  background: #292923;
-
-  color: #fffdf8;
+  border-radius: 8px;
+  padding: 15px 24px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  transition: 0.25s ease;
 }
 
-.overall-secondary-button {
-  border: 1px solid rgba(70, 65, 50, 0.2);
+.overall-result-actions button:first-child {
+  background: #34382d;
+  color: white;
+}
 
+.overall-result-actions button:last-child {
   background: transparent;
-
-  color: #4c493f;
+  border: 1px solid #cfc5b1;
+  color: #49483f;
 }
 
-.overall-primary-button:hover,
-.overall-secondary-button:hover {
+.overall-result-actions button:hover {
   transform: translateY(-2px);
 }
 
-/* =========================================================
-   EMPTY STATE
-   ========================================================= */
-
-.overall-empty {
-  max-width: 600px;
-
-  margin: 100px auto;
-
-  padding: 50px;
-
+.overall-result-loading {
   text-align: center;
-
-  background: #fffdf8;
-
-  border: 1px solid rgba(70, 65, 50, 0.1);
-
-  border-radius: 22px;
-}
-
-.overall-empty h2 {
-  margin: 0 0 15px;
-
+  padding-top: 150px;
   font-family: Georgia, serif;
-  font-size: 34px;
-  font-weight: 400;
+  font-size: 25px;
 }
 
-.overall-empty p {
-  margin-bottom: 25px;
-
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-  line-height: 1.7;
-
-  color: #716e65;
-}
-
-/* =========================================================
-   RESPONSIVE
-   ========================================================= */
-
-@media (max-width: 900px) {
+@media (max-width: 768px) {
+  .overall-result-page {
+    padding: 70px 20px;
+  }
 
   .overall-result-grid {
     grid-template-columns: 1fr;
   }
 
-  .overall-care-grid {
-    grid-template-columns: 1fr 1fr;
+  .overall-card,
+  .combined-result-card {
+    padding: 25px;
   }
 
-}
-
-@media (max-width: 650px) {
-
-  .overall-result-page {
-    padding: 55px 16px 70px;
-  }
-
-  .overall-profile-card,
-  .combination-card,
-  .home-remedies-section {
-    padding: 28px 22px;
-  }
-
-  .overall-profile-top {
-    flex-direction: column;
-  }
-
-  .profile-score {
-    width: 100%;
-  }
-
-  .overall-result-header h1 {
-    font-size: 42px;
-  }
-
-  .overall-profile-top h2 {
-    font-size: 32px;
-  }
-
-  .overall-care-grid,
-  .overall-concern-list,
-  .remedies-list {
+  .dosha-percentages {
     grid-template-columns: 1fr;
   }
 
-  .overall-actions {
+  .overall-result-actions {
     flex-direction: column;
   }
 
-  .overall-primary-button,
-  .overall-secondary-button {
+  .overall-result-actions button {
     width: 100%;
   }
-
 }

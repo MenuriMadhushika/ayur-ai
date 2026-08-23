@@ -1,6 +1,10 @@
-
 import React, { useMemo, useState } from "react";
 import "./HomeRemedy.css";
+
+import {
+  getAssessmentStatus,
+  getDoshaResult,
+} from "../utils/assessmentStatus";
 
 const remedies = [
   {
@@ -190,6 +194,50 @@ function HomeRemedy() {
   const [selectedRemedy, setSelectedRemedy] = useState(null);
   const [step, setStep] = useState(0);
 
+  /* =========================================================
+     PERSONALIZED DOSHA INFORMATION
+  ========================================================= */
+
+  const assessment = useMemo(() => {
+    try {
+      const status = getAssessmentStatus();
+      const doshaResult = getDoshaResult();
+
+      const dominantDosha =
+        doshaResult?.dominantDosha || null;
+
+      return {
+        doshaCompleted: Boolean(
+          status?.doshaCompleted
+        ),
+        dominantDosha
+      };
+
+    } catch (error) {
+      console.error(
+        "Unable to load AyurAI remedy personalization:",
+        error
+      );
+
+      return {
+        doshaCompleted: false,
+        dominantDosha: null
+      };
+    }
+  }, []);
+
+  const recommendedRemedies = useMemo(() => {
+    if (!assessment.dominantDosha) {
+      return [];
+    }
+
+    return remedies.filter(
+      (remedy) =>
+        remedy.dosha.toLowerCase() ===
+        assessment.dominantDosha.toLowerCase()
+    );
+  }, [assessment.dominantDosha]);
+
   const filteredRemedies = useMemo(() => {
 
     const searchValue = search.trim().toLowerCase();
@@ -210,6 +258,7 @@ function HomeRemedy() {
     });
 
   }, [selectedConcern, search]);
+
 
   const openRemedy = (remedy) => {
     setSelectedRemedy(remedy);
@@ -240,33 +289,127 @@ function HomeRemedy() {
     <main className="home-remedy-page">
 
       {/* =========================================
-    COMPACT HERO
-========================================= */}
+          COMPACT HERO
+      ========================================= */}
 
-<section className="remedy-hero compact-remedy-hero">
+      <section className="remedy-hero compact-remedy-hero">
 
-  <div className="hero-content">
+        <div className="hero-content">
 
-    <span className="remedy-eyebrow">
-      AYURAI • HOME WELLNESS
-    </span>
+          <span className="remedy-eyebrow">
+            AYURAI • HOME WELLNESS
+          </span>
 
-    <h1>
-      Simple Care,
-      <span> Inspired by Nature.</span>
-    </h1>
+          <h1>
+            Simple Care,
+            <span> Inspired by Nature.</span>
+          </h1>
 
-    <p>
-      Explore gentle Ayurvedic-inspired home care
-      ideas for your everyday skin concerns.
-    </p>
+          <p>
+            Explore gentle Ayurvedic-inspired home care
+            ideas for your everyday skin concerns.
+          </p>
 
-  </div>
+        </div>
 
-</section>
+      </section>
 
 
-      {/* LIBRARY */}
+      {/* =========================================
+          PERSONALIZED DOSHA SECTION
+      ========================================= */}
+
+      {assessment.doshaCompleted &&
+        assessment.dominantDosha &&
+        recommendedRemedies.length > 0 && (
+
+          <section className="personalized-remedy-section">
+
+            <div className="personalized-remedy-header">
+
+              <div>
+
+                <span className="remedy-section-label">
+                  PERSONALIZED FOR YOU
+                </span>
+
+                <h2>
+                  Explore your{" "}
+                  <span>
+                    {assessment.dominantDosha}
+                  </span>{" "}
+                  inspired care
+                </h2>
+
+                <p>
+                  Based on your saved Ayurvedic assessment,
+                  these remedies match your AI-estimated
+                  dominant Dosha pattern.
+                </p>
+
+              </div>
+
+              <div className="personalized-dosha-badge">
+                <span>YOUR DOSHA</span>
+                <strong>
+                  {assessment.dominantDosha}
+                </strong>
+              </div>
+
+            </div>
+
+
+            <div className="personalized-remedy-grid">
+
+              {recommendedRemedies.map((remedy) => (
+
+                <article
+                  className="personalized-remedy-card"
+                  key={remedy.id}
+                >
+
+                  <div className="personalized-remedy-icon">
+                    {remedy.icon}
+                  </div>
+
+                  <div className="personalized-remedy-content">
+
+                    <span>
+                      {remedy.concern}
+                    </span>
+
+                    <h3>
+                      {remedy.title}
+                    </h3>
+
+                    <p>
+                      {remedy.subtitle}
+                    </p>
+
+                    <button
+                      type="button"
+                      onClick={() =>
+                        openRemedy(remedy)
+                      }
+                    >
+                      Explore Recommended Care →
+                    </button>
+
+                  </div>
+
+                </article>
+
+              ))}
+
+            </div>
+
+          </section>
+        )}
+
+
+      {/* =========================================
+          LIBRARY
+      ========================================= */}
 
       <section className="remedy-library">
 
@@ -316,7 +459,9 @@ function HomeRemedy() {
         </div>
 
 
-        {/* CONCERNS */}
+        {/* =========================================
+            CONCERNS
+        ========================================= */}
 
         <div className="remedy-filters">
 
@@ -342,72 +487,93 @@ function HomeRemedy() {
         </div>
 
 
-        {/* CARDS */}
+        {/* =========================================
+            CARDS
+        ========================================= */}
 
         {filteredRemedies.length > 0 ? (
 
           <div className="remedy-grid">
 
-            {filteredRemedies.map((remedy) => (
+            {filteredRemedies.map((remedy) => {
 
-              <article
-                className="remedy-card"
-                key={remedy.id}
-              >
+              const isRecommended =
+                assessment.dominantDosha &&
+                remedy.dosha.toLowerCase() ===
+                  assessment.dominantDosha.toLowerCase();
 
-                <div className="remedy-card-header">
+              return (
 
-                  <div className="remedy-card-icon">
-                    {remedy.icon}
+                <article
+                  className={`remedy-card ${
+                    isRecommended
+                      ? "recommended-remedy"
+                      : ""
+                  }`}
+                  key={remedy.id}
+                >
+
+                  {isRecommended && (
+                    <span className="recommended-badge">
+                      ✦ Recommended for you
+                    </span>
+                  )}
+
+                  <div className="remedy-card-header">
+
+                    <div className="remedy-card-icon">
+                      {remedy.icon}
+                    </div>
+
+                    <span
+                      className="remedy-dosha"
+                      data-dosha={remedy.dosha}
+                    >
+                      {remedy.dosha}
+                    </span>
+
                   </div>
 
-                  <span
-  className="remedy-dosha"
-  data-dosha={remedy.dosha}
->
-  {remedy.dosha}
-</span>
-
-                </div>
-
-                <span className="remedy-concern">
-                  {remedy.concern}
-                </span>
-
-                <h3>
-                  {remedy.title}
-                </h3>
-
-                <p>
-                  {remedy.subtitle}
-                </p>
-
-                <div className="remedy-meta">
-
-                  <span>
-                    ◷ {remedy.time}
+                  <span className="remedy-concern">
+                    {remedy.concern}
                   </span>
 
-                  <span>
-                    ♧ {remedy.difficulty}
-                  </span>
+                  <h3>
+                    {remedy.title}
+                  </h3>
 
-                </div>
+                  <p>
+                    {remedy.subtitle}
+                  </p>
 
-                <button
-                  type="button"
-                  className="remedy-view-button"
-                  onClick={() =>
-                    openRemedy(remedy)
-                  }
-                >
-                  Explore Remedy
-                  <span>→</span>
-                </button>
+                  <div className="remedy-meta">
 
-              </article>
+                    <span>
+                      ◷ {remedy.time}
+                    </span>
 
-            ))}
+                    <span>
+                      ♧ {remedy.difficulty}
+                    </span>
+
+                  </div>
+
+                  <button
+                    type="button"
+                    className="remedy-view-button"
+                    onClick={() =>
+                      openRemedy(remedy)
+                    }
+                  >
+                    Explore Remedy
+                    <span>→</span>
+                  </button>
+
+                </article>
+
+              );
+
+            })}
 
           </div>
 
@@ -442,7 +608,9 @@ function HomeRemedy() {
       </section>
 
 
-      {/* GUIDANCE */}
+      {/* =========================================
+          GUIDANCE
+      ========================================= */}
 
       <section className="remedy-guidance">
 
@@ -471,7 +639,9 @@ function HomeRemedy() {
       </section>
 
 
-      {/* DETAIL PANEL */}
+      {/* =========================================
+          DETAIL PANEL
+      ========================================= */}
 
       {selectedRemedy && (
 
@@ -548,6 +718,27 @@ function HomeRemedy() {
               </div>
 
             </div>
+
+
+            {/* PERSONALIZED MESSAGE */}
+
+            {assessment.dominantDosha &&
+              selectedRemedy.dosha.toLowerCase() ===
+                assessment.dominantDosha.toLowerCase() && (
+
+                <div className="modal-personalized-note">
+
+                  <span>✦</span>
+
+                  <p>
+                    This remedy is aligned with your
+                    AI-estimated {assessment.dominantDosha}
+                    Dosha pattern from your AyurAI assessment.
+                  </p>
+
+                </div>
+
+              )}
 
 
             {/* INGREDIENTS */}

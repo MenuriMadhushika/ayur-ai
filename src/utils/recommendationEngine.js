@@ -1,118 +1,166 @@
-// =====================================================
-// AYURAI — RECOMMENDATION ENGINE
-// =====================================================
+/* =========================================================
+   AYURAI — SKIN RECOMMENDATION ENGINE
+   Ayurvedic-inspired recommendation system
+   ========================================================= */
 
-// =====================================================
-// NORMALIZE VALUES
-// =====================================================
+
+/* =========================================================
+   NORMALIZE VALUES
+   ========================================================= */
 
 const normalize = (value) => {
+  if (!value) return "";
 
-  if (!value) {
-    return "";
-  }
-
-  return value
-    .toString()
+  return String(value)
     .trim()
     .toLowerCase();
-
 };
 
 
-// =====================================================
-// DOSHA CARE
-// =====================================================
+/* =========================================================
+   DOSHA NORMALIZER
+   ========================================================= */
 
-const doshaCare = {
+const normalizeDosha = (dosha) => {
 
-  vata: {
+  const value = normalize(dosha);
 
-    focus:
-      "hydration and gentle nourishment",
-
-    tips: [
-      "Use a gentle cleanser and avoid over-cleansing.",
-      "Choose a nourishing moisturizer to help maintain skin comfort.",
-      "Prefer simple skincare routines with minimal irritation."
-    ]
-
-  },
-
-
-  pitta: {
-
-    focus:
-      "calming and cooling care",
-
-    tips: [
-      "Choose gentle, fragrance-free skincare where possible.",
-      "Avoid very hot water and harsh exfoliation.",
-      "Use soothing hydration to support skin comfort."
-    ]
-
-  },
-
-
-  kapha: {
-
-    focus:
-      "light cleansing and balance",
-
-    tips: [
-      "Use a gentle cleanser to remove excess oil.",
-      "Choose lightweight, non-comedogenic hydration.",
-      "Avoid repeatedly washing the skin to remove oil."
-    ]
-
+  if (value.includes("vata")) {
+    return "vata";
   }
 
+  if (value.includes("pitta")) {
+    return "pitta";
+  }
+
+  if (value.includes("kapha")) {
+    return "kapha";
+  }
+
+  return null;
 };
 
 
-// =====================================================
-// SKIN TYPE CARE
-// =====================================================
+/* =========================================================
+   SKIN TYPE NORMALIZER
+   ========================================================= */
 
-const skinCare = {
+const normalizeSkinType = (skinType) => {
+
+  const value = normalize(skinType);
+
+  if (value.includes("dry")) {
+    return "dry";
+  }
+
+  if (value.includes("oily")) {
+    return "oily";
+  }
+
+  if (value.includes("sensitive")) {
+    return "sensitive";
+  }
+
+  return "dry";
+};
+
+
+/* =========================================================
+   CONCERN NORMALIZER
+   ========================================================= */
+
+const normalizeConcerns = (concerns) => {
+
+  if (!Array.isArray(concerns)) {
+    return [];
+  }
+
+  return concerns.map((concern) =>
+    normalize(concern)
+  );
+
+};
+
+
+/* =========================================================
+   SKIN TYPE RECOMMENDATIONS
+   ========================================================= */
+
+const skinTypeRecommendations = {
+
+  /* =======================================================
+     DRY SKIN
+     ======================================================= */
 
   dry: {
 
-    focus:
-      "hydration and moisture support",
+    summary:
+      "Your skin appears to benefit from gentle hydration and moisture-supporting care. Focus on maintaining the skin barrier and avoiding overly harsh cleansing.",
 
     tips: [
-      "Apply moisturizer after cleansing.",
-      "Avoid harsh cleansers that may increase dryness.",
-      "Use lukewarm rather than very hot water."
+
+      "Use a gentle cleanser and avoid very hot water.",
+
+      "Apply a nourishing moisturizer while the skin is slightly damp.",
+
+      "Choose soothing ingredients such as aloe vera or turmeric-inspired botanical care.",
+
+      "Keep your daily skincare routine simple and consistent.",
+
+      "Use sunscreen during daytime exposure."
+
     ]
 
   },
 
 
-  sensitive: {
-
-    focus:
-      "calming and barrier-friendly care",
-
-    tips: [
-      "Keep your routine simple and gentle.",
-      "Avoid strong fragrances and harsh scrubs.",
-      "Introduce new products one at a time."
-    ]
-
-  },
-
+  /* =======================================================
+     OILY SKIN
+     ======================================================= */
 
   oily: {
 
-    focus:
-      "oil balance and lightweight hydration",
+    summary:
+      "Your skin appears to benefit from lightweight hydration and balanced cleansing. Avoid over-cleansing because this can leave the skin feeling irritated.",
 
     tips: [
-      "Use a gentle cleanser rather than aggressive oil-stripping products.",
-      "Choose lightweight, non-comedogenic moisturizer.",
-      "Avoid repeatedly cleansing the face throughout the day."
+
+      "Use a gentle cleanser without excessive scrubbing.",
+
+      "Choose lightweight, non-heavy moisturizers.",
+
+      "Keep the skincare routine simple and consistent.",
+
+      "Avoid frequently touching or squeezing visible blemishes.",
+
+      "Use sunscreen suitable for your skin type."
+
+    ]
+
+  },
+
+
+  /* =======================================================
+     SENSITIVE SKIN
+     ======================================================= */
+
+  sensitive: {
+
+    summary:
+      "Your skin appears to benefit from a gentle and minimal routine focused on comfort and barrier support.",
+
+    tips: [
+
+      "Introduce new skincare products one at a time.",
+
+      "Avoid aggressive scrubbing and harsh exfoliation.",
+
+      "Choose gentle, fragrance-free products where possible.",
+
+      "Use a calming moisturizer to support the skin barrier.",
+
+      "Patch-test new products before applying them broadly."
+
     ]
 
   }
@@ -120,71 +168,208 @@ const skinCare = {
 };
 
 
-// =====================================================
-// CONCERN CARE
-// =====================================================
+/* =========================================================
+   DOSHA RECOMMENDATIONS
+   ========================================================= */
 
-const concernCare = {
+const doshaRecommendations = {
 
-  dryness: {
-    tip:
-      "Support dry-looking areas with gentle hydration and moisturizer."
+  /* =======================================================
+     VATA
+     ======================================================= */
+
+  vata: {
+
+    summary:
+      "Vata-inspired care focuses on nourishing, grounding and moisture-supporting skincare.",
+
+    tips: [
+
+      "Prioritize gentle cleansing and regular moisturization.",
+
+      "Choose nourishing botanical ingredients.",
+
+      "Avoid excessively drying skincare routines.",
+
+      "Keep your skincare routine consistent."
+
+    ]
+
   },
 
-  blemish: {
-    tip:
-      "Keep the routine gentle and avoid picking or squeezing visible blemishes."
+
+  /* =======================================================
+     PITTA
+     ======================================================= */
+
+  pitta: {
+
+    summary:
+      "Pitta-inspired care focuses on calming and soothing the skin while avoiding excessive irritation.",
+
+    tips: [
+
+      "Prefer gentle and cooling skincare routines.",
+
+      "Avoid excessive heat and aggressive exfoliation.",
+
+      "Choose soothing botanical ingredients.",
+
+      "Protect your skin from strong sun exposure."
+
+    ]
+
   },
 
-  redness: {
-    tip:
-      "Focus on calming care and avoid harsh exfoliation."
-  },
 
-  sensitivity: {
-    tip:
-      "Use a simple routine and avoid introducing several new products at once."
-  },
+  /* =======================================================
+     KAPHA
+     ======================================================= */
 
-  oiliness: {
-    tip:
-      "Use lightweight hydration while maintaining gentle cleansing."
-  },
+  kapha: {
 
-  clogged: {
-    tip:
-      "Avoid heavy products if your skin tends to feel congested."
+    summary:
+      "Kapha-inspired care focuses on maintaining a fresh, balanced and lightweight skincare routine.",
+
+    tips: [
+
+      "Use gentle cleansing to remove excess surface oil.",
+
+      "Prefer lightweight moisturizers.",
+
+      "Avoid unnecessarily heavy skincare layers.",
+
+      "Keep your skincare routine consistent."
+
+    ]
+
   }
 
 };
 
 
-// =====================================================
-// FIND CONCERN MATCH
-// =====================================================
+/* =========================================================
+   CONCERN-SPECIFIC TIPS
+   ========================================================= */
 
-const getConcernTips = (concerns = []) => {
+const concernRecommendations = {
 
-  const tips = [];
+  /* -------------------------------------------------------
+     DRYNESS
+     ------------------------------------------------------- */
+
+  dryness: [
+
+    "Support hydration with a gentle moisturizer.",
+
+    "Avoid excessive cleansing and hot water."
+
+  ],
+
+
+  /* -------------------------------------------------------
+     BLEMISH
+     ------------------------------------------------------- */
+
+  blemish: [
+
+    "Avoid squeezing or picking visible blemishes.",
+
+    "Keep products and skincare tools clean."
+
+  ],
+
+
+  /* -------------------------------------------------------
+     ACNE
+     ------------------------------------------------------- */
+
+  acne: [
+
+    "Avoid picking or squeezing acne-prone areas.",
+
+    "Use a gentle cleansing routine and avoid harsh scrubbing."
+
+  ],
+
+
+  /* -------------------------------------------------------
+     REDNESS
+     ------------------------------------------------------- */
+
+  redness: [
+
+    "Avoid aggressive exfoliation.",
+
+    "Choose gentle products and monitor how your skin responds."
+
+  ],
+
+
+  /* -------------------------------------------------------
+     DEHYDRATION
+     ------------------------------------------------------- */
+
+  dehydration: [
+
+    "Use a moisturizer after cleansing.",
+
+    "Avoid unnecessarily harsh cleansing."
+
+  ],
+
+
+  /* -------------------------------------------------------
+     OILINESS
+     ------------------------------------------------------- */
+
+  oiliness: [
+
+    "Use lightweight skincare products.",
+
+    "Avoid repeatedly washing the skin throughout the day."
+
+  ],
+
+
+  /* -------------------------------------------------------
+     SENSITIVITY
+     ------------------------------------------------------- */
+
+  sensitivity: [
+
+    "Introduce new skincare products gradually.",
+
+    "Avoid unnecessary fragrance and harsh exfoliation."
+
+  ]
+
+};
+
+
+/* =========================================================
+   FIND CONCERN MATCH
+   ========================================================= */
+
+const getConcernTips = (concerns) => {
+
+  const matchedTips = [];
 
   concerns.forEach((concern) => {
 
-    const value =
-      normalize(concern);
-
-    Object.keys(concernCare).forEach(
+    Object.keys(concernRecommendations).forEach(
       (keyword) => {
 
-        if (
-          value.includes(keyword) &&
-          !tips.includes(
-            concernCare[keyword].tip
-          )
-        ) {
+        if (concern.includes(keyword)) {
 
-          tips.push(
-            concernCare[keyword].tip
-          );
+          concernRecommendations[keyword]
+            .forEach((tip) => {
+
+              if (!matchedTips.includes(tip)) {
+                matchedTips.push(tip);
+              }
+
+            });
 
         }
 
@@ -193,118 +378,143 @@ const getConcernTips = (concerns = []) => {
 
   });
 
-  return tips;
+  return matchedTips;
 
 };
 
 
-// =====================================================
-// GENERATE RECOMMENDATION
-// =====================================================
+/* =========================================================
+   REMOVE DUPLICATES
+   ========================================================= */
+
+const removeDuplicates = (items) => {
+
+  return [
+    ...new Set(
+      items.filter(Boolean)
+    )
+  ];
+
+};
+
+
+/* =========================================================
+   MAIN RECOMMENDATION FUNCTION
+   ========================================================= */
 
 export const generateRecommendation = ({
-  dosha,
-  skinType,
+  dosha = null,
+  skinType = "Dry",
   concerns = []
 }) => {
 
+  /* =======================================================
+     NORMALIZE INPUT
+     ======================================================= */
+
   const normalizedDosha =
-    normalize(dosha);
+    normalizeDosha(dosha);
 
   const normalizedSkinType =
-    normalize(skinType);
+    normalizeSkinType(skinType);
+
+  const normalizedConcerns =
+    normalizeConcerns(concerns);
 
 
-  // ===================================================
-  // GET DOSHA DATA
-  // ===================================================
+  /* =======================================================
+     GET SKIN TYPE DATA
+     ======================================================= */
 
-  const doshaData =
-    doshaCare[normalizedDosha] ||
-    doshaCare.vata;
-
-
-  // ===================================================
-  // GET SKIN TYPE DATA
-  // ===================================================
-
-  const skinData =
-    skinCare[normalizedSkinType] ||
-    skinCare.dry;
+  const skinRecommendation =
+    skinTypeRecommendations[
+      normalizedSkinType
+    ] ||
+    skinTypeRecommendations.dry;
 
 
-  // ===================================================
-  // CONCERN TIPS
-  // ===================================================
+  /* =======================================================
+     GET DOSHA DATA
+     ======================================================= */
+
+  const doshaRecommendation =
+    normalizedDosha
+      ? doshaRecommendations[
+          normalizedDosha
+        ]
+      : null;
+
+
+  /* =======================================================
+     GET CONCERN TIPS
+     ======================================================= */
 
   const concernTips =
-    getConcernTips(concerns);
+    getConcernTips(
+      normalizedConcerns
+    );
 
 
-  // ===================================================
-  // COMBINE TIPS
-  // ===================================================
+  /* =======================================================
+     COMBINE TIPS
+     ======================================================= */
 
-  const combinedTips = [
+  const combinedTips = removeDuplicates([
 
-    ...doshaData.tips,
+    ...skinRecommendation.tips,
 
-    ...skinData.tips,
+    ...(doshaRecommendation
+      ? doshaRecommendation.tips
+      : []),
 
     ...concernTips
 
-  ];
+  ]);
 
 
-  // ===================================================
-  // REMOVE DUPLICATES
-  // ===================================================
-
-  const uniqueTips =
-    [...new Set(combinedTips)];
-
-
-  // ===================================================
-  // LIMIT DISPLAY
-  // ===================================================
+  /* =======================================================
+     LIMIT DISPLAY TIPS
+     ======================================================= */
 
   const finalTips =
-    uniqueTips.slice(0, 6);
+    combinedTips.slice(0, 6);
 
 
-  // ===================================================
-  // SUMMARY
-  // ===================================================
+  /* =======================================================
+     CREATE SUMMARY
+     ======================================================= */
 
-  let summary;
+  let summary =
+    skinRecommendation.summary;
 
 
-  if (normalizedDosha && normalizedSkinType) {
+  /* =======================================================
+     ADD DOSHA CONTEXT
+     ======================================================= */
 
-    summary =
-      `Your ${normalizedDosha.charAt(0).toUpperCase() + normalizedDosha.slice(1)}-aligned profile with ${normalizedSkinType} skin suggests focusing on ${doshaData.focus} together with ${skinData.focus}.`;
-
-  } else if (normalizedDosha) {
-
-    summary =
-      `Your Ayurvedic profile appears aligned with ${normalizedDosha}. Focus on ${doshaData.focus}.`;
-
-  } else if (normalizedSkinType) {
+  if (doshaRecommendation) {
 
     summary =
-      `Your skin appears aligned with a ${normalizedSkinType} skin pattern. Focus on ${skinData.focus}.`;
-
-  } else {
-
-    summary =
-      "A gentle and consistent skincare routine may help support your skin."
+      `${skinRecommendation.summary} ${doshaRecommendation.summary}`;
 
   }
 
 
-  // ===================================================
-  // RETURN
-  // ===================================================
+  /* =======================================================
+     ADD CONCERN CONTEXT
+     ======================================================= */
+
+  if (normalizedConcerns.length > 0) {
+
+    summary +=
+      " The suggested routine also considers the visible characteristics identified in your uploaded image.";
+
+  }
+
+
+  /* =======================================================
+     RETURN RESULT
+     ======================================================= */
 
   return {
 
@@ -313,20 +523,88 @@ export const generateRecommendation = ({
     tips: finalTips,
 
     dosha:
-      normalizedDosha || null,
+      normalizedDosha
+        ? normalizedDosha.toUpperCase()
+        : null,
 
     skinType:
-      normalizedSkinType || null,
+      skinType
+        ? skinType
+        : "Dry",
 
-    concerns
+    concerns:
+      concerns
 
   };
 
 };
 
 
-// =====================================================
-// DEFAULT EXPORT
-// =====================================================
+/* =========================================================
+   QUICK PROFILE GENERATOR
+   ========================================================= */
+
+export const generateSkinProfile = ({
+  dosha = null,
+  skinType = "Dry",
+  concerns = [],
+  hydration = 68,
+  confidence = 86
+}) => {
+
+  const recommendation =
+    generateRecommendation({
+
+      dosha,
+
+      skinType,
+
+      concerns
+
+    });
+
+
+  return {
+
+    skinType,
+
+    hydration: {
+
+      level:
+        hydration >= 75
+          ? "Good hydration appearance"
+          : hydration >= 50
+            ? "Moderate hydration appearance"
+            : "Lower hydration appearance",
+
+      percentage:
+        hydration
+
+    },
+
+    concerns,
+
+    confidence,
+
+    recommendation:
+      recommendation.summary,
+
+    careTips:
+      recommendation.tips,
+
+    dosha:
+      recommendation.dosha,
+
+    completedAt:
+      new Date().toISOString()
+
+  };
+
+};
+
+
+/* =========================================================
+   EXPORT DEFAULT
+   ========================================================= */
 
 export default generateRecommendation;

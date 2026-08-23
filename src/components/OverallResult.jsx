@@ -2,655 +2,211 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./OverallResult.css";
 
-const overallData = {
+import {
+  getAssessmentStatus,
+  getSkinScanResult,
+  getDoshaResult,
+} from "../utils/assessmentStatus";
 
-  vata: {
-    dry: {
-      title: "Vata + Dry Skin",
-      summary:
-        "Your Ayurvedic profile appears aligned with Vata characteristics, while your skin analysis suggests a dry skin pattern. Your routine may benefit from gentle cleansing, hydration and moisture support.",
-      focus: [
-        "Deep hydration",
-        "Moisture-locking skincare",
-        "Gentle cleansing"
-      ],
-      remedies: [
-        "Apply a small amount of pure aloe vera gel for soothing hydration.",
-        "Use a gentle, fragrance-free moisturizer after cleansing.",
-        "Stay hydrated throughout the day and include nourishing foods in your diet."
-      ]
-    },
-
-    sensitive: {
-      title: "Vata + Sensitive Skin",
-      summary:
-        "Your results show a Vata-aligned Ayurvedic profile together with sensitive skin characteristics. A simple, gentle routine may help support your skin barrier.",
-      focus: [
-        "Gentle skincare",
-        "Calming hydration",
-        "Barrier support"
-      ],
-      remedies: [
-        "Use plain aloe vera gel if your skin tolerates it.",
-        "Avoid harsh scrubs and strongly fragranced products.",
-        "Keep your skincare routine simple and consistent."
-      ]
-    },
-
-    oily: {
-      title: "Vata + Oily Skin",
-      summary:
-        "Your results combine Vata characteristics with visible oily skin characteristics. Focus on maintaining hydration without using overly heavy products.",
-      focus: [
-        "Lightweight hydration",
-        "Gentle cleansing",
-        "Balanced skincare"
-      ],
-      remedies: [
-        "Use a lightweight, non-comedogenic moisturizer.",
-        "Cleanse gently without over-washing.",
-        "Choose simple, soothing skincare rather than harsh oil-stripping products."
-      ]
-    }
-  },
-
-  pitta: {
-    dry: {
-      title: "Pitta + Dry Skin",
-      summary:
-        "Your results suggest Pitta characteristics together with dry skin characteristics. Your routine may benefit from calming hydration while avoiding harsh or irritating products.",
-      focus: [
-        "Cooling hydration",
-        "Gentle cleansing",
-        "Skin calming"
-      ],
-      remedies: [
-        "Use plain aloe vera gel if your skin tolerates it.",
-        "Apply a gentle moisturizer while the skin is slightly damp.",
-        "Avoid very hot water when washing your face."
-      ]
-    },
-
-    sensitive: {
-      title: "Pitta + Sensitive Skin",
-      summary:
-        "Your results show Pitta characteristics together with sensitive skin characteristics. Calming and minimal skincare may be especially appropriate to explore.",
-      focus: [
-        "Calming care",
-        "Gentle products",
-        "Cooling hydration"
-      ],
-      remedies: [
-        "Use a simple fragrance-free moisturizer.",
-        "Try a cool compress when the skin feels warm or irritated.",
-        "Avoid harsh exfoliation and heavily fragranced products."
-      ]
-    },
-
-    oily: {
-      title: "Pitta + Oily Skin",
-      summary:
-        "Your Ayurvedic profile appears aligned with Pitta while your skin analysis suggests an oily pattern. Focus on gentle cleansing, lightweight hydration and calming care.",
-      focus: [
-        "Gentle cleansing",
-        "Light hydration",
-        "Calming skincare"
-      ],
-      remedies: [
-        "Use a gentle cleanser rather than aggressive oil-stripping products.",
-        "Choose a lightweight moisturizer.",
-        "Keep the skin cool and avoid very hot water."
-      ]
-    }
-  },
-
-  kapha: {
-    dry: {
-      title: "Kapha + Dry Skin",
-      summary:
-        "Your results combine Kapha characteristics with dry skin characteristics. Your routine may benefit from gentle cleansing together with sufficient hydration.",
-      focus: [
-        "Balanced hydration",
-        "Gentle cleansing",
-        "Skin nourishment"
-      ],
-      remedies: [
-        "Use a gentle cleanser followed by a lightweight moisturizer.",
-        "Avoid excessive cleansing that may increase dryness.",
-        "Drink enough water and maintain a balanced daily routine."
-      ]
-    },
-
-    sensitive: {
-      title: "Kapha + Sensitive Skin",
-      summary:
-        "Your results suggest Kapha characteristics together with sensitive skin. Focus on keeping your routine simple, gentle and balanced.",
-      focus: [
-        "Gentle cleansing",
-        "Calming care",
-        "Light hydration"
-      ],
-      remedies: [
-        "Use fragrance-free and gentle skincare products.",
-        "Avoid harsh scrubbing.",
-        "Use a lightweight moisturizer to support the skin barrier."
-      ]
-    },
-
-    oily: {
-      title: "Kapha + Oily Skin",
-      summary:
-        "Your results show Kapha characteristics together with oily skin characteristics. Your skincare routine may benefit from gentle cleansing and lightweight hydration.",
-      focus: [
-        "Oil balance",
-        "Gentle cleansing",
-        "Light hydration"
-      ],
-      remedies: [
-        "Cleanse gently twice daily if appropriate for your skin.",
-        "Choose lightweight, non-comedogenic skincare.",
-        "Avoid repeatedly washing the face to remove oil."
-      ]
-    }
-  }
-
-};
-
-function OverallResult() {
-
+const OverallResult = () => {
   const navigate = useNavigate();
 
-  const [doshaResult, setDoshaResult] = useState(null);
-  const [skinResult, setSkinResult] = useState(null);
+  const [skinScan, setSkinScan] = useState(null);
+  const [dosha, setDosha] = useState(null);
 
   useEffect(() => {
+    const status = getAssessmentStatus();
 
-    // ---------------------------------------------
-    // GET DOSHA RESULT
-    // ---------------------------------------------
-
-    const savedDosha =
-      localStorage.getItem("ayuraiDoshaResult");
-
-    if (savedDosha) {
-
-      try {
-
-        setDoshaResult(
-          JSON.parse(savedDosha)
-        );
-
-      } catch (error) {
-
-        console.error(
-          "Invalid Dosha result",
-          error
-        );
-
+    if (!status.bothCompleted) {
+      if (!status.skinScanCompleted) {
+        navigate("/skin-scan", { replace: true });
+        return;
       }
 
-    }
-
-    // ---------------------------------------------
-    // GET SKIN RESULT
-    // ---------------------------------------------
-
-    const savedSkin =
-      localStorage.getItem("ayuraiSkinAnalysis");
-
-    if (savedSkin) {
-
-      try {
-
-        setSkinResult(
-          JSON.parse(savedSkin)
-        );
-
-      } catch (error) {
-
-        console.error(
-          "Invalid skin analysis",
-          error
-        );
-
+      if (!status.doshaCompleted) {
+        navigate("/dosha-test", { replace: true });
+        return;
       }
-
     }
 
-  }, []);
+    setSkinScan(getSkinScanResult());
+    setDosha(getDoshaResult());
+  }, [navigate]);
 
-
-  // =================================================
-  // MISSING RESULTS
-  // =================================================
-
-  if (!doshaResult || !skinResult) {
-
+  if (!skinScan || !dosha) {
     return (
-
-      <div className="overall-page">
-
-        <div className="overall-empty">
-
-          <span>
-            AYURAI • PERSONAL PROFILE
-          </span>
-
-          <h1>
-            Complete Your
-            <br />
-            AyurAI Analysis
-          </h1>
-
-          <p>
-            Complete both your Dosha Test and
-            Skin Scan to receive your combined
-            personalized result.
-          </p>
-
-          <div className="overall-empty-actions">
-
-            {!doshaResult && (
-
-              <button
-                onClick={() =>
-                  navigate("/dosha-test")
-                }
-              >
-                Take Dosha Test →
-              </button>
-
-            )}
-
-            {!skinResult && (
-
-              <button
-                onClick={() =>
-                  navigate("/skin-scan")
-                }
-              >
-                Analyze My Skin →
-              </button>
-
-            )}
-
-          </div>
-
+      <main className="overall-result-page">
+        <div className="overall-result-loading">
+          Loading your Ayurvedic assessment...
         </div>
-
-      </div>
-
+      </main>
     );
-
   }
 
-
-  // =================================================
-  // GET VALUES
-  // =================================================
-
-  const dosha =
-    doshaResult.dominant?.toLowerCase();
-
-  const skinType =
-    skinResult.skinType?.toLowerCase();
-
-
-  // =================================================
-  // SAFETY FALLBACK
-  // =================================================
-
-  const validDosha =
-    ["vata", "pitta", "kapha"].includes(dosha)
-      ? dosha
-      : "vata";
-
-  const validSkinType =
-    ["dry", "sensitive", "oily"].includes(skinType)
-      ? skinType
-      : "dry";
-
-
-  const profile =
-    overallData[validDosha][validSkinType];
-
-
-  // =================================================
-  // RENDER
-  // =================================================
-
   return (
+    <main className="overall-result-page">
 
-    <div className="overall-page">
+      <section className="overall-result-header">
 
-      <div className="overall-container">
+        <span className="overall-label">
+          AYURAI · OVERALL ASSESSMENT
+        </span>
 
+        <h1>
+          Your Ayurvedic Skin Profile
+        </h1>
 
-        {/* ==========================================
-            HEADER
-        ========================================== */}
+        <p>
+          Your Skin Scan and Dosha Test have been combined into
+          one educational Ayurvedic assessment.
+        </p>
 
-        <div className="overall-header">
+        <small>
+          AI-estimated and educational only — not a medical diagnosis.
+        </small>
 
-          <span className="overall-label">
-            AYURAI • PERSONALIZED SKIN PROFILE
-          </span>
-
-          <h1>
-            Your Complete
-            <br />
-            <span>Ayurvedic Skin Profile</span>
-          </h1>
-
-          <p>
-            Your Dosha pattern and visible skin
-            characteristics have been combined
-            to create a personalized AyurAI
-            wellness profile.
-          </p>
-
-        </div>
+      </section>
 
 
-        {/* ==========================================
-            PROFILE SUMMARY
-        ========================================== */}
+      <section className="overall-result-grid">
 
-        <div className="profile-summary">
+        {/* DOSHA */}
 
-          <div className="profile-item">
+        <article className="overall-card">
 
-            <span>
-              AYURVEDIC DOSHA
-            </span>
-
-            <strong>
-              {doshaResult.dominant}
-            </strong>
-
-            <small>
-              {doshaResult.percentages?.[
-                doshaResult.dominant
-              ]}% alignment
-            </small>
-
-          </div>
-
-
-          <div className="profile-divider"></div>
-
-
-          <div className="profile-item">
-
-            <span>
-              SKIN TYPE
-            </span>
-
-            <strong>
-              {skinResult.skinType}
-            </strong>
-
-            <small>
-              Based on visible characteristics
-            </small>
-
-          </div>
-
-        </div>
-
-
-        {/* ==========================================
-            OVERALL RESULT
-        ========================================== */}
-
-        <div className="overall-result-card">
-
-          <span className="result-small-label">
-            YOUR COMBINED RESULT
+          <span className="card-label">
+            AYURVEDIC DOSHA
           </span>
 
           <h2>
-            {profile.title}
+            {dosha.dominantDosha}
           </h2>
 
           <p>
-            {profile.summary}
+            Your responses suggest {dosha.dominantDosha} as the
+            dominant Dosha pattern in this assessment.
           </p>
 
-        </div>
-
-
-        {/* ==========================================
-            SKIN CONCERNS
-        ========================================== */}
-
-        {skinResult.concerns?.length > 0 && (
-
-          <section className="overall-section">
-
-            <span className="result-small-label">
-              VISIBLE CONCERNS
-            </span>
-
-            <h2>
-              What We Noticed
-            </h2>
-
-            <div className="overall-concerns">
-
-              {skinResult.concerns.map(
-                (concern, index) => (
-
-                  <div
-                    className="overall-concern"
-                    key={index}
-                  >
-
-                    <span>
-                      0{index + 1}
-                    </span>
-
-                    <strong>
-                      {concern}
-                    </strong>
-
-                  </div>
-
-                )
-              )}
-
-            </div>
-
-          </section>
-
-        )}
-
-
-        {/* ==========================================
-            PERSONALIZED FOCUS
-        ========================================== */}
-
-        <section className="overall-section">
-
-          <span className="result-small-label">
-            PERSONALIZED CARE
-          </span>
-
-          <h2>
-            Your Skincare Focus
-          </h2>
-
-          <p className="section-intro">
-            These areas are suggested from
-            your combined Dosha and skin profile.
-          </p>
-
-          <div className="focus-grid">
-
-            {profile.focus.map(
-              (item, index) => (
-
-                <div
-                  className="focus-card"
-                  key={item}
-                >
-
-                  <span>
-                    0{index + 1}
-                  </span>
-
-                  <h3>
-                    {item}
-                  </h3>
-
-                  <p>
-                    A gentle approach that may
-                    complement your {profile.title}
-                    profile.
-                  </p>
-
-                </div>
-
-              )
-            )}
-
-          </div>
-
-        </section>
-
-
-        {/* ==========================================
-            HOME REMEDIES
-        ========================================== */}
-
-        <section className="overall-section remedies-section">
-
-          <span className="result-small-label">
-            AYURVEDIC-INSPIRED HOME CARE
-          </span>
-
-          <h2>
-            Simple Home Remedies
-          </h2>
-
-          <p className="section-intro">
-            Gentle wellness practices you may
-            explore as part of your skincare routine.
-          </p>
-
-
-          <div className="remedy-list">
-
-            {profile.remedies.map(
-              (remedy, index) => (
-
-                <div
-                  className="remedy-card"
-                  key={index}
-                >
-
-                  <div className="remedy-number">
-                    0{index + 1}
-                  </div>
-
-                  <div>
-
-                    <span>
-                      HOME CARE
-                    </span>
-
-                    <p>
-                      {remedy}
-                    </p>
-
-                  </div>
-
-                </div>
-
-              )
-            )}
-
-          </div>
-
-        </section>
-
-
-        {/* ==========================================
-            HYDRATION
-        ========================================== */}
-
-        {skinResult.hydration && (
-
-          <section className="hydration-summary">
+          <div className="dosha-percentages">
 
             <div>
-
-              <span>
-                HYDRATION APPEARANCE
-              </span>
-
-              <h3>
-                {skinResult.hydration.level}
-              </h3>
-
+              <span>Vata</span>
+              <strong>{dosha.percentages?.Vata || 0}%</strong>
             </div>
 
-            <strong>
-              {skinResult.hydration.percentage}%
-            </strong>
+            <div>
+              <span>Pitta</span>
+              <strong>{dosha.percentages?.Pitta || 0}%</strong>
+            </div>
 
-          </section>
+            <div>
+              <span>Kapha</span>
+              <strong>{dosha.percentages?.Kapha || 0}%</strong>
+            </div>
 
-        )}
+          </div>
+
+        </article>
 
 
-        {/* ==========================================
-            ACTIONS
-        ========================================== */}
+        {/* SKIN */}
 
-        <div className="overall-actions">
+        <article className="overall-card">
 
-          <button
-            className="overall-primary"
-            onClick={() =>
-              navigate("/profile")
-            }
-          >
-            Save to My Profile →
-          </button>
+          <span className="card-label">
+            AI SKIN SCAN
+          </span>
 
-          <button
-            className="overall-secondary"
-            onClick={() =>
-              navigate("/products")
-            }
-          >
-            Explore Recommended Products
-          </button>
+          <h2>
+            Visible Characteristics
+          </h2>
 
+          <p>
+            The Skin Scan provides AI-estimated observations
+            from the uploaded image.
+          </p>
+
+          <div className="skin-observations">
+
+            <div>
+              <span>Skin observation</span>
+              <strong>
+                {skinScan.skinType || "AI Estimated"}
+              </strong>
+            </div>
+
+            <div>
+              <span>Hydration estimate</span>
+              <strong>
+                {skinScan.hydration
+                  ? `${skinScan.hydration}%`
+                  : "Not available"}
+              </strong>
+            </div>
+
+            <div>
+              <span>Texture</span>
+              <strong>
+                {skinScan.texture || "Visible characteristics"}
+              </strong>
+            </div>
+
+          </div>
+
+        </article>
+
+      </section>
+
+
+      {/* COMBINED RESULT */}
+
+      <section className="combined-result-card">
+
+        <span className="card-label">
+          YOUR AYURVEDIC DIRECTION
+        </span>
+
+        <h2>
+          {dosha.dominantDosha}-informed skincare guidance
+        </h2>
+
+        <p>
+          AyurAI combines your AI-estimated visible skin
+          characteristics with your Ayurvedic Dosha assessment
+          to provide personalized educational guidance.
+        </p>
+
+        <div className="result-notice">
+          These results are estimates based on your responses
+          and uploaded image. They should not be treated as a
+          medical diagnosis.
         </div>
 
+      </section>
 
-        {/* ==========================================
-            DISCLAIMER
-        ========================================== */}
 
-        <p className="overall-disclaimer">
+      {/* ACTIONS */}
 
-          AyurAI provides educational and
-          Ayurvedic-inspired skincare guidance.
-          This combined profile is not a medical
-          diagnosis and should not replace advice
-          from a qualified healthcare professional.
+      <div className="overall-result-actions">
 
-        </p>
+        <button
+          type="button"
+          onClick={() => navigate("/home-remedies")}
+        >
+          EXPLORE HOME REMEDIES →
+        </button>
+
+        <button
+          type="button"
+          onClick={() => navigate("/")}
+        >
+          BACK TO HOME
+        </button>
 
       </div>
 
-    </div>
-
+    </main>
   );
-
-}
+};
 
 export default OverallResult;

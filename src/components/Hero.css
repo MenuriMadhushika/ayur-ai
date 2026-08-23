@@ -1,965 +1,502 @@
-/* =========================================================
-   AYURAI — PREMIUM HERO
-   Cream + Gold Ayurvedic Luxury
-========================================================= */
+/* ================================
+   AYURAI HERO
+   Ayurvedic Energy Flow
+================================ */
 
 .hero {
   position: relative;
-
-  min-height: 720px;
-  max-width: 1400px;
-
-  margin: 0 auto;
-
-  padding: 110px 70px 100px;
-
-  display: grid;
-
-  grid-template-columns: 1.05fr 0.95fr;
-
+  min-height: 88vh;
+  display: flex;
   align-items: center;
-
-  gap: 70px;
-
   overflow: hidden;
-
-  background: #f7f3eb;
-
-  color: #25231f;
-}
-
-
-/* =========================================================
-   BACKGROUND DECORATION
-========================================================= */
-
-.hero::before {
-  content: "";
-
-  position: absolute;
-
-  width: 520px;
-  height: 520px;
-
-  right: -200px;
-  top: -200px;
-
-  border-radius: 50%;
-
   background:
-    radial-gradient(
-      circle,
-      rgba(184, 149, 77, 0.14),
-      rgba(184, 149, 77, 0.03),
-      transparent 70%
-    );
+    radial-gradient(circle at 75% 45%, rgba(196, 160, 74, 0.10), transparent 32%),
+    radial-gradient(circle at 20% 80%, rgba(118, 139, 103, 0.08), transparent 30%),
+    #f8f4eb;
+  color: #292722;
+}
 
-  pointer-events: none;
+.hero-container {
+  width: min(1200px, 92%);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  align-items: center;
+  gap: 40px;
+  padding: 80px 0;
 }
 
 
-.hero::after {
-  content: "";
-
-  position: absolute;
-
-  width: 420px;
-  height: 420px;
-
-  left: -220px;
-  bottom: -220px;
-
-  border-radius: 50%;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(184, 149, 77, 0.07),
-      transparent 70%
-    );
-
-  pointer-events: none;
-}
-
-
-/* =========================================================
-   SUBTLE GOLD ORNAMENT
-========================================================= */
-
-.hero {
-  isolation: isolate;
-}
-
-.hero-content,
-.ayurvision-card {
-  position: relative;
-  z-index: 2;
-}
-
-
-/* =========================================================
-   HERO CONTENT
-========================================================= */
+/* ================================
+   LEFT CONTENT
+================================ */
 
 .hero-content {
-  max-width: 650px;
+  position: relative;
+  z-index: 5;
+  max-width: 570px;
 }
 
-
-/* =========================================================
-   LABEL
-========================================================= */
-
-.hero-label {
+.hero-eyebrow {
   display: inline-flex;
-
   align-items: center;
-
-  gap: 10px;
-
-  color: #a17b35;
-
+  gap: 9px;
+  margin-bottom: 20px;
+  font-family: Arial, sans-serif;
   font-size: 11px;
-
-  font-weight: 600;
-
-  letter-spacing: 3px;
-
-  margin-bottom: 25px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  color: #9b7b32;
 }
 
-
-.hero-label::before {
+.hero-eyebrow::before {
   content: "";
-
-  width: 30px;
-
+  width: 28px;
   height: 1px;
-
-  background: #b8954d;
+  background: #b49755;
 }
-
-
-/* =========================================================
-   HERO TITLE
-========================================================= */
 
 .hero h1 {
   margin: 0;
-
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
-
-  font-size:
-    clamp(
-      58px,
-      7vw,
-      92px
-    );
-
-  line-height: 0.92;
-
-  font-weight: 400;
-
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(48px, 6vw, 76px);
+  line-height: 0.98;
+  font-weight: 500;
   letter-spacing: -2.5px;
-
-  color: #25231f;
+  color: #292722;
 }
 
-
 .hero h1 span {
-  color: #a17b35;
-
-  position: relative;
-
+  color: #9b7b32;
   font-style: italic;
 }
 
-
-/* =========================================================
-   GOLD UNDERLINE
-========================================================= */
-
-.hero h1 span::after {
-  content: "";
-
-  position: absolute;
-
-  left: 5px;
-  right: 5px;
-
-  bottom: -9px;
-
-  height: 2px;
-
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      #b8954d,
-      transparent
-    );
-
-  opacity: 0.8;
+.hero-content p {
+  max-width: 510px;
+  margin: 28px 0 34px;
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.8;
+  color: #6d685e;
 }
 
 
-/* =========================================================
-   DESCRIPTION
-========================================================= */
-
-.hero-content > p {
-  max-width: 590px;
-
-  margin-top: 35px;
-
-  color: #777168;
-
-  font-size: 16px;
-
-  line-height: 1.85;
-}
-
-
-/* =========================================================
+/* ================================
    BUTTONS
-========================================================= */
+================================ */
 
-.hero-buttons {
+.hero-actions {
   display: flex;
-
   align-items: center;
-
-  gap: 15px;
-
-  margin-top: 38px;
-
+  gap: 14px;
   flex-wrap: wrap;
 }
 
-
-/* =========================================================
-   PRIMARY BUTTON
-========================================================= */
-
-.hero-primary-button {
-  min-height: 56px;
-
-  padding: 0 27px;
-
-  border:
-    1px solid
-    #a17b35;
-
-  border-radius: 3px;
-
-  background: #b8954d;
-
-  color: #fffdf8;
-
-  display: inline-flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  gap: 16px;
-
-  font-size: 11px;
-
-  font-weight: 600;
-
-  letter-spacing: 1.5px;
-
+.hero-primary-btn,
+.hero-secondary-btn {
+  border: none;
   cursor: pointer;
-
-  box-shadow:
-    0 10px 28px
-    rgba(100, 75, 30, 0.15);
-
+  font-family: Arial, sans-serif;
   transition:
     transform 0.3s ease,
-    background 0.3s ease,
-    box-shadow 0.3s ease;
+    box-shadow 0.3s ease,
+    background 0.3s ease;
 }
 
-
-.hero-primary-button:hover {
-  background: #98742e;
-
-  transform: translateY(-3px);
-
-  box-shadow:
-    0 15px 35px
-    rgba(100, 75, 30, 0.22);
-}
-
-
-.button-arrow {
-  font-size: 20px;
-
-  transition:
-    transform 0.3s ease;
-}
-
-
-.hero-primary-button:hover .button-arrow {
-  transform: translateX(5px);
-}
-
-
-/* =========================================================
-   SECONDARY BUTTON
-========================================================= */
-
-.hero-secondary-button {
-  min-height: 56px;
-
-  padding: 0 25px;
-
-  border:
-    1px solid
-    #d2c7b6;
-
-  border-radius: 3px;
-
-  background: #fffdf8;
-
-  color: #655f56;
-
-  display: inline-flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  gap: 14px;
-
-  font-size: 11px;
-
-  font-weight: 600;
-
-  letter-spacing: 1.5px;
-
-  cursor: pointer;
-
-  transition:
-    all 0.3s ease;
-}
-
-
-.hero-secondary-button:hover {
-  border-color: #b8954d;
-
-  background: #faf6ed;
-
-  color: #a17b35;
-
-  transform: translateY(-3px);
-
-  box-shadow:
-    0 10px 25px
-    rgba(90, 70, 35, 0.07);
-}
-
-
-.button-spark {
-  color: #b8954d;
-
-  font-size: 17px;
-}
-
-
-/* =========================================================
-   HERO FEATURES
-========================================================= */
-
-.hero-features {
+.hero-primary-btn {
   display: flex;
-
   align-items: center;
-
-  gap: 24px;
-
-  margin-top: 35px;
-
-  flex-wrap: wrap;
-}
-
-
-.hero-features span {
-  display: flex;
-
-  align-items: center;
-
-  gap: 7px;
-
-  color: #8b8378;
-
-  font-size: 10px;
-
-  font-weight: 500;
-
-  letter-spacing: 0.5px;
-}
-
-
-.hero-features b {
-  color: #b8954d;
-
-  font-size: 12px;
-}
-
-
-/* =========================================================
-   AYURVISION AI CARD
-========================================================= */
-
-.ayurvision-card {
-  width: 100%;
-
-  max-width: 520px;
-
-  height: 540px;
-
-  margin-left: auto;
-
-  border:
-    1px solid
-    #e1d8c8;
-
+  gap: 18px;
+  padding: 15px 21px;
   border-radius: 4px;
+  background: #292722;
+  color: #fffdf7;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
 
-  background:
-    linear-gradient(
-      145deg,
-      #fffdf8,
-      #f4eee3
-    );
+.hero-primary-btn span {
+  font-size: 18px;
+  transition: transform 0.3s ease;
+}
 
-  overflow: hidden;
+.hero-primary-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(41, 39, 34, 0.18);
+}
 
-  cursor: pointer;
+.hero-primary-btn:hover span {
+  transform: translateX(4px);
+}
 
-  box-shadow:
-    0 25px 70px
-    rgba(70, 55, 30, 0.10);
+.hero-secondary-btn {
+  padding: 14px 20px;
+  border: 1px solid rgba(155, 123, 50, 0.35);
+  border-radius: 4px;
+  background: transparent;
+  color: #6f5a2d;
+  font-size: 13px;
+}
 
-  transition:
-    transform 0.5s ease,
-    box-shadow 0.5s ease;
+.hero-secondary-btn:hover {
+  transform: translateY(-3px);
+  background: rgba(180, 151, 85, 0.08);
 }
 
 
-.ayurvision-card:hover {
-  transform:
-    translateY(-8px);
+/* ================================
+   HERO VISUAL
+================================ */
 
-  box-shadow:
-    0 35px 85px
-    rgba(70, 55, 30, 0.16);
+.hero-visual {
+  position: relative;
+  min-height: 590px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 
-/* =========================================================
-   GOLD CORNER DETAIL
-========================================================= */
+/* ================================
+   BACKGROUND GLOW
+================================ */
 
-.ayurvision-card::before {
-  content: "";
-
+.energy-glow {
   position: absolute;
-
-  width: 100px;
-  height: 100px;
-
-  top: -50px;
-  right: -50px;
-
+  width: 440px;
+  height: 440px;
   border-radius: 50%;
-
-  border:
-    1px solid
-    rgba(184, 149, 77, 0.25);
-}
-
-
-/* =========================================================
-   AI GLOW
-========================================================= */
-
-.ai-glow {
-  position: absolute;
-
-  width: 330px;
-  height: 330px;
-
-  top: 55px;
-
-  left: 50%;
-
-  transform:
-    translateX(-50%);
-
-  border-radius: 50%;
-
   background:
     radial-gradient(
       circle,
-      rgba(184, 149, 77, 0.18),
-      rgba(184, 149, 77, 0.06),
-      transparent 70%
+      rgba(190, 155, 69, 0.14) 0%,
+      rgba(190, 155, 69, 0.06) 40%,
+      transparent 72%
     );
-
   filter: blur(4px);
-
-  animation:
-    aiGlowPulse 4s
-    ease-in-out
-    infinite;
+  animation: energyBreath 5s ease-in-out infinite;
 }
 
-
-@keyframes aiGlowPulse {
-
+@keyframes energyBreath {
   0%,
   100% {
-    transform:
-      translateX(-50%)
-      scale(0.95);
-
-    opacity: 0.65;
+    transform: scale(0.95);
+    opacity: 0.7;
   }
 
   50% {
-    transform:
-      translateX(-50%)
-      scale(1.08);
-
+    transform: scale(1.08);
     opacity: 1;
   }
 }
 
 
-/* =========================================================
-   SCAN RINGS
-========================================================= */
+/* ================================
+   ENERGY ORBITS
+================================ */
 
-.scan-ring {
+.energy-orbit {
   position: absolute;
-
-  left: 50%;
-
-  top: 190px;
-
-  transform:
-    translate(-50%, -50%);
-
-  border:
-    1px solid
-    rgba(184, 149, 77, 0.22);
-
+  border: 1px solid rgba(166, 137, 63, 0.28);
   border-radius: 50%;
-
   pointer-events: none;
 }
 
+.energy-orbit-one {
+  width: 470px;
+  height: 470px;
+  transform: rotate(-18deg);
+  animation: orbitRotate 18s linear infinite;
+}
 
-.ring-one {
-  width: 300px;
+.energy-orbit-two {
+  width: 390px;
+  height: 520px;
+  transform: rotate(34deg);
+  border-color: rgba(112, 133, 98, 0.22);
+  animation: orbitRotateReverse 22s linear infinite;
+}
+
+.energy-orbit-three {
+  width: 540px;
   height: 300px;
+  transform: rotate(-35deg);
+  border-color: rgba(180, 151, 85, 0.17);
+  animation: orbitRotate 26s linear infinite;
+}
 
-  animation:
-    ringPulse 5s
-    ease-in-out
-    infinite;
+@keyframes orbitRotate {
+  from {
+    transform: rotate(-18deg);
+  }
+
+  to {
+    transform: rotate(342deg);
+  }
+}
+
+@keyframes orbitRotateReverse {
+  from {
+    transform: rotate(34deg);
+  }
+
+  to {
+    transform: rotate(-326deg);
+  }
 }
 
 
-.ring-two {
-  width: 240px;
-  height: 240px;
+/* ================================
+   ENERGY PARTICLES
+================================ */
 
-  border-color:
-    rgba(161, 123, 53, 0.30);
-
-  animation:
-    ringPulse 5s
-    ease-in-out
-    0.8s
-    infinite;
+.energy-particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #b49755;
+  box-shadow: 0 0 12px rgba(180, 151, 85, 0.8);
+  z-index: 3;
 }
 
-
-.ring-three {
-  width: 180px;
-  height: 180px;
-
-  border-color:
-    rgba(184, 149, 77, 0.35);
-
-  animation:
-    ringPulse 5s
-    ease-in-out
-    1.6s
-    infinite;
+.particle-one {
+  top: 18%;
+  left: 20%;
+  animation: particleFloatOne 5s ease-in-out infinite;
 }
 
+.particle-two {
+  top: 75%;
+  right: 15%;
+  animation: particleFloatTwo 6s ease-in-out infinite;
+}
 
-@keyframes ringPulse {
+.particle-three {
+  top: 12%;
+  right: 27%;
+  width: 4px;
+  height: 4px;
+  background: #7b8e6c;
+  animation: particleFloatThree 7s ease-in-out infinite;
+}
 
+.particle-four {
+  bottom: 15%;
+  left: 23%;
+  width: 4px;
+  height: 4px;
+  background: #7b8e6c;
+  animation: particleFloatFour 5.5s ease-in-out infinite;
+}
+
+@keyframes particleFloatOne {
   0%,
   100% {
-    opacity: 0.35;
-
-    transform:
-      translate(-50%, -50%)
-      scale(0.96);
+    transform: translate(0, 0);
   }
 
   50% {
-    opacity: 1;
+    transform: translate(25px, -30px);
+  }
+}
 
-    transform:
-      translate(-50%, -50%)
-      scale(1.03);
+@keyframes particleFloatTwo {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(-30px, -25px);
+  }
+}
+
+@keyframes particleFloatThree {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(-20px, 30px);
+  }
+}
+
+@keyframes particleFloatFour {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(25px, 20px);
   }
 }
 
 
-/* =========================================================
-   AI FACE
-========================================================= */
+/* ================================
+   MAIN AI CARD
+================================ */
 
-.ai-face {
-  position: absolute;
-
-  width: 180px;
-
-  height: 230px;
-
-  top: 75px;
-
-  left: 50%;
-
-  transform:
-    translateX(-50%);
-
-  z-index: 4;
-}
-
-
-.face-outline {
+.hero-ai-card {
   position: relative;
-
-  width: 100%;
-
-  height: 100%;
-
-  border:
-    1.5px solid
-    rgba(161, 123, 53, 0.48);
-
-  border-radius:
-    48%
-    48%
-    46%
-    46%;
-
+  z-index: 4;
+  width: 315px;
+  min-height: 405px;
+  padding: 20px;
+  border: 1px solid rgba(180, 151, 85, 0.28);
+  border-radius: 24px;
+  background: rgba(255, 253, 247, 0.78);
   box-shadow:
-    inset 0 0 35px
-    rgba(184, 149, 77, 0.05),
-
-    0 0 25px
-    rgba(184, 149, 77, 0.08);
-
-  animation:
-    facePulse 3s
-    ease-in-out
-    infinite;
+    0 30px 70px rgba(73, 65, 48, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(15px);
+  animation: cardFloat 6s ease-in-out infinite;
 }
 
-
-@keyframes facePulse {
-
+@keyframes cardFloat {
   0%,
   100% {
-    transform: scale(0.98);
-
-    opacity: 0.72;
+    transform: translateY(0);
   }
 
   50% {
-    transform: scale(1.02);
-
-    opacity: 1;
+    transform: translateY(-10px);
   }
 }
 
 
-/* =========================================================
-   FACE EYES
-========================================================= */
+/* ================================
+   CARD TOP
+================================ */
 
-.face-eye {
-  position: absolute;
-
-  top: 91px;
-
-  width: 10px;
-
-  height: 5px;
-
-  border-bottom:
-    1.5px solid
-    #9a762f;
-
-  border-radius: 50%;
+.ai-card-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(100, 90, 70, 0.10);
+  font-family: Arial, sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.7px;
+  color: #777064;
 }
 
-
-.left-eye {
-  left: 50px;
-}
-
-
-.right-eye {
-  right: 50px;
-}
-
-
-/* =========================================================
-   NOSE
-========================================================= */
-
-.face-nose {
-  position: absolute;
-
-  left: 50%;
-
-  top: 96px;
-
-  width: 1px;
-
-  height: 42px;
-
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(161, 123, 53, 0.5),
-      transparent
-    );
-
-  transform:
-    translateX(-50%);
-}
-
-
-/* =========================================================
-   MOUTH
-========================================================= */
-
-.face-mouth {
-  position: absolute;
-
-  left: 50%;
-
-  bottom: 68px;
-
-  width: 34px;
-
-  height: 10px;
-
-  border-bottom:
-    1.5px solid
-    rgba(161, 123, 53, 0.5);
-
-  border-radius: 50%;
-
-  transform:
-    translateX(-50%);
-}
-
-
-/* =========================================================
-   DETECTION POINTS
-========================================================= */
-
-.hero-point {
-  position: absolute;
-
+.ai-status-dot {
   width: 7px;
   height: 7px;
-
   border-radius: 50%;
-
-  background: #b8954d;
-
-  box-shadow:
-    0 0 10px
-    rgba(184, 149, 77, 0.65);
-
-  z-index: 8;
-
-  animation:
-    pointPulse 1.8s
-    ease-in-out
-    infinite;
+  background: #7b8e6c;
+  box-shadow: 0 0 10px rgba(123, 142, 108, 0.65);
+  animation: statusPulse 2s ease-in-out infinite;
 }
 
-
-.hero-point::after {
-  content: "";
-
-  position: absolute;
-
-  inset: -7px;
-
-  border:
-    1px solid
-    rgba(184, 149, 77, 0.40);
-
-  border-radius: 50%;
-
-  animation:
-    pointRing 1.8s
-    ease-out
-    infinite;
-}
-
-
-.hero-point-one {
-  top: 150px;
-
-  left: 38%;
-
-  animation-delay: 0s;
-}
-
-
-.hero-point-two {
-  top: 155px;
-
-  right: 37%;
-
-  animation-delay: 0.4s;
-}
-
-
-.hero-point-three {
-  top: 230px;
-
-  left: 42%;
-
-  animation-delay: 0.8s;
-}
-
-
-.hero-point-four {
-  top: 245px;
-
-  right: 41%;
-
-  animation-delay: 1.2s;
-}
-
-
-@keyframes pointPulse {
-
+@keyframes statusPulse {
   0%,
   100% {
-    transform: scale(0.7);
-
     opacity: 0.5;
   }
 
   50% {
-    transform: scale(1.2);
-
     opacity: 1;
   }
 }
 
 
-@keyframes pointRing {
+/* ================================
+   SKIN VISUAL
+================================ */
 
-  0% {
-    transform: scale(0.5);
-
-    opacity: 0.8;
-  }
-
-  100% {
-    transform: scale(1.8);
-
-    opacity: 0;
-  }
+.skin-visual {
+  position: relative;
+  height: 270px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+.scan-face {
+  position: relative;
+  width: 165px;
+  height: 215px;
+}
 
-/* =========================================================
-   SCAN LINE
-========================================================= */
-
-.hero-scan-line {
+.face-outline {
   position: absolute;
-
-  left: 15%;
-  right: 15%;
-
-  top: 80px;
-
-  height: 1px;
-
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      #b8954d,
-      transparent
-    );
-
+  inset: 5px 18px;
+  border: 1.5px solid rgba(155, 123, 50, 0.55);
+  border-radius: 48% 48% 45% 45% / 43% 43% 55% 55%;
   box-shadow:
-    0 0 12px
-    rgba(184, 149, 77, 0.45);
-
-  z-index: 9;
-
-  animation:
-    heroScan 3.5s
-    ease-in-out
-    infinite;
+    inset 0 0 35px rgba(180, 151, 85, 0.06),
+    0 0 30px rgba(180, 151, 85, 0.08);
 }
 
-
-.hero-scan-line::after {
-  content: "";
-
+.face-eye {
   position: absolute;
+  top: 92px;
+  width: 22px;
+  height: 8px;
+  border-top: 1px solid #8f815e;
+  border-radius: 50%;
+}
 
-  left: 10%;
-  right: 10%;
+.left-eye {
+  left: 48px;
+}
 
-  bottom: 0;
+.right-eye {
+  right: 48px;
+}
 
+.face-nose {
+  position: absolute;
+  top: 96px;
+  left: 80px;
+  width: 8px;
   height: 45px;
+  border-right: 1px solid rgba(143, 129, 94, 0.65);
+  transform: rotate(7deg);
+}
 
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(184, 149, 77, 0.10),
-      transparent
-    );
+.face-mouth {
+  position: absolute;
+  top: 155px;
+  left: 69px;
+  width: 27px;
+  height: 10px;
+  border-bottom: 1px solid #8f815e;
+  border-radius: 50%;
 }
 
 
-@keyframes heroScan {
+/* ================================
+   AI SCAN LINE
+================================ */
 
+.ai-scan-line {
+  position: absolute;
+  left: 15px;
+  right: 15px;
+  top: 20px;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(180, 151, 85, 0.2),
+    #b49755,
+    rgba(180, 151, 85, 0.2),
+    transparent
+  );
+  box-shadow: 0 0 15px rgba(180, 151, 85, 0.7);
+  animation: skinScan 3.2s ease-in-out infinite;
+}
+
+@keyframes skinScan {
   0% {
-    top: 70px;
-
+    top: 18px;
     opacity: 0;
   }
 
@@ -968,104 +505,689 @@
   }
 
   50% {
+    top: 190px;
     opacity: 1;
   }
 
-  85% {
+  70% {
     opacity: 1;
   }
 
   100% {
-    top: 300px;
-
+    top: 18px;
     opacity: 0;
   }
 }
 
 
-/* =========================================================
-   AI CARD CONTENT
-========================================================= */
+/* ================================
+   SCAN POINTS
+================================ */
 
-.ayurvision-content {
+.scan-point {
   position: absolute;
+  width: 7px;
+  height: 7px;
+  border: 1px solid #b49755;
+  border-radius: 50%;
+  background: rgba(180, 151, 85, 0.15);
+  box-shadow: 0 0 10px rgba(180, 151, 85, 0.6);
+  animation: scanPointPulse 2s ease-in-out infinite;
+}
 
-  left: 0;
+.point-one {
+  top: 70px;
+  left: 37px;
+}
+
+.point-two {
+  top: 122px;
+  right: 38px;
+  animation-delay: 0.5s;
+}
+
+.point-three {
+  bottom: 38px;
+  left: 72px;
+  animation-delay: 1s;
+}
+
+@keyframes scanPointPulse {
+  0%,
+  100% {
+    transform: scale(0.7);
+    opacity: 0.35;
+  }
+
+  50% {
+    transform: scale(1.25);
+    opacity: 1;
+  }
+}
+
+
+/* ================================
+   SCAN LABEL
+================================ */
+
+.scan-label {
+  position: absolute;
+  bottom: 7px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: Arial, sans-serif;
+  font-size: 8px;
+  letter-spacing: 1.4px;
+  color: #8b806a;
+}
+
+.scan-label span {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #b49755;
+}
+
+
+/* ================================
+   ANALYSIS
+================================ */
+
+.ai-analysis {
+  padding-top: 3px;
+}
+
+.analysis-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  color: #666055;
+}
+
+.analysis-title strong {
+  padding: 4px 7px;
+  border-radius: 10px;
+  background: rgba(180, 151, 85, 0.10);
+  color: #9b7b32;
+  font-size: 8px;
+}
+
+.analysis-bar {
+  width: 100%;
+  height: 4px;
+  margin: 10px 0 8px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: rgba(100, 90, 70, 0.08);
+}
+
+.analysis-bar div {
+  width: 68%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    #7b8e6c,
+    #b49755
+  );
+  animation: analysisProgress 3.2s ease-in-out infinite;
+}
+
+@keyframes analysisProgress {
+  0% {
+    width: 15%;
+  }
+
+  50% {
+    width: 82%;
+  }
+
+  100% {
+    width: 15%;
+  }
+}
+
+.analysis-status {
+  display: flex;
+  justify-content: space-between;
+  font-family: Arial, sans-serif;
+  font-size: 8px;
+  color: #9a9488;
+}
+
+.analysis-status span:last-child {
+  color: #7b8e6c;
+}
+
+
+/* ================================
+   ENERGY NODES
+================================ */
+
+.energy-node {
+  position: absolute;
+  z-index: 8;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 13px;
+  border: 1px solid rgba(180, 151, 85, 0.25);
+  border-radius: 30px;
+  background: rgba(255, 253, 247, 0.78);
+  box-shadow: 0 10px 25px rgba(73, 65, 48, 0.08);
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  color: #514b40;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.energy-node:hover {
+  transform: translateY(-4px) scale(1.03);
+  border-color: rgba(180, 151, 85, 0.55);
+  box-shadow: 0 14px 30px rgba(73, 65, 48, 0.13);
+}
+
+.node-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 29px;
+  height: 29px;
+  border-radius: 50%;
+  background: rgba(180, 151, 85, 0.10);
+  color: #a18139;
+  font-family: Georgia, serif;
+  font-size: 15px;
+}
+
+.node-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.node-text small {
+  font-size: 7px;
+  letter-spacing: 1px;
+  color: #a39b8b;
+}
+
+
+/* ================================
+   NODE POSITIONS
+================================ */
+
+.node-skin {
+  top: 105px;
+  left: 4%;
+  animation: nodeFloatOne 5s ease-in-out infinite;
+}
+
+.node-ai {
+  top: 60px;
+  right: 7%;
+  animation: nodeFloatTwo 6s ease-in-out infinite;
+}
+
+.node-dosha {
   right: 0;
+  bottom: 120px;
+  animation: nodeFloatThree 5.5s ease-in-out infinite;
+}
 
-  bottom: 0;
+.node-care {
+  bottom: 55px;
+  left: 5%;
+  animation: nodeFloatFour 6s ease-in-out infinite;
+}
 
-  padding: 30px;
+@keyframes nodeFloatOne {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
 
-  z-index: 12;
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+@keyframes nodeFloatTwo {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+@keyframes nodeFloatThree {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes nodeFloatFour {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(7px);
+  }
+}
+
+
+/* ================================
+   CENTRAL ENERGY
+================================ */
+
+.central-energy {
+  position: absolute;
+  z-index: 2;
+  width: 18px;
+  height: 18px;
+  border: 1px solid rgba(180, 151, 85, 0.55);
+  border-radius: 50%;
+  background: rgba(255, 253, 247, 0.5);
+  box-shadow:
+    0 0 0 8px rgba(180, 151, 85, 0.05),
+    0 0 25px rgba(180, 151, 85, 0.35);
+  animation: centralPulse 2.5s ease-in-out infinite;
+}
+
+.central-energy-inner {
+  position: absolute;
+  inset: 5px;
+  border-radius: 50%;
+  background: #b49755;
+  box-shadow: 0 0 10px rgba(180, 151, 85, 0.7);
+}
+
+@keyframes centralPulse {
+  0%,
+  100% {
+    transform: scale(0.85);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+
+/* ================================
+   TABLET
+================================ */
+
+@media (max-width: 950px) {
+
+  .hero-container {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 70px 0;
+  }
+
+  .hero-content {
+    margin: 0 auto;
+  }
+
+  .hero-content p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-actions {
+    justify-content: center;
+  }
+
+  .hero-visual {
+    min-height: 550px;
+    margin-top: 10px;
+  }
+
+  .hero-eyebrow {
+    justify-content: center;
+  }
+}
+
+
+/* ================================
+   MOBILE
+================================ */
+
+@media (max-width: 600px) {
+
+  .hero {
+    min-height: auto;
+  }
+
+  .hero-container {
+    width: 92%;
+    padding: 55px 0 70px;
+  }
+
+  .hero h1 {
+    font-size: 48px;
+    letter-spacing: -1.5px;
+  }
+
+  .hero-content p {
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-primary-btn,
+  .hero-secondary-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero-visual {
+    min-height: 470px;
+    transform: scale(0.82);
+    margin: -20px -40px;
+  }
+
+  .energy-orbit-one {
+    width: 400px;
+    height: 400px;
+  }
+
+  .energy-orbit-two {
+    width: 340px;
+    height: 440px;
+  }
+
+  .energy-orbit-three {
+    width: 430px;
+    height: 260px;
+  }
+
+  .hero-ai-card {
+    width: 285px;
+    min-height: 370px;
+  }
+
+  .node-skin {
+    left: 0;
+  }
+
+  .node-ai {
+    right: 0;
+  }
+
+  .node-dosha {
+    right: -5px;
+  }
+
+  .node-care {
+    left: 0;
+  }
+}
+
+
+/* ================================
+   REDUCED MOTION
+================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .energy-glow,
+  .energy-orbit,
+  .hero-ai-card,
+  .energy-particle,
+  .energy-node,
+  .ai-status-dot,
+  .ai-scan-line,
+  .scan-point,
+  .analysis-bar div,
+  .central-energy {
+    animation: none;
+  }
+
+  /* =========================================
+   AYURVEDIC ENERGY FLOW
+   Connects:
+   Skin → AI Scan → Dosha → Personalized Care
+========================================= */
+
+.hero-visual::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  width: 500px;
+  height: 330px;
+
+  border: 1.5px solid transparent;
+  border-radius: 50%;
 
   background:
     linear-gradient(
-      to bottom,
-      transparent,
-      rgba(255, 253, 248, 0.92) 20%,
-      #fffdf8 55%
-    );
+      90deg,
+      rgba(180, 151, 85, 0.08),
+      rgba(180, 151, 85, 0.65),
+      rgba(123, 142, 108, 0.45),
+      rgba(180, 151, 85, 0.08)
+    ) border-box;
+
+  -webkit-mask:
+    linear-gradient(#fff 0 0) padding-box,
+    linear-gradient(#fff 0 0);
+
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+
+  transform: rotate(-18deg);
+
+  animation: energyFlowRotate 8s linear infinite;
+
+  pointer-events: none;
+}
+
+@keyframes energyFlowRotate {
+  0% {
+    transform: rotate(-18deg) scale(1);
+    opacity: 0.45;
+  }
+
+  50% {
+    transform: rotate(162deg) scale(1.03);
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: rotate(342deg) scale(1);
+    opacity: 0.45;
+  }
 }
 
 
-/* =========================================================
-   AI STATUS
-========================================================= */
+/* =========================================
+   MOVING ENERGY PARTICLE
+========================================= */
 
-.ai-status {
-  display: inline-flex;
+.hero-visual::after {
+  content: "";
+  position: absolute;
+  z-index: 3;
 
-  align-items: center;
-
-  gap: 7px;
-
-  padding: 7px 11px;
-
-  border:
-    1px solid
-    #e1d8c8;
-
-  border-radius: 20px;
-
-  background: #faf7f0;
-
-  color: #827a6f;
-
-  font-size: 9px;
-
-  font-weight: 600;
-
-  letter-spacing: 1.5px;
-
-  margin-bottom: 16px;
-}
-
-
-.ai-status-dot {
-  width: 6px;
-
-  height: 6px;
+  width: 9px;
+  height: 9px;
 
   border-radius: 50%;
 
-  background: #b8954d;
+  background: #b49755;
 
   box-shadow:
-    0 0 7px
-    rgba(184, 149, 77, 0.7);
+    0 0 8px rgba(180, 151, 85, 0.9),
+    0 0 20px rgba(180, 151, 85, 0.55),
+    0 0 35px rgba(180, 151, 85, 0.25);
 
-  animation:
-    statusPulse 1.5s
-    infinite;
+  animation: energyTravel 6s ease-in-out infinite;
+
+  pointer-events: none;
+}
+
+@keyframes energyTravel {
+
+  0% {
+    left: 10%;
+    top: 24%;
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  8% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  25% {
+    left: 30%;
+    top: 18%;
+  }
+
+  45% {
+    left: 72%;
+    top: 20%;
+  }
+
+  65% {
+    left: 85%;
+    top: 58%;
+  }
+
+  82% {
+    left: 55%;
+    top: 78%;
+  }
+
+  94% {
+    left: 20%;
+    top: 72%;
+    opacity: 1;
+  }
+
+  100% {
+    left: 10%;
+    top: 24%;
+    opacity: 0;
+    transform: scale(0.5);
+  }
 }
 
 
-@keyframes statusPulse {
+/* =========================================
+   ENERGY CONNECTION LINES
+========================================= */
+
+.node-skin::after,
+.node-ai::after,
+.node-dosha::after,
+.node-care::after {
+  content: "";
+
+  position: absolute;
+
+  height: 1px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(180, 151, 85, 0.55),
+    transparent
+  );
+
+  box-shadow: 0 0 8px rgba(180, 151, 85, 0.25);
+
+  transform-origin: left center;
+
+  pointer-events: none;
+}
+
+
+/* Skin → central visual */
+
+.node-skin::after {
+  width: 120px;
+  right: -112px;
+  top: 50%;
+
+  transform: rotate(12deg);
+
+  animation: connectionPulse 2.8s ease-in-out infinite;
+}
+
+
+/* AI Scan → central visual */
+
+.node-ai::after {
+  width: 105px;
+  left: -98px;
+  top: 70%;
+
+  transform: rotate(145deg);
+
+  animation: connectionPulse 2.8s ease-in-out infinite 0.7s;
+}
+
+
+/* Dosha → central visual */
+
+.node-dosha::after {
+  width: 115px;
+  left: -108px;
+  top: 30%;
+
+  transform: rotate(-145deg);
+
+  animation: connectionPulse 2.8s ease-in-out infinite 1.2s;
+}
+
+
+/* Personalized Care → central visual */
+
+.node-care::after {
+  width: 125px;
+  right: -118px;
+  top: 35%;
+
+  transform: rotate(-18deg);
+
+  animation: connectionPulse 2.8s ease-in-out infinite 1.7s;
+}
+
+
+@keyframes connectionPulse {
 
   0%,
   100% {
-    opacity: 0.4;
+    opacity: 0.25;
   }
 
   50% {
@@ -1074,330 +1196,583 @@
 }
 
 
-/* =========================================================
-   AI LABEL
-========================================================= */
+/* =========================================
+   GOLDEN ENERGY WAVE
+========================================= */
 
-.ayurvision-label {
-  display: block;
+.energy-orbit-one::after {
+  content: "";
 
-  color: #a17b35;
+  position: absolute;
 
-  font-size: 10px;
-
-  font-weight: 600;
-
-  letter-spacing: 2.5px;
-
-  margin-bottom: 8px;
-}
-
-
-/* =========================================================
-   AI TITLE
-========================================================= */
-
-.ayurvision-content h3 {
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
-
-  font-size: 35px;
-
-  color: #25231f;
-
-  font-weight: 400;
-
-  margin: 0;
-}
-
-
-/* =========================================================
-   AI DESCRIPTION
-========================================================= */
-
-.ayurvision-content p {
-  color: #81796e;
-
-  font-size: 13px;
-
-  line-height: 1.6;
-
-  margin-top: 5px;
-}
-
-
-/* =========================================================
-   AI ACTION
-========================================================= */
-
-.ayurvision-action {
-  display: flex;
-
-  align-items: center;
-
-  justify-content: space-between;
-
-  margin-top: 20px;
-
-  padding-top: 18px;
-
-  border-top:
-    1px solid
-    #e6dfd2;
-
-  color: #a17b35;
-
-  font-size: 11px;
-
-  font-weight: 600;
-
-  letter-spacing: 1px;
-}
-
-
-.action-arrow {
-  width: 34px;
-
-  height: 34px;
+  width: 13px;
+  height: 13px;
 
   border-radius: 50%;
 
-  background: #f1eadc;
+  background: #b49755;
 
-  display: flex;
+  box-shadow:
+    0 0 10px rgba(180, 151, 85, 0.9),
+    0 0 25px rgba(180, 151, 85, 0.5);
 
-  align-items: center;
+  top: -6px;
+  left: 50%;
 
-  justify-content: center;
-
-  font-size: 18px;
-
-  transition:
-    transform 0.3s ease,
-    background 0.3s ease,
-    color 0.3s ease;
+  animation: orbitEnergy 5s linear infinite;
 }
 
 
-.ayurvision-card:hover .action-arrow {
-  transform:
-    translateX(5px);
+@keyframes orbitEnergy {
 
-  background: #b8954d;
+  0% {
+    transform: rotate(0deg)
+      translateX(235px)
+      rotate(0deg);
+  }
 
-  color: #ffffff;
+  100% {
+    transform: rotate(360deg)
+      translateX(235px)
+      rotate(-360deg);
+  }
 }
 
 
-/* =========================================================
-   TABLET
-========================================================= */
+/* =========================================
+   SAGE ENERGY WAVE
+========================================= */
 
-@media (max-width: 1000px) {
+.energy-orbit-two::after {
+  content: "";
 
-  .hero {
-    grid-template-columns: 1fr;
+  position: absolute;
 
-    padding:
-      90px
-      40px;
+  width: 8px;
+  height: 8px;
 
-    text-align: center;
-  }
+  border-radius: 50%;
 
+  background: #7b8e6c;
 
-  .hero-content {
-    max-width: 750px;
+  box-shadow:
+    0 0 10px rgba(123, 142, 108, 0.8),
+    0 0 20px rgba(123, 142, 108, 0.35);
 
-    margin: 0 auto;
-  }
+  top: 50%;
+  left: -4px;
 
-
-  .hero-content > p {
-    margin-left: auto;
-
-    margin-right: auto;
-  }
-
-
-  .hero-buttons {
-    justify-content: center;
-  }
-
-
-  .hero-features {
-    justify-content: center;
-  }
-
-
-  .ayurvision-card {
-    margin:
-      20px
-      auto
-      0;
-  }
-
+  animation: sageEnergy 7s linear infinite;
 }
 
 
-/* =========================================================
-   MOBILE
-========================================================= */
+@keyframes sageEnergy {
+
+  0% {
+    transform: rotate(0deg)
+      translateX(195px)
+      rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg)
+      translateX(195px)
+      rotate(-360deg);
+  }
+}
+
+
+/* =========================================
+   EXTRA GOLDEN SPARKS
+========================================= */
+
+.hero-ai-card::before,
+.hero-ai-card::after {
+  content: "";
+
+  position: absolute;
+
+  width: 5px;
+  height: 5px;
+
+  border-radius: 50%;
+
+  background: #b49755;
+
+  box-shadow:
+    0 0 10px rgba(180, 151, 85, 0.8),
+    0 0 20px rgba(180, 151, 85, 0.3);
+
+  animation: sparkFloat 4s ease-in-out infinite;
+}
+
+.hero-ai-card::before {
+  top: 20%;
+  left: -18px;
+}
+
+.hero-ai-card::after {
+  bottom: 20%;
+  right: -18px;
+  animation-delay: 1.8s;
+}
+
+
+@keyframes sparkFloat {
+
+  0%,
+  100% {
+    transform: translateY(0) scale(0.8);
+    opacity: 0.35;
+  }
+
+  50% {
+    transform: translateY(-18px) scale(1.2);
+    opacity: 1;
+  }
+}
+
+
+/* =========================================
+   MOBILE FLOW ADJUSTMENT
+========================================= */
 
 @media (max-width: 600px) {
 
-  .hero {
-    min-height: auto;
-
-    padding:
-      75px
-      20px
-      70px;
-
-    gap: 55px;
+  .hero-visual::before {
+    width: 390px;
+    height: 270px;
   }
 
-
-  .hero-label {
-    font-size: 9px;
-
-    letter-spacing: 2px;
+  .node-skin::after,
+  .node-ai::after,
+  .node-dosha::after,
+  .node-care::after {
+    display: none;
   }
 
-
-  .hero h1 {
-    font-size: 58px;
-
-    letter-spacing: -1px;
+  .hero-visual::after {
+    animation-duration: 7s;
   }
-
-
-  .hero h1 span::after {
-    bottom: -5px;
-  }
-
-
-  .hero-content > p {
-    font-size: 15px;
-
-    line-height: 1.75;
-
-    margin-top: 28px;
-  }
-
-
-  .hero-buttons {
-    flex-direction: column;
-
-    width: 100%;
-
-    margin-top: 30px;
-  }
-
-
-  .hero-primary-button,
-  .hero-secondary-button {
-    width: 100%;
-  }
-
-
-  .hero-features {
-    flex-direction: column;
-
-    align-items: center;
-
-    gap: 12px;
-
-    margin-top: 28px;
-  }
-
-
-  .ayurvision-card {
-    height: 470px;
-
-    border-radius: 4px;
-
-    margin: 0;
-  }
-
-
-  .ai-face {
-    transform:
-      translateX(-50%)
-      scale(0.85);
-
-    top: 65px;
-  }
-
-
-  .scan-ring {
-    top: 180px;
-  }
-
-
-  .ring-one {
-    width: 260px;
-
-    height: 260px;
-  }
-
-
-  .ring-two {
-    width: 210px;
-
-    height: 210px;
-  }
-
-
-  .ring-three {
-    width: 160px;
-
-    height: 160px;
-  }
-
-
-  .ayurvision-content {
-    padding: 24px;
-  }
-
-
-  .ayurvision-content h3 {
-    font-size: 31px;
-  }
-
 }
 
 
-/* =========================================================
-   SMALL MOBILE
-========================================================= */
+/* =========================================
+   REDUCED MOTION
+========================================= */
 
-@media (max-width: 400px) {
+@media (prefers-reduced-motion: reduce) {
 
-  .hero {
-    padding:
-      60px
-      15px
-      60px;
+  .hero-visual::before,
+  .hero-visual::after,
+  .node-skin::after,
+  .node-ai::after,
+  .node-dosha::after,
+  .node-care::after,
+  .energy-orbit-one::after,
+  .energy-orbit-two::after,
+  .hero-ai-card::before,
+  .hero-ai-card::after {
+    animation: none;
+  }
+}
+/* =========================================
+   ACTIVE AYURAI STAGE
+========================================= */
+
+.energy-node.active-stage {
+  border-color: rgba(180, 151, 85, 0.75);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 253, 247, 0.96),
+      rgba(244, 237, 217, 0.92)
+    );
+
+  box-shadow:
+    0 0 0 4px rgba(180, 151, 85, 0.08),
+    0 12px 35px rgba(180, 151, 85, 0.20),
+    0 0 25px rgba(180, 151, 85, 0.12);
+
+  transform: scale(1.06);
+
+  animation: activeStageGlow 1.8s ease-in-out infinite;
+}
+
+
+/* Active icon */
+
+.energy-node.active-stage .node-icon {
+  background: rgba(180, 151, 85, 0.18);
+
+  color: #96752f;
+
+  box-shadow:
+    0 0 12px rgba(180, 151, 85, 0.25);
+
+  animation: activeIconPulse 1.5s ease-in-out infinite;
+}
+
+
+/* Active number */
+
+.energy-node.active-stage .node-text small {
+  color: #96752f;
+}
+
+
+/* Active text */
+
+.energy-node.active-stage .node-text {
+  color: #403a2f;
+}
+
+
+/* =========================================
+   ACTIVE STAGE GLOW
+========================================= */
+
+@keyframes activeStageGlow {
+
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 4px rgba(180, 151, 85, 0.06),
+      0 10px 28px rgba(180, 151, 85, 0.12),
+      0 0 15px rgba(180, 151, 85, 0.08);
   }
 
+  50% {
+    box-shadow:
+      0 0 0 7px rgba(180, 151, 85, 0.08),
+      0 14px 38px rgba(180, 151, 85, 0.22),
+      0 0 30px rgba(180, 151, 85, 0.18);
+  }
+}
 
-  .hero h1 {
-    font-size: 50px;
+
+@keyframes activeIconPulse {
+
+  0%,
+  100% {
+    transform: scale(1);
   }
 
+  50% {
+    transform: scale(1.12);
+  }
+}
 
-  .ayurvision-card {
-    height: 450px;
+
+/* =========================================
+   ACTIVE CENTRAL ENERGY
+========================================= */
+
+.central-energy {
+  transition:
+    transform 0.8s ease,
+    box-shadow 0.8s ease;
+}
+
+.hero-visual:has(.node-skin.active-stage) .central-energy {
+  box-shadow:
+    0 0 0 8px rgba(180, 151, 85, 0.06),
+    0 0 35px rgba(180, 151, 85, 0.35);
+}
+
+.hero-visual:has(.node-ai.active-stage) .central-energy {
+  box-shadow:
+    0 0 0 10px rgba(180, 151, 85, 0.08),
+    0 0 45px rgba(180, 151, 85, 0.45);
+  transform: scale(1.15);
+}
+
+.hero-visual:has(.node-dosha.active-stage) .central-energy {
+  box-shadow:
+    0 0 0 10px rgba(123, 142, 108, 0.08),
+    0 0 40px rgba(123, 142, 108, 0.40);
+  transform: scale(1.12);
+}
+
+.hero-visual:has(.node-care.active-stage) .central-energy {
+  box-shadow:
+    0 0 0 11px rgba(180, 151, 85, 0.09),
+    0 0 50px rgba(180, 151, 85, 0.50);
+  transform: scale(1.2);
+}
+
+
+/* =========================================
+   ACTIVE ANALYSIS BAR
+========================================= */
+
+.analysis-status span:first-child {
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+  .energy-node.active-stage {
+    transform: scale(1.03);
   }
 
+  .hero-visual:has(.node-ai.active-stage) .central-energy,
+  .hero-visual:has(.node-dosha.active-stage) .central-energy,
+  .hero-visual:has(.node-care.active-stage) .central-energy {
+    transform: scale(1.08);
+  }
+}
 
-  .ai-face {
+
+/* =========================================
+   REDUCED MOTION
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .energy-node.active-stage,
+  .energy-node.active-stage .node-icon {
+    animation: none;
+  }
+}
+/* =====================================================
+   CLICKABLE CENTRAL AI CARD
+===================================================== */
+
+.hero-ai-card-clickable {
+  position: relative;
+
+  z-index: 30;
+
+  cursor: pointer;
+
+  border: none;
+
+  font: inherit;
+
+  color: inherit;
+
+  text-align: left;
+
+  appearance: none;
+  -webkit-appearance: none;
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+
+/* Everything inside the card should NOT block the button */
+
+.hero-ai-card-clickable * {
+  pointer-events: none;
+}
+
+
+/* =====================================================
+   HOVER EFFECT
+===================================================== */
+
+.hero-ai-card-clickable:hover {
+  transform: translateY(-6px) scale(1.015);
+
+  box-shadow:
+    0 25px 55px rgba(73, 65, 48, 0.16),
+    0 0 30px rgba(180, 151, 85, 0.10);
+}
+
+
+/* AI face reacts */
+
+.hero-ai-card-clickable:hover .scan-face {
+  transform: scale(1.035);
+}
+
+
+/* Scan line reacts */
+
+.hero-ai-card-clickable:hover .ai-scan-line {
+  opacity: 1;
+
+  box-shadow:
+    0 0 14px rgba(180, 151, 85, 0.70);
+}
+
+
+/* Scan points glow */
+
+.hero-ai-card-clickable:hover .scan-point {
+  opacity: 1;
+
+  box-shadow:
+    0 0 12px rgba(180, 151, 85, 0.65);
+}
+
+
+/* Status dot */
+
+.hero-ai-card-clickable:hover .ai-status-dot {
+  transform: scale(1.3);
+}
+
+
+/* =====================================================
+   CLICK TO SCAN MESSAGE
+===================================================== */
+
+.card-scan-hint {
+  position: absolute;
+
+  left: 50%;
+  bottom: -30px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 7px 13px;
+
+  border: 1px solid rgba(180, 151, 85, 0.28);
+
+  border-radius: 30px;
+
+  background:
+    rgba(255, 253, 247, 0.96);
+
+  box-shadow:
+    0 8px 22px rgba(73, 65, 48, 0.10);
+
+  color: #8d7950;
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size: 8px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.7px;
+
+  white-space: nowrap;
+
+  opacity: 0;
+
+  transform:
+    translateX(-50%)
+    translateY(6px);
+
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+
+/* Show on hover */
+
+.hero-ai-card-clickable:hover .card-scan-hint {
+  opacity: 1;
+
+  transform:
+    translateX(-50%)
+    translateY(0);
+}
+
+
+/* Arrow */
+
+.card-scan-hint strong {
+  font-size: 11px;
+
+  font-weight: 500;
+
+  transition:
+    transform 0.3s ease;
+}
+
+
+/* Arrow movement */
+
+.hero-ai-card-clickable:hover .card-scan-hint strong {
+  transform: translateX(4px);
+}
+
+
+/* =====================================================
+   KEYBOARD ACCESSIBILITY
+===================================================== */
+
+.hero-ai-card-clickable:focus-visible {
+  outline: 2px solid rgba(180, 151, 85, 0.70);
+
+  outline-offset: 7px;
+
+  border-radius: 28px;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+  .hero-ai-card-clickable {
+    cursor: pointer;
+  }
+
+  .hero-ai-card-clickable:hover {
+    transform: none;
+  }
+
+  /*
+     Touch devices don't have hover,
+     so keep the hint visible.
+  */
+
+  .card-scan-hint {
+    opacity: 1;
+
+    bottom: -27px;
+
     transform:
       translateX(-50%)
-      scale(0.75);
+      translateY(0);
+  }
+}
+
+
+/* =====================================================
+   REDUCED MOTION
+===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .hero-ai-card-clickable {
+    transition: none;
   }
 
+  .hero-ai-card-clickable:hover {
+    transform: none;
+  }
+
+  .hero-ai-card-clickable:hover .scan-face {
+    transform: none;
+  }
+
+  .card-scan-hint {
+    transition: none;
+  }
+}
 }

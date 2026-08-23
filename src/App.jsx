@@ -16,6 +16,8 @@ import DoshaQuestion from "./components/DoshaQuestion";
 import UserProfile from "./components/UserProfile";
 import HomeRemedy from "./components/HomeRemedy";
 import OverallResult from "./components/OverallResult";
+import HowItWorks from "./components/HowItWorks";
+
 
 // =========================================================
 // PAGES
@@ -63,7 +65,7 @@ function Home() {
           skin truly needs.
         </p>
 
-
+        <HowItWorks />
         <DoshaSelector />
 
       </section>
@@ -286,7 +288,10 @@ function App() {
         <Route
   path="/overall-result"
   element={<OverallResult />}
+
 />
+
+
 
       </Routes>
 
