@@ -7,6 +7,7 @@ import {
   getAssessmentStatus,
 } from "../utils/assessmentStatus";
 
+import API_BASE_URL from "../utils/api";
 
 /* =========================================================
    QUESTIONS
@@ -158,7 +159,6 @@ const questions = [
   },
 ];
 
-
 /* =========================================================
    DOSHA QUESTION COMPONENT
    ========================================================= */
@@ -167,6 +167,12 @@ const DoshaQuestion = () => {
 
   const navigate = useNavigate();
 
+  /*
+   * Temporary user ID.
+   * We will replace this with the authenticated
+   * user's ID when login/JWT is implemented.
+   */
+  const userId = 5;
 
   /* =====================================================
      STATE
@@ -184,12 +190,22 @@ const DoshaQuestion = () => {
   const [result, setResult] =
     useState(null);
 
+  const [submitting, setSubmitting] =
+    useState(false);
 
   /* =====================================================
      ANSWER QUESTION
      ===================================================== */
 
   const handleAnswer = (dosha) => {
+
+    /*
+     * Prevent another click while the
+     * final answer is being submitted.
+     */
+    if (submitting) {
+      return;
+    }
 
     const updatedAnswers = [
       ...answers,
@@ -199,7 +215,6 @@ const DoshaQuestion = () => {
       dosha;
 
     setAnswers(updatedAnswers);
-
 
     /* Move to next question */
 
@@ -216,7 +231,6 @@ const DoshaQuestion = () => {
       return;
     }
 
-
     /* Last question */
 
     calculateResult(
@@ -224,137 +238,196 @@ const DoshaQuestion = () => {
     );
   };
 
-
   /* =====================================================
-     CALCULATE RESULT
+     SEND RESULT TO BACKEND
      ===================================================== */
 
-  const calculateResult = (
+  const calculateResult = async (
     finalAnswers
   ) => {
 
-    const finalScores = {
+    /*
+     * Make sure all 8 questions
+     * have been answered.
+     */
+    if (
+      finalAnswers.length !==
+      questions.length
+    ) {
 
-      Vata: 0,
-
-      Pitta: 0,
-
-      Kapha: 0,
-
-    };
-
-
-    finalAnswers.forEach(
-      (dosha) => {
-
-        if (
-          dosha &&
-          finalScores[dosha] !==
-            undefined
-        ) {
-
-          finalScores[dosha] += 1;
-
-        }
-
-      }
-    );
-
-
-    /* Sort Doshas */
-
-    const sortedDoshas =
-      Object.entries(
-        finalScores
-      ).sort(
-        (a, b) =>
-          b[1] - a[1]
+      alert(
+        "Please answer all questions before completing the assessment."
       );
 
-
-    const dominantDosha =
-      sortedDoshas[0][0];
-
-
-    const total =
-      finalAnswers.length;
-
-
-    /* Prevent division by zero */
-
-    if (total === 0) {
       return;
     }
 
+    /*
+     * Make sure there are no empty answers.
+     */
+    if (
+      finalAnswers.some(
+        (answer) => !answer
+      )
+    ) {
 
-    /* Percentages */
+      alert(
+        "Please answer all questions before completing the assessment."
+      );
 
-    const percentages = {
+      return;
+    }
 
-      Vata: Math.round(
-        (finalScores.Vata / total) *
-          100
-      ),
+    setSubmitting(true);
 
-      Pitta: Math.round(
-        (finalScores.Pitta / total) *
-          100
-      ),
+    try {
 
-      Kapha: Math.round(
-        (finalScores.Kapha / total) *
-          100
-      ),
+      /* =================================================
+         SEND ANSWERS TO SPRING BOOT
+         ================================================= */
 
-    };
+      const response = await fetch(
+        `${API_BASE_URL}/dosha-assessments`,
+        {
+          method: "POST",
 
+          headers: {
+            "Content-Type": "application/json",
+          },
 
-    /* =================================================
-       RESULT OBJECT
+          body: JSON.stringify({
+            userId: userId,
+            answers: finalAnswers,
+          }),
+        }
+      );
 
-       IMPORTANT:
-       dominantDosha is the property used
-       everywhere in AyurAI.
-       ================================================= */
+      /* =================================================
+         HANDLE HTTP ERROR
+         ================================================= */
 
-    const doshaResult = {
+      if (!response.ok) {
 
-      dominantDosha,
+        let errorMessage =
+          "Failed to save Dosha assessment.";
 
-      scores: finalScores,
+        try {
 
-      percentages,
+          const errorData =
+            await response.json();
 
-      answers: finalAnswers,
+          if (
+            errorData.message
+          ) {
 
-      completed: true,
+            errorMessage =
+              errorData.message;
 
-      completedAt:
-        new Date().toISOString(),
+          }
 
-    };
+        } catch {
+          // Ignore JSON parsing error
+        }
 
+        throw new Error(
+          errorMessage
+        );
+      }
 
-    /* =================================================
-       SAVE RESULT
-       ================================================= */
+      /* =================================================
+         READ BACKEND RESPONSE
+         ================================================= */
 
-    saveDoshaResult(
-      doshaResult
-    );
+      const backendResult =
+        await response.json();
 
+      console.log(
+        "Dosha backend result:",
+        backendResult
+      );
 
-    /* =================================================
-       UPDATE SCREEN
-       ================================================= */
+      /* =================================================
+         CONVERT BACKEND RESULT TO
+         EXISTING FRONTEND FORMAT
+         ================================================= */
 
-    setResult(
-      doshaResult
-    );
+      const doshaResult = {
 
-    setFinished(true);
+        dominantDosha:
+          backendResult.dominantDosha,
+
+        scores: {
+
+          Vata:
+            backendResult.vataScore,
+
+          Pitta:
+            backendResult.pittaScore,
+
+          Kapha:
+            backendResult.kaphaScore,
+
+        },
+
+        percentages: {
+
+          Vata:
+            backendResult.vataPercentage,
+
+          Pitta:
+            backendResult.pittaPercentage,
+
+          Kapha:
+            backendResult.kaphaPercentage,
+
+        },
+
+        answers:
+          finalAnswers,
+
+        completed: true,
+
+        completedAt:
+          new Date().toISOString(),
+
+      };
+
+      /* =================================================
+         KEEP FRONTEND ASSESSMENT STATUS
+         ================================================= */
+
+      saveDoshaResult(
+        doshaResult
+      );
+
+      /* =================================================
+         DISPLAY RESULT
+         ================================================= */
+
+      setResult(
+        doshaResult
+      );
+
+      setFinished(true);
+
+    } catch (error) {
+
+      console.error(
+        "Dosha assessment error:",
+        error
+      );
+
+      alert(
+        error.message ||
+        "Unable to save your Dosha assessment. Please try again."
+      );
+
+    } finally {
+
+      setSubmitting(false);
+
+    }
   };
-
 
   /* =====================================================
      CONTINUE AFTER RESULT
@@ -364,7 +437,6 @@ const DoshaQuestion = () => {
 
     const status =
       getAssessmentStatus();
-
 
     /* Both complete */
 
@@ -380,7 +452,6 @@ const DoshaQuestion = () => {
       return;
     }
 
-
     /* Skin Scan missing */
 
     if (
@@ -394,14 +465,12 @@ const DoshaQuestion = () => {
       return;
     }
 
-
     /* Safety fallback */
 
     navigate(
       "/overall-result"
     );
   };
-
 
   /* =====================================================
      PREVIOUS QUESTION
@@ -410,7 +479,8 @@ const DoshaQuestion = () => {
   const handleBack = () => {
 
     if (
-      currentQuestion > 0
+      currentQuestion > 0 &&
+      !submitting
     ) {
 
       setCurrentQuestion(
@@ -420,7 +490,6 @@ const DoshaQuestion = () => {
 
     }
   };
-
 
   /* =====================================================
      COMPLETED RESULT SCREEN
@@ -434,23 +503,19 @@ const DoshaQuestion = () => {
     const status =
       getAssessmentStatus();
 
-
     const skinScanDone =
       Boolean(
         status.skinScanCompleted
       );
-
 
     const doshaDone =
       Boolean(
         status.doshaCompleted
       );
 
-
     const bothDone =
       skinScanDone &&
       doshaDone;
-
 
     return (
 
@@ -462,11 +527,9 @@ const DoshaQuestion = () => {
             DOSHA TEST COMPLETE
           </span>
 
-
           <h1>
             Your AI-estimated Dosha Profile
           </h1>
-
 
           <p className="dosha-result-intro">
             Your responses suggest the following
@@ -474,7 +537,6 @@ const DoshaQuestion = () => {
             educational Ayurvedic assessment,
             not a medical diagnosis.
           </p>
-
 
           {/* DOMINANT DOSHA */}
 
@@ -489,7 +551,6 @@ const DoshaQuestion = () => {
             </strong>
 
           </div>
-
 
           {/* SCORES */}
 
@@ -507,7 +568,6 @@ const DoshaQuestion = () => {
 
             </div>
 
-
             <div className="dosha-score-card">
 
               <span>
@@ -519,7 +579,6 @@ const DoshaQuestion = () => {
               </strong>
 
             </div>
-
 
             <div className="dosha-score-card">
 
@@ -535,11 +594,9 @@ const DoshaQuestion = () => {
 
           </div>
 
-
           {/* ASSESSMENT STATUS */}
 
           <div className="dosha-assessment-status">
-
 
             {/* DOSHA */}
 
@@ -563,7 +620,6 @@ const DoshaQuestion = () => {
 
             </div>
 
-
             {/* SKIN */}
 
             <div
@@ -581,7 +637,6 @@ const DoshaQuestion = () => {
                   : "02"}
 
               </span>
-
 
               <div>
 
@@ -603,7 +658,6 @@ const DoshaQuestion = () => {
 
           </div>
 
-
           {/* MESSAGE */}
 
           <div className="dosha-complete-message">
@@ -616,7 +670,6 @@ const DoshaQuestion = () => {
 
             </strong>
 
-
             <p>
 
               {bothDone
@@ -628,7 +681,6 @@ const DoshaQuestion = () => {
             </p>
 
           </div>
-
 
           {/* ACTIONS */}
 
@@ -647,7 +699,6 @@ const DoshaQuestion = () => {
                 : "CONTINUE TO SKIN SCAN →"}
 
             </button>
-
 
             <button
               type="button"
@@ -668,7 +719,6 @@ const DoshaQuestion = () => {
     );
   }
 
-
   /* =====================================================
      QUESTION SCREEN
      ===================================================== */
@@ -676,17 +726,14 @@ const DoshaQuestion = () => {
   const question =
     questions[currentQuestion];
 
-
   const progress =
     ((currentQuestion + 1) /
       questions.length) *
     100;
 
-
   return (
 
     <section className="dosha-question-page">
-
 
       {/* HEADER */}
 
@@ -696,11 +743,9 @@ const DoshaQuestion = () => {
           AYURVEDIC DOSHA ASSESSMENT
         </span>
 
-
         <h1>
           Understand Your Dosha
         </h1>
-
 
         <p>
           Answer each question based on what feels
@@ -708,7 +753,6 @@ const DoshaQuestion = () => {
         </p>
 
       </div>
-
 
       {/* PROGRESS */}
 
@@ -726,7 +770,6 @@ const DoshaQuestion = () => {
 
         </div>
 
-
         <div className="dosha-progress">
 
           <div
@@ -740,11 +783,9 @@ const DoshaQuestion = () => {
 
       </div>
 
-
       {/* QUESTION CARD */}
 
       <div className="dosha-question-card">
-
 
         <span className="question-number">
 
@@ -754,11 +795,9 @@ const DoshaQuestion = () => {
 
         </span>
 
-
         <h2>
           {question.question}
         </h2>
-
 
         <div className="dosha-options">
 
@@ -774,6 +813,7 @@ const DoshaQuestion = () => {
                     option.dosha
                   )
                 }
+                disabled={submitting}
               >
 
                 <span className="option-number">
@@ -784,13 +824,11 @@ const DoshaQuestion = () => {
 
                 </span>
 
-
                 <span className="option-text">
 
                   {option.text}
 
                 </span>
-
 
                 <span className="option-arrow">
                   →
@@ -803,7 +841,6 @@ const DoshaQuestion = () => {
 
         </div>
 
-
         {/* PREVIOUS */}
 
         {currentQuestion > 0 && (
@@ -814,6 +851,7 @@ const DoshaQuestion = () => {
             onClick={
               handleBack
             }
+            disabled={submitting}
           >
 
             ← Previous question
@@ -823,7 +861,6 @@ const DoshaQuestion = () => {
         )}
 
       </div>
-
 
       {/* DISCLAIMER */}
 
@@ -839,7 +876,6 @@ const DoshaQuestion = () => {
 
   );
 };
-
 
 /* =========================================================
    DEFAULT EXPORT
