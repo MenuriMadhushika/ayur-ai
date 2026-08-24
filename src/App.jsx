@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 
-import { testBackend } from "./api";
+
 import "./App.css";
 
 // =========================================================
@@ -188,29 +188,7 @@ function App() {
   // BACKEND CONNECTION
   // =======================================================
 
-  useEffect(() => {
-
-    testBackend()
-
-      .then((data) => {
-
-        console.log(
-          "Backend connected:",
-          data
-        );
-
-      })
-
-      .catch((error) => {
-
-        console.error(
-          "Backend connection failed:",
-          error
-        );
-
-      });
-
-  }, []);
+  
 
 
   // =======================================================
