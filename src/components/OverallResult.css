@@ -1,706 +1,589 @@
-/* =========================================================
+/* ============================================================
    AYURAI — OVERALL RESULT
    Premium Ayurvedic Editorial Style
-   ========================================================= */
+   ============================================================ */
 
 .overall-result-page {
   min-height: 100vh;
-  background: #f7f3eb;
+  padding: 90px 24px 100px;
+  background:
+    radial-gradient(
+      circle at 12% 8%,
+      rgba(183, 157, 92, 0.09),
+      transparent 30%
+    ),
+    #f7f3ea;
   color: #292923;
-  padding: 80px 24px 100px;
 }
 
-.overall-result-container {
-  width: min(1180px, 100%);
-  margin: 0 auto;
-}
 
-/* =========================================================
+/* ============================================================
    HEADER
-   ========================================================= */
+   ============================================================ */
 
 .overall-result-header {
+  max-width: 820px;
+  margin: 0 auto 58px;
   text-align: center;
-  max-width: 760px;
-  margin: 0 auto 60px;
 }
 
-.overall-result-label {
+.overall-label {
   display: inline-block;
-  margin-bottom: 18px;
-
-  font-family: Arial, sans-serif;
-  font-size: 11px;
+  margin-bottom: 17px;
+  color: #9a7b35;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: 2.5px;
-
-  color: #9b7a3d;
 }
 
 .overall-result-header h1 {
   margin: 0;
-
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(42px, 6vw, 72px);
+  font-size: clamp(40px, 6vw, 68px);
   line-height: 1.05;
   font-weight: 400;
-
-  color: #292923;
+  letter-spacing: -1.5px;
+  color: #292821;
 }
 
 .overall-result-header h1 span {
-  color: #9b7a3d;
+  color: #9b8149;
+  font-style: italic;
 }
 
 .overall-result-header p {
   max-width: 650px;
-  margin: 24px auto 0;
-
-  font-family: Arial, sans-serif;
-  font-size: 15px;
-  line-height: 1.8;
-
-  color: #716e65;
-}
-
-/* =========================================================
-   PROFILE HERO
-   ========================================================= */
-
-.overall-profile-card {
-  position: relative;
-
-  padding: 45px;
-
-  background: #fffdf8;
-  border: 1px solid rgba(155, 122, 61, 0.18);
-  border-radius: 24px;
-
-  box-shadow:
-    0 20px 60px rgba(45, 40, 30, 0.07);
-
-  margin-bottom: 35px;
-}
-
-.overall-profile-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 30px;
-}
-
-.profile-label {
-  display: block;
-
-  margin-bottom: 12px;
-
-  font-family: Arial, sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 2px;
-
-  color: #9b7a3d;
-}
-
-.overall-profile-top h2 {
-  margin: 0;
-
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 42px;
-  font-weight: 400;
-
-  color: #292923;
-}
-
-.profile-description {
-  max-width: 650px;
-
-  margin: 18px 0 0;
-
-  font-family: Arial, sans-serif;
+  margin: 22px auto 14px;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
   line-height: 1.8;
-
-  color: #716e65;
+  color: #706c63;
 }
 
-.profile-score {
-  min-width: 130px;
-
-  text-align: center;
-
-  padding: 20px;
-
-  border-radius: 18px;
-
-  background: #f1eadc;
-}
-
-.profile-score strong {
-  display: block;
-
-  font-family: Georgia, serif;
-  font-size: 38px;
-  font-weight: 400;
-
-  color: #8d6c34;
-}
-
-.profile-score span {
-  display: block;
-
-  margin-top: 5px;
-
-  font-family: Arial, sans-serif;
-  font-size: 9px;
-  letter-spacing: 1.5px;
-
-  color: #777268;
-}
-
-/* =========================================================
-   TWO RESULT CARDS
-   ========================================================= */
-
-.overall-section-label {
-  display: block;
-
-  margin-bottom: 20px;
-
-  font-family: Arial, sans-serif;
+.overall-result-header small {
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 2px;
-
-  color: #9b7a3d;
+  color: #918a7e;
 }
+
+
+/* ============================================================
+   MAIN GRID
+   ============================================================ */
 
 .overall-result-grid {
+  width: min(1100px, 100%);
+  margin: 0 auto;
   display: grid;
-
   grid-template-columns: repeat(2, 1fr);
-
-  gap: 25px;
-
-  margin-bottom: 60px;
+  gap: 20px;
 }
 
-.overall-data-card {
-  padding: 34px;
 
-  background: #fffdf8;
-
-  border: 1px solid rgba(70, 65, 50, 0.1);
-
-  border-radius: 20px;
-
-  box-shadow:
-    0 12px 35px rgba(45, 40, 30, 0.05);
-}
-
-.data-number {
-  display: block;
-
-  margin-bottom: 25px;
-
-  font-family: Arial, sans-serif;
-  font-size: 10px;
-  letter-spacing: 2px;
-
-  color: #a08b68;
-}
-
-.data-icon {
-  width: 48px;
-  height: 48px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  margin-bottom: 20px;
-
-  border-radius: 50%;
-
-  background: #f1eadc;
-
-  font-size: 20px;
-
-  color: #8d6c34;
-}
-
-.overall-data-card h3 {
-  margin: 0 0 10px;
-
-  font-family: Georgia, serif;
-  font-size: 27px;
-  font-weight: 400;
-
-  color: #292923;
-}
-
-.overall-data-card p {
-  margin: 0;
-
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-  line-height: 1.7;
-
-  color: #716e65;
-}
-
-/* =========================================================
-   COMBINATION PROFILE
-   ========================================================= */
-
-.combination-card {
-  padding: 45px;
-
-  margin-bottom: 60px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #f3ecdf,
-      #fffdf8
-    );
-
-  border: 1px solid rgba(155, 122, 61, 0.18);
-
-  border-radius: 24px;
-}
-
-.combination-card h2 {
-  margin: 0 0 15px;
-
-  font-family: Georgia, serif;
-  font-size: 36px;
-  font-weight: 400;
-}
-
-.combination-card > p {
-  max-width: 760px;
-
-  margin: 0;
-
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-  line-height: 1.8;
-
-  color: #716e65;
-}
-
-.combination-tags {
-  display: flex;
-  flex-wrap: wrap;
-
-  gap: 10px;
-
-  margin-top: 25px;
-}
-
-.combination-tag {
-  padding: 10px 16px;
-
-  border-radius: 50px;
-
-  background: #fffdf8;
-
-  border: 1px solid rgba(155, 122, 61, 0.2);
-
-  font-family: Arial, sans-serif;
-  font-size: 12px;
-
-  color: #665a46;
-}
-
-/* =========================================================
-   CONCERNS
-   ========================================================= */
-
-.overall-concerns {
-  margin-bottom: 60px;
-}
-
-.overall-concern-list {
-  display: grid;
-
-  grid-template-columns: repeat(2, 1fr);
-
-  gap: 15px;
-}
-
-.overall-concern-item {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-
-  padding: 18px 20px;
-
-  background: #fffdf8;
-
-  border: 1px solid rgba(70, 65, 50, 0.09);
-
-  border-radius: 14px;
-}
-
-.concern-check {
-  width: 28px;
-  height: 28px;
-
-  flex-shrink: 0;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 50%;
-
-  background: #e9eee3;
-
-  color: #68785b;
-
-  font-size: 13px;
-}
-
-.overall-concern-item span:last-child {
-  font-family: Arial, sans-serif;
-  font-size: 13px;
-
-  color: #555249;
-}
-
-/* =========================================================
-   CARE SECTION
-   ========================================================= */
-
-.overall-care-section {
-  margin-bottom: 60px;
-}
-
-.overall-care-section h2 {
-  margin: 0 0 12px;
-
-  font-family: Georgia, serif;
-  font-size: 38px;
-  font-weight: 400;
-}
-
-.care-introduction {
-  max-width: 700px;
-
-  margin-bottom: 30px;
-
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-  line-height: 1.8;
-
-  color: #716e65;
-}
-
-.overall-care-grid {
-  display: grid;
-
-  grid-template-columns: repeat(3, 1fr);
-
-  gap: 18px;
-}
-
-.overall-care-card {
-  padding: 30px;
-
-  background: #fffdf8;
-
-  border: 1px solid rgba(70, 65, 50, 0.1);
-
+/* ============================================================
+   CARDS
+   ============================================================ */
+
+.overall-card,
+.combined-result-card {
+  background: rgba(255, 253, 248, 0.96);
+  border: 1px solid rgba(154, 128, 70, 0.18);
   border-radius: 18px;
+  box-shadow:
+    0 18px 50px rgba(61, 54, 40, 0.06),
+    0 3px 12px rgba(61, 54, 40, 0.03);
+}
 
+.overall-card {
+  padding: 36px;
   transition:
     transform 0.25s ease,
     box-shadow 0.25s ease;
 }
 
-.overall-care-card:hover {
-  transform: translateY(-5px);
-
+.overall-card:hover {
+  transform: translateY(-3px);
   box-shadow:
-    0 15px 35px rgba(45, 40, 30, 0.08);
+    0 22px 55px rgba(61, 54, 40, 0.08);
 }
 
-.care-card-number {
+.card-label {
   display: block;
-
-  margin-bottom: 25px;
-
-  font-family: Arial, sans-serif;
-  font-size: 10px;
+  margin-bottom: 18px;
+  color: #9a7b35;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 9px;
+  font-weight: 700;
   letter-spacing: 2px;
-
-  color: #9b7a3d;
 }
 
-.overall-care-card h3 {
-  margin: 0 0 12px;
 
-  font-family: Georgia, serif;
-  font-size: 22px;
+/* ============================================================
+   DOSHA CARD
+   ============================================================ */
+
+.overall-card-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.overall-card h2 {
+  margin: 0 0 14px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 36px;
+  line-height: 1.1;
   font-weight: 400;
+  color: #39362e;
 }
 
-.overall-care-card p {
+.overall-card p {
   margin: 0;
-
-  font-family: Arial, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 13px;
-  line-height: 1.7;
-
-  color: #716e65;
+  line-height: 1.75;
+  color: #706c63;
 }
 
-/* =========================================================
-   HOME REMEDIES
-   ========================================================= */
-
-.home-remedies-section {
-  padding: 45px;
-
-  margin-bottom: 50px;
-
-  background: #edf0e8;
-
-  border: 1px solid rgba(103, 119, 88, 0.18);
-
-  border-radius: 24px;
+.overall-card p strong {
+  color: #8d713c;
+  font-weight: 600;
 }
 
-.home-remedies-section h2 {
-  margin: 0 0 12px;
-
-  font-family: Georgia, serif;
-  font-size: 38px;
-  font-weight: 400;
-
-  color: #30352c;
+.dominant-badge {
+  flex-shrink: 0;
+  padding: 7px 10px;
+  border: 1px solid #d7c59f;
+  border-radius: 30px;
+  background: #f5eee0;
+  color: #92743c;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
 }
 
-.home-remedies-intro {
-  max-width: 720px;
 
-  margin-bottom: 30px;
+/* ============================================================
+   DOSHA PERCENTAGES
+   ============================================================ */
 
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-  line-height: 1.8;
-
-  color: #62685b;
-}
-
-.remedies-list {
+.dosha-percentages {
   display: grid;
-
-  grid-template-columns: repeat(2, 1fr);
-
-  gap: 15px;
+  gap: 17px;
+  margin-top: 31px;
 }
 
-.remedy-card {
-  padding: 22px;
-
-  background: rgba(255, 253, 248, 0.75);
-
-  border: 1px solid rgba(103, 119, 88, 0.12);
-
-  border-radius: 15px;
+.dosha-percentage-item > div:first-child {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 7px;
 }
 
-.remedy-card strong {
-  display: block;
+.dosha-percentage-item span {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  color: #777168;
+}
 
-  margin-bottom: 8px;
-
-  font-family: Georgia, serif;
-  font-size: 19px;
+.dosha-percentage-item strong {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px;
   font-weight: 400;
-
-  color: #3d4437;
+  color: #987b44;
 }
 
-.remedy-card p {
+.mini-progress {
+  width: 100%;
+  height: 5px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #e8e1d5;
+}
+
+.mini-progress div {
+  height: 100%;
+  border-radius: inherit;
+  background: #a58a55;
+  transition: width 0.8s ease;
+}
+
+
+/* ============================================================
+   SKIN CARD
+   ============================================================ */
+
+.skin-overall-card h2 {
+  margin-bottom: 12px;
+  font-size: 31px;
+}
+
+.skin-observations {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.observation-item {
+  padding: 15px;
+  border: 1px solid #e5ded0;
+  border-radius: 10px;
+  background: #f6f1e7;
+}
+
+.observation-item span {
+  display: block;
+  margin-bottom: 7px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.4px;
+  color: #858074;
+}
+
+.observation-item strong {
+  display: block;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.3;
+  color: #454137;
+}
+
+
+/* ============================================================
+   COMBINED RESULT
+   ============================================================ */
+
+.combined-result-card {
+  width: min(1100px, 100%);
+  margin: 22px auto 0;
+  padding: 39px;
+}
+
+.combined-result-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.combined-result-top .card-label {
+  margin-bottom: 0;
+}
+
+.combined-status {
+  padding: 7px 11px;
+  border: 1px solid #d6c7aa;
+  border-radius: 30px;
+  background: #f4eee2;
+  color: #8e7442;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+}
+
+.combined-result-card h2 {
+  max-width: 700px;
+  margin: 25px 0 14px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(30px, 4vw, 43px);
+  line-height: 1.15;
+  font-weight: 400;
+  color: #36332b;
+}
+
+.combined-result-card h2 span {
+  color: #987b44;
+  font-style: italic;
+}
+
+.combined-result-card > p {
+  max-width: 720px;
   margin: 0;
-
-  font-family: Arial, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 13px;
-  line-height: 1.7;
-
-  color: #656b60;
+  line-height: 1.8;
+  color: #716d64;
 }
 
-/* =========================================================
-   DISCLAIMER
-   ========================================================= */
 
-.overall-disclaimer {
-  padding: 22px 25px;
+/* ============================================================
+   COMBINED POINTS
+   ============================================================ */
 
-  margin-bottom: 35px;
+.combined-points {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 30px;
+}
 
-  background: #f0ede6;
+.combined-points > div {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 17px;
+  border: 1px solid #e5ded0;
+  border-radius: 11px;
+  background: #faf7f0;
+}
 
-  border-radius: 14px;
+.combined-points > div > span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 27px;
+  height: 27px;
+  flex: 0 0 27px;
+  border-radius: 50%;
+  background: #eee5d4;
+  color: #947842;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+}
 
-  font-family: Arial, sans-serif;
+.combined-points strong {
+  display: block;
+  margin-bottom: 4px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 15px;
+  font-weight: 400;
+  color: #48443a;
+}
+
+.combined-points small {
+  display: block;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 9px;
+  line-height: 1.5;
+  color: #918a7d;
+}
+
+
+/* ============================================================
+   NOTICE
+   ============================================================ */
+
+.result-notice {
+  display: flex;
+  gap: 15px;
+  margin-top: 27px;
+  padding: 17px 20px;
+  border-left: 3px solid #a88a4a;
+  border-radius: 0 9px 9px 0;
+  background: #f4efe3;
+}
+
+.result-notice strong {
+  flex: 0 0 auto;
+  padding-top: 1px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #92763f;
+}
+
+.result-notice p {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 11px;
   line-height: 1.7;
-
-  color: #777268;
+  color: #716b60;
 }
 
-/* =========================================================
+
+/* ============================================================
    ACTIONS
-   ========================================================= */
+   ============================================================ */
 
-.overall-actions {
+.overall-result-actions {
+  width: min(1100px, 100%);
+  margin: 32px auto 0;
   display: flex;
-  justify-content: center;
-  gap: 15px;
-
-  margin-top: 35px;
+  align-items: center;
+  gap: 13px;
 }
 
-.overall-primary-button,
-.overall-secondary-button {
-  min-height: 52px;
-
-  padding: 0 28px;
-
-  border-radius: 50px;
-
-  font-family: Arial, sans-serif;
-  font-size: 12px;
-  font-weight: 600;
-
+.overall-result-actions button {
+  min-height: 49px;
+  padding: 0 21px;
+  border-radius: 7px;
   cursor: pointer;
-
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
   transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+    transform 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
 }
 
 .overall-primary-button {
-  border: none;
-
-  background: #292923;
-
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  border: 1px solid #9f824a;
+  background: #9f824a;
   color: #fffdf8;
 }
 
-.overall-secondary-button {
-  border: 1px solid rgba(70, 65, 50, 0.2);
-
-  background: transparent;
-
-  color: #4c493f;
+.overall-primary-button span {
+  font-size: 15px;
+  transition: transform 0.25s ease;
 }
 
-.overall-primary-button:hover,
+.overall-primary-button:hover {
+  background: #866c3d;
+  transform: translateY(-2px);
+  box-shadow:
+    0 9px 22px rgba(107, 83, 38, 0.16);
+}
+
+.overall-primary-button:hover span {
+  transform: translateX(3px);
+}
+
+.overall-secondary-button {
+  border: 1px solid #d2c8b7;
+  background: transparent;
+  color: #716c61;
+}
+
 .overall-secondary-button:hover {
+  background: #fffdf8;
+  border-color: #bca981;
   transform: translateY(-2px);
 }
 
-/* =========================================================
-   EMPTY STATE
-   ========================================================= */
 
-.overall-empty {
-  max-width: 600px;
+/* ============================================================
+   DISCLAIMER
+   ============================================================ */
 
-  margin: 100px auto;
-
-  padding: 50px;
-
+.overall-result-disclaimer {
+  width: min(700px, 100%);
+  margin: 30px auto 0;
   text-align: center;
-
-  background: #fffdf8;
-
-  border: 1px solid rgba(70, 65, 50, 0.1);
-
-  border-radius: 22px;
-}
-
-.overall-empty h2 {
-  margin: 0 0 15px;
-
-  font-family: Georgia, serif;
-  font-size: 34px;
-  font-weight: 400;
-}
-
-.overall-empty p {
-  margin-bottom: 25px;
-
-  font-family: Arial, sans-serif;
-  font-size: 14px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 9px;
   line-height: 1.7;
-
-  color: #716e65;
+  color: #999185;
 }
 
-/* =========================================================
-   RESPONSIVE
-   ========================================================= */
 
-@media (max-width: 900px) {
+/* ============================================================
+   LOADING
+   ============================================================ */
+
+.overall-result-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  text-align: center;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 25px;
+  color: #514b40;
+}
+
+
+/* ============================================================
+   TABLET
+   ============================================================ */
+
+@media (max-width: 850px) {
+
+  .overall-result-page {
+    padding: 70px 18px 80px;
+  }
 
   .overall-result-grid {
     grid-template-columns: 1fr;
   }
 
-  .overall-care-grid {
-    grid-template-columns: 1fr 1fr;
+  .combined-points {
+    grid-template-columns: 1fr;
   }
 
 }
 
-@media (max-width: 650px) {
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
+@media (max-width: 560px) {
 
   .overall-result-page {
-    padding: 55px 16px 70px;
+    padding: 48px 13px 65px;
   }
 
-  .overall-profile-card,
-  .combination-card,
-  .home-remedies-section {
-    padding: 28px 22px;
-  }
-
-  .overall-profile-top {
-    flex-direction: column;
-  }
-
-  .profile-score {
-    width: 100%;
+  .overall-result-header {
+    margin-bottom: 40px;
   }
 
   .overall-result-header h1 {
-    font-size: 42px;
+    font-size: 40px;
   }
 
-  .overall-profile-top h2 {
-    font-size: 32px;
+  .overall-result-header p {
+    font-size: 13px;
   }
 
-  .overall-care-grid,
-  .overall-concern-list,
-  .remedies-list {
+  .overall-card,
+  .combined-result-card {
+    padding: 25px 19px;
+    border-radius: 14px;
+  }
+
+  .overall-card-heading {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .overall-card h2 {
+    font-size: 31px;
+  }
+
+  .dominant-badge {
+    align-self: flex-start;
+  }
+
+  .skin-observations {
     grid-template-columns: 1fr;
   }
 
-  .overall-actions {
+  .combined-result-top {
+    align-items: flex-start;
     flex-direction: column;
+    gap: 13px;
   }
 
-  .overall-primary-button,
-  .overall-secondary-button {
+  .combined-result-card h2 {
+    font-size: 31px;
+  }
+
+  .result-notice {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .overall-result-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .overall-result-actions button {
     width: 100%;
   }
 

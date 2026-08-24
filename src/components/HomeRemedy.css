@@ -229,7 +229,400 @@
     transform: translateY(-54%) rotate(6deg);
   }
 }
+/* =========================================================
+   PERSONALIZED REMEDY SECTION
+   ========================================================= */
 
+.personalized-remedy-section {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 55px 7% 60px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(247, 230, 223, 0.42),
+      rgba(255, 253, 248, 0.75)
+    );
+
+  border-top: 1px solid rgba(200, 121, 97, 0.10);
+  border-bottom: 1px solid rgba(200, 121, 97, 0.10);
+}
+
+
+/* =========================================================
+   PERSONALIZED HEADER
+   ========================================================= */
+
+.personalized-remedy-header {
+  max-width: 1100px;
+
+  margin: 0 auto 30px;
+
+  display: flex;
+
+  align-items: flex-end;
+
+  justify-content: space-between;
+
+  gap: 35px;
+}
+
+.personalized-remedy-header > div:first-child {
+  max-width: 760px;
+}
+
+.personalized-remedy-header .remedy-section-label {
+  margin-bottom: 10px;
+
+  color: var(--pitta-dark);
+}
+
+.personalized-remedy-header h2 {
+  margin: 0;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: clamp(28px, 3vw, 40px);
+
+  line-height: 1.15;
+
+  font-weight: 400;
+
+  color: var(--text);
+}
+
+.personalized-remedy-header h2 span {
+  color: var(--pitta-main);
+
+  font-style: italic;
+}
+
+.personalized-remedy-header p {
+  max-width: 700px;
+
+  margin: 10px 0 0;
+
+  color: #756f67;
+
+  font-size: 12px;
+
+  line-height: 1.75;
+}
+
+
+/* =========================================================
+   DOSHA BADGE
+   ========================================================= */
+
+.personalized-dosha-badge {
+  min-width: 105px;
+
+  padding: 15px 18px;
+
+  flex-shrink: 0;
+
+  text-align: center;
+
+  border: 1px solid var(--pitta-border);
+
+  border-radius: 15px;
+
+  background: var(--pitta-light);
+
+  box-shadow:
+    0 8px 22px rgba(170, 91, 70, 0.08);
+}
+
+.personalized-dosha-badge span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: var(--pitta-dark);
+
+  font-size: 8px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.8px;
+}
+
+.personalized-dosha-badge strong {
+  display: block;
+
+  color: var(--pitta-main);
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 21px;
+
+  font-weight: 400;
+}
+
+
+/* =========================================================
+   PERSONALIZED CARD GRID
+   ========================================================= */
+
+.personalized-remedy-grid {
+  max-width: 1100px;
+
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 18px;
+}
+
+
+/* =========================================================
+   PERSONALIZED CARD
+   ========================================================= */
+
+.personalized-remedy-card {
+  position: relative;
+
+  min-height: 190px;
+
+  padding: 23px;
+
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 17px;
+
+  box-sizing: border-box;
+
+  overflow: hidden;
+
+  border: 1px solid var(--pitta-border);
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #fffaf7,
+      #f8e8e1
+    );
+
+  box-shadow:
+    0 12px 30px rgba(170, 91, 70, 0.08);
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.personalized-remedy-card:hover {
+  transform: translateY(-6px);
+
+  box-shadow:
+    0 20px 40px rgba(170, 91, 70, 0.15);
+}
+
+
+/* =========================================================
+   DECORATIVE CIRCLE
+   ========================================================= */
+
+.personalized-remedy-card::before {
+  content: "";
+
+  position: absolute;
+
+  width: 150px;
+  height: 150px;
+
+  top: -85px;
+  right: -70px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(200, 121, 97, 0.10);
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   PERSONALIZED ICON
+   ========================================================= */
+
+.personalized-remedy-icon {
+  position: relative;
+
+  z-index: 2;
+
+  width: 48px;
+  height: 48px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 15px;
+
+  background: #f0d0c5;
+
+  color: var(--pitta-dark);
+
+  font-size: 21px;
+
+  transition:
+    transform 0.3s ease;
+}
+
+.personalized-remedy-card:hover
+.personalized-remedy-icon {
+  transform:
+    rotate(-5deg)
+    scale(1.06);
+}
+
+
+/* =========================================================
+   PERSONALIZED CONTENT
+   ========================================================= */
+
+.personalized-remedy-content {
+  position: relative;
+
+  z-index: 2;
+
+  flex: 1;
+}
+
+.personalized-remedy-content > span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: var(--pitta-dark);
+
+  font-size: 8px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.8px;
+
+  text-transform: uppercase;
+}
+
+.personalized-remedy-content h3 {
+  margin: 0;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 21px;
+
+  line-height: 1.25;
+
+  font-weight: 400;
+
+  color: var(--text);
+}
+
+.personalized-remedy-content p {
+  margin: 7px 0 14px;
+
+  color: #756d66;
+
+  font-size: 11px;
+
+  line-height: 1.65;
+}
+
+
+/* =========================================================
+   PERSONALIZED BUTTON
+   ========================================================= */
+
+.personalized-remedy-content button {
+  min-height: 36px;
+
+  padding: 0 13px;
+
+  border: 1px solid #dfb5a7;
+
+  border-radius: 10px;
+
+  background: rgba(255, 255, 255, 0.45);
+
+  color: var(--pitta-dark);
+
+  cursor: pointer;
+
+  font: inherit;
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.personalized-remedy-content button:hover {
+  background: var(--pitta-dark);
+
+  border-color: var(--pitta-dark);
+
+  color: white;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   PERSONALIZED SECTION — VATA
+   Future dynamic support
+   ========================================================= */
+
+.personalized-remedy-section[data-dosha="Vata"] {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(231, 238, 240, 0.55),
+      rgba(255, 253, 248, 0.8)
+    );
+}
+
+
+/* =========================================================
+   PERSONALIZED SECTION — KAPHA
+   Future dynamic support
+   ========================================================= */
+
+.personalized-remedy-section[data-dosha="Kapha"] {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(231, 238, 227, 0.55),
+      rgba(255, 253, 248, 0.8)
+    );
+}
 
 /* =========================================================
    LIBRARY

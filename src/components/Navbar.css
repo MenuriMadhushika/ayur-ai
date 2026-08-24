@@ -1,51 +1,51 @@
 /* =========================================================
    AYURAI — PREMIUM NAVBAR
-   Cream • Gold • Natural Green • Ayurvedic Luxury
-   ========================================================= */
+   AI × AYURVEDA × NATURAL LUXURY
+
+   Ivory / Charcoal / Sage / Muted Gold
+========================================================= */
 
 
 /* =========================================================
-   NAVBAR
+   ROOT NAVBAR
 ========================================================= */
 
 .navbar {
   position: sticky;
-
   top: 0;
-
   z-index: 1000;
 
   width: 100%;
 
-  background: rgba(250, 249, 244, 0.94);
+  background:
+    rgba(250, 249, 244, 0.88);
 
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  border-bottom:
+    1px solid
+    rgba(183, 154, 90, 0.16);
 
-  border-bottom: 1px solid rgba(183, 154, 90, 0.18);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 
   box-shadow:
-    0 5px 25px rgba(22, 63, 50, 0.05);
+    0 8px 30px
+    rgba(22, 63, 50, 0.035);
 }
 
 
 /* =========================================================
-   INNER NAVBAR
+   NAVBAR INNER
 ========================================================= */
 
 .navbar-inner {
-  width: min(1400px, 100%);
+  width: min(1320px, 92%);
 
-  height: 82px;
+  height: 76px;
 
   margin: 0 auto;
 
-  padding: 0 45px;
-
   display: flex;
-
   align-items: center;
-
   justify-content: space-between;
 }
 
@@ -55,46 +55,68 @@
 ========================================================= */
 
 .navbar-logo {
-  display: flex;
+  position: relative;
 
+  display: inline-flex;
   align-items: baseline;
 
-  gap: 2px;
+  gap: 1px;
 
   text-decoration: none;
 
   font-family:
-    "Cormorant Garamond",
     Georgia,
+    "Times New Roman",
     serif;
 
-  font-size: 34px;
-
+  font-size: 31px;
   font-weight: 600;
 
-  letter-spacing: -1px;
+  line-height: 1;
 
-  flex-shrink: 0;
+  letter-spacing: -1.5px;
 
   transition:
-    transform 0.3s ease,
-    opacity 0.3s ease;
+    transform 0.35s ease,
+    opacity 0.35s ease;
 }
 
 .navbar-logo:hover {
-  transform: translateY(-2px);
-
-  opacity: 0.88;
+  transform: translateY(-1px);
+  opacity: 0.9;
 }
 
-.logo-main {
-  color: #163F32;
+.logo-ayur {
+  color: #173f33;
 }
 
 .logo-ai {
-  color: #B79A5A;
+  color: #b79a5a;
 
   font-style: italic;
+
+  margin-left: 1px;
+}
+
+
+/* Small decorative dot */
+
+.navbar-logo::after {
+  content: "";
+
+  position: absolute;
+
+  right: -6px;
+  top: -3px;
+
+  width: 4px;
+  height: 4px;
+
+  border-radius: 50%;
+
+  background: #b79a5a;
+
+  opacity: 0.75;
 }
 
 
@@ -104,59 +126,63 @@
 
 .desktop-nav {
   display: flex;
-
   align-items: center;
 
-  gap: 30px;
+  gap: 34px;
 
   margin-left: auto;
-
-  margin-right: 30px;
+  margin-right: 42px;
 }
 
 
 /* =========================================================
-   NAV LINKS
+   NAV LINK
 ========================================================= */
 
 .nav-link {
   position: relative;
 
-  display: inline-flex;
+  height: 76px;
 
+  display: inline-flex;
   align-items: center;
 
-  height: 82px;
-
-  color: #718079;
+  color: #707a74;
 
   text-decoration: none;
 
-  font-size: 12px;
+  font-family:
+    Inter,
+    Arial,
+    sans-serif;
 
+  font-size: 11px;
   font-weight: 500;
 
-  letter-spacing: 0.4px;
+  letter-spacing: 0.45px;
 
   white-space: nowrap;
 
   transition:
-    color 0.3s ease;
+    color 0.3s ease,
+    transform 0.3s ease;
 }
 
 .nav-link:hover {
-  color: #163F32;
+  color: #173f33;
+
+  transform: translateY(-1px);
 }
 
 .nav-link.active {
-  color: #163F32;
+  color: #173f33;
 
   font-weight: 600;
 }
 
 
 /* =========================================================
-   GOLD UNDERLINE
+   ACTIVE / HOVER GOLD MARKER
 ========================================================= */
 
 .nav-link::after {
@@ -165,16 +191,14 @@
   position: absolute;
 
   left: 50%;
-
-  bottom: 21px;
+  bottom: 17px;
 
   width: 0;
-
   height: 2px;
 
-  border-radius: 10px;
+  border-radius: 999px;
 
-  background: #B79A5A;
+  background: #b79a5a;
 
   transform: translateX(-50%);
 
@@ -184,129 +208,48 @@
 
 .nav-link:hover::after,
 .nav-link.active::after {
-  width: 24px;
+  width: 20px;
 }
 
 
 /* =========================================================
-   RIGHT SIDE
+   RIGHT ACTIONS
 ========================================================= */
 
 .navbar-actions {
   display: flex;
-
   align-items: center;
-
-  justify-content: flex-end;
-
-  gap: 12px;
-
-  flex-shrink: 0;
-}
-
-
-/* =========================================================
-   FIND MY SKIN TYPE — AYURAI THEME
-========================================================= */
-
-.nav-cta {
-  display: inline-flex;
-
-  align-items: center;
-  justify-content: center;
 
   gap: 10px;
-
-  padding: 11px 19px;
-
-  border: 1px solid rgba(183, 154, 90, 0.55);
-
-  border-radius: 30px;
-
-  background: #F5F1E7;
-
-  color: #8C6E36;
-
-  text-decoration: none;
-
-  font-size: 10px;
-
-  font-weight: 600;
-
-  letter-spacing: 0.8px;
-
-  white-space: nowrap;
-
-  transition:
-    background 0.3s ease,
-    border-color 0.3s ease,
-    color 0.3s ease,
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-}
-
-
-/* ARROW */
-
-.nav-cta span {
-  font-size: 16px;
-
-  line-height: 1;
-
-  color: #B79A5A;
-
-  transition:
-    transform 0.3s ease;
-}
-
-
-/* HOVER */
-
-.nav-cta:hover {
-  background: #E8F0EB;
-
-  border-color: #B79A5A;
-
-  color: #163F32;
-
-  transform: translateY(-2px);
-
-  box-shadow:
-    0 8px 22px rgba(183, 154, 90, 0.15);
-}
-
-
-.nav-cta:hover span {
-  transform: translateX(4px);
-
-  color: #163F32;
 }
 
 
 /* =========================================================
-   PROFILE
+   PROFILE BUTTON
 ========================================================= */
 
-.profile-nav-icon {
-  width: 44px;
+.profile-button {
+  position: relative;
 
-  height: 44px;
+  width: 42px;
+  height: 42px;
 
   display: flex;
-
   align-items: center;
-
   justify-content: center;
 
-  flex-shrink: 0;
-
-  border: 1px solid rgba(183, 154, 90, 0.35);
+  border:
+    1px solid
+    rgba(183, 154, 90, 0.28);
 
   border-radius: 50%;
 
-  background: #F5F8F5;
+  background:
+    rgba(255, 255, 255, 0.7);
 
   text-decoration: none;
+
+  overflow: hidden;
 
   transition:
     transform 0.3s ease,
@@ -316,89 +259,120 @@
 }
 
 .profile-icon {
+  position: relative;
+  z-index: 2;
+
   display: flex;
-
   align-items: center;
-
   justify-content: center;
 
-  font-size: 21px;
+  font-size: 19px;
 
   line-height: 1;
+
+  transition:
+    transform 0.3s ease;
 }
 
-.profile-nav-icon:hover {
+.profile-ring {
+  position: absolute;
+
+  inset: 3px;
+
+  border:
+    1px solid
+    rgba(183, 154, 90, 0.12);
+
+  border-radius: 50%;
+
+  transition:
+    transform 0.4s ease,
+    border-color 0.3s ease;
+}
+
+.profile-button:hover {
   transform: translateY(-2px);
 
-  background: #E8F0EB;
+  background: #f1f5f0;
 
-  border-color: #B79A5A;
+  border-color: #b79a5a;
 
   box-shadow:
-    0 8px 20px rgba(22, 63, 50, 0.10);
+    0 8px 22px
+    rgba(22, 63, 50, 0.09);
 }
 
-.profile-nav-icon.active {
-  background: #E8F0EB;
+.profile-button:hover .profile-icon {
+  transform: scale(1.08);
+}
 
-  border-color: #B79A5A;
+.profile-button:hover .profile-ring {
+  transform: scale(0.88);
 
-  box-shadow:
-    0 5px 16px rgba(22, 63, 50, 0.10);
+  border-color:
+    rgba(183, 154, 90, 0.35);
+}
+
+.profile-button.active {
+  background: #edf3ee;
+
+  border-color: #b79a5a;
 }
 
 
 /* =========================================================
-   MENU BUTTON
+   MOBILE MENU BUTTON
 ========================================================= */
 
 .menu-button {
-  width: 44px;
-
-  height: 44px;
+  width: 42px;
+  height: 42px;
 
   display: none;
 
-  flex-direction: column;
-
+  align-items: center;
   justify-content: center;
 
-  align-items: center;
+  flex-direction: column;
 
   gap: 5px;
 
-  border: 1px solid rgba(183, 154, 90, 0.35);
+  padding: 0;
+
+  border:
+    1px solid
+    rgba(183, 154, 90, 0.28);
 
   border-radius: 50%;
 
-  background: #FFFFFF;
+  background:
+    rgba(255, 255, 255, 0.72);
 
   cursor: pointer;
 
   transition:
+    transform 0.3s ease,
     background 0.3s ease,
-    border-color 0.3s ease,
-    transform 0.3s ease;
+    border-color 0.3s ease;
 }
 
 .menu-button span {
-  width: 17px;
-
+  width: 16px;
   height: 1.5px;
 
-  border-radius: 10px;
+  border-radius: 999px;
 
-  background: #163F32;
+  background: #173f33;
 
   transition:
-    transform 0.3s ease,
-    opacity 0.3s ease;
+    transform 0.35s ease,
+    opacity 0.25s ease;
 }
 
 .menu-button:hover {
-  background: #E8F0EB;
+  background: #f0f4f0;
 
-  border-color: #B79A5A;
+  border-color: #b79a5a;
 }
 
 .menu-button:active {
@@ -407,7 +381,7 @@
 
 
 /* =========================================================
-   MENU OPEN → X
+   MENU → X
 ========================================================= */
 
 .menu-button.open span:nth-child(1) {
@@ -418,6 +392,7 @@
 
 .menu-button.open span:nth-child(2) {
   opacity: 0;
+  transform: scaleX(0);
 }
 
 .menu-button.open span:nth-child(3) {
@@ -436,164 +411,164 @@
 
   width: 100%;
 
-  padding: 10px 25px 25px;
+  overflow: hidden;
 
-  background: rgba(250, 249, 244, 0.98);
+  background:
+    rgba(250, 249, 244, 0.97);
 
   border-top:
     1px solid
-    rgba(183, 154, 90, 0.15);
+    rgba(183, 154, 90, 0.13);
 
   box-shadow:
-    0 18px 35px rgba(22, 63, 50, 0.08);
+    0 20px 40px
+    rgba(22, 63, 50, 0.07);
 }
 
 
 /* =========================================================
-   MOBILE LINKS
+   MOBILE MENU INNER
 ========================================================= */
 
-.mobile-menu a {
+.mobile-menu-inner {
+  width: min(1320px, 92%);
+
+  margin: 0 auto;
+
+  padding:
+    8px 0 20px;
+}
+
+
+/* =========================================================
+   MOBILE LINK
+========================================================= */
+
+.mobile-nav-link {
   position: relative;
 
-  display: block;
+  display: flex;
+  align-items: center;
 
-  padding: 15px 5px;
+  gap: 18px;
+
+  min-height: 56px;
 
   border-bottom:
     1px solid
-    rgba(22, 63, 50, 0.08);
+    rgba(22, 63, 50, 0.065);
 
-  color: #718079;
+  color: #68756e;
 
   text-decoration: none;
 
-  font-size: 13px;
+  font-family:
+    Inter,
+    Arial,
+    sans-serif;
 
+  font-size: 13px;
   font-weight: 500;
 
-  letter-spacing: 0.3px;
+  letter-spacing: 0.25px;
 
   transition:
     color 0.25s ease,
     padding-left 0.25s ease;
 }
 
-.mobile-menu a:hover {
-  color: #163F32;
+.mobile-nav-link:last-child {
+  border-bottom: none;
+}
 
-  padding-left: 10px;
+.mobile-nav-link:hover {
+  color: #173f33;
+
+  padding-left: 8px;
+}
+
+.mobile-nav-link.active {
+  color: #173f33;
+
+  font-weight: 600;
+
+  padding-left: 8px;
 }
 
 
 /* =========================================================
-   ACTIVE MOBILE LINK
+   MOBILE NUMBER
 ========================================================= */
 
-.mobile-menu a.active {
-  color: #163F32;
+.mobile-link-number {
+  width: 24px;
 
-  font-weight: 600;
+  color: #b79a5a;
 
-  padding-left: 10px;
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 11px;
+
+  letter-spacing: 0.5px;
+
+  opacity: 0.75;
 }
 
-.mobile-menu a.active::before {
+
+/* =========================================================
+   ACTIVE MOBILE INDICATOR
+========================================================= */
+
+.mobile-nav-link.active::before {
   content: "";
 
   position: absolute;
 
-  left: 0;
+  left: -1px;
 
   top: 50%;
 
-  width: 4px;
+  width: 3px;
+  height: 22px;
 
-  height: 4px;
+  border-radius: 999px;
 
-  border-radius: 50%;
+  background: #b79a5a;
 
-  background: #B79A5A;
-
-  transform: translateY(-50%);
+  transform:
+    translateY(-50%);
 }
 
 
 /* =========================================================
-   MOBILE CTA
-========================================================= */
-
-.mobile-cta {
-  margin-top: 18px;
-
-  padding: 14px 20px !important;
-
-  text-align: center;
-
-  border:
-    1px solid
-    #163F32 !important;
-
-  border-radius: 30px;
-
-  background: #163F32;
-
-  color: #FFFFFF !important;
-
-  font-size: 11px !important;
-
-  font-weight: 600 !important;
-
-  letter-spacing: 0.8px;
-
-  transition:
-    background 0.3s ease,
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-}
-
-.mobile-cta:hover {
-  padding-left: 20px !important;
-
-  background: #245B48;
-
-  transform: translateY(-2px);
-
-  box-shadow:
-    0 8px 20px rgba(22, 63, 50, 0.15);
-}
-
-
-/* =========================================================
-   SHOW MOBILE MENU
+   MOBILE MENU ANIMATION
 ========================================================= */
 
 .mobile-menu.show {
   display: block;
 
   animation:
-    menuReveal 0.3s ease forwards;
+    navbarMenuReveal 0.3s ease forwards;
 }
 
-
-/* =========================================================
-   MENU ANIMATION
-========================================================= */
-
-@keyframes menuReveal {
+@keyframes navbarMenuReveal {
 
   from {
     opacity: 0;
 
-    transform: translateY(-8px);
+    transform:
+      translateY(-8px);
   }
 
   to {
     opacity: 1;
 
-    transform: translateY(0);
+    transform:
+      translateY(0);
   }
-
 }
 
 
@@ -601,22 +576,21 @@
    TABLET
 ========================================================= */
 
-@media (max-width: 1100px) {
+@media (max-width: 1050px) {
 
   .navbar-inner {
-    padding: 0 30px;
+    width: 93%;
   }
 
   .desktop-nav {
-    gap: 20px;
+    gap: 23px;
 
-    margin-right: 20px;
+    margin-right: 28px;
   }
 
-  .nav-cta {
-    display: none;
+  .nav-link {
+    font-size: 10.5px;
   }
-
 }
 
 
@@ -627,31 +601,20 @@
 @media (max-width: 800px) {
 
   .navbar-inner {
-    height: 76px;
+    width: 92%;
 
-    padding: 0 25px;
+    height: 72px;
   }
 
   .navbar-logo {
-    font-size: 32px;
+    font-size: 29px;
   }
 
   .desktop-nav {
     display: none;
   }
 
-  .navbar-actions {
-    margin-left: auto;
-
-    gap: 10px;
-  }
-
-  /*
-     Profile is available
-     inside the mobile menu.
-  */
-
-  .profile-nav-icon {
+  .profile-button {
     display: none;
   }
 
@@ -659,6 +622,9 @@
     display: flex;
   }
 
+  .navbar-actions {
+    margin-left: auto;
+  }
 }
 
 
@@ -669,32 +635,46 @@
 @media (max-width: 450px) {
 
   .navbar-inner {
-    height: 70px;
+    width: 90%;
 
-    padding: 0 18px;
+    height: 68px;
   }
 
   .navbar-logo {
-    font-size: 29px;
+    font-size: 27px;
   }
 
   .menu-button {
-    width: 42px;
-
-    height: 42px;
+    width: 40px;
+    height: 40px;
   }
 
-  .mobile-menu {
-    padding:
-      8px
-      20px
-      22px;
+  .mobile-menu-inner {
+    width: 90%;
   }
 
-  .mobile-menu a {
-    padding: 14px 4px;
+  .mobile-nav-link {
+    min-height: 54px;
+
+    font-size: 12.5px;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL SCREENS
+========================================================= */
+
+@media (max-width: 350px) {
+
+  .navbar-logo {
+    font-size: 25px;
   }
 
+  .menu-button {
+    width: 38px;
+    height: 38px;
+  }
 }
 
 
@@ -702,15 +682,37 @@
    ACCESSIBILITY
 ========================================================= */
 
+.navbar-logo:focus-visible,
 .nav-link:focus-visible,
-.nav-cta:focus-visible,
-.profile-nav-icon:focus-visible,
+.profile-button:focus-visible,
 .menu-button:focus-visible,
-.mobile-menu a:focus-visible {
-
+.mobile-nav-link:focus-visible {
   outline:
     2px solid
-    #B79A5A;
+    #b79a5a;
 
   outline-offset: 4px;
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .navbar-logo,
+  .nav-link,
+  .profile-button,
+  .profile-icon,
+  .profile-ring,
+  .menu-button,
+  .menu-button span,
+  .mobile-nav-link {
+    transition: none;
+  }
+
+  .mobile-menu.show {
+    animation: none;
+  }
 }

@@ -1,603 +1,608 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+
 import { useNavigate } from "react-router-dom";
+
 import "./SkinScanCard.css";
 
 import {
-  generateRecommendation
-} from "../utils/recommendationEngine";
+  saveSkinScanResult,
+  getAssessmentStatus,
+} from "../utils/assessmentStatus";
+
+
+/* =========================================================
+   ICONS
+   ========================================================= */
+
+const CameraIcon = ({
+  size = 30,
+}) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M8.5 5.5L10 3.5H14L15.5 5.5H18C19.6569 5.5 21 6.84315 21 8.5V17.5C21 19.1569 19.6569 20.5 18 20.5H6C4.34315 20.5 3 19.1569 3 17.5V8.5C3 6.84315 4.34315 5.5 6 5.5H8.5Z"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+
+    <circle
+      cx="12"
+      cy="13"
+      r="3.5"
+      stroke="currentColor"
+      strokeWidth="1.5"
+    />
+  </svg>
+);
+
+
+const UploadIcon = ({
+  size = 24,
+}) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M12 16V4"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+    />
+
+    <path
+      d="M7.5 8.5L12 4L16.5 8.5"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+
+    <path
+      d="M5 14V18C5 19.1046 5.89543 20 7 20H17C18.1046 20 19 19.1046 19 18V14"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+    />
+  </svg>
+);
+
+
+const SparkleIcon = ({
+  size = 18,
+}) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M12 2L13.5 8.5L20 10L13.5 11.5L12 18L10.5 11.5L4 10L10.5 8.5L12 2Z"
+      fill="currentColor"
+    />
+
+    <path
+      d="M19 15L19.7 18.3L23 19L19.7 19.7L19 23L18.3 19.7L15 19L18.3 18.3L19 15Z"
+      fill="currentColor"
+    />
+  </svg>
+);
+
+
+const CheckIcon = ({
+  size = 17,
+}) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M5 12.5L9.5 17L19 7"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+
+const ArrowIcon = ({
+  size = 17,
+}) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M5 12H19"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+    />
+
+    <path
+      d="M13 6L19 12L13 18"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+
+/* =========================================================
+   COMPONENT
+   ========================================================= */
 
 const SkinScanCard = () => {
-
-  // =====================================================
-  // NAVIGATION
-  // =====================================================
-
   const navigate = useNavigate();
 
-  // =====================================================
-  // STATE
-  // =====================================================
+  const fileInputRef =
+    useRef(null);
 
-  const [showUploadOptions, setShowUploadOptions] =
+  const cameraInputRef =
+    useRef(null);
+
+  const [image, setImage] =
+    useState(null);
+
+  const [isScanning, setIsScanning] =
     useState(false);
 
-  const [image, setImage] = useState(null);
-  const [imageFile, setImageFile] = useState(null);
+  const [progress, setProgress] =
+    useState(0);
 
-  const [analyzing, setAnalyzing] = useState(false);
-  const [analysis, setAnalysis] = useState(null);
+  const [showOptions, setShowOptions] =
+    useState(false);
 
-  const [dragActive, setDragActive] = useState(false);
-  const [error, setError] = useState("");
+  const [analysisComplete, setAnalysisComplete] =
+    useState(false);
 
-  const [analysisStep, setAnalysisStep] = useState(0);
+  const [doshaCompleted, setDoshaCompleted] =
+    useState(false);
 
-  const [dosha, setDosha] = useState(null);
+  const [openCareCard, setOpenCareCard] =
+    useState(null);
 
-  // =====================================================
-  // REFS
-  // =====================================================
+  const [completedSteps, setCompletedSteps] =
+    useState([]);
 
-  const fileInputRef = useRef(null);
-  const cameraInputRef = useRef(null);
 
-  // =====================================================
-  // ANALYSIS STEPS
-  // =====================================================
+  /* =========================================================
+     STATUS
+     ========================================================= */
 
-  const analysisSteps = [
-    "Preparing your image...",
-    "Checking image quality...",
-    "Analyzing visible skin patterns...",
-    "Assessing skin characteristics...",
-    "Preparing your skin profile..."
-  ];
+  const checkAssessmentStatus = () => {
+    const status =
+      getAssessmentStatus();
 
-  // =====================================================
-  // GET SAVED DOSHA
-  // =====================================================
+    setDoshaCompleted(
+      Boolean(
+        status.doshaCompleted ||
+        status.doshaTestCompleted
+      )
+    );
+  };
+
 
   useEffect(() => {
+    checkAssessmentStatus();
 
-    const savedDoshaResult =
-      localStorage.getItem("ayuraiDoshaResult");
+    const updateStatus =
+      () => checkAssessmentStatus();
 
-    if (!savedDoshaResult) {
-      setDosha(null);
-      return;
-    }
+    window.addEventListener(
+      "storage",
+      updateStatus
+    );
 
-    try {
+    window.addEventListener(
+      "ayurai-assessment-updated",
+      updateStatus
+    );
 
-      const parsedDosha =
-        JSON.parse(savedDoshaResult);
-
-      if (parsedDosha?.dominant) {
-
-        setDosha(
-          parsedDosha.dominant
-        );
-
-      }
-
-    } catch (error) {
-
-      console.error(
-        "Unable to read Dosha result:",
-        error
+    return () => {
+      window.removeEventListener(
+        "storage",
+        updateStatus
       );
 
-      setDosha(null);
-
-    }
-
+      window.removeEventListener(
+        "ayurai-assessment-updated",
+        updateStatus
+      );
+    };
   }, []);
 
-  // =====================================================
-  // IMAGE PROCESSING
-  // =====================================================
 
-  const processImage = (file) => {
+  /* =========================================================
+     FILE
+     ========================================================= */
 
-    setError("");
+  const handleFile = (
+    file
+  ) => {
+    if (!file) return;
 
-    if (!file) {
-      return;
-    }
-
-    // -----------------------------------------------
-    // FILE TYPE
-    // -----------------------------------------------
-
-    const allowedTypes = [
-      "image/jpeg",
-      "image/png",
-      "image/webp"
-    ];
-
-    if (!allowedTypes.includes(file.type)) {
-
-      setError(
-        "Please upload a JPG, PNG, or WEBP image."
+    if (
+      !file.type.startsWith(
+        "image/"
+      )
+    ) {
+      alert(
+        "Please select a valid image."
       );
 
       return;
     }
-
-    // -----------------------------------------------
-    // FILE SIZE
-    // -----------------------------------------------
-
-    if (file.size > 10 * 1024 * 1024) {
-
-      setError(
-        "Please upload an image smaller than 10MB."
-      );
-
-      return;
-    }
-
-    // -----------------------------------------------
-    // CREATE PREVIEW
-    // -----------------------------------------------
 
     const imageUrl =
-      URL.createObjectURL(file);
+      URL.createObjectURL(
+        file
+      );
 
     setImage(imageUrl);
 
-    setImageFile(file);
+    setAnalysisComplete(
+      false
+    );
 
-    setAnalysis(null);
+    setProgress(0);
 
-    setAnalyzing(false);
+    setIsScanning(
+      false
+    );
 
-    setAnalysisStep(0);
-
-    setShowUploadOptions(false);
-
+    setShowOptions(
+      false
+    );
   };
 
-  // =====================================================
-  // NORMAL FILE UPLOAD
-  // =====================================================
 
-  const handleImageUpload = (event) => {
-
-    const file =
-      event.target.files?.[0];
-
-    if (file) {
-      processImage(file);
-    }
-
-    event.target.value = "";
-
-  };
-
-  // =====================================================
-  // CAMERA CAPTURE
-  // =====================================================
-
-  const handleCameraCapture = (event) => {
-
-    const file =
-      event.target.files?.[0];
-
-    if (file) {
-      processImage(file);
-    }
-
-    event.target.value = "";
-
-  };
-
-  // =====================================================
-  // OPEN FILE SELECTOR
-  // =====================================================
-
-  const openFileSelector = () => {
-
-    setShowUploadOptions(false);
-
+  const handleUploadClick = () => {
     fileInputRef.current?.click();
-
   };
 
-  // =====================================================
-  // OPEN CAMERA
-  // =====================================================
 
-  const openCamera = () => {
-
-    setShowUploadOptions(false);
-
+  const handleCameraClick = () => {
     cameraInputRef.current?.click();
-
   };
 
-  // =====================================================
-  // DRAG OVER
-  // =====================================================
 
-  const handleDragOver = (event) => {
-
-    event.preventDefault();
-
-    setDragActive(true);
-
-  };
-
-  // =====================================================
-  // DRAG LEAVE
-  // =====================================================
-
-  const handleDragLeave = (event) => {
-
-    event.preventDefault();
-
-    setDragActive(false);
-
-  };
-
-  // =====================================================
-  // DROP
-  // =====================================================
-
-  const handleDrop = (event) => {
-
-    event.preventDefault();
-
-    setDragActive(false);
-
+  const handleFileChange = (
+    event
+  ) => {
     const file =
-      event.dataTransfer.files?.[0];
+      event.target.files?.[0];
 
-    if (file) {
-      processImage(file);
+    handleFile(file);
+
+    event.target.value = "";
+  };
+
+
+  /* =========================================================
+     ANALYZE
+     ========================================================= */
+
+  const handleAnalyze = () => {
+    if (
+      !image ||
+      isScanning
+    ) {
+      return;
     }
 
+    setIsScanning(
+      true
+    );
+
+    setProgress(0);
+
+    setAnalysisComplete(
+      false
+    );
   };
 
- // =====================================================
-// ANALYZE IMAGE
-// =====================================================
 
-const handleAnalyze = () => {
+  /* =========================================================
+     SCAN
+     ========================================================= */
 
-  if (!imageFile || analyzing) {
-    return;
-  }
+  useEffect(() => {
+    if (!isScanning) {
+      return;
+    }
 
-  setError("");
-  setAnalysis(null);
-  setAnalyzing(true);
-  setAnalysisStep(0);
+    const interval =
+      setInterval(() => {
 
-  // ===================================================
-  // GET DOSHA RESULT
-  // ===================================================
+        setProgress(
+          (previous) => {
 
-  const savedDoshaResult =
-    localStorage.getItem("ayuraiDoshaResult");
+            const next =
+              previous + 2;
 
-  let savedDosha = null;
+            if (
+              next >= 100
+            ) {
+              clearInterval(
+                interval
+              );
 
-  if (savedDoshaResult) {
+              setTimeout(() => {
 
-    try {
+                setIsScanning(
+                  false
+                );
 
-      const parsedDosha =
-        JSON.parse(savedDoshaResult);
+                setAnalysisComplete(
+                  true
+                );
 
-      savedDosha =
-        parsedDosha.dominant || null;
 
-      setDosha(savedDosha);
+                /* =========================================
+                   SAVE SKIN RESULT
+                ========================================= */
 
-    } catch (error) {
+                saveSkinScanResult({
 
-      console.error(
-        "Unable to read Dosha result:",
-        error
+                  completed:
+                    true,
+
+                  completedAt:
+                    new Date().toISOString(),
+
+                  /*
+                    Placeholder AI-estimated
+                    visible characteristics.
+                  */
+
+                  skinType:
+                    "AI-estimated",
+
+                  hydration:
+                    "AI-estimated",
+
+                  concern:
+                    "AI-observed",
+
+                  texture:
+                    "AI-observed",
+                });
+
+
+                checkAssessmentStatus();
+
+              }, 500);
+
+              return 100;
+            }
+
+            return next;
+          }
+        );
+
+      }, 55);
+
+
+    return () =>
+      clearInterval(
+        interval
       );
 
-      setDosha(null);
-
-    }
-
-  }
+  }, [isScanning]);
 
 
-  // ===================================================
-  // ANALYSIS ANIMATION
-  // ===================================================
-
-  let currentStep = 0;
-
-  const stepInterval =
-    setInterval(() => {
-
-      currentStep++;
-
-      if (
-        currentStep <
-        analysisSteps.length
-      ) {
-
-        setAnalysisStep(currentStep);
-
-      }
-
-    }, 700);
-
-
-  // ===================================================
-  // DEMO SKIN ANALYSIS
-  // ===================================================
-
-  setTimeout(() => {
-
-    clearInterval(stepInterval);
-
-
-    // =================================================
-    // SKIN TYPE
-    // =================================================
-    //
-    // IMPORTANT:
-    // Only use the 3 skin types you decided:
-    //
-    // dry
-    // sensitive
-    // oily
-    //
-    // NO COMBINATION
-    // =================================================
-
-    const skinType = "Dry";
-
-
-    // =================================================
-    // VISIBLE CONCERNS
-    // =================================================
-
-    const concerns = [
-      "Possible mild dryness",
-      "Blemish-prone appearance"
-    ];
-
-
-    // =================================================
-    // RECOMMENDATION ENGINE
-    // =================================================
-
-    const recommendation =
-      generateRecommendation({
-        dosha: savedDosha,
-        skinType,
-        concerns
-      });
-
-
-    // =================================================
-    // CREATE SKIN RESULT
-    // =================================================
-
-    const skinResult = {
-
-      skinType,
-
-      hydration: {
-        level:
-          "Moderate hydration appearance",
-
-        percentage: 68
-      },
-
-      concerns,
-
-      confidence: 86,
-
-      recommendation:
-        recommendation.summary,
-
-      careTips:
-        recommendation.tips,
-
-      completedAt:
-        new Date().toISOString()
-
-    };
-
-
-    // =================================================
-    // SAVE SKIN RESULT
-    // =================================================
-
-    localStorage.setItem(
-      "ayuraiSkinAnalysis",
-      JSON.stringify(skinResult)
-    );
-
-
-    // =================================================
-    // UPDATE UI
-    // =================================================
-
-    setAnalysis(skinResult);
-
-    setAnalyzing(false);
-
-    setAnalysisStep(
-      analysisSteps.length - 1
-    );
-
-  }, 4000);
-
-};
-  // =====================================================
-  // RESET
-  // =====================================================
+  /* =========================================================
+     CHANGE PHOTO
+     ========================================================= */
 
   const handleChangePhoto = () => {
-
-    if (image) {
-      URL.revokeObjectURL(image);
-    }
-
     setImage(null);
 
-    setImageFile(null);
+    setAnalysisComplete(
+      false
+    );
 
-    setAnalysis(null);
+    setProgress(0);
 
-    setAnalyzing(false);
-
-    setAnalysisStep(0);
-
-    setError("");
-
+    setIsScanning(
+      false
+    );
   };
 
-  // =====================================================
-  // CAMERA ICON
-  // =====================================================
 
-  const CameraIcon = () => (
+  /* =========================================================
+     CARE
+     ========================================================= */
 
-    <svg
-      className="upload-camera-icon"
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
+  const toggleCareCard = (
+    card
+  ) => {
+    setOpenCareCard(
+      (previous) =>
+        previous === card
+          ? null
+          : card
+    );
+  };
 
-      <path
-        d="M8.5 6.5L9.7 4.5H14.3L15.5 6.5H19C20.1 6.5 21 7.4 21 8.5V17.5C21 18.6 20.1 19.5 19 19.5H5C3.9 19.5 3 18.6 3 17.5V8.5C3 7.4 3.9 6.5 5 6.5H8.5Z"
-        stroke="currentColor"
-        strokeWidth="1.4"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
 
-      <circle
-        cx="12"
-        cy="13"
-        r="3.5"
-        stroke="currentColor"
-        strokeWidth="1.4"
-      />
+  const toggleStep = (
+    stepId
+  ) => {
+    setCompletedSteps(
+      (previous) =>
+        previous.includes(
+          stepId
+        )
+          ? previous.filter(
+              (id) =>
+                id !== stepId
+            )
+          : [
+              ...previous,
+              stepId,
+            ]
+    );
+  };
 
-      <circle
-        cx="17.5"
-        cy="9.5"
-        r="0.7"
-        fill="currentColor"
-      />
 
-    </svg>
+  /* =========================================================
+     NEXT ASSESSMENT
+     ========================================================= */
 
-  );
+  const handleNextAssessment = () => {
+    const status =
+      getAssessmentStatus();
 
-  // =====================================================
-  // RENDER
-  // =====================================================
+    if (
+      status.skinScanCompleted &&
+      status.doshaCompleted
+    ) {
+      navigate(
+        "/overall-result"
+      );
+
+      return;
+    }
+
+    navigate(
+      "/dosha-test"
+    );
+  };
+
+
+  const nextButtonText =
+    doshaCompleted
+      ? "VIEW OVERALL RESULT"
+      : "CONTINUE TO DOSHA TEST";
+
+
+  const progressPercentage =
+    Math.round(
+      (completedSteps.length /
+        6) *
+        100
+    );
+
+
+  /* =========================================================
+     RENDER
+     ========================================================= */
 
   return (
+    <section className="skin-scan-section">
 
-    <section
-      className="skin-scan-section"
-      id="skin-scan"
-    >
-
-      {/* =================================================
+      {/* =====================================================
           HEADER
-      ================================================= */}
+      ===================================================== */}
 
       <div className="scan-heading">
 
         <span className="section-label">
-          AYURVISION AI ENGINE
+          AI SKIN ANALYSIS
         </span>
 
         <h2>
-          See What Your Skin
-          <br />
-          <span>Is Telling You</span>
+          Understand Your{" "}
+          <span>
+            Skin
+          </span>
         </h2>
 
         <p>
-          Upload a clear photo and let AyurAI
-          analyse visible skin characteristics
-          and create your skincare profile.
+          Upload a clear facial photo and let
+          AyurAI estimate visible skin
+          characteristics to support your
+          Ayurvedic skincare journey.
         </p>
 
       </div>
 
 
-      {/* =================================================
-          MAIN SCAN AREA
-      ================================================= */}
+      {/* =====================================================
+          MAIN
+      ===================================================== */}
 
       <div className="scan-container">
-
-        {/* =================================================
-            LEFT INFORMATION
-        ================================================= */}
 
         <div className="scan-info">
 
           <div className="scan-number">
-            01
+            01 — SKIN SCAN
           </div>
 
           <h3>
-            AI Skin Analysis
+            Begin with your skin.
           </h3>
 
           <p>
-            Upload a clear photo of your face
-            to begin your AyurAI skin analysis.
+            Your photo is used to estimate
+            visible characteristics such as
+            skin appearance, hydration and
+            texture.
           </p>
-
 
           <div className="scan-features">
 
             <span>
               <b>✓</b>
-              Skin characteristics
+              AI-estimated visible skin
+              characteristics
             </span>
 
             <span>
               <b>✓</b>
-              Hydration patterns
+              Simple and personalized
+              guidance
             </span>
 
             <span>
               <b>✓</b>
-              Visible concerns
-            </span>
-
-            <span>
-              <b>✓</b>
-              Personalized care
+              Designed for your Ayurvedic
+              journey
             </span>
 
           </div>
 
-
           <div className="scan-note">
 
-            <span className="scan-note-icon">
-              ⌘
-            </span>
+            <div className="scan-note-icon">
+              <SparkleIcon size={15} />
+            </div>
 
             <p>
-              For best results, upload a clear,
-              well-lit face photo without heavy
-              makeup or filters.
+              For best results, use a clear,
+              front-facing photo taken in
+              natural or well-lit conditions.
+              This tool provides an AI estimate
+              and is not a medical diagnosis.
             </p>
 
           </div>
@@ -605,48 +610,15 @@ const handleAnalyze = () => {
         </div>
 
 
-        {/* =================================================
-            RIGHT SIDE
-        ================================================= */}
+        {/* ===================================================
+            UPLOAD
+        =================================================== */}
 
         <div className="upload-wrapper">
 
-          {/* =================================================
-              ERROR
-          ================================================= */}
+          {!image ? (
 
-          {error && (
-
-            <div className="upload-error">
-
-              <span>!</span>
-
-              {error}
-
-            </div>
-
-          )}
-
-
-          {/* =================================================
-              UPLOAD AREA
-          ================================================= */}
-
-          {!image && (
-
-            <div
-              className={`upload-area ${
-                dragActive
-                  ? "drag-active"
-                  : ""
-              }`}
-
-              onDragOver={handleDragOver}
-
-              onDragLeave={handleDragLeave}
-
-              onDrop={handleDrop}
-            >
+            <div className="upload-area">
 
               <div className="upload-content">
 
@@ -654,322 +626,119 @@ const handleAnalyze = () => {
                   type="button"
                   className="upload-icon-button"
                   onClick={() =>
-                    setShowUploadOptions(true)
+                    setShowOptions(true)
                   }
-                  aria-label="Upload or take a photo"
-                  title="Upload or take a photo"
                 >
-
-                  <CameraIcon />
-
+                  <CameraIcon size={31} />
                 </button>
 
-
                 <h3>
-                  Upload Your Skin Photo
+                  Add your skin photo
                 </h3>
 
                 <p>
-                  Drag & drop your photo here
+                  Choose an existing photo or
+                  use your camera
                 </p>
 
-
                 <div className="or-divider">
-                  <span>OR</span>
+                  <span>
+                    OR
+                  </span>
                 </div>
-
 
                 <button
                   type="button"
                   className="upload-button"
-                  onClick={openFileSelector}
+                  onClick={
+                    handleUploadClick
+                  }
                 >
-                  Choose Image
+                  UPLOAD PHOTO
                 </button>
-
 
                 <small>
-                  JPG, PNG or WEBP
-                  <br />
-                  Maximum 10MB
+                  JPG, JPEG or PNG · Clear
+                  facial photo recommended
                 </small>
 
-
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept="image/jpeg,image/png,image/webp"
-                  onChange={handleImageUpload}
-                  hidden
-                />
-
-
-                <input
-                  ref={cameraInputRef}
-                  type="file"
-                  accept="image/*"
-                  capture="environment"
-                  onChange={handleCameraCapture}
-                  hidden
-                />
-
               </div>
 
             </div>
 
-          )}
-
-
-          {/* =================================================
-              UPLOAD OPTIONS MODAL
-          ================================================= */}
-
-          {showUploadOptions && !image && (
-
-            <div
-              className="upload-options-overlay"
-              onClick={() =>
-                setShowUploadOptions(false)
-              }
-            >
-
-              <div
-                className="upload-options-card"
-                onClick={(event) =>
-                  event.stopPropagation()
-                }
-              >
-
-                <button
-                  type="button"
-                  className="upload-options-close"
-                  onClick={() =>
-                    setShowUploadOptions(false)
-                  }
-                  aria-label="Close"
-                >
-                  ×
-                </button>
-
-
-                <div className="upload-options-symbol">
-                  <CameraIcon />
-                </div>
-
-
-                <span className="upload-options-label">
-                  AYURVISION
-                </span>
-
-
-                <h3>
-                  Add Your Skin Photo
-                </h3>
-
-
-                <p>
-                  Choose how you would like
-                  to provide your photo.
-                </p>
-
-
-                <div className="upload-options-buttons">
-
-                  {/* CAMERA */}
-
-                  <button
-                    type="button"
-                    className="upload-option-button"
-                    onClick={openCamera}
-                  >
-
-                    <span className="option-icon">
-                      <CameraIcon />
-                    </span>
-
-                    <span className="option-text">
-
-                      <strong>
-                        Take a Photo
-                      </strong>
-
-                      <small>
-                        Use your camera
-                      </small>
-
-                    </span>
-
-                    <span className="option-arrow">
-                      →
-                    </span>
-
-                  </button>
-
-
-                  {/* FILE */}
-
-                  <button
-                    type="button"
-                    className="upload-option-button"
-                    onClick={openFileSelector}
-                  >
-
-                    <span className="option-icon">
-
-                      <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-
-                        <path
-                          d="M4 5.5C4 4.67 4.67 4 5.5 4H14L20 10V18.5C20 19.33 19.33 20 18.5 20H5.5C4.67 20 4 19.33 4 18.5V5.5Z"
-                          stroke="currentColor"
-                          strokeWidth="1.4"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-
-                        <path
-                          d="M14 4V10H20"
-                          stroke="currentColor"
-                          strokeWidth="1.4"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-
-                        <circle
-                          cx="9"
-                          cy="14"
-                          r="1.5"
-                          stroke="currentColor"
-                          strokeWidth="1.2"
-                        />
-
-                        <path
-                          d="M6.5 18L11 14L14 16.5L16 15L19.5 18"
-                          stroke="currentColor"
-                          strokeWidth="1.2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-
-                      </svg>
-
-                    </span>
-
-                    <span className="option-text">
-
-                      <strong>
-                        Upload from Device
-                      </strong>
-
-                      <small>
-                        Choose an existing image
-                      </small>
-
-                    </span>
-
-                    <span className="option-arrow">
-                      →
-                    </span>
-
-                  </button>
-
-                </div>
-
-
-                <button
-                  type="button"
-                  className="upload-options-cancel"
-                  onClick={() =>
-                    setShowUploadOptions(false)
-                  }
-                >
-                  Cancel
-                </button>
-
-              </div>
-
-            </div>
-
-          )}
-
-
-          {/* =================================================
-              IMAGE PREVIEW
-          ================================================= */}
-
-          {image && (
+          ) : (
 
             <div className="image-preview-container">
 
-              <div
-                className={`image-preview ${
-                  analyzing
-                    ? "is-scanning"
-                    : ""
-                }`}
-              >
+              <div className="image-preview">
 
                 <img
                   src={image}
-                  alt="Uploaded skin"
+                  alt="Uploaded skin scan preview"
                 />
 
+                {!isScanning &&
+                  !analysisComplete && (
 
-                {/* =================================================
-                    AI SCANNING
-                ================================================= */}
+                    <div className="image-status">
 
-                {analyzing && (
+                      <span className="status-dot" />
+
+                      PHOTO READY
+
+                    </div>
+
+                  )}
+
+
+                {/* SCANNING */}
+
+                {isScanning && (
 
                   <div className="ai-scan-overlay">
 
-                    <div className="scan-glow"></div>
+                    <div className="scan-glow" />
 
-                    <div className="face-scan-frame"></div>
+                    <div className="face-scan-frame" />
 
-                    <div className="scan-corner top-left"></div>
+                    <div className="scan-corner top-left" />
+                    <div className="scan-corner top-right" />
+                    <div className="scan-corner bottom-left" />
+                    <div className="scan-corner bottom-right" />
 
-                    <div className="scan-corner top-right"></div>
+                    <div className="face-point point-one" />
+                    <div className="face-point point-two" />
+                    <div className="face-point point-three" />
+                    <div className="face-point point-four" />
+                    <div className="face-point point-five" />
 
-                    <div className="scan-corner bottom-left"></div>
-
-                    <div className="scan-corner bottom-right"></div>
-
-                    <div className="face-point point-one"></div>
-
-                    <div className="face-point point-two"></div>
-
-                    <div className="face-point point-three"></div>
-
-                    <div className="face-point point-four"></div>
-
-                    <div className="face-point point-five"></div>
-
-                    <div className="photo-scan-line"></div>
-
+                    <div className="photo-scan-line" />
 
                     <div className="scan-status">
 
-                      <span className="scan-pulse"></span>
+                      <span className="scan-pulse" />
 
-                      AYURVISION AI SCANNING
+                      AI ANALYSIS IN PROGRESS
 
                     </div>
-
 
                     <div className="scan-detection">
 
+                      <SparkleIcon size={13} />
+
                       <span>
-                        ◈
+
+                        {progress < 30
+                          ? "Detecting facial region..."
+                          : progress < 60
+                          ? "Observing visible skin characteristics..."
+                          : progress < 85
+                          ? "Estimating skin appearance..."
+                          : "Preparing your assessment..."}
+
                       </span>
 
-                      {analysisSteps[analysisStep]}
-
                     </div>
-
 
                     <div className="scan-progress">
 
@@ -977,12 +746,7 @@ const handleAnalyze = () => {
                         className="scan-progress-bar"
                         style={{
                           width:
-                            `${
-                              (
-                                (analysisStep + 1) /
-                                analysisSteps.length
-                              ) * 100
-                            }%`
+                            `${progress}%`,
                         }}
                       />
 
@@ -993,17 +757,19 @@ const handleAnalyze = () => {
                 )}
 
 
-                {/* =================================================
-                    READY
-                ================================================= */}
+                {/* COMPLETE */}
 
-                {!analyzing && !analysis && (
+                {analysisComplete && (
 
-                  <div className="image-status">
+                  <div className="scan-complete-overlay">
 
-                    <span className="status-dot"></span>
+                    <div className="scan-complete-icon">
+                      <CheckIcon size={26} />
+                    </div>
 
-                    IMAGE READY
+                    <span>
+                      SKIN SCAN COMPLETE
+                    </span>
 
                   </div>
 
@@ -1012,17 +778,20 @@ const handleAnalyze = () => {
               </div>
 
 
-              {!analyzing && !analysis && (
+              {!isScanning &&
+                !analysisComplete && (
 
-                <button
-                  type="button"
-                  className="change-photo-small"
-                  onClick={handleChangePhoto}
-                >
-                  Change Photo
-                </button>
+                  <button
+                    type="button"
+                    className="change-photo-small"
+                    onClick={
+                      handleChangePhoto
+                    }
+                  >
+                    Change photo
+                  </button>
 
-              )}
+                )}
 
             </div>
 
@@ -1033,38 +802,47 @@ const handleAnalyze = () => {
       </div>
 
 
-      {/* =================================================
+      {/* =====================================================
           ANALYZE BUTTON
-      ================================================= */}
+      ===================================================== */}
 
       {image &&
-        !analysis &&
-        !analyzing && (
+        !analysisComplete && (
 
           <div className="analysis-action">
 
             <button
               type="button"
               className="analyze-button"
-              onClick={handleAnalyze}
+              onClick={
+                handleAnalyze
+              }
+              disabled={
+                isScanning
+              }
             >
 
               <span className="analyze-icon">
-                ✦
+                <SparkleIcon size={15} />
               </span>
 
-              <span>
-                Analyze My Skin
-              </span>
+              {isScanning
+                ? "ANALYZING..."
+                : "ANALYZE MY SKIN"}
 
-              <span className="arrow">
-                →
-              </span>
+              {!isScanning && (
+
+                <span className="arrow">
+                  <ArrowIcon size={15} />
+                </span>
+
+              )}
 
             </button>
 
             <p>
-              Your photo is ready for AyurAI analysis.
+              AI-estimated results ·
+              Not a medical diagnosis
             </p>
 
           </div>
@@ -1072,236 +850,101 @@ const handleAnalyze = () => {
         )}
 
 
-      {/* =================================================
-          RESULT
-      ================================================= */}
+      {/* =====================================================
+          COMPLETE
+      ===================================================== */}
 
-      {analysis && (
+      {analysisComplete && (
 
-        <div className="analysis-result">
+        <section className="skin-scan-complete">
 
-          {/* =================================================
-              RESULT HEADING
-          ================================================= */}
+          <div className="complete-heading">
 
-          <div className="result-heading">
-
-            <span className="section-label">
-              AYURVISION AI RESULT
+            <span className="complete-label">
+              SKIN SCAN COMPLETE
             </span>
 
             <h2>
-              Your Skin Analysis Is Ready
+              Your first assessment is complete.
             </h2>
 
             <p>
-              AyurAI has identified visible skin
-              characteristics from your uploaded photo.
+              Your Skin Scan has been saved.
+              AyurAI will combine this assessment
+              with your Dosha Test to create your
+              Overall Ayurvedic Result.
             </p>
 
           </div>
 
 
-          {/* =================================================
-              DOSHA PROFILE
-          ================================================= */}
+          <div className="assessment-status-grid">
 
-          {dosha ? (
+            <div className="assessment-status completed">
 
-            <div className="dosha-result-banner">
-
-              <div className="dosha-result-icon">
-                ☯
+              <div className="assessment-status-icon">
+                <CheckIcon size={16} />
               </div>
 
-              <div className="dosha-result-content">
-
+              <div>
                 <span>
-                  YOUR AYURVEDIC PROFILE
+                  01
                 </span>
 
                 <strong>
-                  {dosha}
+                  Skin Scan
                 </strong>
 
-                <p>
-                  Your Dosha and skin analysis are
-                  now ready to be combined into your
-                  personalized AyurAI profile.
-                </p>
-
+                <small>
+                  Completed
+                </small>
               </div>
 
             </div>
 
-          ) : (
 
-            <div className="dosha-result-banner dosha-missing">
-
-              <div className="dosha-result-icon">
-                ☯
-              </div>
-
-              <div className="dosha-result-content">
-
-                <span>
-                  AYURVEDIC PROFILE
-                </span>
-
-                <strong>
-                  Dosha Test Not Completed
-                </strong>
-
-                <p>
-                  Complete the Dosha Test to create
-                  your complete AyurAI profile.
-                </p>
-
-              </div>
-
-              <button
-                type="button"
-                onClick={() =>
-                  navigate("/dosha-test")
-                }
-              >
-                Take Test →
-              </button>
-
-            </div>
-
-          )}
-
-
-          {/* =================================================
-              RESULT GRID
-          ================================================= */}
-
-          <div className="result-grid">
-
-            {/* =================================================
-                SKIN TYPE
-            ================================================= */}
-
-            <div className="result-card result-skin">
-
-              <span className="result-number">
-                01
-              </span>
-
-              <div className="result-icon">
-                ◈
-              </div>
-
-              <span className="result-label">
-                SKIN TYPE
-              </span>
-
-              <strong>
-                {analysis.skinType}
-              </strong>
-
+            <div className="assessment-connector">
+              <span />
             </div>
 
 
-            {/* =================================================
-                HYDRATION
-            ================================================= */}
+            <div
+              className={`assessment-status ${
+                doshaCompleted
+                  ? "completed"
+                  : "pending"
+              }`}
+            >
 
-            <div className="result-card result-hydration">
+              <div className="assessment-status-icon">
 
-              <span className="result-number">
-                02
-              </span>
-
-              <div className="result-icon">
-                ◌
-              </div>
-
-              <span className="result-label">
-                HYDRATION APPEARANCE
-              </span>
-
-              <strong>
-                {analysis.hydration.level}
-              </strong>
-
-              <div className="hydration-meter">
-
-                <div
-                  className="hydration-meter-fill"
-                  style={{
-                    width:
-                      `${analysis.hydration.percentage}%`
-                  }}
-                />
-
-              </div>
-
-              <small>
-                {analysis.hydration.percentage}%
-              </small>
-
-            </div>
-
-
-            {/* =================================================
-                CONFIDENCE
-            ================================================= */}
-
-            <div className="result-card result-confidence">
-
-              <span className="result-number">
-                03
-              </span>
-
-              <div className="result-icon">
-                ✓
-              </div>
-
-              <span className="result-label">
-                AI ANALYSIS CONFIDENCE
-              </span>
-
-              <strong>
-                {analysis.confidence}%
-              </strong>
-
-            </div>
-
-
-            {/* =================================================
-                CONCERNS
-            ================================================= */}
-
-            <div className="result-card result-concerns">
-
-              <span className="result-number">
-                04
-              </span>
-
-              <div className="result-icon">
-                ⌘
-              </div>
-
-              <span className="result-label">
-                VISIBLE CONCERNS
-              </span>
-
-              <div className="concern-list">
-
-                {analysis.concerns.map(
-                  (concern, index) => (
-
-                    <span
-                      key={index}
-                      className="concern-tag"
-                    >
-                      {concern}
-                    </span>
-
+                {doshaCompleted
+                  ? (
+                    <CheckIcon size={16} />
                   )
-                )}
+                  : (
+                    <span>
+                      02
+                    </span>
+                  )}
+
+              </div>
+
+              <div>
+
+                <span>
+                  02
+                </span>
+
+                <strong>
+                  Dosha Test
+                </strong>
+
+                <small>
+                  {doshaCompleted
+                    ? "Completed"
+                    : "Still required"}
+                </small>
 
               </div>
 
@@ -1310,174 +953,881 @@ const handleAnalyze = () => {
           </div>
 
 
-          {/* =================================================
-              BASIC CARE RECOMMENDATION
-          ================================================= */}
+          <div className="complete-message">
 
-          <div className="care-recommendation">
-
-            <div className="care-icon">
-              ⌘
+            <div className="complete-message-icon">
+              <SparkleIcon size={17} />
             </div>
+
+            <p>
+
+              <strong>
+                {doshaCompleted
+                  ? "Both assessments are complete."
+                  : "One more assessment is required."}
+              </strong>
+
+              {" "}
+
+              {doshaCompleted
+                ? "Your Skin Scan and Dosha Test are ready to be combined into your Overall Ayurvedic Result."
+                : "Complete your Dosha Test so AyurAI can combine both assessments into your Overall Ayurvedic Result."}
+
+            </p>
+
+          </div>
+
+
+          <div className="complete-action">
+
+            <button
+              type="button"
+              onClick={
+                handleNextAssessment
+              }
+              className="continue-dosha-button"
+            >
+
+              <span>
+                {nextButtonText}
+              </span>
+
+              <ArrowIcon size={17} />
+
+            </button>
+
+            <button
+              type="button"
+              onClick={
+                handleChangePhoto
+              }
+              className="another-photo-button"
+            >
+              Analyze another photo
+            </button>
+
+          </div>
+
+        </section>
+
+      )}
+
+
+      {/* =====================================================
+          CARE
+      ===================================================== */}
+
+      {analysisComplete && (
+
+        <section className="ayurvedic-care-section">
+
+          <div className="care-section-header">
+
+            <div>
+
+              <h2>
+                Your Ayurvedic Care
+              </h2>
+
+              <p>
+                Explore simple skincare habits
+                while you complete your full
+                Ayurvedic assessment.
+              </p>
+
+            </div>
+
+            <div className="routine-progress">
+
+              <div className="progress-circle">
+
+                <span>
+                  {progressPercentage}
+                </span>
+
+                <small>
+                  %
+                </small>
+
+              </div>
+
+              <div>
+
+                <strong>
+                  Routine progress
+                </strong>
+
+                <span>
+                  {completedSteps.length}
+                  {" "}of 6 steps completed
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div className="routine-progress-bar">
+
+            <div
+              style={{
+                width:
+                  `${progressPercentage}%`,
+              }}
+            />
+
+          </div>
+
+
+          {/* MORNING */}
+
+          <article
+            className={`care-plan-card gold ${
+              openCareCard ===
+              "morning"
+                ? "is-open"
+                : ""
+            }`}
+          >
+
+            <button
+              type="button"
+              className="care-card-header"
+              onClick={() =>
+                toggleCareCard(
+                  "morning"
+                )
+              }
+            >
+
+              <div className="care-card-icon">
+                ☼
+              </div>
+
+              <div className="care-card-title">
+
+                <span>
+                  MORNING
+                </span>
+
+                <h3>
+                  Gentle Start
+                </h3>
+
+                <p>
+                  Begin your day with
+                  a simple and gentle
+                  skincare routine.
+                </p>
+
+              </div>
+
+              <span className="care-card-toggle">
+                {openCareCard ===
+                "morning"
+                  ? "−"
+                  : "+"}
+              </span>
+
+            </button>
+
+            <div
+              className={`care-card-content ${
+                openCareCard ===
+                "morning"
+                  ? "expanded"
+                  : ""
+              }`}
+            >
+
+              <div className="care-steps">
+
+                {[
+                  [
+                    "morning-1",
+                    "Cleanse gently",
+                    "Use a gentle cleanser without harsh rubbing.",
+                  ],
+
+                  [
+                    "morning-2",
+                    "Hydrate",
+                    "Apply a suitable lightweight moisturizer.",
+                  ],
+                ].map(
+                  (
+                    [
+                      id,
+                      title,
+                      description,
+                    ],
+                    index
+                  ) => (
+
+                    <button
+                      type="button"
+                      key={id}
+                      className={`care-step ${
+                        completedSteps.includes(
+                          id
+                        )
+                          ? "completed"
+                          : ""
+                      }`}
+                      onClick={() =>
+                        toggleStep(
+                          id
+                        )
+                      }
+                    >
+
+                      <span className="step-number">
+                        {index + 1}
+                      </span>
+
+                      <span className="step-content">
+
+                        <strong>
+                          {title}
+                        </strong>
+
+                        <span>
+                          {description}
+                        </span>
+
+                      </span>
+
+                      <span className="step-check">
+
+                        {completedSteps.includes(
+                          id
+                        )
+                          ? (
+                            <CheckIcon size={16} />
+                          )
+                          : "○"}
+
+                      </span>
+
+                    </button>
+
+                  )
+                )}
+
+              </div>
+
+            </div>
+
+          </article>
+
+
+          {/* DAY */}
+
+          <article
+            className={`care-plan-card sage ${
+              openCareCard ===
+              "day"
+                ? "is-open"
+                : ""
+            }`}
+          >
+
+            <button
+              type="button"
+              className="care-card-header"
+              onClick={() =>
+                toggleCareCard(
+                  "day"
+                )
+              }
+            >
+
+              <div className="care-card-icon">
+                ✦
+              </div>
+
+              <div className="care-card-title">
+
+                <span>
+                  DAYTIME
+                </span>
+
+                <h3>
+                  Protect & Balance
+                </h3>
+
+                <p>
+                  Keep your skin comfortable
+                  and protected throughout
+                  the day.
+                </p>
+
+              </div>
+
+              <span className="care-card-toggle">
+                {openCareCard ===
+                "day"
+                  ? "−"
+                  : "+"}
+              </span>
+
+            </button>
+
+            <div
+              className={`care-card-content ${
+                openCareCard ===
+                "day"
+                  ? "expanded"
+                  : ""
+              }`}
+            >
+
+              <div className="care-steps">
+
+                {[
+                  [
+                    "day-1",
+                    "Stay hydrated",
+                    "Drink enough water throughout your day.",
+                  ],
+
+                  [
+                    "day-2",
+                    "Protect your skin",
+                    "Use appropriate sun protection when outdoors.",
+                  ],
+                ].map(
+                  (
+                    [
+                      id,
+                      title,
+                      description,
+                    ],
+                    index
+                  ) => (
+
+                    <button
+                      type="button"
+                      key={id}
+                      className={`care-step ${
+                        completedSteps.includes(
+                          id
+                        )
+                          ? "completed"
+                          : ""
+                      }`}
+                      onClick={() =>
+                        toggleStep(
+                          id
+                        )
+                      }
+                    >
+
+                      <span className="step-number">
+                        {index + 1}
+                      </span>
+
+                      <span className="step-content">
+
+                        <strong>
+                          {title}
+                        </strong>
+
+                        <span>
+                          {description}
+                        </span>
+
+                      </span>
+
+                      <span className="step-check">
+
+                        {completedSteps.includes(
+                          id
+                        )
+                          ? (
+                            <CheckIcon size={16} />
+                          )
+                          : "○"}
+
+                      </span>
+
+                    </button>
+
+                  )
+                )}
+
+              </div>
+
+            </div>
+
+          </article>
+
+
+          {/* EVENING */}
+
+          <article
+            className={`care-plan-card blue ${
+              openCareCard ===
+              "evening"
+                ? "is-open"
+                : ""
+            }`}
+          >
+
+            <button
+              type="button"
+              className="care-card-header"
+              onClick={() =>
+                toggleCareCard(
+                  "evening"
+                )
+              }
+            >
+
+              <div className="care-card-icon">
+                ◐
+              </div>
+
+              <div className="care-card-title">
+
+                <span>
+                  EVENING
+                </span>
+
+                <h3>
+                  Restore & Relax
+                </h3>
+
+                <p>
+                  End your day with a calm
+                  and consistent skincare
+                  routine.
+                </p>
+
+              </div>
+
+              <span className="care-card-toggle">
+                {openCareCard ===
+                "evening"
+                  ? "−"
+                  : "+"}
+              </span>
+
+            </button>
+
+            <div
+              className={`care-card-content ${
+                openCareCard ===
+                "evening"
+                  ? "expanded"
+                  : ""
+              }`}
+            >
+
+              <div className="care-steps">
+
+                {[
+                  [
+                    "evening-1",
+                    "Cleanse",
+                    "Remove daily buildup with a gentle cleanse.",
+                  ],
+
+                  [
+                    "evening-2",
+                    "Moisturize",
+                    "Finish with a comfortable nighttime moisturizer.",
+                  ],
+                ].map(
+                  (
+                    [
+                      id,
+                      title,
+                      description,
+                    ],
+                    index
+                  ) => (
+
+                    <button
+                      type="button"
+                      key={id}
+                      className={`care-step ${
+                        completedSteps.includes(
+                          id
+                        )
+                          ? "completed"
+                          : ""
+                      }`}
+                      onClick={() =>
+                        toggleStep(
+                          id
+                        )
+                      }
+                    >
+
+                      <span className="step-number">
+                        {index + 1}
+                      </span>
+
+                      <span className="step-content">
+
+                        <strong>
+                          {title}
+                        </strong>
+
+                        <span>
+                          {description}
+                        </span>
+
+                      </span>
+
+                      <span className="step-check">
+
+                        {completedSteps.includes(
+                          id
+                        )
+                          ? (
+                            <CheckIcon size={16} />
+                          )
+                          : "○"}
+
+                      </span>
+
+                    </button>
+
+                  )
+                )}
+
+              </div>
+
+            </div>
+
+          </article>
+
+
+          {/* SIMPLE FLOW */}
+
+          <div className="simple-routine">
+
+            <div className="simple-routine-heading">
+
+              <h3>
+                A Simple Daily Flow
+              </h3>
+
+            </div>
+
+            <div className="routine-flow">
+
+              <div className="routine-flow-card morning">
+
+                <div className="routine-flow-icon">
+                  ☼
+                </div>
+
+                <div>
+
+                  <span>
+                    MORNING
+                  </span>
+
+                  <strong>
+                    Cleanse
+                  </strong>
+
+                  <p>
+                    Start gently.
+                  </p>
+
+                </div>
+
+              </div>
+
+              <div className="routine-arrow">
+                →
+              </div>
+
+              <div className="routine-flow-card day">
+
+                <div className="routine-flow-icon">
+                  ✦
+                </div>
+
+                <div>
+
+                  <span>
+                    DAY
+                  </span>
+
+                  <strong>
+                    Protect
+                  </strong>
+
+                  <p>
+                    Maintain balance.
+                  </p>
+
+                </div>
+
+              </div>
+
+              <div className="routine-arrow">
+                →
+              </div>
+
+              <div className="routine-flow-card evening">
+
+                <div className="routine-flow-icon">
+                  ◐
+                </div>
+
+                <div>
+
+                  <span>
+                    EVENING
+                  </span>
+
+                  <strong>
+                    Restore
+                  </strong>
+
+                  <p>
+                    Let your skin rest.
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          {/* FINAL */}
+
+          <div className="overall-analysis-action">
 
             <div>
 
               <span>
-                AYURVEDIC-INSPIRED CARE
+                {doshaCompleted
+                  ? "ASSESSMENT COMPLETE"
+                  : "NEXT STEP"}
               </span>
 
+              <h3>
+                {doshaCompleted
+                  ? "Your Overall Ayurvedic Result is ready."
+                  : "Complete your Ayurvedic assessment"}
+              </h3>
+
               <p>
-                {analysis.recommendation}
+                {doshaCompleted
+                  ? "Both your Skin Scan and Dosha Test are complete. View your combined Ayurvedic assessment."
+                  : "Your Skin Scan is complete. Complete the Dosha Test to combine both assessments and unlock your Overall Ayurvedic Result."}
               </p>
 
-              <ul className="care-tips">
-
-                {analysis.careTips.map(
-                  (tip, index) => (
-
-                    <li key={index}>
-
-                      <span>
-                        ✓
-                      </span>
-
-                      {tip}
-
-                    </li>
-
-                  )
-                )}
-
-              </ul>
-
             </div>
+
+            <button
+              type="button"
+              onClick={
+                handleNextAssessment
+              }
+            >
+              {doshaCompleted
+                ? "VIEW OVERALL RESULT →"
+                : "CONTINUE TO DOSHA TEST →"}
+            </button>
 
           </div>
 
+        </section>
 
-          {/* =================================================
-              OVERALL ANALYSIS BUTTON
-          ================================================= */}
+      )}
 
-          {dosha && (
 
-            <div className="overall-analysis-action">
+      {/* DISCLAIMER */}
 
-              <div>
+      {analysisComplete && (
 
-                <span>
-                  NEXT STEP
-                </span>
+        <p className="analysis-disclaimer">
+          AyurAI provides AI-estimated visual
+          observations for educational and
+          wellness purposes only. Results are
+          not a medical diagnosis and should
+          not replace advice from a qualified
+          healthcare professional.
+        </p>
 
-                <h3>
-                  Discover Your Complete Ayurvedic Profile
-                </h3>
+      )}
 
-                <p>
-                  Combine your Dosha and skin analysis
-                  to receive personalized skincare,
-                  home remedies and wellness suggestions.
-                </p>
 
-              </div>
+      {/* FILE INPUTS */}
+
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/jpeg,image/png,image/jpg"
+        hidden
+        onChange={
+          handleFileChange
+        }
+      />
+
+      <input
+        ref={cameraInputRef}
+        type="file"
+        accept="image/*"
+        capture="user"
+        hidden
+        onChange={
+          handleFileChange
+        }
+      />
+
+
+      {/* UPLOAD OPTIONS */}
+
+      {showOptions && (
+
+        <div
+          className="upload-options-overlay"
+          onClick={(event) => {
+
+            if (
+              event.target ===
+              event.currentTarget
+            ) {
+              setShowOptions(
+                false
+              );
+            }
+
+          }}
+        >
+
+          <div className="upload-options-card">
+
+            <button
+              type="button"
+              className="upload-options-close"
+              onClick={() =>
+                setShowOptions(
+                  false
+                )
+              }
+            >
+              ×
+            </button>
+
+            <div className="upload-options-symbol">
+              <CameraIcon size={25} />
+            </div>
+
+            <span className="upload-options-label">
+              SKIN SCAN
+            </span>
+
+            <h3>
+              Choose your photo
+            </h3>
+
+            <p>
+              Select an existing image or
+              use your device camera to
+              capture a new facial photo.
+            </p>
+
+            <div className="upload-options-buttons">
 
               <button
                 type="button"
-                onClick={() =>
-                  navigate("/overall-result")
+                className="upload-option-button"
+                onClick={
+                  handleUploadClick
                 }
               >
-                View My Overall Analysis →
+
+                <span className="option-icon">
+                  <UploadIcon size={20} />
+                </span>
+
+                <span className="option-text">
+
+                  <strong>
+                    Upload from device
+                  </strong>
+
+                  <small>
+                    Choose a JPG or PNG image
+                  </small>
+
+                </span>
+
+                <span className="option-arrow">
+                  →
+                </span>
+
+              </button>
+
+
+              <button
+                type="button"
+                className="upload-option-button"
+                onClick={
+                  handleCameraClick
+                }
+              >
+
+                <span className="option-icon">
+                  <CameraIcon size={20} />
+                </span>
+
+                <span className="option-text">
+
+                  <strong>
+                    Use camera
+                  </strong>
+
+                  <small>
+                    Take a new facial photo
+                  </small>
+
+                </span>
+
+                <span className="option-arrow">
+                  →
+                </span>
+
               </button>
 
             </div>
 
-          )}
+            <button
+              type="button"
+              className="upload-options-cancel"
+              onClick={() =>
+                setShowOptions(
+                  false
+                )
+              }
+            >
+              Cancel
+            </button>
 
-
-          {/* =================================================
-              DOSHA MISSING ACTION
-          ================================================= */}
-
-          {!dosha && (
-
-            <div className="overall-analysis-action">
-
-              <div>
-
-                <span>
-                  COMPLETE YOUR PROFILE
-                </span>
-
-                <h3>
-                  Take Your Dosha Test
-                </h3>
-
-                <p>
-                  Complete your Dosha Test so AyurAI
-                  can combine both assessments.
-                </p>
-
-              </div>
-
-              <button
-                type="button"
-                onClick={() =>
-                  navigate("/dosha-test")
-                }
-              >
-                Take Dosha Test →
-              </button>
-
-            </div>
-
-          )}
-
-
-          {/* =================================================
-              DISCLAIMER
-          ================================================= */}
-
-          <p className="analysis-disclaimer">
-            AyurAI provides educational and
-            Ayurvedic-inspired skincare guidance.
-            Visible characteristics from an image
-            may not represent your actual skin condition.
-            This analysis is not a medical diagnosis
-            and should not replace professional
-            medical advice.
-          </p>
-
-
-          {/* =================================================
-              ANALYZE ANOTHER
-          ================================================= */}
-
-          <button
-  type="button"
-  className="overall-result-button"
-  onClick={() => {
-    window.location.href = "/overall-result";
-  }}
->
-  View My Overall Result →
-</button>
-
-<button
-  type="button"
-  className="another-photo-button"
-  onClick={handleChangePhoto}
->
-  ↻ Analyze Another Photo
-</button>
+          </div>
 
         </div>
 
       )}
 
     </section>
-
   );
 };
+
 
 export default SkinScanCard;
