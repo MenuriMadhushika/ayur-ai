@@ -5,7 +5,7 @@ import "./HowItWorks.css";
 const steps = [
   {
     number: "01",
-    icon: "✦",
+    icon: "🌿",
     title: "Discover",
     description:
       "Begin your AyurAI journey by understanding your skin and natural Ayurvedic balance.",
@@ -14,7 +14,7 @@ const steps = [
   },
   {
     number: "02",
-    icon: "⌁",
+    icon: "✨",
     title: "AI Skin Scan",
     description:
       "Upload your skin image and let AyurAI analyze visible skin characteristics.",
@@ -23,7 +23,7 @@ const steps = [
   },
   {
     number: "03",
-    icon: "◌",
+    icon: "🧘",
     title: "Find Your Balance",
     description:
       "Understand your dominant Dosha and how it may relate to your skin needs.",
@@ -32,7 +32,7 @@ const steps = [
   },
   {
     number: "04",
-    icon: "❋",
+    icon: "🍯",
     title: "Personalized Care",
     description:
       "Explore Ayurvedic home remedies and care suggestions suited to your results.",

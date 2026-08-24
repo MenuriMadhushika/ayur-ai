@@ -1,188 +1,554 @@
-/* ================================
-   AYURAI HERO
-   Ayurvedic Energy Flow
-================================ */
+/* =========================================================
+   AYURAI — HERO
+   AI × AYURVEDA × NATURAL LUXURY
+========================================================= */
 
 .hero {
   position: relative;
-  min-height: 88vh;
+
+  min-height: calc(100vh - 76px);
+
   display: flex;
   align-items: center;
+
   overflow: hidden;
+
   background:
-    radial-gradient(circle at 75% 45%, rgba(196, 160, 74, 0.10), transparent 32%),
-    radial-gradient(circle at 20% 80%, rgba(118, 139, 103, 0.08), transparent 30%),
-    #f8f4eb;
+    radial-gradient(
+      circle at 76% 45%,
+      rgba(183, 154, 90, 0.13),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 8% 90%,
+      rgba(103, 130, 109, 0.09),
+      transparent 28%
+    ),
+    linear-gradient(
+      135deg,
+      #faf7ef 0%,
+      #f7f3e9 52%,
+      #f2eee3 100%
+    );
+
   color: #292722;
 }
 
-.hero-container {
-  width: min(1200px, 92%);
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 0.95fr 1.05fr;
-  align-items: center;
-  gap: 40px;
-  padding: 80px 0;
+
+/* =========================================================
+   BACKGROUND ORBS
+========================================================= */
+
+.hero-bg-orb {
+  position: absolute;
+
+  border-radius: 50%;
+
+  pointer-events: none;
+
+  filter: blur(1px);
+}
+
+.hero-bg-orb-one {
+  width: 380px;
+  height: 380px;
+
+  top: -190px;
+  left: -140px;
+
+  border:
+    1px solid
+    rgba(183, 154, 90, 0.1);
+}
+
+.hero-bg-orb-two {
+  width: 300px;
+  height: 300px;
+
+  right: -120px;
+  bottom: -150px;
+
+  background:
+    rgba(105, 133, 111, 0.05);
 }
 
 
-/* ================================
-   LEFT CONTENT
-================================ */
+/* =========================================================
+   SUBTLE GRAIN
+========================================================= */
+
+.hero-grain {
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  opacity: 0.025;
+
+  background-image:
+    radial-gradient(
+      rgba(40, 38, 33, 0.8) 0.5px,
+      transparent 0.5px
+    );
+
+  background-size: 7px 7px;
+}
+
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.hero-container {
+  position: relative;
+  z-index: 2;
+
+  width: min(1280px, 92%);
+
+  min-height: 650px;
+
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 0.95fr)
+    minmax(470px, 1.05fr);
+
+  align-items: center;
+
+  gap: 55px;
+
+  padding: 70px 0 80px;
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
 
 .hero-content {
   position: relative;
-  z-index: 5;
-  max-width: 570px;
+  z-index: 10;
+
+  max-width: 610px;
 }
+
+
+/* =========================================================
+   EYEBROW
+========================================================= */
 
 .hero-eyebrow {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 9px;
-  margin-bottom: 20px;
-  font-family: Arial, sans-serif;
-  font-size: 11px;
+
+  gap: 10px;
+
+  margin-bottom: 23px;
+
+  font-family:
+    Inter,
+    Arial,
+    sans-serif;
+
+  font-size: 9px;
+
   font-weight: 700;
-  letter-spacing: 2.5px;
-  color: #9b7b32;
+
+  letter-spacing: 2.2px;
+
+  color: #967537;
+
+  animation:
+    heroFadeUp 0.8s ease both;
 }
 
-.hero-eyebrow::before {
-  content: "";
-  width: 28px;
+.eyebrow-line {
+  width: 31px;
   height: 1px;
-  background: #b49755;
+
+  background: #b79a5a;
 }
 
-.hero h1 {
+.eyebrow-dot {
+  width: 4px;
+  height: 4px;
+
+  border-radius: 50%;
+
+  background: #7d927c;
+
+  animation:
+    eyebrowPulse 2.2s ease-in-out infinite;
+}
+
+@keyframes eyebrowPulse {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.hero-title {
   margin: 0;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(48px, 6vw, 76px);
-  line-height: 0.98;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size:
+    clamp(54px, 6vw, 82px);
+
+  line-height: 0.96;
+
   font-weight: 500;
-  letter-spacing: -2.5px;
-  color: #292722;
+
+  letter-spacing: -4px;
+
+  color: #282720;
+
+  animation:
+    heroFadeUp 0.9s ease 0.08s both;
 }
 
-.hero h1 span {
+.hero-title em {
   color: #9b7b32;
+
   font-style: italic;
-}
 
-.hero-content p {
-  max-width: 510px;
-  margin: 28px 0 34px;
-  font-family: Arial, sans-serif;
-  font-size: 15px;
-  line-height: 1.8;
-  color: #6d685e;
+  font-weight: 500;
 }
 
 
-/* ================================
-   BUTTONS
-================================ */
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.hero-description {
+  max-width: 535px;
+
+  margin: 30px 0 34px;
+
+  font-family:
+    Inter,
+    Arial,
+    sans-serif;
+
+  font-size: 14px;
+
+  line-height: 1.85;
+
+  color: #6d685f;
+
+  animation:
+    heroFadeUp 0.9s ease 0.18s both;
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
 
 .hero-actions {
   display: flex;
   align-items: center;
-  gap: 14px;
+
+  gap: 12px;
+
   flex-wrap: wrap;
+
+  animation:
+    heroFadeUp 0.9s ease 0.28s both;
 }
 
 .hero-primary-btn,
 .hero-secondary-btn {
-  border: none;
+  min-height: 48px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
   cursor: pointer;
-  font-family: Arial, sans-serif;
+
+  font-family:
+    Inter,
+    Arial,
+    sans-serif;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  letter-spacing: 0.2px;
+
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease,
-    background 0.3s ease;
+    background 0.3s ease,
+    border-color 0.3s ease;
 }
+
+
+/* =========================================================
+   PRIMARY
+========================================================= */
 
 .hero-primary-btn {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  padding: 15px 21px;
-  border-radius: 4px;
+  min-width: 174px;
+
+  gap: 22px;
+
+  padding: 13px 18px;
+
+  border:
+    1px solid
+    #292722;
+
+  border-radius: 6px;
+
   background: #292722;
+
   color: #fffdf7;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.3px;
 }
 
-.hero-primary-btn span {
-  font-size: 18px;
-  transition: transform 0.3s ease;
+.primary-arrow {
+  font-size: 17px;
+  font-weight: 400;
+
+  transition:
+    transform 0.3s ease;
 }
 
 .hero-primary-btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 25px rgba(41, 39, 34, 0.18);
+
+  box-shadow:
+    0 14px 30px
+    rgba(41, 39, 34, 0.18);
 }
 
-.hero-primary-btn:hover span {
-  transform: translateX(4px);
+.hero-primary-btn:hover .primary-arrow {
+  transform: translateX(5px);
 }
+
+
+/* =========================================================
+   SECONDARY
+========================================================= */
 
 .hero-secondary-btn {
-  padding: 14px 20px;
-  border: 1px solid rgba(155, 123, 50, 0.35);
-  border-radius: 4px;
-  background: transparent;
-  color: #6f5a2d;
-  font-size: 13px;
+  gap: 8px;
+
+  padding: 13px 18px;
+
+  border:
+    1px solid
+    rgba(155, 123, 50, 0.4);
+
+  border-radius: 6px;
+
+  background:
+    rgba(255, 253, 247, 0.42);
+
+  color: #735d2d;
+}
+
+.secondary-icon {
+  color: #b79a5a;
+
+  font-size: 12px;
 }
 
 .hero-secondary-btn:hover {
   transform: translateY(-3px);
-  background: rgba(180, 151, 85, 0.08);
+
+  background:
+    rgba(183, 154, 90, 0.09);
+
+  border-color: #b79a5a;
+
+  box-shadow:
+    0 10px 25px
+    rgba(73, 65, 48, 0.07);
 }
 
 
-/* ================================
-   HERO VISUAL
-================================ */
+/* =========================================================
+   NOTE
+========================================================= */
+
+.hero-note {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-top: 23px;
+
+  font-family:
+    Inter,
+    Arial,
+    sans-serif;
+
+  font-size: 9px;
+
+  letter-spacing: 0.2px;
+
+  color: #999184;
+
+  animation:
+    heroFadeUp 0.9s ease 0.36s both;
+}
+
+.hero-note-icon {
+  color: #b79a5a;
+
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   META
+========================================================= */
+
+.hero-meta {
+  display: flex;
+  align-items: center;
+
+  gap: 18px;
+
+  margin-top: 38px;
+
+  animation:
+    heroFadeUp 0.9s ease 0.44s both;
+}
+
+.hero-meta-item {
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.hero-meta-item strong {
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 16px;
+
+  font-weight: 500;
+
+  color: #3d392f;
+}
+
+.hero-meta-item span {
+  font-family:
+    Inter,
+    Arial,
+    sans-serif;
+
+  font-size: 7px;
+
+  letter-spacing: 0.8px;
+
+  text-transform: uppercase;
+
+  color: #9a9386;
+}
+
+.hero-meta-divider {
+  width: 1px;
+  height: 25px;
+
+  background:
+    rgba(75, 68, 56, 0.12);
+}
+
+
+/* =========================================================
+   HERO FADE ANIMATION
+========================================================= */
+
+@keyframes heroFadeUp {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+}
+
+
+/* =========================================================
+   VISUAL
+========================================================= */
 
 .hero-visual {
   position: relative;
-  min-height: 590px;
+
+  min-height: 610px;
+
   display: flex;
+
   align-items: center;
   justify-content: center;
 }
 
 
-/* ================================
-   BACKGROUND GLOW
-================================ */
+/* =========================================================
+   GLOW
+========================================================= */
 
-.energy-glow {
+.visual-glow {
   position: absolute;
-  width: 440px;
-  height: 440px;
+
+  width: 480px;
+  height: 480px;
+
   border-radius: 50%;
+
   background:
     radial-gradient(
       circle,
-      rgba(190, 155, 69, 0.14) 0%,
-      rgba(190, 155, 69, 0.06) 40%,
+      rgba(183, 154, 90, 0.18),
+      rgba(183, 154, 90, 0.06) 42%,
       transparent 72%
     );
-  filter: blur(4px);
-  animation: energyBreath 5s ease-in-out infinite;
+
+  filter: blur(6px);
+
+  animation:
+    visualBreath 6s ease-in-out infinite;
 }
 
-@keyframes energyBreath {
+@keyframes visualBreath {
+
   0%,
   100% {
-    transform: scale(0.95);
-    opacity: 0.7;
+    transform: scale(0.94);
+    opacity: 0.65;
   }
 
   50% {
@@ -192,41 +558,59 @@
 }
 
 
-/* ================================
-   ENERGY ORBITS
-================================ */
+/* =========================================================
+   ORBITS
+========================================================= */
 
-.energy-orbit {
+.visual-orbit {
   position: absolute;
-  border: 1px solid rgba(166, 137, 63, 0.28);
+
+  border:
+    1px solid
+    rgba(183, 154, 90, 0.2);
+
   border-radius: 50%;
+
   pointer-events: none;
 }
 
-.energy-orbit-one {
-  width: 470px;
-  height: 470px;
-  transform: rotate(-18deg);
-  animation: orbitRotate 18s linear infinite;
-}
-
-.energy-orbit-two {
-  width: 390px;
+.orbit-one {
+  width: 520px;
   height: 520px;
-  transform: rotate(34deg);
-  border-color: rgba(112, 133, 98, 0.22);
-  animation: orbitRotateReverse 22s linear infinite;
+
+  transform: rotate(-18deg);
+
+  animation:
+    orbitOne 24s linear infinite;
 }
 
-.energy-orbit-three {
-  width: 540px;
-  height: 300px;
-  transform: rotate(-35deg);
-  border-color: rgba(180, 151, 85, 0.17);
-  animation: orbitRotate 26s linear infinite;
+.orbit-two {
+  width: 400px;
+  height: 550px;
+
+  border-color:
+    rgba(105, 133, 111, 0.17);
+
+  transform: rotate(27deg);
+
+  animation:
+    orbitTwo 29s linear infinite;
 }
 
-@keyframes orbitRotate {
+.orbit-three {
+  width: 430px;
+  height: 260px;
+
+  border-color:
+    rgba(183, 154, 90, 0.12);
+
+  transform: rotate(-38deg);
+
+  animation:
+    orbitThree 20s linear infinite;
+}
+
+@keyframes orbitOne {
   from {
     transform: rotate(-18deg);
   }
@@ -236,168 +620,220 @@
   }
 }
 
-@keyframes orbitRotateReverse {
+@keyframes orbitTwo {
   from {
-    transform: rotate(34deg);
+    transform: rotate(27deg);
   }
 
   to {
-    transform: rotate(-326deg);
+    transform: rotate(-333deg);
+  }
+}
+
+@keyframes orbitThree {
+  from {
+    transform: rotate(-38deg);
+  }
+
+  to {
+    transform: rotate(322deg);
   }
 }
 
 
-/* ================================
-   ENERGY PARTICLES
-================================ */
+/* =========================================================
+   DOTS
+========================================================= */
 
-.energy-particle {
+.visual-dot {
   position: absolute;
+
   width: 6px;
   height: 6px;
+
   border-radius: 50%;
-  background: #b49755;
-  box-shadow: 0 0 12px rgba(180, 151, 85, 0.8);
+
+  background: #b79a5a;
+
+  box-shadow:
+    0 0 13px
+    rgba(183, 154, 90, 0.65);
+
   z-index: 3;
 }
 
-.particle-one {
-  top: 18%;
-  left: 20%;
-  animation: particleFloatOne 5s ease-in-out infinite;
+.dot-one {
+  top: 17%;
+  left: 14%;
+
+  animation:
+    dotFloat 5s ease-in-out infinite;
 }
 
-.particle-two {
-  top: 75%;
-  right: 15%;
-  animation: particleFloatTwo 6s ease-in-out infinite;
+.dot-two {
+  right: 11%;
+  bottom: 22%;
+
+  width: 5px;
+  height: 5px;
+
+  background: #7b8e6c;
+
+  animation:
+    dotFloat 6s ease-in-out infinite 1s;
 }
 
-.particle-three {
-  top: 12%;
-  right: 27%;
+.dot-three {
+  top: 11%;
+  right: 23%;
+
   width: 4px;
   height: 4px;
-  background: #7b8e6c;
-  animation: particleFloatThree 7s ease-in-out infinite;
+
+  animation:
+    dotFloat 5.5s ease-in-out infinite 2s;
 }
 
-.particle-four {
-  bottom: 15%;
-  left: 23%;
+.dot-four {
+  left: 18%;
+  bottom: 17%;
+
   width: 4px;
   height: 4px;
+
   background: #7b8e6c;
-  animation: particleFloatFour 5.5s ease-in-out infinite;
+
+  animation:
+    dotFloat 5.8s ease-in-out infinite 1.4s;
 }
 
-@keyframes particleFloatOne {
+@keyframes dotFloat {
+
   0%,
   100% {
-    transform: translate(0, 0);
+    transform:
+      translate(0, 0);
   }
 
   50% {
-    transform: translate(25px, -30px);
-  }
-}
-
-@keyframes particleFloatTwo {
-  0%,
-  100% {
-    transform: translate(0, 0);
-  }
-
-  50% {
-    transform: translate(-30px, -25px);
-  }
-}
-
-@keyframes particleFloatThree {
-  0%,
-  100% {
-    transform: translate(0, 0);
-  }
-
-  50% {
-    transform: translate(-20px, 30px);
-  }
-}
-
-@keyframes particleFloatFour {
-  0%,
-  100% {
-    transform: translate(0, 0);
-  }
-
-  50% {
-    transform: translate(25px, 20px);
+    transform:
+      translate(16px, -18px);
   }
 }
 
 
-/* ================================
+/* =========================================================
    MAIN AI CARD
-================================ */
+========================================================= */
 
-.hero-ai-card {
+.ai-visual-card {
   position: relative;
-  z-index: 4;
-  width: 315px;
-  min-height: 405px;
-  padding: 20px;
-  border: 1px solid rgba(180, 151, 85, 0.28);
-  border-radius: 24px;
-  background: rgba(255, 253, 247, 0.78);
+
+  z-index: 5;
+
+  width: 334px;
+
+  min-height: 470px;
+
+  padding: 22px;
+
+  border:
+    1px solid
+    rgba(183, 154, 90, 0.3);
+
+  border-radius: 27px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 254, 249, 0.9),
+      rgba(247, 243, 233, 0.79)
+    );
+
   box-shadow:
-    0 30px 70px rgba(73, 65, 48, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(15px);
-  animation: cardFloat 6s ease-in-out infinite;
+    0 35px 80px
+    rgba(73, 65, 48, 0.14),
+    inset 0 1px 0
+    rgba(255, 255, 255, 0.95);
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  animation:
+    cardFloat 6s ease-in-out infinite;
 }
 
 @keyframes cardFloat {
+
   0%,
   100% {
-    transform: translateY(0);
+    transform:
+      translateY(0);
   }
 
   50% {
-    transform: translateY(-10px);
+    transform:
+      translateY(-9px);
   }
 }
 
 
-/* ================================
-   CARD TOP
-================================ */
+/* =========================================================
+   CARD HEADER
+========================================================= */
 
-.ai-card-top {
+.visual-card-header {
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
+
   padding-bottom: 15px;
-  border-bottom: 1px solid rgba(100, 90, 70, 0.10);
-  font-family: Arial, sans-serif;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 1.7px;
-  color: #777064;
+
+  border-bottom:
+    1px solid
+    rgba(80, 70, 55, 0.08);
+
+  font-family:
+    Inter,
+    Arial,
+    sans-serif;
 }
 
-.ai-status-dot {
+.visual-brand {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: 1.7px;
+
+  color: #696359;
+}
+
+.status-dot {
   width: 7px;
   height: 7px;
+
   border-radius: 50%;
+
   background: #7b8e6c;
-  box-shadow: 0 0 10px rgba(123, 142, 108, 0.65);
-  animation: statusPulse 2s ease-in-out infinite;
+
+  box-shadow:
+    0 0 10px
+    rgba(123, 142, 108, 0.6);
+
+  animation:
+    statusPulse 2s ease-in-out infinite;
 }
 
 @keyframes statusPulse {
+
   0%,
   100% {
-    opacity: 0.5;
+    opacity: 0.45;
   }
 
   50% {
@@ -405,96 +841,313 @@
   }
 }
 
+.visual-label {
+  font-size: 7px;
 
-/* ================================
-   SKIN VISUAL
-================================ */
+  letter-spacing: 1.3px;
 
-.skin-visual {
+  color: #a09378;
+}
+
+
+/* =========================================================
+   FACE AREA
+========================================================= */
+
+.face-area {
   position: relative;
-  height: 270px;
+
+  height: 304px;
+
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.scan-face {
-  position: relative;
-  width: 165px;
-  height: 215px;
+.face-halo {
+  position: absolute;
+
+  width: 250px;
+  height: 250px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(183, 154, 90, 0.13),
+      transparent 68%
+    );
 }
 
-.face-outline {
+.face-halo-inner {
   position: absolute;
-  inset: 5px 18px;
-  border: 1.5px solid rgba(155, 123, 50, 0.55);
-  border-radius: 48% 48% 45% 45% / 43% 43% 55% 55%;
-  box-shadow:
-    inset 0 0 35px rgba(180, 151, 85, 0.06),
-    0 0 30px rgba(180, 151, 85, 0.08);
+
+  width: 195px;
+  height: 195px;
+
+  border:
+    1px solid
+    rgba(183, 154, 90, 0.09);
+
+  border-radius: 50%;
+
+  animation:
+    haloPulse 5s ease-in-out infinite;
 }
+
+@keyframes haloPulse {
+
+  0%,
+  100% {
+    transform: scale(0.94);
+    opacity: 0.45;
+  }
+
+  50% {
+    transform: scale(1.06);
+    opacity: 1;
+  }
+}
+
+
+/* =========================================================
+   FACE
+========================================================= */
+
+.face-shape {
+  position: relative;
+
+  width: 172px;
+  height: 228px;
+
+  border:
+    1px solid
+    rgba(155, 123, 50, 0.46);
+
+  border-radius:
+    48% 48% 45% 45% /
+    43% 43% 55% 55%;
+
+  box-shadow:
+    inset 0 0 38px
+    rgba(183, 154, 90, 0.055),
+
+    0 0 35px
+    rgba(183, 154, 90, 0.08);
+
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   FACE GRID
+========================================================= */
+
+.face-grid {
+  position: absolute;
+
+  inset: 0;
+
+  opacity: 0.3;
+
+  background:
+    linear-gradient(
+      rgba(183, 154, 90, 0.08) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(183, 154, 90, 0.08) 1px,
+      transparent 1px
+    );
+
+  background-size:
+    26px 26px;
+
+  mask-image:
+    linear-gradient(
+      to bottom,
+      transparent,
+      black 20%,
+      black 80%,
+      transparent
+    );
+}
+
+
+/* =========================================================
+   EYES
+========================================================= */
 
 .face-eye {
   position: absolute;
-  top: 92px;
-  width: 22px;
+
+  top: 95px;
+
+  width: 24px;
   height: 8px;
-  border-top: 1px solid #8f815e;
+
+  border-top:
+    1px solid
+    #8f815e;
+
   border-radius: 50%;
 }
 
-.left-eye {
-  left: 48px;
+.face-eye-left {
+  left: 47px;
 }
 
-.right-eye {
-  right: 48px;
+.face-eye-right {
+  right: 47px;
 }
+
+
+/* =========================================================
+   NOSE
+========================================================= */
 
 .face-nose {
   position: absolute;
-  top: 96px;
-  left: 80px;
+
+  top: 98px;
+  left: 82px;
+
   width: 8px;
   height: 45px;
-  border-right: 1px solid rgba(143, 129, 94, 0.65);
+
+  border-right:
+    1px solid
+    rgba(143, 129, 94, 0.65);
+
   transform: rotate(7deg);
 }
 
+
+/* =========================================================
+   MOUTH
+========================================================= */
+
 .face-mouth {
   position: absolute;
-  top: 155px;
-  left: 69px;
-  width: 27px;
+
+  top: 161px;
+  left: 71px;
+
+  width: 29px;
   height: 10px;
-  border-bottom: 1px solid #8f815e;
+
+  border-bottom:
+    1px solid
+    #8f815e;
+
   border-radius: 50%;
 }
 
 
-/* ================================
-   AI SCAN LINE
-================================ */
+/* =========================================================
+   FACE POINTS
+========================================================= */
 
-.ai-scan-line {
+.face-point {
   position: absolute;
-  left: 15px;
-  right: 15px;
-  top: 20px;
-  height: 2px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(180, 151, 85, 0.2),
-    #b49755,
-    rgba(180, 151, 85, 0.2),
-    transparent
-  );
-  box-shadow: 0 0 15px rgba(180, 151, 85, 0.7);
-  animation: skinScan 3.2s ease-in-out infinite;
+
+  width: 7px;
+  height: 7px;
+
+  border:
+    1px solid
+    #b79a5a;
+
+  border-radius: 50%;
+
+  background:
+    rgba(183, 154, 90, 0.12);
+
+  box-shadow:
+    0 0 12px
+    rgba(183, 154, 90, 0.55);
+
+  animation:
+    pointPulse 2.2s ease-in-out infinite;
 }
 
-@keyframes skinScan {
+.face-point-one {
+  top: 71px;
+  left: 37px;
+}
+
+.face-point-two {
+  top: 124px;
+  right: 35px;
+
+  animation-delay: 0.6s;
+}
+
+.face-point-three {
+  bottom: 38px;
+  left: 75px;
+
+  animation-delay: 1.1s;
+}
+
+.face-point-four {
+  top: 144px;
+  left: 35px;
+
+  animation-delay: 1.6s;
+}
+
+@keyframes pointPulse {
+
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.75);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+
+/* =========================================================
+   SCAN BEAM
+========================================================= */
+
+.scan-beam {
+  position: absolute;
+
+  left: 12px;
+  right: 12px;
+
+  top: 18px;
+
+  height: 2px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(183, 154, 90, 0.15),
+      #b79a5a,
+      rgba(183, 154, 90, 0.15),
+      transparent
+    );
+
+  box-shadow:
+    0 0 15px
+    rgba(183, 154, 90, 0.65);
+
+  animation:
+    scanMove 3.6s ease-in-out infinite;
+}
+
+@keyframes scanMove {
+
   0% {
     top: 18px;
     opacity: 0;
@@ -505,11 +1158,11 @@
   }
 
   50% {
-    top: 190px;
+    top: 205px;
     opacity: 1;
   }
 
-  70% {
+  72% {
     opacity: 1;
   }
 
@@ -520,338 +1173,467 @@
 }
 
 
-/* ================================
-   SCAN POINTS
-================================ */
+/* =========================================================
+   SCAN STATUS
+========================================================= */
 
-.scan-point {
+.scan-status {
   position: absolute;
-  width: 7px;
-  height: 7px;
-  border: 1px solid #b49755;
+
+  right: 22px;
+  top: 28px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+
+  font-family:
+    Inter,
+    Arial,
+    sans-serif;
+
+  font-size: 6px;
+
+  letter-spacing: 0.8px;
+
+  color: #9b8d73;
+}
+
+.scan-status-line {
+  width: 4px;
+  height: 4px;
+
   border-radius: 50%;
-  background: rgba(180, 151, 85, 0.15);
-  box-shadow: 0 0 10px rgba(180, 151, 85, 0.6);
-  animation: scanPointPulse 2s ease-in-out infinite;
+
+  background: #7b8e6c;
+
+  box-shadow:
+    0 0 7px
+    rgba(123, 142, 108, 0.6);
 }
 
-.point-one {
-  top: 70px;
-  left: 37px;
+
+/* =========================================================
+   FACE CAPTION
+========================================================= */
+
+.face-caption {
+  position: absolute;
+
+  bottom: 7px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  font-family:
+    Inter,
+    Arial,
+    sans-serif;
+
+  font-size: 6.5px;
+
+  letter-spacing: 1.1px;
+
+  color: #918876;
+
+  white-space: nowrap;
 }
 
-.point-two {
-  top: 122px;
-  right: 38px;
-  animation-delay: 0.5s;
+.face-caption span {
+  width: 5px;
+  height: 5px;
+
+  border-radius: 50%;
+
+  background: #b79a5a;
 }
 
-.point-three {
-  bottom: 38px;
-  left: 72px;
-  animation-delay: 1s;
+
+/* =========================================================
+   INSIGHT PANEL
+========================================================= */
+
+.insight-panel {
+  padding-top: 3px;
 }
 
-@keyframes scanPointPulse {
+.insight-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 10px;
+
+  font-family:
+    Inter,
+    Arial,
+    sans-serif;
+}
+
+.insight-heading span {
+  font-size: 9px;
+
+  color: #625c52;
+}
+
+.insight-heading small {
+  font-size: 7px;
+
+  letter-spacing: 1px;
+
+  color: #a49b8b;
+}
+
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+.journey-progress {
+  width: 100%;
+  height: 3px;
+
+  overflow: hidden;
+
+  border-radius: 20px;
+
+  background:
+    rgba(90, 80, 65, 0.08);
+}
+
+.journey-progress-fill {
+  height: 100%;
+
+  border-radius: inherit;
+
+  background:
+    linear-gradient(
+      90deg,
+      #7b8e6c,
+      #b79a5a
+    );
+
+  transition:
+    width 0.7s ease;
+}
+
+
+/* =========================================================
+   JOURNEY STEP
+========================================================= */
+
+.journey-step {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  margin-top: 14px;
+}
+
+.journey-number {
+  width: 31px;
+  height: 31px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background:
+    rgba(183, 154, 90, 0.11);
+
+  color: #9a7936;
+
+  font-family:
+    Georgia,
+    serif;
+
+  font-size: 10px;
+}
+
+.journey-content strong {
+  display: block;
+
+  font-family:
+    Georgia,
+    serif;
+
+  font-size: 13px;
+
+  font-weight: 500;
+
+  color: #49443b;
+}
+
+.journey-content p {
+  margin: 3px 0 0;
+
+  font-family:
+    Inter,
+    Arial,
+    sans-serif;
+
+  font-size: 8px;
+
+  color: #999185;
+}
+
+
+/* =========================================================
+   VISUAL RINGS
+========================================================= */
+
+.visual-ring {
+  position: absolute;
+
+  border:
+    1px solid
+    rgba(183, 154, 90, 0.16);
+
+  border-radius: 50%;
+
+  pointer-events: none;
+}
+
+.ring-one {
+  width: 260px;
+  height: 260px;
+
+  animation:
+    ringPulse 5s ease-in-out infinite;
+}
+
+.ring-two {
+  width: 205px;
+  height: 205px;
+
+  border-color:
+    rgba(123, 142, 108, 0.14);
+
+  animation:
+    ringPulse 5s ease-in-out infinite 1s;
+}
+
+@keyframes ringPulse {
+
   0%,
   100% {
-    transform: scale(0.7);
-    opacity: 0.35;
+    transform: scale(0.94);
+    opacity: 0.45;
   }
 
   50% {
-    transform: scale(1.25);
+    transform: scale(1.06);
     opacity: 1;
   }
 }
 
 
-/* ================================
-   SCAN LABEL
-================================ */
+/* =========================================================
+   FLOATING LABELS
+========================================================= */
 
-.scan-label {
+.floating-label {
   position: absolute;
-  bottom: 7px;
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  font-family: Arial, sans-serif;
-  font-size: 8px;
-  letter-spacing: 1.4px;
-  color: #8b806a;
-}
 
-.scan-label span {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: #b49755;
-}
-
-
-/* ================================
-   ANALYSIS
-================================ */
-
-.ai-analysis {
-  padding-top: 3px;
-}
-
-.analysis-title {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-family: Arial, sans-serif;
-  font-size: 10px;
-  color: #666055;
-}
-
-.analysis-title strong {
-  padding: 4px 7px;
-  border-radius: 10px;
-  background: rgba(180, 151, 85, 0.10);
-  color: #9b7b32;
-  font-size: 8px;
-}
-
-.analysis-bar {
-  width: 100%;
-  height: 4px;
-  margin: 10px 0 8px;
-  overflow: hidden;
-  border-radius: 20px;
-  background: rgba(100, 90, 70, 0.08);
-}
-
-.analysis-bar div {
-  width: 68%;
-  height: 100%;
-  border-radius: inherit;
-  background: linear-gradient(
-    90deg,
-    #7b8e6c,
-    #b49755
-  );
-  animation: analysisProgress 3.2s ease-in-out infinite;
-}
-
-@keyframes analysisProgress {
-  0% {
-    width: 15%;
-  }
-
-  50% {
-    width: 82%;
-  }
-
-  100% {
-    width: 15%;
-  }
-}
-
-.analysis-status {
-  display: flex;
-  justify-content: space-between;
-  font-family: Arial, sans-serif;
-  font-size: 8px;
-  color: #9a9488;
-}
-
-.analysis-status span:last-child {
-  color: #7b8e6c;
-}
-
-
-/* ================================
-   ENERGY NODES
-================================ */
-
-.energy-node {
-  position: absolute;
   z-index: 8;
+
+  min-width: 130px;
+
   display: flex;
   align-items: center;
+
   gap: 9px;
-  padding: 9px 13px;
-  border: 1px solid rgba(180, 151, 85, 0.25);
-  border-radius: 30px;
-  background: rgba(255, 253, 247, 0.78);
-  box-shadow: 0 10px 25px rgba(73, 65, 48, 0.08);
-  backdrop-filter: blur(10px);
-  cursor: pointer;
-  color: #514b40;
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease,
-    border-color 0.3s ease;
+
+  padding: 9px 12px;
+
+  border:
+    1px solid
+    rgba(183, 154, 90, 0.24);
+
+  border-radius: 14px;
+
+  background:
+    rgba(255, 253, 247, 0.76);
+
+  box-shadow:
+    0 12px 28px
+    rgba(73, 65, 48, 0.08);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  font-family:
+    Inter,
+    Arial,
+    sans-serif;
 }
 
-.energy-node:hover {
-  transform: translateY(-4px) scale(1.03);
-  border-color: rgba(180, 151, 85, 0.55);
-  box-shadow: 0 14px 30px rgba(73, 65, 48, 0.13);
-}
+.floating-icon {
+  width: 25px;
+  height: 25px;
 
-.node-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 29px;
-  height: 29px;
+
   border-radius: 50%;
-  background: rgba(180, 151, 85, 0.10);
-  color: #a18139;
-  font-family: Georgia, serif;
-  font-size: 15px;
+
+  background:
+    rgba(183, 154, 90, 0.1);
+
+  color: #b79a5a;
+
+  font-size: 11px;
 }
 
-.node-text {
+.floating-label div {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 1px;
-  font-family: Arial, sans-serif;
-  font-size: 10px;
-  font-weight: 600;
-  white-space: nowrap;
+
+  gap: 2px;
 }
 
-.node-text small {
-  font-size: 7px;
+.floating-label small {
+  font-size: 6px;
+
   letter-spacing: 1px;
-  color: #a39b8b;
+
+  color: #aaa08e;
+}
+
+.floating-label strong {
+  font-size: 8px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.2px;
+
+  color: #706859;
+}
+
+.floating-label-top {
+  top: 18%;
+  right: 2%;
+
+  animation:
+    labelFloat 5s ease-in-out infinite;
+}
+
+.floating-label-bottom {
+  bottom: 16%;
+  left: 1%;
+
+  animation:
+    labelFloat 6s ease-in-out infinite 1s;
+}
+
+@keyframes labelFloat {
+
+  0%,
+  100% {
+    transform:
+      translateY(0);
+  }
+
+  50% {
+    transform:
+      translateY(-8px);
+  }
 }
 
 
-/* ================================
-   NODE POSITIONS
-================================ */
+/* =========================================================
+   SCROLL INDICATOR
+========================================================= */
 
-.node-skin {
-  top: 105px;
+.hero-scroll {
+  position: absolute;
+
   left: 4%;
-  animation: nodeFloatOne 5s ease-in-out infinite;
+
+  bottom: 30px;
+
+  z-index: 5;
+
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  font-family:
+    Inter,
+    Arial,
+    sans-serif;
+
+  font-size: 7px;
+
+  letter-spacing: 1.7px;
+
+  color: #a29a8c;
 }
 
-.node-ai {
-  top: 60px;
-  right: 7%;
-  animation: nodeFloatTwo 6s ease-in-out infinite;
+.scroll-line {
+  width: 30px;
+  height: 1px;
+
+  background:
+    #b79a5a;
+
+  animation:
+    scrollPulse 2s ease-in-out infinite;
 }
 
-.node-dosha {
-  right: 0;
-  bottom: 120px;
-  animation: nodeFloatThree 5.5s ease-in-out infinite;
-}
+@keyframes scrollPulse {
 
-.node-care {
-  bottom: 55px;
-  left: 5%;
-  animation: nodeFloatFour 6s ease-in-out infinite;
-}
-
-@keyframes nodeFloatOne {
   0%,
   100% {
-    transform: translateY(0);
+    width: 22px;
+    opacity: 0.4;
   }
 
   50% {
-    transform: translateY(-7px);
-  }
-}
-
-@keyframes nodeFloatTwo {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(8px);
-  }
-}
-
-@keyframes nodeFloatThree {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-8px);
-  }
-}
-
-@keyframes nodeFloatFour {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(7px);
+    width: 35px;
+    opacity: 1;
   }
 }
 
 
-/* ================================
-   CENTRAL ENERGY
-================================ */
-
-.central-energy {
-  position: absolute;
-  z-index: 2;
-  width: 18px;
-  height: 18px;
-  border: 1px solid rgba(180, 151, 85, 0.55);
-  border-radius: 50%;
-  background: rgba(255, 253, 247, 0.5);
-  box-shadow:
-    0 0 0 8px rgba(180, 151, 85, 0.05),
-    0 0 25px rgba(180, 151, 85, 0.35);
-  animation: centralPulse 2.5s ease-in-out infinite;
-}
-
-.central-energy-inner {
-  position: absolute;
-  inset: 5px;
-  border-radius: 50%;
-  background: #b49755;
-  box-shadow: 0 0 10px rgba(180, 151, 85, 0.7);
-}
-
-@keyframes centralPulse {
-  0%,
-  100% {
-    transform: scale(0.85);
-  }
-
-  50% {
-    transform: scale(1.2);
-  }
-}
-
-
-/* ================================
+/* =========================================================
    TABLET
-================================ */
+========================================================= */
 
-@media (max-width: 950px) {
+@media (max-width: 1050px) {
 
   .hero-container {
     grid-template-columns: 1fr;
+
+    gap: 20px;
+
     text-align: center;
-    padding: 70px 0;
+
+    padding:
+      65px 0 85px;
   }
 
   .hero-content {
+    max-width: 680px;
+
     margin: 0 auto;
   }
 
-  .hero-content p {
+  .hero-eyebrow {
+    justify-content: center;
+  }
+
+  .hero-description {
     margin-left: auto;
     margin-right: auto;
   }
@@ -860,20 +1642,27 @@
     justify-content: center;
   }
 
-  .hero-visual {
-    min-height: 550px;
-    margin-top: 10px;
+  .hero-note {
+    justify-content: center;
   }
 
-  .hero-eyebrow {
+  .hero-meta {
     justify-content: center;
+  }
+
+  .hero-visual {
+    min-height: 590px;
+  }
+
+  .hero-scroll {
+    display: none;
   }
 }
 
 
-/* ================================
+/* =========================================================
    MOBILE
-================================ */
+========================================================= */
 
 @media (max-width: 600px) {
 
@@ -882,688 +1671,203 @@
   }
 
   .hero-container {
-    width: 92%;
-    padding: 55px 0 70px;
+    width: 91%;
+
+    padding:
+      50px 0 40px;
+
+    gap: 0;
   }
 
-  .hero h1 {
+  .hero-eyebrow {
+    font-size: 7.5px;
+
+    letter-spacing: 1.5px;
+  }
+
+  .eyebrow-line {
+    width: 22px;
+  }
+
+  .hero-title {
     font-size: 48px;
-    letter-spacing: -1.5px;
+
+    letter-spacing: -2.6px;
   }
 
-  .hero-content p {
-    font-size: 14px;
-    line-height: 1.7;
+  .hero-description {
+    margin-top: 22px;
+
+    font-size: 12.5px;
+
+    line-height: 1.8;
   }
 
   .hero-actions {
     flex-direction: column;
+
     width: 100%;
+
+    gap: 9px;
   }
 
   .hero-primary-btn,
   .hero-secondary-btn {
     width: 100%;
+  }
+
+  .hero-note {
     justify-content: center;
+
+    font-size: 7.5px;
+
+    text-align: center;
+  }
+
+  .hero-meta {
+    gap: 13px;
+
+    margin-top: 30px;
+  }
+
+  .hero-meta-item strong {
+    font-size: 14px;
+  }
+
+  .hero-meta-item span {
+    font-size: 6px;
   }
 
   .hero-visual {
     min-height: 470px;
-    transform: scale(0.82);
-    margin: -20px -40px;
+
+    transform:
+      scale(0.83);
+
+    margin:
+      -28px
+      -45px
+      -30px;
   }
 
-  .energy-orbit-one {
-    width: 400px;
-    height: 400px;
+  .ai-visual-card {
+    width: 300px;
+
+    min-height: 425px;
   }
 
-  .energy-orbit-two {
-    width: 340px;
-    height: 440px;
+  .orbit-one {
+    width: 410px;
+    height: 410px;
   }
 
-  .energy-orbit-three {
-    width: 430px;
-    height: 260px;
+  .orbit-two {
+    width: 330px;
+    height: 450px;
   }
 
-  .hero-ai-card {
-    width: 285px;
-    min-height: 370px;
+  .orbit-three {
+    width: 350px;
+    height: 220px;
   }
 
-  .node-skin {
-    left: 0;
-  }
-
-  .node-ai {
+  .floating-label-top {
     right: 0;
   }
 
-  .node-dosha {
-    right: -5px;
-  }
-
-  .node-care {
+  .floating-label-bottom {
     left: 0;
   }
 }
 
 
-/* ================================
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 380px) {
+
+  .hero-title {
+    font-size: 43px;
+
+    letter-spacing: -2.3px;
+  }
+
+  .hero-description {
+    font-size: 12px;
+  }
+
+  .hero-meta {
+    gap: 10px;
+  }
+
+  .hero-meta-divider {
+    height: 22px;
+  }
+
+  .hero-visual {
+    transform:
+      scale(0.73);
+
+    margin:
+      -58px
+      -60px
+      -55px;
+  }
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+.hero-primary-btn:focus-visible,
+.hero-secondary-btn:focus-visible {
+  outline:
+    2px solid
+    #b79a5a;
+
+  outline-offset: 4px;
+}
+
+
+/* =========================================================
    REDUCED MOTION
-================================ */
+========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
 
-  .energy-glow,
-  .energy-orbit,
-  .hero-ai-card,
-  .energy-particle,
-  .energy-node,
-  .ai-status-dot,
-  .ai-scan-line,
-  .scan-point,
-  .analysis-bar div,
-  .central-energy {
+  .hero-eyebrow,
+  .hero-title,
+  .hero-description,
+  .hero-actions,
+  .hero-note,
+  .hero-meta,
+  .visual-glow,
+  .visual-orbit,
+  .visual-dot,
+  .ai-visual-card,
+  .status-dot,
+  .face-halo-inner,
+  .face-point,
+  .scan-beam,
+  .visual-ring,
+  .floating-label,
+  .scroll-line,
+  .eyebrow-dot {
     animation: none;
   }
 
-  /* =========================================
-   AYURVEDIC ENERGY FLOW
-   Connects:
-   Skin → AI Scan → Dosha → Personalized Care
-========================================= */
-
-.hero-visual::before {
-  content: "";
-  position: absolute;
-  z-index: 1;
-  width: 500px;
-  height: 330px;
-
-  border: 1.5px solid transparent;
-  border-radius: 50%;
-
-  background:
-    linear-gradient(
-      90deg,
-      rgba(180, 151, 85, 0.08),
-      rgba(180, 151, 85, 0.65),
-      rgba(123, 142, 108, 0.45),
-      rgba(180, 151, 85, 0.08)
-    ) border-box;
-
-  -webkit-mask:
-    linear-gradient(#fff 0 0) padding-box,
-    linear-gradient(#fff 0 0);
-
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-
-  transform: rotate(-18deg);
-
-  animation: energyFlowRotate 8s linear infinite;
-
-  pointer-events: none;
-}
-
-@keyframes energyFlowRotate {
-  0% {
-    transform: rotate(-18deg) scale(1);
-    opacity: 0.45;
+  .journey-progress-fill {
+    transition: none;
   }
-
-  50% {
-    transform: rotate(162deg) scale(1.03);
-    opacity: 0.8;
-  }
-
-  100% {
-    transform: rotate(342deg) scale(1);
-    opacity: 0.45;
-  }
-}
-
-
-/* =========================================
-   MOVING ENERGY PARTICLE
-========================================= */
-
-.hero-visual::after {
-  content: "";
-  position: absolute;
-  z-index: 3;
-
-  width: 9px;
-  height: 9px;
-
-  border-radius: 50%;
-
-  background: #b49755;
-
-  box-shadow:
-    0 0 8px rgba(180, 151, 85, 0.9),
-    0 0 20px rgba(180, 151, 85, 0.55),
-    0 0 35px rgba(180, 151, 85, 0.25);
-
-  animation: energyTravel 6s ease-in-out infinite;
-
-  pointer-events: none;
-}
-
-@keyframes energyTravel {
-
-  0% {
-    left: 10%;
-    top: 24%;
-    opacity: 0;
-    transform: scale(0.5);
-  }
-
-  8% {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  25% {
-    left: 30%;
-    top: 18%;
-  }
-
-  45% {
-    left: 72%;
-    top: 20%;
-  }
-
-  65% {
-    left: 85%;
-    top: 58%;
-  }
-
-  82% {
-    left: 55%;
-    top: 78%;
-  }
-
-  94% {
-    left: 20%;
-    top: 72%;
-    opacity: 1;
-  }
-
-  100% {
-    left: 10%;
-    top: 24%;
-    opacity: 0;
-    transform: scale(0.5);
-  }
-}
-
-
-/* =========================================
-   ENERGY CONNECTION LINES
-========================================= */
-
-.node-skin::after,
-.node-ai::after,
-.node-dosha::after,
-.node-care::after {
-  content: "";
-
-  position: absolute;
-
-  height: 1px;
-
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(180, 151, 85, 0.55),
-    transparent
-  );
-
-  box-shadow: 0 0 8px rgba(180, 151, 85, 0.25);
-
-  transform-origin: left center;
-
-  pointer-events: none;
-}
-
-
-/* Skin → central visual */
-
-.node-skin::after {
-  width: 120px;
-  right: -112px;
-  top: 50%;
-
-  transform: rotate(12deg);
-
-  animation: connectionPulse 2.8s ease-in-out infinite;
-}
-
-
-/* AI Scan → central visual */
-
-.node-ai::after {
-  width: 105px;
-  left: -98px;
-  top: 70%;
-
-  transform: rotate(145deg);
-
-  animation: connectionPulse 2.8s ease-in-out infinite 0.7s;
-}
-
-
-/* Dosha → central visual */
-
-.node-dosha::after {
-  width: 115px;
-  left: -108px;
-  top: 30%;
-
-  transform: rotate(-145deg);
-
-  animation: connectionPulse 2.8s ease-in-out infinite 1.2s;
-}
-
-
-/* Personalized Care → central visual */
-
-.node-care::after {
-  width: 125px;
-  right: -118px;
-  top: 35%;
-
-  transform: rotate(-18deg);
-
-  animation: connectionPulse 2.8s ease-in-out infinite 1.7s;
-}
-
-
-@keyframes connectionPulse {
-
-  0%,
-  100% {
-    opacity: 0.25;
-  }
-
-  50% {
-    opacity: 1;
-  }
-}
-
-
-/* =========================================
-   GOLDEN ENERGY WAVE
-========================================= */
-
-.energy-orbit-one::after {
-  content: "";
-
-  position: absolute;
-
-  width: 13px;
-  height: 13px;
-
-  border-radius: 50%;
-
-  background: #b49755;
-
-  box-shadow:
-    0 0 10px rgba(180, 151, 85, 0.9),
-    0 0 25px rgba(180, 151, 85, 0.5);
-
-  top: -6px;
-  left: 50%;
-
-  animation: orbitEnergy 5s linear infinite;
-}
-
-
-@keyframes orbitEnergy {
-
-  0% {
-    transform: rotate(0deg)
-      translateX(235px)
-      rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg)
-      translateX(235px)
-      rotate(-360deg);
-  }
-}
-
-
-/* =========================================
-   SAGE ENERGY WAVE
-========================================= */
-
-.energy-orbit-two::after {
-  content: "";
-
-  position: absolute;
-
-  width: 8px;
-  height: 8px;
-
-  border-radius: 50%;
-
-  background: #7b8e6c;
-
-  box-shadow:
-    0 0 10px rgba(123, 142, 108, 0.8),
-    0 0 20px rgba(123, 142, 108, 0.35);
-
-  top: 50%;
-  left: -4px;
-
-  animation: sageEnergy 7s linear infinite;
-}
-
-
-@keyframes sageEnergy {
-
-  0% {
-    transform: rotate(0deg)
-      translateX(195px)
-      rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg)
-      translateX(195px)
-      rotate(-360deg);
-  }
-}
-
-
-/* =========================================
-   EXTRA GOLDEN SPARKS
-========================================= */
-
-.hero-ai-card::before,
-.hero-ai-card::after {
-  content: "";
-
-  position: absolute;
-
-  width: 5px;
-  height: 5px;
-
-  border-radius: 50%;
-
-  background: #b49755;
-
-  box-shadow:
-    0 0 10px rgba(180, 151, 85, 0.8),
-    0 0 20px rgba(180, 151, 85, 0.3);
-
-  animation: sparkFloat 4s ease-in-out infinite;
-}
-
-.hero-ai-card::before {
-  top: 20%;
-  left: -18px;
-}
-
-.hero-ai-card::after {
-  bottom: 20%;
-  right: -18px;
-  animation-delay: 1.8s;
-}
-
-
-@keyframes sparkFloat {
-
-  0%,
-  100% {
-    transform: translateY(0) scale(0.8);
-    opacity: 0.35;
-  }
-
-  50% {
-    transform: translateY(-18px) scale(1.2);
-    opacity: 1;
-  }
-}
-
-
-/* =========================================
-   MOBILE FLOW ADJUSTMENT
-========================================= */
-
-@media (max-width: 600px) {
-
-  .hero-visual::before {
-    width: 390px;
-    height: 270px;
-  }
-
-  .node-skin::after,
-  .node-ai::after,
-  .node-dosha::after,
-  .node-care::after {
-    display: none;
-  }
-
-  .hero-visual::after {
-    animation-duration: 7s;
-  }
-}
-
-
-/* =========================================
-   REDUCED MOTION
-========================================= */
-
-@media (prefers-reduced-motion: reduce) {
-
-  .hero-visual::before,
-  .hero-visual::after,
-  .node-skin::after,
-  .node-ai::after,
-  .node-dosha::after,
-  .node-care::after,
-  .energy-orbit-one::after,
-  .energy-orbit-two::after,
-  .hero-ai-card::before,
-  .hero-ai-card::after {
-    animation: none;
-  }
-}
-/* =========================================
-   ACTIVE AYURAI STAGE
-========================================= */
-
-.energy-node.active-stage {
-  border-color: rgba(180, 151, 85, 0.75);
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255, 253, 247, 0.96),
-      rgba(244, 237, 217, 0.92)
-    );
-
-  box-shadow:
-    0 0 0 4px rgba(180, 151, 85, 0.08),
-    0 12px 35px rgba(180, 151, 85, 0.20),
-    0 0 25px rgba(180, 151, 85, 0.12);
-
-  transform: scale(1.06);
-
-  animation: activeStageGlow 1.8s ease-in-out infinite;
-}
-
-
-/* Active icon */
-
-.energy-node.active-stage .node-icon {
-  background: rgba(180, 151, 85, 0.18);
-
-  color: #96752f;
-
-  box-shadow:
-    0 0 12px rgba(180, 151, 85, 0.25);
-
-  animation: activeIconPulse 1.5s ease-in-out infinite;
-}
-
-
-/* Active number */
-
-.energy-node.active-stage .node-text small {
-  color: #96752f;
-}
-
-
-/* Active text */
-
-.energy-node.active-stage .node-text {
-  color: #403a2f;
-}
-
-
-/* =========================================
-   ACTIVE STAGE GLOW
-========================================= */
-
-@keyframes activeStageGlow {
-
-  0%,
-  100% {
-    box-shadow:
-      0 0 0 4px rgba(180, 151, 85, 0.06),
-      0 10px 28px rgba(180, 151, 85, 0.12),
-      0 0 15px rgba(180, 151, 85, 0.08);
-  }
-
-  50% {
-    box-shadow:
-      0 0 0 7px rgba(180, 151, 85, 0.08),
-      0 14px 38px rgba(180, 151, 85, 0.22),
-      0 0 30px rgba(180, 151, 85, 0.18);
-  }
-}
-
-
-@keyframes activeIconPulse {
-
-  0%,
-  100% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(1.12);
-  }
-}
-
-
-/* =========================================
-   ACTIVE CENTRAL ENERGY
-========================================= */
-
-.central-energy {
-  transition:
-    transform 0.8s ease,
-    box-shadow 0.8s ease;
-}
-
-.hero-visual:has(.node-skin.active-stage) .central-energy {
-  box-shadow:
-    0 0 0 8px rgba(180, 151, 85, 0.06),
-    0 0 35px rgba(180, 151, 85, 0.35);
-}
-
-.hero-visual:has(.node-ai.active-stage) .central-energy {
-  box-shadow:
-    0 0 0 10px rgba(180, 151, 85, 0.08),
-    0 0 45px rgba(180, 151, 85, 0.45);
-  transform: scale(1.15);
-}
-
-.hero-visual:has(.node-dosha.active-stage) .central-energy {
-  box-shadow:
-    0 0 0 10px rgba(123, 142, 108, 0.08),
-    0 0 40px rgba(123, 142, 108, 0.40);
-  transform: scale(1.12);
-}
-
-.hero-visual:has(.node-care.active-stage) .central-energy {
-  box-shadow:
-    0 0 0 11px rgba(180, 151, 85, 0.09),
-    0 0 50px rgba(180, 151, 85, 0.50);
-  transform: scale(1.2);
-}
-
-
-/* =========================================
-   ACTIVE ANALYSIS BAR
-========================================= */
-
-.analysis-status span:first-child {
-  transition:
-    opacity 0.4s ease,
-    transform 0.4s ease;
-}
-
-
-/* =========================================
-   MOBILE
-========================================= */
-
-@media (max-width: 600px) {
-
-  .energy-node.active-stage {
-    transform: scale(1.03);
-  }
-
-  .hero-visual:has(.node-ai.active-stage) .central-energy,
-  .hero-visual:has(.node-dosha.active-stage) .central-energy,
-  .hero-visual:has(.node-care.active-stage) .central-energy {
-    transform: scale(1.08);
-  }
-}
-
-
-/* =========================================
-   REDUCED MOTION
-========================================= */
-
-@media (prefers-reduced-motion: reduce) {
-
-  .energy-node.active-stage,
-  .energy-node.active-stage .node-icon {
-    animation: none;
-  }
-}
-/* =====================================================
-   CLICKABLE CENTRAL AI CARD
-===================================================== */
-
-.hero-ai-card-clickable {
-  position: relative;
-
-  z-index: 30;
-
+  /* =========================================================
+   CLICKABLE AI SKIN SCAN CARD
+   Keeps the existing animation/design unchanged
+========================================================= */
+
+.clickable-scan-card {
   cursor: pointer;
-
-  border: none;
-
-  font: inherit;
-
-  color: inherit;
-
-  text-align: left;
-
-  appearance: none;
-  -webkit-appearance: none;
 
   transition:
     transform 0.35s ease,
@@ -1571,208 +1875,27 @@
     border-color 0.35s ease;
 }
 
+/* Hover feedback only */
+.clickable-scan-card:hover {
+  transform: translateY(-12px);
 
-/* Everything inside the card should NOT block the button */
-
-.hero-ai-card-clickable * {
-  pointer-events: none;
-}
-
-
-/* =====================================================
-   HOVER EFFECT
-===================================================== */
-
-.hero-ai-card-clickable:hover {
-  transform: translateY(-6px) scale(1.015);
+  border-color: rgba(183, 154, 90, 0.48);
 
   box-shadow:
-    0 25px 55px rgba(73, 65, 48, 0.16),
-    0 0 30px rgba(180, 151, 85, 0.10);
+    0 38px 85px rgba(73, 65, 48, 0.17),
+    0 0 0 1px rgba(183, 154, 90, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
-
-/* AI face reacts */
-
-.hero-ai-card-clickable:hover .scan-face {
-  transform: scale(1.035);
+/* Keyboard accessibility */
+.clickable-scan-card:focus-visible {
+  outline: 2px solid #b79a5a;
+  outline-offset: 6px;
 }
 
-
-/* Scan line reacts */
-
-.hero-ai-card-clickable:hover .ai-scan-line {
-  opacity: 1;
-
-  box-shadow:
-    0 0 14px rgba(180, 151, 85, 0.70);
+/* Click feedback */
+.clickable-scan-card:active {
+  transform: translateY(-7px) scale(0.99);
 }
-
-
-/* Scan points glow */
-
-.hero-ai-card-clickable:hover .scan-point {
-  opacity: 1;
-
-  box-shadow:
-    0 0 12px rgba(180, 151, 85, 0.65);
-}
-
-
-/* Status dot */
-
-.hero-ai-card-clickable:hover .ai-status-dot {
-  transform: scale(1.3);
-}
-
-
-/* =====================================================
-   CLICK TO SCAN MESSAGE
-===================================================== */
-
-.card-scan-hint {
-  position: absolute;
-
-  left: 50%;
-  bottom: -30px;
-
-  display: flex;
-  align-items: center;
-
-  gap: 7px;
-
-  padding: 7px 13px;
-
-  border: 1px solid rgba(180, 151, 85, 0.28);
-
-  border-radius: 30px;
-
-  background:
-    rgba(255, 253, 247, 0.96);
-
-  box-shadow:
-    0 8px 22px rgba(73, 65, 48, 0.10);
-
-  color: #8d7950;
-
-  font-family:
-    Arial,
-    sans-serif;
-
-  font-size: 8px;
-
-  font-weight: 600;
-
-  letter-spacing: 0.7px;
-
-  white-space: nowrap;
-
-  opacity: 0;
-
-  transform:
-    translateX(-50%)
-    translateY(6px);
-
-  transition:
-    opacity 0.3s ease,
-    transform 0.3s ease;
-}
-
-
-/* Show on hover */
-
-.hero-ai-card-clickable:hover .card-scan-hint {
-  opacity: 1;
-
-  transform:
-    translateX(-50%)
-    translateY(0);
-}
-
-
-/* Arrow */
-
-.card-scan-hint strong {
-  font-size: 11px;
-
-  font-weight: 500;
-
-  transition:
-    transform 0.3s ease;
-}
-
-
-/* Arrow movement */
-
-.hero-ai-card-clickable:hover .card-scan-hint strong {
-  transform: translateX(4px);
-}
-
-
-/* =====================================================
-   KEYBOARD ACCESSIBILITY
-===================================================== */
-
-.hero-ai-card-clickable:focus-visible {
-  outline: 2px solid rgba(180, 151, 85, 0.70);
-
-  outline-offset: 7px;
-
-  border-radius: 28px;
-}
-
-
-/* =====================================================
-   MOBILE
-===================================================== */
-
-@media (max-width: 600px) {
-
-  .hero-ai-card-clickable {
-    cursor: pointer;
-  }
-
-  .hero-ai-card-clickable:hover {
-    transform: none;
-  }
-
-  /*
-     Touch devices don't have hover,
-     so keep the hint visible.
-  */
-
-  .card-scan-hint {
-    opacity: 1;
-
-    bottom: -27px;
-
-    transform:
-      translateX(-50%)
-      translateY(0);
-  }
-}
-
-
-/* =====================================================
-   REDUCED MOTION
-===================================================== */
-
-@media (prefers-reduced-motion: reduce) {
-
-  .hero-ai-card-clickable {
-    transition: none;
-  }
-
-  .hero-ai-card-clickable:hover {
-    transform: none;
-  }
-
-  .hero-ai-card-clickable:hover .scan-face {
-    transform: none;
-  }
-
-  .card-scan-hint {
-    transition: none;
-  }
-}
+  
 }

@@ -4,46 +4,92 @@ import "./Hero.css";
 
 const Hero = () => {
   const navigate = useNavigate();
+  const openSkinScan = () => {
+  navigate("/skin-scan");
+};
 
-  // Active AyurAI process stage
-  const [activeStage, setActiveStage] = useState(0);
+const handleCardKeyDown = (event) => {
+  if (event.key === "Enter" || event.key === " ") {
+    event.preventDefault();
+    openSkinScan();
+  }
+};
+  const [activeStep, setActiveStep] = useState(0);
 
-  // Automatically move through:
-  // Skin → AI Scan → Dosha Balance → Personalized Care
+  const steps = [
+    {
+      number: "01",
+      title: "Understand",
+      description: "Explore your skin's visible characteristics",
+    },
+    {
+      number: "02",
+      title: "Discover",
+      description: "Explore your Ayurvedic balance",
+    },
+    {
+      number: "03",
+      title: "Personalize",
+      description: "Find care approaches suited to you",
+    },
+  ];
+
   useEffect(() => {
-    const stageTimer = setInterval(() => {
-      setActiveStage((current) => (current + 1) % 4);
+    const timer = setInterval(() => {
+      setActiveStep((current) => (current + 1) % steps.length);
     }, 3000);
 
-    return () => clearInterval(stageTimer);
-  }, []);
+    return () => clearInterval(timer);
+  }, [steps.length]);
 
   return (
     <section className="hero">
+
+      {/* =====================================================
+          BACKGROUND DECORATION
+      ===================================================== */}
+
+      <div className="hero-bg-orb hero-bg-orb-one"></div>
+      <div className="hero-bg-orb hero-bg-orb-two"></div>
+
+      <div className="hero-grain"></div>
+
+
       <div className="hero-container">
 
-        {/* =====================================
-            LEFT SIDE — HERO CONTENT
-        ===================================== */}
+        {/* =====================================================
+            LEFT — CONTENT
+        ===================================================== */}
+
         <div className="hero-content">
 
-          <span className="hero-eyebrow">
-            AI-POWERED AYURVEDIC SKINCARE
-          </span>
+          <div className="hero-eyebrow">
+            <span className="eyebrow-line"></span>
 
-          <h1>
+            <span>AI-POWERED AYURVEDIC WELLNESS</span>
+
+            <span className="eyebrow-dot"></span>
+          </div>
+
+
+          <h1 className="hero-title">
             Your Skin.
             <br />
-            <span>Your Balance.</span>
+            <em>Your Balance.</em>
           </h1>
 
-          <p>
-            Discover your skin's unique needs through AI-powered analysis
-            and Ayurvedic wisdom. Get personalized recommendations designed
-            for your natural balance.
+
+          <p className="hero-description">
+            Discover visible characteristics of your skin through
+            AI-assisted analysis and explore personalized Ayurvedic
+            approaches for your natural care and balance.
           </p>
 
-          {/* HERO BUTTONS */}
+
+          {/* =================================================
+              ACTIONS
+          ================================================= */}
+
           <div className="hero-actions">
 
             <button
@@ -51,286 +97,309 @@ const Hero = () => {
               className="hero-primary-btn"
               onClick={() => navigate("/skin-scan")}
             >
-              Start Skin Analysis
-              <span>→</span>
+              <span>Start Skin Scan</span>
+
+              <span className="primary-arrow">
+                →
+              </span>
             </button>
+
 
             <button
               type="button"
               className="hero-secondary-btn"
               onClick={() => navigate("/dosha-test")}
             >
-              Discover Your Dosha
+              <span className="secondary-icon">⌘</span>
+
+              <span>Discover Your Dosha</span>
             </button>
 
           </div>
+
+
+          {/* =================================================
+              TRUST NOTE
+          ================================================= */}
+
+          <div className="hero-note">
+
+            <span className="hero-note-icon">
+              ⌘
+            </span>
+
+            <span>
+              AI-estimated insights · Inspired by Ayurvedic principles
+            </span>
+
+          </div>
+
+
+          {/* =================================================
+              MINI STATS
+          ================================================= */}
+
+          <div className="hero-meta">
+
+            <div className="hero-meta-item">
+              <strong>AI</strong>
+              <span>Skin Insights</span>
+            </div>
+
+            <span className="hero-meta-divider"></span>
+
+            <div className="hero-meta-item">
+              <strong>3</strong>
+              <span>Dosha Types</span>
+            </div>
+
+            <span className="hero-meta-divider"></span>
+
+            <div className="hero-meta-item">
+              <strong>01</strong>
+              <span>Personal Journey</span>
+            </div>
+
+          </div>
+
         </div>
 
 
-        {/* =====================================
-            RIGHT SIDE — AYURVEDIC ENERGY FLOW
-        ===================================== */}
+        {/* =====================================================
+            RIGHT — AI VISUAL
+        ===================================================== */}
+
         <div className="hero-visual">
 
-          {/* Background glow */}
-          <div className="energy-glow"></div>
+          {/* Ambient glow */}
 
-          {/* Energy orbit paths */}
-          <div className="energy-orbit energy-orbit-one"></div>
-          <div className="energy-orbit energy-orbit-two"></div>
-          <div className="energy-orbit energy-orbit-three"></div>
+          <div className="visual-glow"></div>
 
-          {/* Floating energy particles */}
-          <span className="energy-particle particle-one"></span>
-          <span className="energy-particle particle-two"></span>
-          <span className="energy-particle particle-three"></span>
-          <span className="energy-particle particle-four"></span>
+          {/* Large orbital system */}
+
+          <div className="visual-orbit orbit-one"></div>
+          <div className="visual-orbit orbit-two"></div>
+          <div className="visual-orbit orbit-three"></div>
 
 
-          {/* =====================================
-              CLICKABLE CENTRAL AI CARD
-          ===================================== */}
-          <button
-            type="button"
-            className="hero-ai-card hero-ai-card-clickable"
-            onClick={() => navigate("/skin-scan")}
-            aria-label="Start AI Skin Scan"
-          >
+          {/* Orbit dots */}
 
-            {/* Card header */}
-            <div className="ai-card-top">
+          <span className="visual-dot dot-one"></span>
+          <span className="visual-dot dot-two"></span>
+          <span className="visual-dot dot-three"></span>
+          <span className="visual-dot dot-four"></span>
 
-              <span className="ai-status-dot"></span>
 
-              <span>
-                AYURAI ANALYSIS
+          {/* =================================================
+              MAIN AI CARD
+          ================================================= */}
+
+          <div
+  className="ai-visual-card clickable-scan-card"
+  onClick={openSkinScan}
+  onKeyDown={handleCardKeyDown}
+  role="button"
+  tabIndex={0}
+  aria-label="Open AI Skin Scan"
+>
+            
+
+            {/* Header */}
+
+            <div className="visual-card-header">
+
+              <div className="visual-brand">
+
+                <span className="status-dot"></span>
+
+                <span>AYURAI</span>
+
+              </div>
+
+              <span className="visual-label">
+                AI INSIGHT
               </span>
 
             </div>
 
 
-            {/* Skin visualization */}
-            <div className="skin-visual">
+            {/* =================================================
+                FACE / SKIN VISUALIZATION
+            ================================================= */}
 
-              <div className="scan-face">
+            <div className="face-area">
 
-                {/* Face outline */}
-                <div className="face-outline"></div>
+              <div className="face-halo"></div>
 
-                {/* Eyes */}
-                <div className="face-eye left-eye"></div>
-                <div className="face-eye right-eye"></div>
+              <div className="face-halo-inner"></div>
 
-                {/* Nose */}
+
+              <div className="face-shape">
+
+                <div className="face-eye face-eye-left"></div>
+
+                <div className="face-eye face-eye-right"></div>
+
                 <div className="face-nose"></div>
 
-                {/* Mouth */}
                 <div className="face-mouth"></div>
 
-                {/* AI scanning line */}
-                <div className="ai-scan-line"></div>
 
-                {/* AI scan points */}
-                <span className="scan-point point-one"></span>
-                <span className="scan-point point-two"></span>
-                <span className="scan-point point-three"></span>
+                <span className="face-point face-point-one"></span>
+
+                <span className="face-point face-point-two"></span>
+
+                <span className="face-point face-point-three"></span>
+
+                <span className="face-point face-point-four"></span>
+
+
+                <div className="face-grid"></div>
+
+                <div className="scan-beam"></div>
 
               </div>
 
 
-              {/* Scan label */}
-              <div className="scan-label">
+              {/* Scanning status */}
+
+              <div className="scan-status">
+
+                <span className="scan-status-line"></span>
+
+                <span>
+                  ANALYZING
+                </span>
+
+              </div>
+
+
+              <div className="face-caption">
 
                 <span></span>
 
-                AI SKIN SCAN
+                AI-ESTIMATED VISIBLE CHARACTERISTICS
 
               </div>
 
             </div>
 
 
-            {/* =====================================
-                AI ANALYSIS INFORMATION
-            ===================================== */}
-            <div className="ai-analysis">
+            {/* =================================================
+                JOURNEY PANEL
+            ================================================= */}
 
-              {/* Analysis title */}
-              <div className="analysis-title">
+            <div className="insight-panel">
+
+              <div className="insight-heading">
 
                 <span>
-                  Skin Analysis
+                  Your AyurAI Journey
                 </span>
 
-                <strong>
-                  AI
-                </strong>
+                <small>
+                  {String(activeStep + 1).padStart(2, "0")} / 03
+                </small>
 
               </div>
 
 
-              {/* Progress bar */}
-              <div className="analysis-bar">
-                <div></div>
+              <div className="journey-progress">
+
+                <div
+                  className="journey-progress-fill"
+                  style={{
+                    width:
+                      `${((activeStep + 1) / steps.length) * 100}%`,
+                  }}
+                ></div>
+
               </div>
 
 
-              {/* Dynamic analysis message */}
-              <div className="analysis-status">
+              <div className="journey-step">
 
-                <span>
+                <div className="journey-number">
+                  {steps[activeStep].number}
+                </div>
 
-                  {activeStage === 0 &&
-                    "Understanding your skin"}
 
-                  {activeStage === 1 &&
-                    "Scanning skin characteristics"}
+                <div className="journey-content">
 
-                  {activeStage === 2 &&
-                    "Balancing your dosha"}
+                  <strong>
+                    {steps[activeStep].title}
+                  </strong>
 
-                  {activeStage === 3 &&
-                    "Preparing personalized care"}
+                  <p>
+                    {steps[activeStep].description}
+                  </p>
 
-                </span>
-
-                <span>●</span>
+                </div>
 
               </div>
 
             </div>
-
-
-            
-
-          </button>
-
-
-          {/* =====================================
-              STAGE 01 — SKIN
-          ===================================== */}
-          <button
-            type="button"
-            className={`energy-node node-skin ${
-              activeStage === 0 ? "active-stage" : ""
-            }`}
-            onClick={() => navigate("/skin-scan")}
-          >
-
-            <span className="node-icon">
-              ✦
-            </span>
-
-            <span className="node-text">
-
-              <small>
-                01
-              </small>
-
-              Skin
-
-            </span>
-
-          </button>
-
-
-          {/* =====================================
-              STAGE 02 — AI SCAN
-          ===================================== */}
-          <button
-            type="button"
-            className={`energy-node node-ai ${
-              activeStage === 1 ? "active-stage" : ""
-            }`}
-            onClick={() => navigate("/skin-scan")}
-          >
-
-            <span className="node-icon">
-              ⌁
-            </span>
-
-            <span className="node-text">
-
-              <small>
-                02
-              </small>
-
-              AI Scan
-
-            </span>
-
-          </button>
-
-
-          {/* =====================================
-              STAGE 03 — DOSHA BALANCE
-          ===================================== */}
-          <button
-            type="button"
-            className={`energy-node node-dosha ${
-              activeStage === 2 ? "active-stage" : ""
-            }`}
-            onClick={() => navigate("/dosha-test")}
-          >
-
-            <span className="node-icon">
-              ◌
-            </span>
-
-            <span className="node-text">
-
-              <small>
-                03
-              </small>
-
-              Dosha Balance
-
-            </span>
-
-          </button>
-
-
-          {/* =====================================
-              STAGE 04 — PERSONALIZED CARE
-              → HOME REMEDIES
-          ===================================== */}
-          <button
-            type="button"
-            className={`energy-node node-care ${
-              activeStage === 3 ? "active-stage" : ""
-            }`}
-            onClick={() => navigate("/home-remedies")}
-          >
-
-            <span className="node-icon">
-              ❋
-            </span>
-
-            <span className="node-text">
-
-              <small>
-                04
-              </small>
-
-              Personalized Care
-
-            </span>
-
-          </button>
-
-
-          {/* =====================================
-              CENTRAL ENERGY POINT
-          ===================================== */}
-          <div className="central-energy">
-
-            <div className="central-energy-inner"></div>
 
           </div>
 
+
+          {/* =================================================
+              FLOATING INFORMATION CARDS
+          ================================================= */}
+
+          <div className="floating-label floating-label-top">
+
+            <span className="floating-icon">
+              🌿
+            </span>
+
+            <div>
+              <small>AI</small>
+              <strong>Skin Insight</strong>
+            </div>
+
+          </div>
+
+
+          <div className="floating-label floating-label-bottom">
+
+            <span className="floating-icon">
+              🌸
+            </span>
+
+            <div>
+              <small>AYURVEDA</small>
+              <strong>Natural Balance</strong>
+            </div>
+
+          </div>
+
+
+          {/* Decorative central rings */}
+
+          <div className="visual-ring ring-one"></div>
+          <div className="visual-ring ring-two"></div>
+
         </div>
+        
 
       </div>
+
+
+      {/* =====================================================
+          BOTTOM SCROLL INDICATOR
+      ===================================================== */}
+
+      <div className="hero-scroll">
+
+        <span className="scroll-line"></span>
+
+        <span>
+          EXPLORE
+        </span>
+
+      </div>
+
     </section>
   );
 };
