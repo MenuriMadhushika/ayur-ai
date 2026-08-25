@@ -1,70 +1,256 @@
+
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./OverallResult.css";
 
+import API_BASE_URL from "../utils/api";
+
 import {
-  getAssessmentStatus,
-  getSkinScanResult,
-  getDoshaResult,
+  getCurrentUserId,
 } from "../utils/assessmentStatus";
+
 
 const OverallResult = () => {
   const navigate = useNavigate();
 
+  /*
+   * Temporary user ID.
+   * Replace this with the authenticated user's ID
+   * when JWT authentication is implemented.
+   */
+  const userId = getCurrentUserId();
+
   const [skinScan, setSkinScan] = useState(null);
   const [dosha, setDosha] = useState(null);
 
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  /* =========================================================
+     LOAD RESULTS FROM BACKEND
+  ========================================================= */
+
   useEffect(() => {
-    const loadResults = () => {
-      const status = getAssessmentStatus();
+    const loadResults = async () => {
+      setLoading(true);
+      setError("");
 
-      if (!status.skinScanCompleted) {
-        navigate("/skin-scan", { replace: true });
-        return;
+      if (!userId) {
+  setError(
+    "Your user session could not be found. Please log in again."
+  );
+  setLoading(false);
+  return;
+}
+
+      try {
+        /*
+         * Get latest Dosha assessment
+         */
+        const doshaResponse = await fetch(
+          `${API_BASE_URL}/dosha-assessments/user/${userId}/latest`
+        );
+
+        if (!doshaResponse.ok) {
+          if (doshaResponse.status === 401) {
+            throw new Error(
+              "You are not authorized to view your Dosha assessment."
+            );
+          }
+
+          if (doshaResponse.status === 404) {
+            navigate("/dosha-test", { replace: true });
+            return;
+          }
+
+          throw new Error(
+            "Unable to load your Dosha assessment."
+          );
+        }
+
+        const doshaData = await doshaResponse.json();
+
+        /*
+         * Get latest Skin Scan
+         */
+        const skinResponse = await fetch(
+          `${API_BASE_URL}/skin-scans/user/${userId}/latest`
+        );
+
+        if (!skinResponse.ok) {
+          if (skinResponse.status === 401) {
+            throw new Error(
+              "You are not authorized to view your Skin Scan."
+            );
+          }
+
+          if (skinResponse.status === 404) {
+            navigate("/skin-scan", { replace: true });
+            return;
+          }
+
+          throw new Error(
+            "Unable to load your Skin Scan."
+          );
+        }
+
+        const skinData = await skinResponse.json();
+
+        console.log(
+          "Dosha result from backend:",
+          doshaData
+        );
+
+        console.log(
+          "Skin Scan result from backend:",
+          skinData
+        );
+
+        /*
+         * Save backend results into React state.
+         */
+        setDosha(doshaData);
+        setSkinScan(skinData);
+
+      } catch (err) {
+        console.error(
+          "Overall result loading error:",
+          err
+        );
+
+        setError(
+          err.message ||
+          "Unable to load your assessment results."
+        );
+
+      } finally {
+        setLoading(false);
       }
-
-      if (!status.doshaCompleted) {
-        navigate("/dosha-test", { replace: true });
-        return;
-      }
-
-      setSkinScan(getSkinScanResult());
-      setDosha(getDoshaResult());
     };
 
     loadResults();
+  }, [navigate, userId]);
 
-    window.addEventListener(
-      "ayurai-assessment-updated",
-      loadResults
-    );
+  /* =========================================================
+     LOADING
+  ========================================================= */
 
-    return () => {
-      window.removeEventListener(
-        "ayurai-assessment-updated",
-        loadResults
-      );
-    };
-  }, [navigate]);
-
-  if (!skinScan || !dosha) {
+  if (loading) {
     return (
       <main className="overall-result-page">
+
         <div className="overall-result-loading">
-          Loading your Ayurvedic assessment...
+
+          <span>
+            AYURAI
+          </span>
+
+          <p>
+            Loading your Ayurvedic assessment...
+          </p>
+
         </div>
+
       </main>
     );
   }
 
+  /* =========================================================
+     ERROR
+  ========================================================= */
+
+  if (error) {
+    return (
+      <main className="overall-result-page">
+
+        <section className="overall-result-error">
+
+          <span className="overall-label">
+            AYURAI · ASSESSMENT
+          </span>
+
+          <h1>
+            Unable to load your results
+          </h1>
+
+          <p>
+            {error}
+          </p>
+
+          <button
+            type="button"
+            className="overall-primary-button"
+            onClick={() => window.location.reload()}
+          >
+            TRY AGAIN
+          </button>
+
+          <button
+            type="button"
+            className="overall-secondary-button"
+            onClick={() => navigate("/")}
+          >
+            BACK TO HOME
+          </button>
+
+        </section>
+
+      </main>
+    );
+  }
+
+  /* =========================================================
+     SAFETY CHECK
+  ========================================================= */
+
+  if (!skinScan || !dosha) {
+    return (
+      <main className="overall-result-page">
+
+        <div className="overall-result-loading">
+
+          <p>
+            No complete assessment results were found.
+          </p>
+
+        </div>
+
+      </main>
+    );
+  }
+
+  /* =========================================================
+     DOSHA DATA
+  ========================================================= */
+
   const dominantDosha =
     dosha.dominantDosha || "Not available";
 
-  const percentages = dosha.percentages || {
-    Vata: 0,
-    Pitta: 0,
-    Kapha: 0,
+  const percentages = {
+    Vata: dosha.vataPercentage ?? 0,
+    Pitta: dosha.pittaPercentage ?? 0,
+    Kapha: dosha.kaphaPercentage ?? 0,
   };
+
+  /* =========================================================
+     SKIN DATA
+  ========================================================= */
+
+  const estimatedSkinType =
+    skinScan.estimatedSkinType ||
+    "AI-estimated";
+
+  const visibleCharacteristics =
+    skinScan.visibleCharacteristics ||
+    "AI-observed visible characteristics";
+
+  const analysisStatus =
+    skinScan.analysisStatus ||
+    "COMPLETED";
+
+  /* =========================================================
+     RENDER
+  ========================================================= */
 
   return (
     <main className="overall-result-page">
@@ -104,7 +290,9 @@ const OverallResult = () => {
 
       <section className="overall-result-grid">
 
-        {/* DOSHA */}
+        {/* ===================================================
+            DOSHA CARD
+        =================================================== */}
 
         <article className="overall-card dosha-overall-card">
 
@@ -115,6 +303,7 @@ const OverallResult = () => {
           <div className="overall-card-heading">
 
             <div>
+
               <h2>
                 {dominantDosha}
               </h2>
@@ -127,6 +316,7 @@ const OverallResult = () => {
                 as the dominant Dosha pattern
                 in this assessment.
               </p>
+
             </div>
 
             <div className="dominant-badge">
@@ -136,66 +326,92 @@ const OverallResult = () => {
           </div>
 
 
+          {/* DOSHA PERCENTAGES */}
+
           <div className="dosha-percentages">
+
+            {/* VATA */}
 
             <div className="dosha-percentage-item">
 
               <div>
-                <span>Vata</span>
+
+                <span>
+                  Vata
+                </span>
 
                 <strong>
                   {percentages.Vata}%
                 </strong>
+
               </div>
 
               <div className="mini-progress">
+
                 <div
                   style={{
                     width: `${percentages.Vata}%`,
                   }}
                 />
+
               </div>
 
             </div>
 
 
+            {/* PITTA */}
+
             <div className="dosha-percentage-item">
 
               <div>
-                <span>Pitta</span>
+
+                <span>
+                  Pitta
+                </span>
 
                 <strong>
                   {percentages.Pitta}%
                 </strong>
+
               </div>
 
               <div className="mini-progress">
+
                 <div
                   style={{
                     width: `${percentages.Pitta}%`,
                   }}
                 />
+
               </div>
 
             </div>
 
 
+            {/* KAPHA */}
+
             <div className="dosha-percentage-item">
 
               <div>
-                <span>Kapha</span>
+
+                <span>
+                  Kapha
+                </span>
 
                 <strong>
                   {percentages.Kapha}%
                 </strong>
+
               </div>
 
               <div className="mini-progress">
+
                 <div
                   style={{
                     width: `${percentages.Kapha}%`,
                   }}
                 />
+
               </div>
 
             </div>
@@ -205,7 +421,9 @@ const OverallResult = () => {
         </article>
 
 
-        {/* SKIN */}
+        {/* ===================================================
+            SKIN SCAN CARD
+        =================================================== */}
 
         <article className="overall-card skin-overall-card">
 
@@ -226,61 +444,46 @@ const OverallResult = () => {
 
           <div className="skin-observations">
 
+            {/* ESTIMATED SKIN TYPE */}
+
             <div className="observation-item">
 
               <span>
-                Skin observation
+                Estimated skin type
               </span>
 
               <strong>
-                {skinScan.skinType ||
-                  "AI-estimated"}
+                {estimatedSkinType}
               </strong>
 
             </div>
 
 
+            {/* VISIBLE CHARACTERISTICS */}
+
             <div className="observation-item">
 
               <span>
-                Hydration estimate
+                Visible characteristics
               </span>
 
               <strong>
-                {skinScan.hydration &&
-                !String(
-                  skinScan.hydration
-                ).includes("AI")
-                  ? `${skinScan.hydration}%`
-                  : "AI-estimated"}
+                {visibleCharacteristics}
               </strong>
 
             </div>
 
 
-            <div className="observation-item">
-
-              <span>
-                Texture observation
-              </span>
-
-              <strong>
-                {skinScan.texture ||
-                  "AI-observed"}
-              </strong>
-
-            </div>
-
+            {/* ANALYSIS STATUS */}
 
             <div className="observation-item">
 
               <span>
-                Visible concern
+                Analysis status
               </span>
 
               <strong>
-                {skinScan.concern ||
-                  "AI-observed"}
+                {analysisStatus}
               </strong>
 
             </div>
@@ -326,10 +529,16 @@ const OverallResult = () => {
 
         <div className="combined-points">
 
+          {/* POINT 01 */}
+
           <div>
-            <span>01</span>
+
+            <span>
+              01
+            </span>
 
             <div>
+
               <strong>
                 Skin observations
               </strong>
@@ -337,14 +546,22 @@ const OverallResult = () => {
               <small>
                 AI-estimated visible characteristics
               </small>
+
             </div>
+
           </div>
 
 
+          {/* POINT 02 */}
+
           <div>
-            <span>02</span>
+
+            <span>
+              02
+            </span>
 
             <div>
+
               <strong>
                 Dosha pattern
               </strong>
@@ -352,14 +569,22 @@ const OverallResult = () => {
               <small>
                 Based on your assessment responses
               </small>
+
             </div>
+
           </div>
 
 
+          {/* POINT 03 */}
+
           <div>
-            <span>03</span>
+
+            <span>
+              03
+            </span>
 
             <div>
+
               <strong>
                 Ayurvedic direction
               </strong>
@@ -367,11 +592,17 @@ const OverallResult = () => {
               <small>
                 Educational skincare guidance
               </small>
+
             </div>
+
           </div>
 
         </div>
 
+
+        {/* ===================================================
+            IMPORTANT NOTICE
+        =================================================== */}
 
         <div className="result-notice">
 
@@ -406,7 +637,9 @@ const OverallResult = () => {
           }
         >
           EXPLORE HOME REMEDIES
-          <span>→</span>
+          <span>
+            →
+          </span>
         </button>
 
 
@@ -428,10 +661,12 @@ const OverallResult = () => {
       ===================================================== */}
 
       <p className="overall-result-disclaimer">
+
         AyurAI provides AI-estimated visual
         observations and educational Ayurvedic
         guidance. It does not diagnose, treat,
         or prevent medical conditions.
+
       </p>
 
     </main>

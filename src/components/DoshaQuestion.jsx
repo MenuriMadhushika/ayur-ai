@@ -8,6 +8,7 @@ import {
 } from "../utils/assessmentStatus";
 
 import API_BASE_URL from "../utils/api";
+import { getCurrentUserId } from "../utils/userSession";
 
 /* =========================================================
    QUESTIONS
@@ -172,7 +173,7 @@ const DoshaQuestion = () => {
    * We will replace this with the authenticated
    * user's ID when login/JWT is implemented.
    */
-  const userId = 5;
+  const userId = getCurrentUserId();
 
   /* =====================================================
      STATE

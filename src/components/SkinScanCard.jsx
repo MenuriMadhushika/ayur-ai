@@ -13,6 +13,8 @@ import {
   getAssessmentStatus,
 } from "../utils/assessmentStatus";
 
+import { createSkinScan } from "../utils/api";
+
 
 /* =========================================================
    ICONS
@@ -354,7 +356,7 @@ const SkinScanCard = () => {
                 interval
               );
 
-              setTimeout(() => {
+              setTimeout(async() => {
 
                 setIsScanning(
                   false
@@ -369,31 +371,38 @@ const SkinScanCard = () => {
                    SAVE SKIN RESULT
                 ========================================= */
 
-                saveSkinScanResult({
+                try {
+  const backendResult = await createSkinScan({
+    userId: 5,
+    imagePath: "uploads/skin-scan.jpg",
+    estimatedSkinType: "AI-estimated combination skin",
+    visibleCharacteristics:
+      "AI-estimated visible skin characteristics from uploaded image",
+    analysisStatus: "COMPLETED",
+  });
 
-                  completed:
-                    true,
+  console.log("Skin scan saved to backend:", backendResult);
 
-                  completedAt:
-                    new Date().toISOString(),
+  saveSkinScanResult({
+    completed: true,
+    completedAt: new Date().toISOString(),
+    skinType: backendResult.estimatedSkinType || "AI-estimated",
+    hydration: "AI-estimated",
+    concern: "AI-observed",
+    texture: backendResult.visibleCharacteristics || "AI-observed",
+  });
 
-                  /*
-                    Placeholder AI-estimated
-                    visible characteristics.
-                  */
+  checkAssessmentStatus();
 
-                  skinType:
-                    "AI-estimated",
+} catch (error) {
+  console.error("Failed to save skin scan:", error);
 
-                  hydration:
-                    "AI-estimated",
+  alert(
+    "Skin analysis completed, but the result could not be saved. Please make sure the backend is running."
+  );
 
-                  concern:
-                    "AI-observed",
-
-                  texture:
-                    "AI-observed",
-                });
+  setAnalysisComplete(false);
+}
 
 
                 checkAssessmentStatus();
