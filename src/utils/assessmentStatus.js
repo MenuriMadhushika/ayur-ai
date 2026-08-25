@@ -1,16 +1,17 @@
+
 /* =========================================================
    AYURAI — ASSESSMENT STATUS
    =========================================================
 
    Central storage utility for:
 
-   1. Skin Scan
-   2. Dosha Test
-   3. Overall Assessment
+   1. Current User
+   2. Skin Scan
+   3. Dosha Test
+   4. Overall Assessment
 
    IMPORTANT:
-   This file must contain JavaScript only.
-   Do NOT put React JSX inside this file.
+   This file contains JavaScript only.
 ========================================================= */
 
 
@@ -19,12 +20,11 @@
 ========================================================= */
 
 const STORAGE_KEYS = {
+  userId: "ayuraiUserId",
+
   doshaResult: "ayuraiDoshaResult",
   skinScanResult: "ayuraiSkinScanResult",
 
-  /*
-    Compatibility flags used by existing components.
-  */
   doshaCompleted: "ayuraiDoshaTestCompleted",
   skinScanCompleted: "ayuraiSkinScanCompleted",
 };
@@ -43,7 +43,9 @@ const readJSON = (key) => {
     }
 
     return JSON.parse(saved);
+
   } catch (error) {
+
     console.error(
       `AyurAI: Unable to read ${key}`,
       error
@@ -59,16 +61,137 @@ const readJSON = (key) => {
 ========================================================= */
 
 const writeJSON = (key, value) => {
+
   try {
+
     localStorage.setItem(
       key,
       JSON.stringify(value)
     );
 
     return true;
+
   } catch (error) {
+
     console.error(
       `AyurAI: Unable to save ${key}`,
+      error
+    );
+
+    return false;
+  }
+};
+
+
+/* =========================================================
+   CURRENT USER
+   =========================================================
+
+   The backend currently uses Long user IDs.
+
+   Example:
+
+   userId = 5
+
+   We store it as a string in localStorage and
+   convert it back to Number when reading.
+========================================================= */
+
+export const saveCurrentUserId = (userId) => {
+
+  if (
+    userId === null ||
+    userId === undefined ||
+    userId === ""
+  ) {
+
+    console.warn(
+      "AyurAI: Cannot save empty user ID."
+    );
+
+    return false;
+  }
+
+  try {
+
+    localStorage.setItem(
+      STORAGE_KEYS.userId,
+      String(userId)
+    );
+
+    return true;
+
+  } catch (error) {
+
+    console.error(
+      "AyurAI: Unable to save current user ID.",
+      error
+    );
+
+    return false;
+  }
+};
+
+
+/* =========================================================
+   GET CURRENT USER ID
+========================================================= */
+
+export const getCurrentUserId = () => {
+
+  try {
+
+    const savedUserId =
+      localStorage.getItem(
+        STORAGE_KEYS.userId
+      );
+
+    if (
+      savedUserId === null ||
+      savedUserId === ""
+    ) {
+      return null;
+    }
+
+    const userId =
+      Number(savedUserId);
+
+    if (Number.isNaN(userId)) {
+      return null;
+    }
+
+    return userId;
+
+  } catch (error) {
+
+    console.error(
+      "AyurAI: Unable to read current user ID.",
+      error
+    );
+
+    return null;
+  }
+};
+
+
+/* =========================================================
+   CLEAR CURRENT USER
+========================================================= */
+
+export const clearCurrentUserId = () => {
+
+  try {
+
+    localStorage.removeItem(
+      STORAGE_KEYS.userId
+    );
+
+    return true;
+
+  } catch (error) {
+
+    console.error(
+      "AyurAI: Unable to clear current user ID.",
       error
     );
 
@@ -82,14 +205,18 @@ const writeJSON = (key, value) => {
 ========================================================= */
 
 const saveBooleanFlag = (key, value) => {
+
   try {
+
     localStorage.setItem(
       key,
       value ? "true" : "false"
     );
 
     return true;
+
   } catch (error) {
+
     console.error(
       `AyurAI: Unable to save ${key}`,
       error
@@ -105,11 +232,15 @@ const saveBooleanFlag = (key, value) => {
 ========================================================= */
 
 const readBooleanFlag = (key) => {
+
   try {
+
     return (
       localStorage.getItem(key) === "true"
     );
+
   } catch {
+
     return false;
   }
 };
@@ -117,27 +248,21 @@ const readBooleanFlag = (key) => {
 
 /* =========================================================
    NOTIFY REACT COMPONENTS
-   =========================================================
-
-   This allows UserProfile and other components to
-   refresh immediately after an assessment is saved
-   in the SAME browser tab.
-
-   The normal "storage" event does not fire in the
-   same tab that changes localStorage.
 ========================================================= */
 
 const notifyAssessmentUpdated = () => {
+
   try {
+
     window.dispatchEvent(
       new CustomEvent(
         "ayuraiAssessmentUpdated"
       )
     );
-  } catch (error) {
+
+  } catch {
     /*
       Ignore notification errors.
-      The localStorage save has already happened.
     */
   }
 };
@@ -148,6 +273,7 @@ const notifyAssessmentUpdated = () => {
 ========================================================= */
 
 export const getDoshaResult = () => {
+
   return readJSON(
     STORAGE_KEYS.doshaResult
   );
@@ -159,7 +285,9 @@ export const getDoshaResult = () => {
 ========================================================= */
 
 export const saveDoshaResult = (result) => {
+
   if (!result) {
+
     console.warn(
       "AyurAI: Cannot save empty Dosha result."
     );
@@ -168,11 +296,8 @@ export const saveDoshaResult = (result) => {
   }
 
 
-  /*
-    Make sure the result has the expected structure.
-  */
-
   const savedResult = {
+
     ...result,
 
     completed:
@@ -184,10 +309,6 @@ export const saveDoshaResult = (result) => {
   };
 
 
-  /*
-    Save complete Dosha result.
-  */
-
   const resultSaved =
     writeJSON(
       STORAGE_KEYS.doshaResult,
@@ -195,19 +316,11 @@ export const saveDoshaResult = (result) => {
     );
 
 
-  /*
-    Save compatibility completion flag.
-  */
-
   saveBooleanFlag(
     STORAGE_KEYS.doshaCompleted,
     true
   );
 
-
-  /*
-    Notify components such as UserProfile.
-  */
 
   notifyAssessmentUpdated();
 
@@ -221,7 +334,9 @@ export const saveDoshaResult = (result) => {
 ========================================================= */
 
 export const clearDoshaResult = () => {
+
   try {
+
     localStorage.removeItem(
       STORAGE_KEYS.doshaResult
     );
@@ -233,7 +348,9 @@ export const clearDoshaResult = () => {
     notifyAssessmentUpdated();
 
     return true;
+
   } catch (error) {
+
     console.error(
       "AyurAI: Unable to clear Dosha result.",
       error
@@ -249,6 +366,7 @@ export const clearDoshaResult = () => {
 ========================================================= */
 
 export const getSkinScanResult = () => {
+
   return readJSON(
     STORAGE_KEYS.skinScanResult
   );
@@ -260,7 +378,9 @@ export const getSkinScanResult = () => {
 ========================================================= */
 
 export const saveSkinScanResult = (result) => {
+
   if (!result) {
+
     console.warn(
       "AyurAI: Cannot save empty Skin Scan result."
     );
@@ -269,13 +389,8 @@ export const saveSkinScanResult = (result) => {
   }
 
 
-  /*
-    Keep the actual AI-estimated observations.
-
-    These values are NOT treated as medical diagnosis.
-  */
-
   const savedResult = {
+
     ...result,
 
     completed:
@@ -287,10 +402,6 @@ export const saveSkinScanResult = (result) => {
   };
 
 
-  /*
-    Save complete Skin Scan result.
-  */
-
   const resultSaved =
     writeJSON(
       STORAGE_KEYS.skinScanResult,
@@ -298,19 +409,11 @@ export const saveSkinScanResult = (result) => {
     );
 
 
-  /*
-    Save compatibility completion flag.
-  */
-
   saveBooleanFlag(
     STORAGE_KEYS.skinScanCompleted,
     true
   );
 
-
-  /*
-    Notify UserProfile and other components.
-  */
 
   notifyAssessmentUpdated();
 
@@ -324,7 +427,9 @@ export const saveSkinScanResult = (result) => {
 ========================================================= */
 
 export const clearSkinScanResult = () => {
+
   try {
+
     localStorage.removeItem(
       STORAGE_KEYS.skinScanResult
     );
@@ -336,7 +441,9 @@ export const clearSkinScanResult = () => {
     notifyAssessmentUpdated();
 
     return true;
+
   } catch (error) {
+
     console.error(
       "AyurAI: Unable to clear Skin Scan result.",
       error
@@ -360,14 +467,6 @@ export const getAssessmentStatus = () => {
     getSkinScanResult();
 
 
-  /*
-    Check both the result itself and the
-    compatibility completion flag.
-
-    This makes the application more robust
-    if older localStorage data exists.
-  */
-
   const doshaCompleted =
     Boolean(
       doshaResult?.completed ||
@@ -388,34 +487,15 @@ export const getAssessmentStatus = () => {
 
   return {
 
-    /*
-      Main names used by the new application.
-    */
+    userId:
+      getCurrentUserId(),
 
     doshaCompleted,
 
     skinScanCompleted,
 
-
-    /*
-      Compatibility name used by SkinScanCard.
-    */
-
     doshaTestCompleted:
       doshaCompleted,
-
-    doshaCompleted:
-
-
-      doshaCompleted,
-
-    skinScanCompleted:
-      skinScanCompleted,
-
-
-    /*
-      Overall status.
-    */
 
     bothCompleted:
       doshaCompleted &&
@@ -424,7 +504,6 @@ export const getAssessmentStatus = () => {
     assessmentCompleted:
       doshaCompleted &&
       skinScanCompleted,
-
   };
 };
 
@@ -493,9 +572,7 @@ export const clearAllAssessmentResults = () => {
       STORAGE_KEYS.skinScanCompleted
     );
 
-
     notifyAssessmentUpdated();
-
 
     return true;
 
@@ -513,19 +590,14 @@ export const clearAllAssessmentResults = () => {
 
 /* =========================================================
    DEBUG HELPER
-   =========================================================
-
-   You can call:
-
-   getAssessmentStorage()
-
-   from the browser console to inspect
-   exactly what AyurAI has saved.
 ========================================================= */
 
 export const getAssessmentStorage = () => {
 
   return {
+
+    userId:
+      getCurrentUserId(),
 
     doshaResult:
       getDoshaResult(),
@@ -535,7 +607,6 @@ export const getAssessmentStorage = () => {
 
     status:
       getAssessmentStatus(),
-
   };
 };
 
@@ -545,6 +616,11 @@ export const getAssessmentStorage = () => {
 ========================================================= */
 
 export default {
+
+  saveCurrentUserId,
+  getCurrentUserId,
+  clearCurrentUserId,
+
   getDoshaResult,
   saveDoshaResult,
   clearDoshaResult,
