@@ -10,15 +10,31 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
     @Column(unique = true, nullable = false)
     private String email;
 
+    @Column(nullable = false)
     private String password;
+
+    private Integer age;
+
+    private String profileIcon;
+
+
+    // =========================================================
+    // CONSTRUCTOR
+    // =========================================================
 
     public User() {
     }
+
+
+    // =========================================================
+    // GETTERS & SETTERS
+    // =========================================================
 
     public Long getId() {
         return id;
@@ -28,6 +44,7 @@ public class User {
         this.id = id;
     }
 
+
     public String getName() {
         return name;
     }
@@ -35,6 +52,7 @@ public class User {
     public void setName(String name) {
         this.name = name;
     }
+
 
     public String getEmail() {
         return email;
@@ -44,11 +62,30 @@ public class User {
         this.email = email;
     }
 
+
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+
+    public String getProfileIcon() {
+        return profileIcon;
+    }
+
+    public void setProfileIcon(String profileIcon) {
+        this.profileIcon = profileIcon;
     }
 }

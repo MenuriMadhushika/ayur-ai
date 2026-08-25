@@ -1,6 +1,6 @@
 package com.ayurai.ayuraibackend.dto;
 
-public class UserResponse {
+public class LoginResponse {
 
     private Long id;
     private String name;
@@ -8,12 +8,7 @@ public class UserResponse {
     private Integer age;
     private String profileIcon;
 
-
-    // =========================================================
-    // CONSTRUCTOR
-    // =========================================================
-
-    public UserResponse(
+    public LoginResponse(
             Long id,
             String name,
             String email,
@@ -26,11 +21,6 @@ public class UserResponse {
         this.age = age;
         this.profileIcon = profileIcon;
     }
-
-
-    // =========================================================
-    // GETTERS
-    // =========================================================
 
     public Long getId() {
         return id;
