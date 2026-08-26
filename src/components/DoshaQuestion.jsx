@@ -2,626 +2,884 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./DoshaQuestion.css";
 
+import {
+  saveDoshaResult,
+  getAssessmentStatus,
+} from "../utils/assessmentStatus";
+
+import API_BASE_URL from "../utils/api";
+import { getCurrentUserId } from "../utils/userSession";
+
+/* =========================================================
+   QUESTIONS
+   ========================================================= */
+
 const questions = [
   {
+    question: "How would you describe your skin?",
+    options: [
+      {
+        text: "Dry, thin or easily dehydrated",
+        dosha: "Vata",
+      },
+      {
+        text: "Sensitive, warm or prone to redness",
+        dosha: "Pitta",
+      },
+      {
+        text: "Soft, thick or naturally oily",
+        dosha: "Kapha",
+      },
+    ],
+  },
+
+  {
     question: "How does your skin usually feel?",
-    subtitle: "Think about your skin on a normal day.",
-    options: [
-      { text: "Dry and sometimes tight", dosha: "vata" },
-      { text: "Warm or easily sensitive", dosha: "pitta" },
-      { text: "Smooth but often oily", dosha: "kapha" },
-    ],
-  },
-  {
-    question: "What happens to your skin during the day?",
-    subtitle: "Choose what feels most familiar.",
-    options: [
-      { text: "It becomes dry and needs moisture", dosha: "vata" },
-      { text: "It can become red or irritated", dosha: "pitta" },
-      { text: "It becomes shiny or oily", dosha: "kapha" },
-    ],
-  },
-  {
-    question: "How does your skin react to the sun?",
-    subtitle: "Consider your usual experience outdoors.",
-    options: [
-      { text: "It feels dry or dehydrated", dosha: "vata" },
-      { text: "It becomes red or sensitive", dosha: "pitta" },
-      { text: "It becomes oily or heavy", dosha: "kapha" },
-    ],
-  },
-  {
-    question: "What is your most noticeable skin concern?",
-    subtitle: "Choose the concern you notice most often.",
-    options: [
-      { text: "Dryness or fine lines", dosha: "vata" },
-      { text: "Redness or sensitivity", dosha: "pitta" },
-      { text: "Oiliness or clogged pores", dosha: "kapha" },
-    ],
-  },
-  {
-    question: "How does your skin feel after cleansing?",
-    subtitle: "Think about the first few minutes after washing.",
-    options: [
-      { text: "Tight or slightly rough", dosha: "vata" },
-      { text: "Warm or sensitive", dosha: "pitta" },
-      { text: "Comfortable, then oily later", dosha: "kapha" },
-    ],
-  },
-  {
-    question: "Which skin texture sounds most like yours?",
-    subtitle: "Choose the description that feels closest.",
-    options: [
-      { text: "Fine, delicate or uneven", dosha: "vata" },
-      { text: "Soft and easily reactive", dosha: "pitta" },
-      { text: "Smooth, thick or firm", dosha: "kapha" },
-    ],
-  },
-  {
-    question: "What does your skin need most?",
-    subtitle: "Choose the type of care you naturally reach for.",
-    options: [
-      { text: "Deep hydration and nourishment", dosha: "vata" },
-      { text: "Cooling and calming care", dosha: "pitta" },
-      { text: "Light cleansing and balancing", dosha: "kapha" },
-    ],
-  },
-  {
-    question: "Which description best represents your skin journey?",
-    subtitle: "Choose the one that feels most like you.",
     options: [
       {
-        text: "I am always trying to keep my skin hydrated",
-        dosha: "vata",
+        text: "Dry and sometimes rough",
+        dosha: "Vata",
       },
       {
-        text: "I am always trying to keep my skin calm",
-        dosha: "pitta",
+        text: "Warm and sensitive",
+        dosha: "Pitta",
       },
       {
-        text: "I am always trying to keep my skin balanced",
-        dosha: "kapha",
+        text: "Smooth and moisturized",
+        dosha: "Kapha",
+      },
+    ],
+  },
+
+  {
+    question: "How does your skin react to the environment?",
+    options: [
+      {
+        text: "Becomes dry in cold or windy weather",
+        dosha: "Vata",
+      },
+      {
+        text: "Becomes irritated in heat or sun",
+        dosha: "Pitta",
+      },
+      {
+        text: "Feels comfortable but can become oily",
+        dosha: "Kapha",
+      },
+    ],
+  },
+
+  {
+    question: "What is your usual skin texture?",
+    options: [
+      {
+        text: "Fine and uneven",
+        dosha: "Vata",
+      },
+      {
+        text: "Soft with occasional sensitivity",
+        dosha: "Pitta",
+      },
+      {
+        text: "Thick and smooth",
+        dosha: "Kapha",
+      },
+    ],
+  },
+
+  {
+    question: "How does your skin usually look?",
+    options: [
+      {
+        text: "Dull or slightly dry",
+        dosha: "Vata",
+      },
+      {
+        text: "Bright but sometimes flushed",
+        dosha: "Pitta",
+      },
+      {
+        text: "Smooth and naturally glowing",
+        dosha: "Kapha",
+      },
+    ],
+  },
+
+  {
+    question: "What is your common skin concern?",
+    options: [
+      {
+        text: "Dryness or flaky areas",
+        dosha: "Vata",
+      },
+      {
+        text: "Redness or sensitivity",
+        dosha: "Pitta",
+      },
+      {
+        text: "Oiliness or clogged pores",
+        dosha: "Kapha",
+      },
+    ],
+  },
+
+  {
+    question: "How does your skin respond to products?",
+    options: [
+      {
+        text: "Needs extra moisture",
+        dosha: "Vata",
+      },
+      {
+        text: "Can react easily to strong products",
+        dosha: "Pitta",
+      },
+      {
+        text: "Usually tolerates products well",
+        dosha: "Kapha",
+      },
+    ],
+  },
+
+  {
+    question: "Which description feels closest to your skin?",
+    options: [
+      {
+        text: "Dry and delicate",
+        dosha: "Vata",
+      },
+      {
+        text: "Sensitive and warm",
+        dosha: "Pitta",
+      },
+      {
+        text: "Smooth and balanced",
+        dosha: "Kapha",
       },
     ],
   },
 ];
 
-const doshaInfo = {
-  vata: {
-    name: "Vata",
-    focus: [
-      "Deep hydration",
-      "Gentle cleansing",
-      "Moisture-locking care",
-    ],
-  },
+/* =========================================================
+   DOSHA QUESTION COMPONENT
+   ========================================================= */
 
-  pitta: {
-    name: "Pitta",
-    focus: [
-      "Calming ingredients",
-      "Gentle skincare",
-      "Cooling hydration",
-    ],
-  },
+const DoshaQuestion = () => {
 
-  kapha: {
-    name: "Kapha",
-    focus: [
-      "Light hydration",
-      "Gentle cleansing",
-      "Balancing skincare",
-    ],
-  },
-};
-
-function DoshaQuestion() {
   const navigate = useNavigate();
 
-  const [current, setCurrent] = useState(0);
-  const [answers, setAnswers] = useState([]);
-  const [result, setResult] = useState(null);
+  /*
+   * Temporary user ID.
+   * We will replace this with the authenticated
+   * user's ID when login/JWT is implemented.
+   */
+  const userId = getCurrentUserId();
 
-  const question = questions[current];
+  /* =====================================================
+     STATE
+     ===================================================== */
 
-  // =========================================
-  // SELECT ANSWER
-  // =========================================
+  const [currentQuestion, setCurrentQuestion] =
+    useState(0);
 
-  const selectAnswer = (dosha) => {
-    const updatedAnswers = [...answers, dosha];
+  const [answers, setAnswers] =
+    useState([]);
+
+  const [finished, setFinished] =
+    useState(false);
+
+  const [result, setResult] =
+    useState(null);
+
+  const [submitting, setSubmitting] =
+    useState(false);
+
+  /* =====================================================
+     ANSWER QUESTION
+     ===================================================== */
+
+  const handleAnswer = (dosha) => {
+
+    /*
+     * Prevent another click while the
+     * final answer is being submitted.
+     */
+    if (submitting) {
+      return;
+    }
+
+    const updatedAnswers = [
+      ...answers,
+    ];
+
+    updatedAnswers[currentQuestion] =
+      dosha;
 
     setAnswers(updatedAnswers);
 
-    if (current < questions.length - 1) {
-      setTimeout(() => {
-        setCurrent(current + 1);
-      }, 250);
-    } else {
-      calculateResult(updatedAnswers);
+    /* Move to next question */
+
+    if (
+      currentQuestion <
+      questions.length - 1
+    ) {
+
+      setCurrentQuestion(
+        (previous) =>
+          previous + 1
+      );
+
+      return;
+    }
+
+    /* Last question */
+
+    calculateResult(
+      updatedAnswers
+    );
+  };
+
+  /* =====================================================
+     SEND RESULT TO BACKEND
+     ===================================================== */
+
+  const calculateResult = async (
+    finalAnswers
+  ) => {
+
+    /*
+     * Make sure all 8 questions
+     * have been answered.
+     */
+    if (
+      finalAnswers.length !==
+      questions.length
+    ) {
+
+      alert(
+        "Please answer all questions before completing the assessment."
+      );
+
+      return;
+    }
+
+    /*
+     * Make sure there are no empty answers.
+     */
+    if (
+      finalAnswers.some(
+        (answer) => !answer
+      )
+    ) {
+
+      alert(
+        "Please answer all questions before completing the assessment."
+      );
+
+      return;
+    }
+
+    setSubmitting(true);
+
+    try {
+
+      /* =================================================
+         SEND ANSWERS TO SPRING BOOT
+         ================================================= */
+
+      const response = await fetch(
+        `${API_BASE_URL}/dosha-assessments`,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify({
+            userId: userId,
+            answers: finalAnswers,
+          }),
+        }
+      );
+
+      /* =================================================
+         HANDLE HTTP ERROR
+         ================================================= */
+
+      if (!response.ok) {
+
+        let errorMessage =
+          "Failed to save Dosha assessment.";
+
+        try {
+
+          const errorData =
+            await response.json();
+
+          if (
+            errorData.message
+          ) {
+
+            errorMessage =
+              errorData.message;
+
+          }
+
+        } catch {
+          // Ignore JSON parsing error
+        }
+
+        throw new Error(
+          errorMessage
+        );
+      }
+
+      /* =================================================
+         READ BACKEND RESPONSE
+         ================================================= */
+
+      const backendResult =
+        await response.json();
+
+      console.log(
+        "Dosha backend result:",
+        backendResult
+      );
+
+      /* =================================================
+         CONVERT BACKEND RESULT TO
+         EXISTING FRONTEND FORMAT
+         ================================================= */
+
+      const doshaResult = {
+
+        dominantDosha:
+          backendResult.dominantDosha,
+
+        scores: {
+
+          Vata:
+            backendResult.vataScore,
+
+          Pitta:
+            backendResult.pittaScore,
+
+          Kapha:
+            backendResult.kaphaScore,
+
+        },
+
+        percentages: {
+
+          Vata:
+            backendResult.vataPercentage,
+
+          Pitta:
+            backendResult.pittaPercentage,
+
+          Kapha:
+            backendResult.kaphaPercentage,
+
+        },
+
+        answers:
+          finalAnswers,
+
+        completed: true,
+
+        completedAt:
+          new Date().toISOString(),
+
+      };
+
+      /* =================================================
+         KEEP FRONTEND ASSESSMENT STATUS
+         ================================================= */
+
+      saveDoshaResult(
+        doshaResult
+      );
+
+      /* =================================================
+         DISPLAY RESULT
+         ================================================= */
+
+      setResult(
+        doshaResult
+      );
+
+      setFinished(true);
+
+    } catch (error) {
+
+      console.error(
+        "Dosha assessment error:",
+        error
+      );
+
+      alert(
+        error.message ||
+        "Unable to save your Dosha assessment. Please try again."
+      );
+
+    } finally {
+
+      setSubmitting(false);
+
     }
   };
 
-  // =========================================
-  // CALCULATE RESULT
-  // =========================================
+  /* =====================================================
+     CONTINUE AFTER RESULT
+     ===================================================== */
 
-  const calculateResult = (answerList) => {
-    const scores = {
-      vata: 0,
-      pitta: 0,
-      kapha: 0,
-    };
+  const handleContinue = () => {
 
-    answerList.forEach((answer) => {
-      scores[answer] += 1;
-    });
+    const status =
+      getAssessmentStatus();
 
-    const total = answerList.length;
+    /* Both complete */
 
-    const percentages = {
-      vata: Math.round((scores.vata / total) * 100),
-      pitta: Math.round((scores.pitta / total) * 100),
-      kapha: Math.round((scores.kapha / total) * 100),
-    };
+    if (
+      status.skinScanCompleted &&
+      status.doshaCompleted
+    ) {
 
-    const dominant = Object.keys(scores).reduce((a, b) =>
-      scores[a] >= scores[b] ? a : b
+      navigate(
+        "/overall-result"
+      );
+
+      return;
+    }
+
+    /* Skin Scan missing */
+
+    if (
+      !status.skinScanCompleted
+    ) {
+
+      navigate(
+        "/skin-scan"
+      );
+
+      return;
+    }
+
+    /* Safety fallback */
+
+    navigate(
+      "/overall-result"
     );
-
-    const finalResult = {
-      dominant,
-      percentages,
-      completedAt: new Date().toISOString(),
-    };
-
-    localStorage.setItem(
-      "ayuraiDoshaResult",
-      JSON.stringify(finalResult)
-    );
-
-    setResult(finalResult);
   };
 
-  // =========================================
-  // RESTART TEST
-  // =========================================
+  /* =====================================================
+     PREVIOUS QUESTION
+     ===================================================== */
 
-  const restartTest = () => {
-    setCurrent(0);
-    setAnswers([]);
-    setResult(null);
+  const handleBack = () => {
+
+    if (
+      currentQuestion > 0 &&
+      !submitting
+    ) {
+
+      setCurrentQuestion(
+        (previous) =>
+          previous - 1
+      );
+
+    }
   };
 
-  // =========================================
-  // RESULT PAGE
-  // =========================================
+  /* =====================================================
+     COMPLETED RESULT SCREEN
+     ===================================================== */
 
-  if (result) {
-    const info = doshaInfo[result.dominant];
+  if (
+    finished &&
+    result
+  ) {
+
+    const status =
+      getAssessmentStatus();
+
+    const skinScanDone =
+      Boolean(
+        status.skinScanCompleted
+      );
+
+    const doshaDone =
+      Boolean(
+        status.doshaCompleted
+      );
+
+    const bothDone =
+      skinScanDone &&
+      doshaDone;
 
     return (
-      <div className="dosha-page">
 
-        <div className="result-container">
+      <section className="dosha-result-page">
 
-          {/* =====================================
-              RESULT HEADER
-          ===================================== */}
+        <div className="dosha-result-card">
 
-          <div className="result-top">
+          <span className="dosha-result-label">
+            DOSHA TEST COMPLETE
+          </span>
 
-            <span>
-              AYURAI • YOUR RESULT
-            </span>
+          <h1>
+            Your AI-estimated Dosha Profile
+          </h1>
 
-            <h1>
-              Your Ayurvedic
-              <br />
-              Skin Balance
-            </h1>
+          <p className="dosha-result-intro">
+            Your responses suggest the following
+            dominant Dosha pattern. This is an
+            educational Ayurvedic assessment,
+            not a medical diagnosis.
+          </p>
 
-            <p>
-              Your current Ayurvedic skin balance
-              based on your answers.
-            </p>
-
-          </div>
-
-
-          {/* =====================================
-              DOSHA BALANCE
-          ===================================== */}
-
-          <div className="percentage-section">
-
-            <div className="percentage-title">
-
-              <span>
-                DOSHA BALANCE
-              </span>
-
-              <small>
-                Your current Dosha composition
-              </small>
-
-            </div>
-
-
-            {/* =================================
-                COMBINED DOSHA CIRCLE
-            ================================= */}
-
-            <div className="dosha-balance-wrapper">
-
-              <div
-                className="dosha-donut"
-                style={{
-                  "--vata": `${result.percentages.vata}%`,
-                  "--pitta": `${result.percentages.pitta}%`,
-                  "--kapha": `${result.percentages.kapha}%`,
-                }}
-              >
-
-                <div className="dosha-donut-center">
-
-                  <span>
-                    YOUR
-                  </span>
-
-                  <strong>
-                    DOSHA
-                  </strong>
-
-                  <small>
-                    BALANCE
-                  </small>
-
-                </div>
-
-              </div>
-
-
-              {/* =================================
-                  DOSHA LEGEND
-              ================================= */}
-
-              <div className="dosha-legend">
-
-                <div className="legend-item">
-
-                  <span className="legend-dot vata-dot"></span>
-
-                  <div>
-                    <strong>
-                      Vata
-                    </strong>
-
-                    <span>
-                      {result.percentages.vata}%
-                    </span>
-                  </div>
-
-                </div>
-
-
-                <div className="legend-item">
-
-                  <span className="legend-dot pitta-dot"></span>
-
-                  <div>
-                    <strong>
-                      Pitta
-                    </strong>
-
-                    <span>
-                      {result.percentages.pitta}%
-                    </span>
-                  </div>
-
-                </div>
-
-
-                <div className="legend-item">
-
-                  <span className="legend-dot kapha-dot"></span>
-
-                  <div>
-                    <strong>
-                      Kapha
-                    </strong>
-
-                    <span>
-                      {result.percentages.kapha}%
-                    </span>
-                  </div>
-
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-
-          {/* =====================================
-              DOMINANT DOSHA
-          ===================================== */}
+          {/* DOMINANT DOSHA */}
 
           <div className="dominant-dosha">
 
-            <span className="result-small-label">
+            <span>
               DOMINANT DOSHA
             </span>
 
-            <h2>
-              {info.name}
-            </h2>
-
-            <p>
-              Your highest Dosha percentage is{" "}
-              <strong>
-                {result.percentages[result.dominant]}%
-              </strong>
-              .
-            </p>
+            <strong>
+              {result.dominantDosha}
+            </strong>
 
           </div>
 
+          {/* SCORES */}
 
-          {/* =====================================
-              PERSONALIZED CARE
-          ===================================== */}
+          <div className="dosha-score-grid">
 
-          <div className="care-section">
+            <div className="dosha-score-card">
 
-            <span className="result-small-label">
-              PERSONALIZED CARE
-            </span>
+              <span>
+                VATA
+              </span>
 
-            <h2>
-              What Your Skin May Need
-            </h2>
+              <strong>
+                {result.percentages.Vata}%
+              </strong>
 
-            <div className="care-grid">
+            </div>
 
-              {info.focus.map((item, index) => (
+            <div className="dosha-score-card">
 
-                <div
-                  className="care-card"
-                  key={item}
-                >
+              <span>
+                PITTA
+              </span>
 
-                  <span>
-                    0{index + 1}
-                  </span>
+              <strong>
+                {result.percentages.Pitta}%
+              </strong>
 
-                  <h3>
-                    {item}
-                  </h3>
+            </div>
 
-                  <p>
-                    A gentle approach that complements
-                    your {info.name} skin balance.
-                  </p>
+            <div className="dosha-score-card">
 
-                </div>
+              <span>
+                KAPHA
+              </span>
 
-              ))}
+              <strong>
+                {result.percentages.Kapha}%
+              </strong>
 
             </div>
 
           </div>
 
+          {/* ASSESSMENT STATUS */}
 
-          {/* =====================================
-              ACTION BUTTONS
-          ===================================== */}
+          <div className="dosha-assessment-status">
 
-          <div className="result-actions">
+            {/* DOSHA */}
+
+            <div className="dosha-status-item completed">
+
+              <span className="status-check">
+                ✓
+              </span>
+
+              <div>
+
+                <strong>
+                  Dosha Test
+                </strong>
+
+                <small>
+                  Completed
+                </small>
+
+              </div>
+
+            </div>
+
+            {/* SKIN */}
+
+            <div
+              className={`dosha-status-item ${
+                skinScanDone
+                  ? "completed"
+                  : "required"
+              }`}
+            >
+
+              <span className="status-check">
+
+                {skinScanDone
+                  ? "✓"
+                  : "02"}
+
+              </span>
+
+              <div>
+
+                <strong>
+                  Skin Scan
+                </strong>
+
+                <small>
+
+                  {skinScanDone
+                    ? "Completed"
+                    : "Still required"}
+
+                </small>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          {/* MESSAGE */}
+
+          <div className="dosha-complete-message">
+
+            <strong>
+
+              {bothDone
+                ? "Your Ayurvedic assessment is complete."
+                : "Your Dosha Test has been saved."}
+
+            </strong>
+
+            <p>
+
+              {bothDone
+
+                ? "Your Skin Scan and Dosha Test are both complete. You can now view your Overall Result."
+
+                : "Complete your Skin Scan to combine both assessments and unlock your Overall Result."}
+
+            </p>
+
+          </div>
+
+          {/* ACTIONS */}
+
+          <div className="dosha-result-actions">
 
             <button
-              className="primary-result-button"
-              onClick={() => navigate("/profile")}
+              type="button"
+              onClick={
+                handleContinue
+              }
+              className="dosha-primary-button"
             >
-              View My Profile →
+
+              {bothDone
+                ? "VIEW OVERALL RESULT →"
+                : "CONTINUE TO SKIN SCAN →"}
+
             </button>
 
             <button
-              className="secondary-result-button"
-              onClick={restartTest}
+              type="button"
+              onClick={() =>
+                navigate("/")
+              }
+              className="dosha-secondary-button"
             >
-              Retake Test
+              BACK TO HOME
             </button>
 
           </div>
 
+        </div>
 
-          {/* =====================================
-              DISCLAIMER
-          ===================================== */}
+      </section>
 
-          <p className="result-note">
+    );
+  }
 
-            AyurAI provides traditional Ayurvedic-inspired
-            wellness guidance and is not a medical diagnosis.
+  /* =====================================================
+     QUESTION SCREEN
+     ===================================================== */
 
-          </p>
+  const question =
+    questions[currentQuestion];
+
+  const progress =
+    ((currentQuestion + 1) /
+      questions.length) *
+    100;
+
+  return (
+
+    <section className="dosha-question-page">
+
+      {/* HEADER */}
+
+      <div className="dosha-question-header">
+
+        <span>
+          AYURVEDIC DOSHA ASSESSMENT
+        </span>
+
+        <h1>
+          Understand Your Dosha
+        </h1>
+
+        <p>
+          Answer each question based on what feels
+          most representative of you.
+        </p>
+
+      </div>
+
+      {/* PROGRESS */}
+
+      <div className="dosha-progress-wrapper">
+
+        <div className="dosha-progress-info">
+
+          <span>
+            QUESTION {currentQuestion + 1}
+          </span>
+
+          <span>
+            {questions.length} QUESTIONS
+          </span>
+
+        </div>
+
+        <div className="dosha-progress">
+
+          <div
+            style={{
+              width:
+                `${progress}%`,
+            }}
+          />
 
         </div>
 
       </div>
-    );
-  }
 
+      {/* QUESTION CARD */}
 
-  // =========================================
-  // QUIZ PAGE
-  // =========================================
+      <div className="dosha-question-card">
 
-  return (
-    <div className="dosha-page">
+        <span className="question-number">
 
-      <div className="quiz-container">
+          {String(
+            currentQuestion + 1
+          ).padStart(2, "0")}
 
-        {/* =====================================
-            QUIZ HEADER
-        ===================================== */}
+        </span>
 
-        <div className="quiz-top">
+        <h2>
+          {question.question}
+        </h2>
 
-          <span className="quiz-label">
-            AYURAI • AYURVEDIC DISCOVERY
-          </span>
+        <div className="dosha-options">
 
-          <h1>
-            Discover Your
-            <br />
-
-            <span>
-              Skin Balance
-            </span>
-          </h1>
-
-          <p>
-            Answer a few thoughtful questions and
-            discover which Ayurvedic Dosha best
-            represents your skin.
-          </p>
-
-        </div>
-
-
-        {/* =====================================
-            PROGRESS
-        ===================================== */}
-
-        <div className="progress-area">
-
-          <div className="progress-info">
-
-            <span>
-              QUESTION {current + 1}
-            </span>
-
-            <span>
-              {questions.length} QUESTIONS
-            </span>
-
-          </div>
-
-          <div className="progress-track">
-
-            <div
-              className="progress-fill"
-              style={{
-                width: `${
-                  ((current + 1) / questions.length) * 100
-                }%`,
-              }}
-            />
-
-          </div>
-
-        </div>
-
-
-        {/* =====================================
-            QUESTION CARD
-        ===================================== */}
-
-        <div className="question-card">
-
-          <div className="question-number">
-
-            {String(current + 1).padStart(2, "0")}
-
-          </div>
-
-
-          <div className="question-content">
-
-            <span className="question-label">
-
-              YOUR SKIN • QUESTION {current + 1}
-
-            </span>
-
-            <h2>
-              {question.question}
-            </h2>
-
-            <p>
-              {question.subtitle}
-            </p>
-
-          </div>
-
-
-          {/* =================================
-              ANSWERS
-          ================================= */}
-
-          <div className="answer-list">
-
-            {question.options.map((option, index) => (
+          {question.options.map(
+            (option, index) => (
 
               <button
-                className="answer-button"
-                key={option.dosha}
+                type="button"
+                key={index}
+                className="dosha-option"
                 onClick={() =>
-                  selectAnswer(option.dosha)
+                  handleAnswer(
+                    option.dosha
+                  )
                 }
+                disabled={submitting}
               >
 
-                <span className="answer-number">
+                <span className="option-number">
 
-                  {String(index + 1).padStart(2, "0")}
+                  {String(
+                    index + 1
+                  ).padStart(2, "0")}
 
                 </span>
 
-                <span className="answer-text">
+                <span className="option-text">
 
                   {option.text}
 
                 </span>
 
-                <span className="answer-arrow">
-
+                <span className="option-arrow">
                   →
-
                 </span>
 
               </button>
 
-            ))}
-
-          </div>
-
-        </div>
-
-
-        {/* =====================================
-            QUIZ FOOTER
-        ===================================== */}
-
-        <div className="quiz-footer">
-
-          <span>
-            ✦ Take your time
-          </span>
-
-          <span>
-            AyurAI • Inspired by Ayurveda
-          </span>
+            )
+          )}
 
         </div>
+
+        {/* PREVIOUS */}
+
+        {currentQuestion > 0 && (
+
+          <button
+            type="button"
+            className="question-back-button"
+            onClick={
+              handleBack
+            }
+            disabled={submitting}
+          >
+
+            ← Previous question
+
+          </button>
+
+        )}
 
       </div>
 
-    </div>
+      {/* DISCLAIMER */}
+
+      <p className="dosha-disclaimer">
+
+        AyurAI provides an educational Ayurvedic
+        assessment and does not provide medical
+        diagnosis or treatment.
+
+      </p>
+
+    </section>
+
   );
-}
+};
+
+/* =========================================================
+   DEFAULT EXPORT
+   ========================================================= */
 
 export default DoshaQuestion;

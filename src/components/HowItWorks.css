@@ -1,0 +1,408 @@
+/* =========================================
+   HOW IT WORKS
+========================================= */
+
+.how-it-works {
+  position: relative;
+
+  width: 100%;
+
+  padding: 110px 6% 120px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #faf7ef 0%,
+      #f6f1e6 100%
+    );
+
+  overflow: hidden;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.how-header {
+  max-width: 720px;
+
+  margin: 0 auto 70px;
+
+  text-align: center;
+}
+
+.how-eyebrow {
+  display: inline-block;
+
+  margin-bottom: 15px;
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 2.5px;
+
+  color: #a18a58;
+}
+
+.how-header h2 {
+  margin: 0 0 18px;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: clamp(34px, 4vw, 52px);
+
+  font-weight: 400;
+
+  line-height: 1.15;
+
+  color: #343129;
+}
+
+.how-header h2 span {
+  color: #a88c4c;
+  font-style: italic;
+}
+
+.how-header p {
+  max-width: 600px;
+
+  margin: 0 auto;
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size: 14px;
+
+  line-height: 1.8;
+
+  color: #777166;
+}
+
+
+/* =========================================
+   STEPS CONTAINER
+========================================= */
+
+.how-steps {
+  display: flex;
+
+  align-items: stretch;
+
+  justify-content: center;
+
+  max-width: 1250px;
+
+  margin: 0 auto;
+}
+
+
+/* =========================================
+   STEP CARD
+========================================= */
+
+.how-step {
+  position: relative;
+
+  flex: 1;
+
+  min-height: 300px;
+
+  padding: 32px 28px;
+
+  border: 1px solid
+    rgba(180, 151, 85, 0.18);
+
+  border-radius: 24px;
+
+  background:
+    rgba(255, 253, 247, 0.82);
+
+  box-shadow:
+    0 10px 30px
+    rgba(73, 65, 48, 0.055);
+
+  text-align: left;
+
+  cursor: pointer;
+
+  font: inherit;
+
+  color: inherit;
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+
+/* Hover */
+
+.how-step:hover {
+  transform: translateY(-8px);
+
+  border-color:
+    rgba(180, 151, 85, 0.40);
+
+  box-shadow:
+    0 20px 45px
+    rgba(73, 65, 48, 0.11);
+}
+
+
+/* =========================================
+   NUMBER
+========================================= */
+
+.how-number {
+  position: absolute;
+
+  top: 22px;
+  right: 25px;
+
+  font-family:
+    Georgia,
+    serif;
+
+  font-size: 12px;
+
+  letter-spacing: 1px;
+
+  color: #b7a477;
+}
+
+
+/* =========================================
+   ICON
+========================================= */
+
+.how-icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 58px;
+  height: 58px;
+
+  margin-bottom: 30px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(180, 151, 85, 0.10);
+
+  border: 1px solid
+    rgba(180, 151, 85, 0.18);
+
+  color: #a88c4c;
+
+  font-family:
+    Georgia,
+    serif;
+
+  font-size: 25px;
+
+  transition:
+    transform 0.35s ease,
+    background 0.35s ease;
+}
+
+
+.how-step:hover .how-icon {
+  transform:
+    rotate(8deg)
+    scale(1.08);
+
+  background:
+    rgba(180, 151, 85, 0.16);
+}
+
+
+/* =========================================
+   CONTENT
+========================================= */
+
+.how-content h3 {
+  margin: 0 0 12px;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 24px;
+
+  font-weight: 400;
+
+  color: #39352e;
+}
+
+.how-content p {
+  margin: 0 0 22px;
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size: 12px;
+
+  line-height: 1.75;
+
+  color: #777166;
+}
+
+
+/* =========================================
+   LINK
+========================================= */
+
+.how-link {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  letter-spacing: 1px;
+
+  text-transform: uppercase;
+
+  color: #9d8350;
+}
+
+.how-link strong {
+  font-size: 13px;
+
+  font-weight: 400;
+
+  transition:
+    transform 0.3s ease;
+}
+
+.how-step:hover .how-link strong {
+  transform: translateX(4px);
+}
+
+
+/* =========================================
+   CONNECTOR
+========================================= */
+
+.how-connector {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 45px;
+
+  flex-shrink: 0;
+
+  color: #b7a477;
+
+  font-size: 20px;
+
+  opacity: 0.7;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1000px) {
+
+  .how-steps {
+    display: grid;
+
+    grid-template-columns:
+      repeat(2, 1fr);
+
+    gap: 20px;
+  }
+
+  .how-connector {
+    display: none;
+  }
+
+  .how-step {
+    min-height: 280px;
+  }
+}
+
+
+@media (max-width: 600px) {
+
+  .how-it-works {
+    padding:
+      80px 5% 90px;
+  }
+
+  .how-header {
+    margin-bottom: 45px;
+  }
+
+  .how-header h2 {
+    font-size: 34px;
+  }
+
+  .how-header p {
+    font-size: 13px;
+  }
+
+  .how-steps {
+    grid-template-columns: 1fr;
+
+    gap: 15px;
+  }
+
+  .how-step {
+    min-height: auto;
+
+    padding: 27px 23px;
+  }
+
+  .how-icon {
+    width: 52px;
+    height: 52px;
+
+    margin-bottom: 22px;
+  }
+
+  .how-content h3 {
+    font-size: 22px;
+  }
+}
+
+
+/* =========================================
+   REDUCED MOTION
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .how-step,
+  .how-icon,
+  .how-link strong {
+    transition: none;
+  }
+}

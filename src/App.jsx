@@ -1,261 +1,266 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
+
 import "./App.css";
 
-// Components
+// =========================================================
+// COMPONENTS
+// =========================================================
+
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import DoshaSelector from "./components/DoshaSelector";
 import SkinScanCard from "./components/SkinScanCard";
 import DoshaQuestion from "./components/DoshaQuestion";
 import UserProfile from "./components/UserProfile";
-import AyurvedicRemedies from "./components/AyurvedicRemedies";
+import HomeRemedy from "./components/HomeRemedy";
+import OverallResult from "./components/OverallResult";
+import HowItWorks from "./components/HowItWorks";
+import Register from "./components/Register";
+import Login from "./components/Login";
 
+// =========================================================
+// PAGES
+// =========================================================
 
-/* =========================================================
-   HOME PAGE
-   ========================================================= */
+import SkinScan from "./pages/SkinScan";
+
+// =========================================================
+// HOME PAGE
+// =========================================================
 
 function Home() {
   return (
-    <div className="app">
+    <main>
+      <Hero />
 
-      {/* =========================
-          NAVBAR
-      ========================== */}
+      <section className="intro-section">
+        <div className="section-label">
+          AYURVEDIC SKINCARE
+        </div>
 
-      <Navbar />
+        <h2>
+          Discover Your Ayurvedic Skin Balance
+        </h2>
 
+        <p className="section-description">
+          Ayurveda describes three natural energies called
+          Doshas. Discover yours and understand what your
+          skin truly needs.
+        </p>
 
-      <main>
+        <HowItWorks />
+        <DoshaSelector />
+      </section>
 
-        {/* =========================
-            HERO
-        ========================== */}
+      <SkinScanCard />
 
-        <Hero />
+      <section className="personalized-section">
+        <div className="personalized-content">
 
-
-        {/* =========================
-            DOSHA SECTION
-        ========================== */}
-
-        <section className="intro-section">
-
-          <div className="section-label">
-            AYURVEDIC SKINCARE
-          </div>
-
-          <h2>
-            Discover Your Ayurvedic Skin Balance
-          </h2>
-
-          <p className="section-description">
-            Ayurveda describes three natural energies called Doshas.
-            Discover yours and understand what your skin truly needs.
-          </p>
-
-          <DoshaSelector />
-
-        </section>
-
-
-        {/* =========================
-            AI SKIN ANALYSIS
-        ========================== */}
-
-        <SkinScanCard />
-
-
-        {/* =========================
-            HOME REMEDIES
-        ========================== */}
-
-        <section
-          className="home-remedies-section"
-          id="home-remedies"
-        >
-
-          <div className="section-label">
-            AYURVEDIC WELLNESS
-          </div>
-
-          <h2>
-            Natural Care From Your Kitchen
-          </h2>
-
-          <p className="section-description">
-            Discover simple Ayurvedic home remedies inspired by
-            traditional ingredients and personalized to your skin needs.
-          </p>
-
-          <AyurvedicRemedies />
-
-        </section>
-
-
-        {/* =========================
+          <span className="section-label">
             PERSONALIZED CARE
-        ========================== */}
-
-        <section className="personalized-section">
-
-          <div className="personalized-content">
-
-            <span className="section-label">
-              PERSONALIZED CARE
-            </span>
-
-            <h2>
-              Beauty Guided by Ayurveda
-            </h2>
-
-            <p>
-              AyurAI combines Ayurvedic principles with intelligent
-              technology to help you understand your skin and discover
-              personalized Ayurvedic care.
-            </p>
-
-
-            <div className="feature-row">
-
-              {/* FEATURE 01 */}
-
-              <div className="feature-item">
-
-                <span className="feature-number">
-                  01
-                </span>
-
-                <h3>
-                  Discover
-                </h3>
-
-                <p>
-                  Understand your Ayurvedic skin type and Dosha.
-                </p>
-
-              </div>
-
-
-              {/* FEATURE 02 */}
-
-              <div className="feature-item">
-
-                <span className="feature-number">
-                  02
-                </span>
-
-                <h3>
-                  Analyse
-                </h3>
-
-                <p>
-                  Explore AI-powered skin analysis for your concerns.
-                </p>
-
-              </div>
-
-
-              {/* FEATURE 03 */}
-
-              <div className="feature-item">
-
-                <span className="feature-number">
-                  03
-                </span>
-
-                <h3>
-                  Personalize
-                </h3>
-
-                <p>
-                  Receive Ayurvedic home-care recommendations.
-                </p>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </section>
-
-
-      </main>
-
-
-      {/* =========================
-          FOOTER
-      ========================== */}
-
-      <footer className="footer">
-
-        <div className="footer-brand">
+          </span>
 
           <h2>
-            AyurAI
+            Beauty Guided by Ayurveda
           </h2>
 
           <p>
-            Intelligent skincare inspired by the wisdom of Ayurveda.
+            AyurAI combines Ayurvedic principles with
+            intelligent technology to help you understand
+            your skin and discover personalized Ayurvedic care.
           </p>
 
+          <div className="feature-row">
+
+            <div className="feature-item">
+              <span className="feature-number">
+                01
+              </span>
+
+              <h3>
+                Discover
+              </h3>
+
+              <p>
+                Understand your Ayurvedic skin type and Dosha.
+              </p>
+            </div>
+
+            <div className="feature-item">
+              <span className="feature-number">
+                02
+              </span>
+
+              <h3>
+                Analyse
+              </h3>
+
+              <p>
+                Explore AI-powered skin analysis for your
+                concerns.
+              </p>
+            </div>
+
+            <div className="feature-item">
+              <span className="feature-number">
+                03
+              </span>
+
+              <h3>
+                Personalize
+              </h3>
+
+              <p>
+                Receive Ayurvedic home-care recommendations.
+              </p>
+            </div>
+
+          </div>
         </div>
-
-
-        <div className="footer-right">
-
-          <span>
-            AI • AYURVEDA • BEAUTY
-          </span>
-
-        </div>
-
-      </footer>
-
-    </div>
+      </section>
+    </main>
   );
 }
 
 
-/* =========================================================
-   APP ROUTES
-   ========================================================= */
+// =========================================================
+// PROTECTED ROUTE
+// =========================================================
+
+function ProtectedRoute({ children }) {
+
+  const savedUser =
+    localStorage.getItem("ayuraiUser");
+
+  const savedUserId =
+    localStorage.getItem("ayuraiUserId");
+
+  if (!savedUser || !savedUserId) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return children;
+}
+
+
+// =========================================================
+// APP
+// =========================================================
 
 function App() {
 
   return (
+    <div className="app">
 
-    <Routes>
+      <Navbar />
 
-      {/* HOME */}
+      <Routes>
 
-      <Route
-        path="/"
-        element={<Home />}
-      />
+        {/* =================================================
+            REGISTER
+        ================================================= */}
 
-
-      {/* DOSHA TEST */}
-
-      <Route
-        path="/dosha-test"
-        element={<DoshaQuestion />}
-      />
+        <Route
+          path="/register"
+          element={<Register />}
+        />
 
 
-      {/* USER PROFILE */}
+        {/* =================================================
+            LOGIN
+        ================================================= */}
 
-      <Route
-        path="/profile"
-        element={<UserProfile />}
-      />
+        <Route
+          path="/login"
+          element={<Login />}
+        />
 
-    </Routes>
 
+        {/* =================================================
+            HOME
+        ================================================= */}
+
+        <Route
+          path="/"
+          element={<Home />}
+        />
+
+
+        {/* =================================================
+            PROTECTED — DOSHA TEST
+        ================================================= */}
+
+        <Route
+          path="/dosha-test"
+          element={
+            <ProtectedRoute>
+              <DoshaQuestion />
+            </ProtectedRoute>
+          }
+        />
+
+
+        {/* =================================================
+            PROTECTED — SKIN SCAN
+        ================================================= */}
+
+        <Route
+          path="/skin-scan"
+          element={
+            <ProtectedRoute>
+              <SkinScan />
+            </ProtectedRoute>
+          }
+        />
+
+
+        {/* =================================================
+            PROTECTED — HOME REMEDIES
+        ================================================= */}
+
+        <Route
+          path="/home-remedies"
+          element={
+            <ProtectedRoute>
+              <HomeRemedy />
+            </ProtectedRoute>
+          }
+        />
+
+
+        {/* =================================================
+            PROTECTED — PROFILE
+        ================================================= */}
+
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <UserProfile />
+            </ProtectedRoute>
+          }
+        />
+
+
+        {/* =================================================
+            PROTECTED — OVERALL RESULT
+        ================================================= */}
+
+        <Route
+          path="/overall-result"
+          element={
+            <ProtectedRoute>
+              <OverallResult />
+            </ProtectedRoute>
+          }
+        />
+
+      </Routes>
+
+    </div>
   );
 }
-
 
 export default App;
