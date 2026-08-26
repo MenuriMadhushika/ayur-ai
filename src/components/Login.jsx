@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
@@ -18,10 +19,12 @@ function Login() {
   // =========================================================
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
 
     setError("");
   };
@@ -35,31 +38,49 @@ function Login() {
 
     setError("");
 
-    if (!formData.email.trim() || !formData.password) {
-      setError("Please enter your email and password.");
+    const email = formData.email.trim().toLowerCase();
+    const password = formData.password;
+
+    // ---------------------------------------------------------
+    // VALIDATION
+    // ---------------------------------------------------------
+
+    if (!email) {
+      setError("Please enter your email.");
+      return;
+    }
+
+    if (!password) {
+      setError("Please enter your password.");
       return;
     }
 
     setLoading(true);
 
     try {
+      // -------------------------------------------------------
+      // SEND LOGIN REQUEST
+      // -------------------------------------------------------
+
       const response = await fetch(
-        "http://localhost:8081/api/auth/login",
+        `${API_BASE_URL}/auth/login`,
         {
           method: "POST",
+
           headers: {
             "Content-Type": "application/json",
           },
+
           body: JSON.stringify({
-            email: formData.email.trim(),
-            password: formData.password,
+            email,
+            password,
           }),
         }
       );
 
-      // =====================================================
-      // SAFELY READ RESPONSE
-      // =====================================================
+      // -------------------------------------------------------
+      // READ RESPONSE SAFELY
+      // -------------------------------------------------------
 
       const contentType =
         response.headers.get("content-type") || "";
@@ -76,9 +97,9 @@ function Login() {
         };
       }
 
-      // =====================================================
-      // HANDLE LOGIN ERROR
-      // =====================================================
+      // -------------------------------------------------------
+      // BACKEND ERROR
+      // -------------------------------------------------------
 
       if (!response.ok) {
         throw new Error(
@@ -86,9 +107,9 @@ function Login() {
         );
       }
 
-      // =====================================================
-      // CHECK USER ID
-      // =====================================================
+      // -------------------------------------------------------
+      // CHECK RESPONSE
+      // -------------------------------------------------------
 
       if (!data.id) {
         throw new Error(
@@ -96,36 +117,36 @@ function Login() {
         );
       }
 
-      // =====================================================
-      // SAVE LOGGED-IN USER
-      // =====================================================
+      // -------------------------------------------------------
+      // CREATE LOGGED-IN USER
+      // -------------------------------------------------------
 
       const loggedInUser = {
         id: data.id,
-        name: data.name,
-        email: data.email,
-        age: data.age,
-        profileIcon: data.profileIcon,
-        icon: data.profileIcon || "butterfly",
+        name: data.name || "",
+        email: data.email || email,
+        age: data.age ?? null,
+        profileIcon: data.profileIcon || "🌿",
+        icon: data.profileIcon || "🌿",
       };
+
+      // -------------------------------------------------------
+      // SAVE USER SESSION
+      // -------------------------------------------------------
 
       localStorage.setItem(
         "ayuraiUser",
         JSON.stringify(loggedInUser)
       );
 
-      // =====================================================
-      // SAVE USER ID
-      // =====================================================
-
       localStorage.setItem(
         "ayuraiUserId",
         String(data.id)
       );
 
-      // =====================================================
-      // GO TO PROFILE
-      // =====================================================
+      // -------------------------------------------------------
+      // SUCCESS
+      // -------------------------------------------------------
 
       navigate("/profile");
 
@@ -196,6 +217,7 @@ function Login() {
               value={formData.email}
               onChange={handleChange}
               autoComplete="email"
+              disabled={loading}
             />
 
           </div>
@@ -216,6 +238,7 @@ function Login() {
               value={formData.password}
               onChange={handleChange}
               autoComplete="current-password"
+              disabled={loading}
             />
 
           </div>
@@ -223,12 +246,15 @@ function Login() {
           {/* ERROR */}
 
           {error && (
-            <div className="login-error">
+            <div
+              className="login-error"
+              role="alert"
+            >
               {error}
             </div>
           )}
 
-          {/* LOGIN */}
+          {/* LOGIN BUTTON */}
 
           <button
             type="submit"

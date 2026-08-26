@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./UserProfile.css";
 
-import {
-  getAssessmentStatus,
-} from "../utils/assessmentStatus";
+import { getAssessmentStatus } from "../utils/assessmentStatus";
+import API_BASE_URL from "../utils/api";
 
 /* =========================================================
    AYURAI — PROFILE ICONS
@@ -119,26 +118,20 @@ const remediesByDosha = {
 
 const getSavedDoshaResult = () => {
   try {
-    const saved =
-      localStorage.getItem("ayuraiDoshaResult");
+    const saved = localStorage.getItem("ayuraiDoshaResult");
 
     if (!saved) return null;
 
     return JSON.parse(saved);
   } catch (error) {
-    console.error(
-      "Unable to read AyurAI Dosha result:",
-      error
-    );
-
+    console.error("Unable to read saved Dosha result:", error);
     return null;
   }
 };
 
 const getSavedSkinScanResult = () => {
   try {
-    const saved =
-      localStorage.getItem("ayuraiSkinScanResult");
+    const saved = localStorage.getItem("ayuraiSkinScanResult");
 
     if (saved) {
       return JSON.parse(saved);
@@ -154,7 +147,7 @@ const getSavedSkinScanResult = () => {
     return null;
   } catch (error) {
     console.error(
-      "Unable to read AyurAI Skin Scan result:",
+      "Unable to read saved Skin Scan result:",
       error
     );
 
@@ -169,10 +162,9 @@ const getSavedSkinScanResult = () => {
 const normalizeDosha = (value) => {
   if (!value) return "";
 
-  const normalized =
-    String(value)
-      .trim()
-      .toLowerCase();
+  const normalized = String(value)
+    .trim()
+    .toLowerCase();
 
   if (normalized === "vata") return "Vata";
   if (normalized === "pitta") return "Pitta";
@@ -193,31 +185,39 @@ const formatSkinValue = (value) => {
   return String(value);
 };
 
+const formatDate = (dateValue) => {
+  if (!dateValue) {
+    return {
+      day: "--",
+      month: "---",
+    };
+  }
+
+  const date = new Date(dateValue);
+
+  if (Number.isNaN(date.getTime())) {
+    return {
+      day: "--",
+      month: "---",
+    };
+  }
+
+  return {
+    day: date.getDate(),
+    month: date
+      .toLocaleString("en-US", {
+        month: "short",
+      })
+      .toUpperCase(),
+  };
+};
+
 /* =========================================================
    USER PROFILE
 ========================================================= */
 
 const UserProfile = () => {
   const navigate = useNavigate();
-
-  /* =======================================================
-     ASSESSMENT RESULTS
-  ======================================================= */
-
-  const [doshaResult, setDoshaResult] =
-    useState(() => getSavedDoshaResult());
-
-  const [skinScanResult, setSkinScanResult] =
-    useState(() => getSavedSkinScanResult());
-
-  const [assessmentStatus, setAssessmentStatus] =
-    useState(() => {
-      try {
-        return getAssessmentStatus() || {};
-      } catch {
-        return {};
-      }
-    });
 
   /* =======================================================
      USER
@@ -232,7 +232,7 @@ const UserProfile = () => {
         const parsed = JSON.parse(savedUser);
 
         return {
-          id: parsed.id,
+          id: parsed.id || null,
           name: parsed.name || "AyurAI User",
           email:
             parsed.email || "user@ayurai.com",
@@ -263,8 +263,35 @@ const UserProfile = () => {
     };
   });
 
-  const [editing, setEditing] =
+  /* =======================================================
+     ASSESSMENTS
+  ======================================================= */
+
+  const [doshaResult, setDoshaResult] = useState(
+    () => getSavedDoshaResult()
+  );
+
+  const [skinScanResult, setSkinScanResult] = useState(
+    () => getSavedSkinScanResult()
+  );
+
+  const [assessmentStatus, setAssessmentStatus] =
+    useState(() => {
+      try {
+        return getAssessmentStatus() || {};
+      } catch {
+        return {};
+      }
+    });
+
+  const [loadingAssessments, setLoadingAssessments] =
     useState(false);
+
+  /* =======================================================
+     PROFILE EDITING
+  ======================================================= */
+
+  const [editing, setEditing] = useState(false);
 
   const [savingProfile, setSavingProfile] =
     useState(false);
@@ -272,13 +299,12 @@ const UserProfile = () => {
   const [profileError, setProfileError] =
     useState("");
 
-  const [editForm, setEditForm] =
-    useState({
-      name: user.name,
-      email: user.email,
-      age: user.age,
-      icon: user.icon || "butterfly",
-    });
+  const [editForm, setEditForm] = useState({
+    name: user.name,
+    email: user.email,
+    age: user.age,
+    icon: user.icon || "butterfly",
+  });
 
   /* =======================================================
      LOAD USER FROM BACKEND
@@ -290,20 +316,26 @@ const UserProfile = () => {
         localStorage.getItem("ayuraiUserId");
 
       if (!storedId) {
+        console.log(
+          "No AyurAI user ID found."
+        );
         return;
       }
 
       try {
         const response = await fetch(
-          `http://localhost:8081/api/users/${storedId}`
+          `${API_BASE_URL}/users/${storedId}`
         );
 
         if (!response.ok) {
+          console.error(
+            "User API error:",
+            response.status
+          );
           return;
         }
 
-        const data =
-          await response.json();
+        const data = await response.json();
 
         const backendUser = {
           id: data.id,
@@ -318,20 +350,27 @@ const UserProfile = () => {
               : "",
           icon:
             data.profileIcon ||
+            data.icon ||
+            "butterfly",
+          profileIcon:
+            data.profileIcon ||
+            data.icon ||
             "butterfly",
         };
 
         setUser(backendUser);
 
+        setEditForm({
+          name: backendUser.name,
+          email: backendUser.email,
+          age: backendUser.age,
+          icon: backendUser.icon,
+        });
+
         localStorage.setItem(
           "ayuraiUser",
-          JSON.stringify({
-            ...backendUser,
-            profileIcon:
-              backendUser.icon,
-          })
+          JSON.stringify(backendUser)
         );
-
       } catch (error) {
         console.error(
           "Unable to load user profile:",
@@ -344,53 +383,333 @@ const UserProfile = () => {
   }, []);
 
   /* =======================================================
-     LOAD / REFRESH ASSESSMENTS
+     LOAD LATEST ASSESSMENTS FROM BACKEND
   ======================================================= */
 
-  const loadAssessmentResults = () => {
-    setDoshaResult(
-      getSavedDoshaResult()
-    );
+  const loadAssessmentResults = async () => {
+    const userId =
+      localStorage.getItem("ayuraiUserId");
 
-    setSkinScanResult(
-      getSavedSkinScanResult()
-    );
+    if (!userId) {
+      console.log(
+        "No user ID available for assessments."
+      );
+      return;
+    }
+
+    setLoadingAssessments(true);
 
     try {
-      setAssessmentStatus(
-        getAssessmentStatus() || {}
+      /* ===================================================
+         LATEST DOSHA
+      =================================================== */
+
+      const doshaResponse = await fetch(
+        `${API_BASE_URL}/dosha-assessments/user/${userId}/latest`
       );
-    } catch {
-      setAssessmentStatus({});
+
+      if (doshaResponse.ok) {
+        const data =
+          await doshaResponse.json();
+
+        console.log(
+          "Latest Dosha from backend:",
+          data
+        );
+
+        /*
+         * Your backend currently returns:
+         *
+         * {
+         *   id: 9,
+         *   userId: 9,
+         *   vataScore: 2,
+         *   pittaScore: 4,
+         *   kaphaScore: 2,
+         *   ...
+         * }
+         *
+         * Therefore we calculate the percentages
+         * from the scores if percentage fields
+         * are not provided.
+         */
+
+        const vataScore =
+          Number(data.vataScore) || 0;
+
+        const pittaScore =
+          Number(data.pittaScore) || 0;
+
+        const kaphaScore =
+          Number(data.kaphaScore) || 0;
+
+        const scoreTotal =
+          vataScore +
+          pittaScore +
+          kaphaScore;
+
+        let vataPercentage =
+          Number(
+            data.vataPercentage ??
+              data.vata_percentage
+          );
+
+        let pittaPercentage =
+          Number(
+            data.pittaPercentage ??
+              data.pitta_percentage
+          );
+
+        let kaphaPercentage =
+          Number(
+            data.kaphaPercentage ??
+              data.kapha_percentage
+          );
+
+        /*
+         * If backend percentages don't exist,
+         * calculate them from the scores.
+         */
+
+        if (
+          !Number.isFinite(vataPercentage) ||
+          !Number.isFinite(pittaPercentage) ||
+          !Number.isFinite(kaphaPercentage) ||
+          scoreTotal > 0 &&
+          vataPercentage === 0 &&
+          pittaPercentage === 0 &&
+          kaphaPercentage === 0
+        ) {
+          if (scoreTotal > 0) {
+            vataPercentage =
+              Math.round(
+                (vataScore / scoreTotal) * 100
+              );
+
+            pittaPercentage =
+              Math.round(
+                (pittaScore / scoreTotal) * 100
+              );
+
+            kaphaPercentage =
+              100 -
+              vataPercentage -
+              pittaPercentage;
+          } else {
+            vataPercentage = 0;
+            pittaPercentage = 0;
+            kaphaPercentage = 0;
+          }
+        }
+
+        /*
+         * Determine dominant Dosha if backend
+         * doesn't provide it.
+         */
+
+        let dominantDosha =
+          normalizeDosha(
+            data.dominantDosha ||
+              data.dominant_dosha
+          );
+
+        if (!dominantDosha && scoreTotal > 0) {
+          const scores = {
+            Vata: vataScore,
+            Pitta: pittaScore,
+            Kapha: kaphaScore,
+          };
+
+          dominantDosha =
+            Object.entries(scores).sort(
+              (a, b) => b[1] - a[1]
+            )[0][0];
+        }
+
+        const backendDosha = {
+          ...data,
+
+          dominantDosha,
+
+          percentages: {
+            Vata: vataPercentage,
+            Pitta: pittaPercentage,
+            Kapha: kaphaPercentage,
+          },
+
+          completed: true,
+
+          completedAt:
+            data.createdAt ||
+            data.completedAt ||
+            null,
+        };
+
+        console.log(
+          "Processed Dosha:",
+          backendDosha
+        );
+
+        setDoshaResult(backendDosha);
+
+        localStorage.setItem(
+          "ayuraiDoshaResult",
+          JSON.stringify(backendDosha)
+        );
+      } else {
+        console.log(
+          "No latest Dosha assessment found."
+        );
+      }
+
+      /* ===================================================
+         LATEST SKIN SCAN
+      =================================================== */
+
+      const skinResponse = await fetch(
+        `${API_BASE_URL}/skin-scans/user/${userId}/latest`
+      );
+
+      if (skinResponse.ok) {
+        const data =
+          await skinResponse.json();
+
+        console.log(
+          "LATEST SKIN DATA:",
+          JSON.stringify(data, null, 2)
+        );
+
+        /*
+         * Your backend currently returns:
+         *
+         * estimatedSkinType:
+         * "AI-estimated combination skin"
+         *
+         * visibleCharacteristics:
+         * "AI-estimated visible skin characteristics
+         *  from uploaded image"
+         *
+         * analysisStatus:
+         * "COMPLETED"
+         *
+         * There is currently no hydration
+         * value in the backend response.
+         */
+
+        const backendSkin = {
+          ...data,
+
+          skinType:
+            data.estimatedSkinType ||
+            data.skinType ||
+            "Not analyzed",
+
+          texture:
+            data.visibleCharacteristics ||
+            data.texture ||
+            "Not analyzed",
+
+          hydration:
+            data.hydration ??
+            data.hydrationPercentage ??
+            null,
+
+          completed:
+            String(
+              data.analysisStatus || ""
+            ).toUpperCase() ===
+              "COMPLETED" ||
+            Boolean(data.completed),
+
+          completedAt:
+            data.createdAt ||
+            data.completedAt ||
+            null,
+        };
+
+        console.log(
+          "Processed Skin Scan:",
+          backendSkin
+        );
+
+        setSkinScanResult(
+          backendSkin
+        );
+
+        localStorage.setItem(
+          "ayuraiSkinScanResult",
+          JSON.stringify(backendSkin)
+        );
+      } else {
+        console.log(
+          "No latest Skin Scan found."
+        );
+      }
+
+      /* ===================================================
+         ASSESSMENT STATUS
+      =================================================== */
+
+      try {
+        setAssessmentStatus(
+          getAssessmentStatus() || {}
+        );
+      } catch {
+        setAssessmentStatus({});
+      }
+    } catch (error) {
+      console.error(
+        "Unable to load assessment results:",
+        error
+      );
+
+      /*
+       * If backend request fails,
+       * use saved frontend data.
+       */
+
+      setDoshaResult(
+        getSavedDoshaResult()
+      );
+
+      setSkinScanResult(
+        getSavedSkinScanResult()
+      );
+    } finally {
+      setLoadingAssessments(false);
     }
   };
+
+  /* =======================================================
+     LOAD ASSESSMENTS WHEN PAGE OPENS
+  ======================================================= */
 
   useEffect(() => {
     loadAssessmentResults();
 
-    const handleStorage = () => {
+    const handleAssessmentUpdate = () => {
       loadAssessmentResults();
     };
 
     window.addEventListener(
       "storage",
-      handleStorage
+      handleAssessmentUpdate
     );
 
     window.addEventListener(
       "ayuraiAssessmentUpdated",
-      handleStorage
+      handleAssessmentUpdate
     );
 
     return () => {
       window.removeEventListener(
         "storage",
-        handleStorage
+        handleAssessmentUpdate
       );
 
       window.removeEventListener(
         "ayuraiAssessmentUpdated",
-        handleStorage
+        handleAssessmentUpdate
       );
     };
   }, []);
@@ -406,7 +725,10 @@ const UserProfile = () => {
       name: user.name,
       email: user.email,
       age: user.age,
-      icon: user.icon || "butterfly",
+      icon:
+        user.icon ||
+        user.profileIcon ||
+        "butterfly",
     });
 
     setEditing(true);
@@ -442,7 +764,7 @@ const UserProfile = () => {
   };
 
   /* =======================================================
-     SAVE PROFILE TO BACKEND
+     SAVE PROFILE
   ======================================================= */
 
   const handleSave = async () => {
@@ -479,7 +801,7 @@ const UserProfile = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:8081/api/users/${userId}`,
+        `${API_BASE_URL}/users/${userId}`,
         {
           method: "PUT",
 
@@ -489,15 +811,19 @@ const UserProfile = () => {
           },
 
           body: JSON.stringify({
-            name: editForm.name.trim(),
+            name:
+              editForm.name.trim(),
+
             email:
               editForm.email
                 .trim()
                 .toLowerCase(),
+
             age:
               editForm.age
                 ? Number(editForm.age)
                 : null,
+
             profileIcon:
               editForm.icon ||
               "butterfly",
@@ -530,16 +856,14 @@ const UserProfile = () => {
       if (!response.ok) {
         throw new Error(
           data.message ||
-          "Unable to update profile."
+            "Unable to update profile."
         );
       }
 
-      /* ===============================================
-         UPDATE FRONTEND USER
-      =============================================== */
-
       const updatedUser = {
-        id: data.id || Number(userId),
+        id:
+          data.id ||
+          Number(userId),
 
         name:
           data.name ||
@@ -568,6 +892,13 @@ const UserProfile = () => {
 
       setUser(updatedUser);
 
+      setEditForm({
+        name: updatedUser.name,
+        email: updatedUser.email,
+        age: updatedUser.age,
+        icon: updatedUser.icon,
+      });
+
       localStorage.setItem(
         "ayuraiUser",
         JSON.stringify(
@@ -581,7 +912,6 @@ const UserProfile = () => {
       );
 
       setEditing(false);
-
     } catch (error) {
       console.error(
         "AyurAI profile update error:",
@@ -590,9 +920,8 @@ const UserProfile = () => {
 
       setProfileError(
         error.message ||
-        "Unable to update your profile."
+          "Unable to update your profile."
       );
-
     } finally {
       setSavingProfile(false);
     }
@@ -644,15 +973,22 @@ const UserProfile = () => {
       skinScanResult?.skinType
     );
 
-  const hydrationValue =
-    skinScanResult?.hydration;
+  /*
+   * IMPORTANT:
+   * The current backend response does not
+   * contain hydration.
+   *
+   * Therefore we do NOT invent a percentage.
+   */
 
   const hydration =
-    hydrationValue !== undefined &&
-    hydrationValue !== null &&
-    hydrationValue !== ""
-      ? `${hydrationValue}%`
-      : "Not analyzed";
+    skinScanResult?.hydration !==
+      undefined &&
+    skinScanResult?.hydration !==
+      null &&
+    skinScanResult?.hydration !== ""
+      ? `${skinScanResult.hydration}%`
+      : "Not available";
 
   const concern =
     formatSkinValue(
@@ -677,13 +1013,14 @@ const UserProfile = () => {
     );
 
   /* =======================================================
-     SELECTED ICON
+     SELECTED PROFILE ICON
   ======================================================= */
 
   const selectedIcon =
     profileIcons.find(
       (item) =>
-        item.id === user.icon
+        item.id === user.icon ||
+        item.id === user.profileIcon
     ) ||
     profileIcons[0];
 
@@ -697,13 +1034,29 @@ const UserProfile = () => {
     ] || [];
 
   /* =======================================================
+     HISTORY DATES
+  ======================================================= */
+
+  const doshaDate =
+    formatDate(
+      doshaResult?.completedAt
+    );
+
+  const skinDate =
+    formatDate(
+      skinScanResult?.completedAt
+    );
+
+  /* =======================================================
      UI
   ======================================================= */
 
   return (
     <section className="profile-page">
 
-      {/* HEADER */}
+      {/* ===================================================
+          HEADER
+      =================================================== */}
 
       <div className="profile-header">
 
@@ -724,7 +1077,9 @@ const UserProfile = () => {
 
       </div>
 
-      {/* PROFILE CARD */}
+      {/* ===================================================
+          PROFILE CARD
+      =================================================== */}
 
       <div className="profile-main-card">
 
@@ -759,12 +1114,11 @@ const UserProfile = () => {
 
       </div>
 
-      {/* =====================================================
+      {/* ===================================================
           EDIT PROFILE MODAL
-      ===================================================== */}
+      =================================================== */}
 
       {editing && (
-
         <div className="edit-profile-overlay">
 
           <div className="edit-profile-modal">
@@ -779,6 +1133,7 @@ const UserProfile = () => {
             <div className="profile-modal-header">
 
               <div className="profile-modal-avatar">
+
                 {
                   profileIcons.find(
                     (item) =>
@@ -786,6 +1141,7 @@ const UserProfile = () => {
                       editForm.icon
                   )?.symbol || "🦋"
                 }
+
               </div>
 
               <div>
@@ -806,7 +1162,7 @@ const UserProfile = () => {
 
             </div>
 
-            {/* ICONS */}
+            {/* PROFILE ICONS */}
 
             <div className="profile-icon-section">
 
@@ -892,7 +1248,9 @@ const UserProfile = () => {
                 <input
                   type="number"
                   name="age"
-                  value={editForm.age ?? ""}
+                  value={
+                    editForm.age ?? ""
+                  }
                   onChange={handleChange}
                   min="1"
                   max="100"
@@ -938,12 +1296,11 @@ const UserProfile = () => {
           </div>
 
         </div>
-
       )}
 
-      {/* =====================================================
+      {/* ===================================================
           01 — AYURVEDIC PROFILE
-      ===================================================== */}
+      =================================================== */}
 
       <div className="profile-section">
 
@@ -961,6 +1318,8 @@ const UserProfile = () => {
 
         <div className="profile-stats">
 
+          {/* DOSHA */}
+
           <div className="profile-stat dosha-stat">
 
             <span>
@@ -968,7 +1327,8 @@ const UserProfile = () => {
             </span>
 
             <strong>
-              {dominantDosha || "Not tested"}
+              {dominantDosha ||
+                "Not tested"}
             </strong>
 
             <small>
@@ -976,6 +1336,8 @@ const UserProfile = () => {
             </small>
 
           </div>
+
+          {/* SKIN TYPE */}
 
           <div className="profile-stat skin-stat">
 
@@ -993,6 +1355,8 @@ const UserProfile = () => {
 
           </div>
 
+          {/* HYDRATION */}
+
           <div className="profile-stat hydration-stat">
 
             <span>
@@ -1008,6 +1372,8 @@ const UserProfile = () => {
             </small>
 
           </div>
+
+          {/* MAIN CONCERN */}
 
           <div className="profile-stat concern-stat">
 
@@ -1029,9 +1395,9 @@ const UserProfile = () => {
 
       </div>
 
-      {/* =====================================================
+      {/* ===================================================
           02 — DOSHA BALANCE
-      ===================================================== */}
+      =================================================== */}
 
       <div className="profile-section">
 
@@ -1058,8 +1424,12 @@ const UserProfile = () => {
                   totalPercentage > 0
                     ? `conic-gradient(
                         #b68b4c 0 ${vata}%,
-                        #d47b61 ${vata}% ${vata + pitta}%,
-                        #7f9b72 ${vata + pitta}% 100%
+                        #d47b61 ${vata}% ${
+                          vata + pitta
+                        }%,
+                        #7f9b72 ${
+                          vata + pitta
+                        }% 100%
                       )`
                     : "#e5dfd2",
               }}
@@ -1072,7 +1442,8 @@ const UserProfile = () => {
                 </span>
 
                 <strong>
-                  {dominantDosha || "Not tested"}
+                  {dominantDosha ||
+                    "Not tested"}
                 </strong>
 
                 <small>
@@ -1145,9 +1516,16 @@ const UserProfile = () => {
 
             <button
               className="profile-refresh-button"
-              onClick={loadAssessmentResults}
+              onClick={
+                loadAssessmentResults
+              }
+              disabled={
+                loadingAssessments
+              }
             >
-              Refresh Results
+              {loadingAssessments
+                ? "Refreshing..."
+                : "Refresh Results"}
             </button>
 
           </div>
@@ -1156,9 +1534,9 @@ const UserProfile = () => {
 
       </div>
 
-      {/* =====================================================
+      {/* ===================================================
           03 — LATEST ANALYSIS
-      ===================================================== */}
+      =================================================== */}
 
       <div className="profile-section">
 
@@ -1191,9 +1569,12 @@ const UserProfile = () => {
             </h3>
 
             <p>
-              {hydration} hydration •{" "}
-              {concern} •{" "}
-              {dominantDosha || "Not tested"}
+              {hydration} hydration
+              {" • "}
+              {concern}
+              {" • "}
+              {dominantDosha ||
+                "Not tested"}
             </p>
 
           </div>
@@ -1201,7 +1582,9 @@ const UserProfile = () => {
           <button
             className="view-analysis-button"
             onClick={() =>
-              navigate("/skin-scan")
+              navigate(
+                "/skin-scan"
+              )
             }
           >
             View Analysis →
@@ -1211,9 +1594,9 @@ const UserProfile = () => {
 
       </div>
 
-      {/* =====================================================
+      {/* ===================================================
           04 — HOME REMEDIES
-      ===================================================== */}
+      =================================================== */}
 
       <div className="profile-section">
 
@@ -1234,7 +1617,8 @@ const UserProfile = () => {
 
         </div>
 
-        {recommendedRemedies.length > 0 ? (
+        {recommendedRemedies.length >
+        0 ? (
 
           <div className="profile-remedies-grid">
 
@@ -1304,7 +1688,9 @@ const UserProfile = () => {
 
             <button
               onClick={() =>
-                navigate("/dosha-test")
+                navigate(
+                  "/dosha-test"
+                )
               }
             >
               Take Dosha Test →
@@ -1316,9 +1702,9 @@ const UserProfile = () => {
 
       </div>
 
-      {/* =====================================================
+      {/* ===================================================
           05 — DOSHA JOURNEY
-      ===================================================== */}
+      =================================================== */}
 
       <div className="profile-section">
 
@@ -1337,7 +1723,8 @@ const UserProfile = () => {
             <p>
               Your current dominant Ayurvedic balance is{" "}
               <strong>
-                {dominantDosha || "Not tested"}
+                {dominantDosha ||
+                  "Not tested"}
               </strong>.
             </p>
 
@@ -1346,7 +1733,9 @@ const UserProfile = () => {
           <button
             className="retake-button"
             onClick={() =>
-              navigate("/dosha-test")
+              navigate(
+                "/dosha-test"
+              )
             }
           >
             Retake Dosha Test →
@@ -1356,9 +1745,9 @@ const UserProfile = () => {
 
       </div>
 
-      {/* =====================================================
+      {/* ===================================================
           06 — HISTORY
-      ===================================================== */}
+      =================================================== */}
 
       <div className="profile-section">
 
@@ -1369,12 +1758,14 @@ const UserProfile = () => {
           </span>
 
           <h2>
-            Skin Analysis History
+            Assessment History
           </h2>
 
         </div>
 
         <div className="history-list">
+
+          {/* DOSHA HISTORY */}
 
           {doshaCompleted && (
 
@@ -1383,26 +1774,11 @@ const UserProfile = () => {
               <div className="history-date">
 
                 <strong>
-                  {doshaResult?.completedAt
-                    ? new Date(
-                        doshaResult.completedAt
-                      ).getDate()
-                    : "--"}
+                  {doshaDate.day}
                 </strong>
 
                 <span>
-                  {doshaResult?.completedAt
-                    ? new Date(
-                        doshaResult.completedAt
-                      )
-                        .toLocaleString(
-                          "en-US",
-                          {
-                            month: "short",
-                          }
-                        )
-                        .toUpperCase()
-                    : "---"}
+                  {doshaDate.month}
                 </span>
 
               </div>
@@ -1415,7 +1791,8 @@ const UserProfile = () => {
 
                 <p>
                   Primary balance •{" "}
-                  {dominantDosha || "Not tested"}
+                  {dominantDosha ||
+                    "Not tested"}
                 </p>
 
               </div>
@@ -1428,6 +1805,8 @@ const UserProfile = () => {
 
           )}
 
+          {/* SKIN SCAN HISTORY */}
+
           {skinCompleted && (
 
             <div className="history-item">
@@ -1435,26 +1814,11 @@ const UserProfile = () => {
               <div className="history-date">
 
                 <strong>
-                  {skinScanResult?.completedAt
-                    ? new Date(
-                        skinScanResult.completedAt
-                      ).getDate()
-                    : "--"}
+                  {skinDate.day}
                 </strong>
 
                 <span>
-                  {skinScanResult?.completedAt
-                    ? new Date(
-                        skinScanResult.completedAt
-                      )
-                        .toLocaleString(
-                          "en-US",
-                          {
-                            month: "short",
-                          }
-                        )
-                        .toUpperCase()
-                    : "---"}
+                  {skinDate.month}
                 </span>
 
               </div>
@@ -1466,8 +1830,9 @@ const UserProfile = () => {
                 </h3>
 
                 <p>
-                  {skinType} •{" "}
-                  {hydration} hydration
+                  {skinType}
+                  {" • "}
+                  {concern}
                 </p>
 
               </div>
@@ -1479,6 +1844,8 @@ const UserProfile = () => {
             </div>
 
           )}
+
+          {/* EMPTY */}
 
           {!doshaCompleted &&
             !skinCompleted && (
@@ -1492,8 +1859,9 @@ const UserProfile = () => {
                   </h3>
 
                   <p>
-                    Complete your Skin Scan or Dosha Test
-                    to begin your AyurAI journey.
+                    Complete your Skin Scan or
+                    Dosha Test to begin your
+                    AyurAI journey.
                   </p>
 
                 </div>
@@ -1506,7 +1874,9 @@ const UserProfile = () => {
 
       </div>
 
-      {/* DISCLAIMER */}
+      {/* ===================================================
+          DISCLAIMER
+      =================================================== */}
 
       <p
         className="analysis-disclaimer"

@@ -1,10 +1,14 @@
-import React, { useMemo, useState } from "react";
+
+import React, { useEffect, useMemo, useState } from "react";
 import "./HomeRemedy.css";
 
 import {
   getAssessmentStatus,
   getDoshaResult,
+  getCurrentUserId,
 } from "../utils/assessmentStatus";
+
+import API_BASE_URL from "../utils/api";
 
 /* =========================================================
    REMEDY DATA
@@ -225,14 +229,187 @@ const doshaConfig = {
 };
 
 /* =========================================================
+   STORAGE HELPERS
+========================================================= */
+
+const getStorageKey = (userId, type) => {
+  const safeUserId = userId || "guest";
+  return `ayurai_${type}_${safeUserId}`;
+};
+
+const readStorageArray = (key) => {
+  try {
+    const stored = localStorage.getItem(key);
+
+    if (!stored) {
+      return [];
+    }
+
+    const parsed = JSON.parse(stored);
+
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (error) {
+    console.error(
+      "Unable to read AyurAI remedy storage:",
+      error
+    );
+
+    return [];
+  }
+};
+
+/* =========================================================
    COMPONENT
 ========================================================= */
 
 function HomeRemedy() {
-  const [selectedConcern, setSelectedConcern] = useState("All");
+  const [selectedConcern, setSelectedConcern] =
+    useState("All");
+
   const [search, setSearch] = useState("");
-  const [selectedRemedy, setSelectedRemedy] = useState(null);
+
+  const [selectedRemedy, setSelectedRemedy] =
+    useState(null);
+
   const [step, setStep] = useState(0);
+
+  /* =======================================================
+     EXTRA USER FEATURES
+  ======================================================= */
+
+  const [currentUserId, setCurrentUserId] =
+    useState("guest");
+
+  const [favoriteRemedies, setFavoriteRemedies] =
+    useState([]);
+
+  const [completedRemedies, setCompletedRemedies] =
+    useState([]);
+
+  const [showSavedOnly, setShowSavedOnly] =
+    useState(false);
+
+  /* =======================================================
+     LOAD USER ID + SAVED DATA
+  ======================================================= */
+
+  useEffect(() => {
+    let userId = "guest";
+
+    try {
+      const storedUserId = getCurrentUserId();
+
+      if (
+        storedUserId !== null &&
+        storedUserId !== undefined &&
+        String(storedUserId).trim() !== ""
+      ) {
+        userId = String(storedUserId);
+      }
+    } catch (error) {
+      console.warn(
+        "Unable to retrieve current AyurAI user ID. Using guest storage.",
+        error
+      );
+    }
+
+    setCurrentUserId(userId);
+
+    const favoriteKey = getStorageKey(
+      userId,
+      "favorite_remedies"
+    );
+
+    const completedKey = getStorageKey(
+      userId,
+      "completed_remedies"
+    );
+
+    setFavoriteRemedies(
+      readStorageArray(favoriteKey)
+    );
+
+    setCompletedRemedies(
+      readStorageArray(completedKey)
+    );
+  }, []);
+
+  /* =======================================================
+     SAVE FAVORITES
+  ======================================================= */
+
+  useEffect(() => {
+    try {
+      const key = getStorageKey(
+        currentUserId,
+        "favorite_remedies"
+      );
+
+      localStorage.setItem(
+        key,
+        JSON.stringify(favoriteRemedies)
+      );
+    } catch (error) {
+      console.error(
+        "Unable to save AyurAI favorite remedies:",
+        error
+      );
+    }
+  }, [favoriteRemedies, currentUserId]);
+
+  /* =======================================================
+     SAVE COMPLETED REMEDIES
+  ======================================================= */
+
+  useEffect(() => {
+    try {
+      const key = getStorageKey(
+        currentUserId,
+        "completed_remedies"
+      );
+
+      localStorage.setItem(
+        key,
+        JSON.stringify(completedRemedies)
+      );
+    } catch (error) {
+      console.error(
+        "Unable to save AyurAI completed remedies:",
+        error
+      );
+    }
+  }, [completedRemedies, currentUserId]);
+
+  /* =======================================================
+     MODAL KEYBOARD + BODY SCROLL
+  ======================================================= */
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setSelectedRemedy(null);
+        setStep(0);
+      }
+    };
+
+    if (selectedRemedy) {
+      document.addEventListener(
+        "keydown",
+        handleKeyDown
+      );
+
+      document.body.style.overflow = "hidden";
+    }
+
+    return () => {
+      document.removeEventListener(
+        "keydown",
+        handleKeyDown
+      );
+
+      document.body.style.overflow = "";
+    };
+  }, [selectedRemedy]);
 
   /* =======================================================
      LOAD ASSESSMENT
@@ -314,7 +491,15 @@ function HomeRemedy() {
           .toLowerCase()
           .includes(searchValue);
 
-      return concernMatch && searchMatch;
+      const savedMatch =
+        !showSavedOnly ||
+        favoriteRemedies.includes(remedy.id);
+
+      return (
+        concernMatch &&
+        searchMatch &&
+        savedMatch
+      );
     });
 
     /* Put user's Dosha remedies first */
@@ -323,6 +508,7 @@ function HomeRemedy() {
       return [...filtered].sort((a, b) => {
         const aMatch =
           a.dosha === assessment.dominantDosha;
+
         const bMatch =
           b.dosha === assessment.dominantDosha;
 
@@ -338,7 +524,47 @@ function HomeRemedy() {
     selectedConcern,
     search,
     assessment.dominantDosha,
+    showSavedOnly,
+    favoriteRemedies,
   ]);
+
+  /* =======================================================
+     FAVORITE TOGGLE
+  ======================================================= */
+
+  const toggleFavorite = (remedyId) => {
+    setFavoriteRemedies((current) => {
+      if (current.includes(remedyId)) {
+        return current.filter(
+          (id) => id !== remedyId
+        );
+      }
+
+      return [...current, remedyId];
+    });
+  };
+
+  const isFavorite = (remedyId) =>
+    favoriteRemedies.includes(remedyId);
+
+  /* =======================================================
+     COMPLETED TOGGLE
+  ======================================================= */
+
+  const toggleCompleted = (remedyId) => {
+    setCompletedRemedies((current) => {
+      if (current.includes(remedyId)) {
+        return current.filter(
+          (id) => id !== remedyId
+        );
+      }
+
+      return [...current, remedyId];
+    });
+  };
+
+  const isCompleted = (remedyId) =>
+    completedRemedies.includes(remedyId);
 
   /* =======================================================
      MODAL
@@ -347,6 +573,17 @@ function HomeRemedy() {
   const openRemedy = (remedy) => {
     setSelectedRemedy(remedy);
     setStep(0);
+
+    setTimeout(() => {
+      const modal =
+        document.querySelector(
+          ".remedy-modal"
+        );
+
+      if (modal) {
+        modal.scrollTop = 0;
+      }
+    }, 0);
   };
 
   const closeRemedy = () => {
@@ -374,7 +611,21 @@ function HomeRemedy() {
   const resetFilters = () => {
     setSearch("");
     setSelectedConcern("All");
+    setShowSavedOnly(false);
   };
+
+  /* =======================================================
+     API REFERENCE
+     =======================================================
+
+     API_BASE_URL is intentionally kept available for the
+     future backend integration.
+
+     Your current UI continues to use the existing local
+     remedy data so nothing visually changes.
+  ======================================================= */
+
+  void API_BASE_URL;
 
   return (
     <main className="home-remedy-page">
@@ -623,6 +874,67 @@ function HomeRemedy() {
 
 
         {/* ===================================================
+            EXTRA REMEDY CONTROLS
+        =================================================== */}
+
+        <div
+          className="remedy-extra-controls"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "12px",
+            flexWrap: "wrap",
+            marginTop: "18px",
+            marginBottom: "12px",
+          }}
+        >
+
+          <button
+            type="button"
+            onClick={() =>
+              setShowSavedOnly(
+                (current) => !current
+              )
+            }
+            style={{
+              border: "1px solid rgba(120, 100, 60, 0.2)",
+              background: showSavedOnly
+                ? "rgba(180, 150, 80, 0.12)"
+                : "transparent",
+              borderRadius: "999px",
+              padding: "9px 15px",
+              cursor: "pointer",
+              fontSize: "0.85rem",
+            }}
+          >
+            {showSavedOnly
+              ? "♥ Showing Saved"
+              : "♡ Saved Remedies"}
+          </button>
+
+          <div
+            style={{
+              display: "flex",
+              gap: "14px",
+              alignItems: "center",
+              fontSize: "0.82rem",
+              opacity: 0.75,
+            }}
+          >
+            <span>
+              ♥ {favoriteRemedies.length} saved
+            </span>
+
+            <span>
+              ✓ {completedRemedies.length} completed
+            </span>
+          </div>
+
+        </div>
+
+
+        {/* ===================================================
             RESULT COUNT
         =================================================== */}
 
@@ -738,6 +1050,50 @@ function HomeRemedy() {
                     Explore Remedy
                     <span>→</span>
                   </button>
+
+
+                  {/* =================================================
+                      EXTRA SAVE BUTTON
+                  ================================================= */}
+
+                  <button
+                    type="button"
+                    onClick={() =>
+                      toggleFavorite(remedy.id)
+                    }
+                    aria-label={
+                      isFavorite(remedy.id)
+                        ? `Remove ${remedy.title} from saved remedies`
+                        : `Save ${remedy.title}`
+                    }
+                    style={{
+                      marginTop: "10px",
+                      width: "100%",
+                      border: "none",
+                      background: "transparent",
+                      cursor: "pointer",
+                      fontSize: "0.85rem",
+                      padding: "6px",
+                      opacity: 0.85,
+                    }}
+                  >
+                    {isFavorite(remedy.id)
+                      ? "♥ Saved to My Remedies"
+                      : "♡ Save for Later"}
+                  </button>
+
+                  {isCompleted(remedy.id) && (
+                    <div
+                      style={{
+                        textAlign: "center",
+                        fontSize: "0.75rem",
+                        marginTop: "3px",
+                        opacity: 0.65,
+                      }}
+                    >
+                      ✓ Ritual completed
+                    </div>
+                  )}
 
                 </article>
 
@@ -917,6 +1273,78 @@ function HomeRemedy() {
               </div>
 
             )}
+
+
+            {/* =================================================
+                EXTRA SAVE / COMPLETE ACTIONS
+            ================================================= */}
+
+            <div
+              style={{
+                display: "flex",
+                gap: "10px",
+                flexWrap: "wrap",
+                margin: "18px 0",
+              }}
+            >
+
+              <button
+                type="button"
+                onClick={() =>
+                  toggleFavorite(
+                    selectedRemedy.id
+                  )
+                }
+                style={{
+                  flex: "1 1 180px",
+                  padding: "11px 15px",
+                  borderRadius: "10px",
+                  border:
+                    "1px solid rgba(120, 100, 60, 0.2)",
+                  background:
+                    isFavorite(selectedRemedy.id)
+                      ? "rgba(180, 150, 80, 0.12)"
+                      : "transparent",
+                  cursor: "pointer",
+                }}
+              >
+                {isFavorite(
+                  selectedRemedy.id
+                )
+                  ? "♥ Saved Remedy"
+                  : "♡ Save Remedy"}
+              </button>
+
+              <button
+                type="button"
+                onClick={() =>
+                  toggleCompleted(
+                    selectedRemedy.id
+                  )
+                }
+                style={{
+                  flex: "1 1 180px",
+                  padding: "11px 15px",
+                  borderRadius: "10px",
+                  border:
+                    "1px solid rgba(120, 100, 60, 0.2)",
+                  background:
+                    isCompleted(
+                      selectedRemedy.id
+                    )
+                      ? "rgba(120, 150, 100, 0.12)"
+                      : "transparent",
+                  cursor: "pointer",
+                }}
+              >
+                {isCompleted(
+                  selectedRemedy.id
+                )
+                  ? "✓ Ritual Completed"
+                  : "○ Mark as Completed"}
+              </button>
+
+            </div>
 
 
             {/* =================================================
