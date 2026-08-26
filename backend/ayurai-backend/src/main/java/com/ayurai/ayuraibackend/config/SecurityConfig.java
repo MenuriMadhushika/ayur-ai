@@ -37,11 +37,13 @@ public class SecurityConfig {
                 )
 
                 .authorizeHttpRequests(auth -> auth
-
                         .requestMatchers(
                                 "/api/auth/**",
                                 "/api/users/**",
-                                "/api/dosha-assessments/**"
+                                "/api/skin-scans/**",
+                                "/api/dosha-assessments/**",
+                                "/api/home-remedies/**",
+                                "/api/overall-results/**"
                         ).permitAll()
 
                         .anyRequest().authenticated()
