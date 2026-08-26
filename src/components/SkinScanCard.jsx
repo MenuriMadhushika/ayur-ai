@@ -13,7 +13,13 @@ import {
   getAssessmentStatus,
 } from "../utils/assessmentStatus";
 
-import { createSkinScan } from "../utils/api";
+import {
+  createSkinScan
+} from "../utils/api";
+
+import {
+  getCurrentUserId
+} from "../utils/userSession";
 
 
 /* =========================================================
@@ -372,14 +378,20 @@ const SkinScanCard = () => {
                 ========================================= */
 
                 try {
-  const backendResult = await createSkinScan({
-    userId: 5,
-    imagePath: "uploads/skin-scan.jpg",
-    estimatedSkinType: "AI-estimated combination skin",
-    visibleCharacteristics:
-      "AI-estimated visible skin characteristics from uploaded image",
-    analysisStatus: "COMPLETED",
-  });
+                 const userId = getCurrentUserId();
+
+if (!userId) {
+  throw new Error("User session not found. Please log in again.");
+}
+
+const backendResult = await createSkinScan({
+  userId,
+  imagePath: "uploads/skin-scan.jpg",
+  estimatedSkinType: "AI-estimated combination skin",
+  visibleCharacteristics:
+    "AI-estimated visible skin characteristics from uploaded image",
+  analysisStatus: "COMPLETED",
+});
 
   console.log("Skin scan saved to backend:", backendResult);
 

@@ -189,6 +189,7 @@ function HomeRemedy() {
   const [search, setSearch] = useState("");
   const [selectedRemedy, setSelectedRemedy] = useState(null);
   const [step, setStep] = useState(0);
+  
 
   const filteredRemedies = useMemo(() => {
 
