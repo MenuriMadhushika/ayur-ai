@@ -1,53 +1,31 @@
-
-
 const API_BASE_URL = "http://localhost:8081/api";
 
-/* =========================================================
-   SKIN SCAN
-========================================================= */
-
+// SKIN SCAN
 export const createSkinScan = async (skinScanData) => {
-  const response = await fetch(
-    `${API_BASE_URL}/skin-scans`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(skinScanData),
-    }
-  );
+  const response = await fetch(`${API_BASE_URL}/skin-scans`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(skinScanData),
+  });
 
   if (!response.ok) {
-    const errorText = await response.text();
-
-    throw new Error(
-      errorText ||
-        `Skin scan request failed: ${response.status}`
-    );
+    throw new Error(await response.text());
   }
 
   return response.json();
 };
-
 
 export const getUserSkinScans = async (userId) => {
-  const response = await fetch(
-    `${API_BASE_URL}/skin-scans/user/${userId}`
-  );
+  const response = await fetch(`${API_BASE_URL}/skin-scans/user/${userId}`);
 
   if (!response.ok) {
-    const errorText = await response.text();
-
-    throw new Error(
-      errorText ||
-        `Failed to load skin scans: ${response.status}`
-    );
+    throw new Error(await response.text());
   }
 
   return response.json();
 };
-
 
 export const getLatestSkinScan = async (userId) => {
   const response = await fetch(
@@ -55,110 +33,63 @@ export const getLatestSkinScan = async (userId) => {
   );
 
   if (!response.ok) {
-    const errorText = await response.text();
-
-    throw new Error(
-      errorText ||
-        `Failed to load latest skin scan: ${response.status}`
-    );
+    throw new Error(await response.text());
   }
 
   return response.json();
 };
 
-
-/* =========================================================
-   DOSHA ASSESSMENT
-========================================================= */
-
-export const createDoshaAssessment = async (
-  assessmentData
-) => {
-  const response = await fetch(
-    `${API_BASE_URL}/dosha-assessments`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(assessmentData),
-    }
-  );
+// DOSHA ASSESSMENT
+export const createDoshaAssessment = async (assessmentData) => {
+  const response = await fetch(`${API_BASE_URL}/dosha-assessments`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(assessmentData),
+  });
 
   if (!response.ok) {
-    const errorText = await response.text();
-
-    throw new Error(
-      errorText ||
-        `Dosha assessment request failed: ${response.status}`
-    );
+    throw new Error(await response.text());
   }
 
   return response.json();
 };
 
-
-export const getUserDoshaAssessments = async (
-  userId
-) => {
+export const getUserDoshaAssessments = async (userId) => {
   const response = await fetch(
     `${API_BASE_URL}/dosha-assessments/user/${userId}`
   );
 
   if (!response.ok) {
-    const errorText = await response.text();
-
-    throw new Error(
-      errorText ||
-        `Failed to load Dosha assessments: ${response.status}`
-    );
+    throw new Error(await response.text());
   }
 
   return response.json();
 };
 
-
-export const getLatestDoshaAssessment = async (
-  userId
-) => {
+export const getLatestDoshaAssessment = async (userId) => {
   const response = await fetch(
     `${API_BASE_URL}/dosha-assessments/user/${userId}/latest`
   );
 
   if (!response.ok) {
-    const errorText = await response.text();
-
-    throw new Error(
-      errorText ||
-        `Failed to load latest Dosha assessment: ${response.status}`
-    );
+    throw new Error(await response.text());
   }
 
   return response.json();
 };
 
-
-/* =========================================================
-   HOME REMEDIES
-========================================================= */
-
+// HOME REMEDIES
 export const getAllHomeRemedies = async () => {
-  const response = await fetch(
-    `${API_BASE_URL}/home-remedies`
-  );
+  const response = await fetch(`${API_BASE_URL}/home-remedies`);
 
   if (!response.ok) {
-    const errorText = await response.text();
-
-    throw new Error(
-      errorText ||
-      `Failed to load home remedies: ${response.status}`
-    );
+    throw new Error(await response.text());
   }
 
   return response.json();
 };
-
 
 export const getHomeRemediesByDosha = async (dosha) => {
   const response = await fetch(
@@ -166,22 +97,13 @@ export const getHomeRemediesByDosha = async (dosha) => {
   );
 
   if (!response.ok) {
-    const errorText = await response.text();
-
-    throw new Error(
-      errorText ||
-      `Failed to load Dosha remedies: ${response.status}`
-    );
+    throw new Error(await response.text());
   }
 
   return response.json();
 };
 
-
-export const getPersonalizedHomeRemedies = async (
-  dosha,
-  skinType
-) => {
+export const getPersonalizedHomeRemedies = async (dosha, skinType) => {
   const response = await fetch(
     `${API_BASE_URL}/home-remedies/personalized?dosha=${encodeURIComponent(
       dosha
@@ -189,20 +111,39 @@ export const getPersonalizedHomeRemedies = async (
   );
 
   if (!response.ok) {
-    const errorText = await response.text();
-
-    throw new Error(
-      errorText ||
-      `Failed to load personalized remedies: ${response.status}`
-    );
+    throw new Error(await response.text());
   }
 
   return response.json();
 };
 
+// OVERALL RESULT
+export const createOverallResult = async (userId) => {
+  const response = await fetch(`${API_BASE_URL}/overall-results`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ userId }),
+  });
 
-/* =========================================================
-   API BASE URL
-========================================================= */
+  if (!response.ok) {
+    throw new Error(await response.text());
+  }
+
+  return response.json();
+};
+
+export const getLatestOverallResult = async (userId) => {
+  const response = await fetch(
+    `${API_BASE_URL}/overall-results/user/${userId}/latest`
+  );
+
+  if (!response.ok) {
+    throw new Error(await response.text());
+  }
+
+  return response.json();
+};
 
 export default API_BASE_URL;
