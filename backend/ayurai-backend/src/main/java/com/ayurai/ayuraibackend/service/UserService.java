@@ -18,24 +18,21 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
     public UserService(
             UserRepository userRepository,
-            PasswordEncoder passwordEncoder
+            PasswordEncoder passwordEncoder,
+            JwtService jwtService
     ) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
     }
 
-    // =========================================================
-    // REGISTER NEW USER
-    // Every new registration is a normal USER by default.
-    // =========================================================
     public UserResponse createUser(UserRequest request) {
 
-        String email = request.getEmail()
-                .trim()
-                .toLowerCase();
+        String email = request.getEmail().trim().toLowerCase();
 
         if (userRepository.existsByEmailIgnoreCase(email)) {
             throw new RuntimeException("Email already exists");
@@ -50,23 +47,14 @@ public class UserService {
         );
         user.setAge(request.getAge());
         user.setProfileIcon(request.getProfileIcon());
-
-        // Only the database administrator can promote a user to ADMIN.
         user.setRole(UserRole.USER);
 
-        User savedUser = userRepository.save(user);
-
-        return convertToResponse(savedUser);
+        return convertToResponse(userRepository.save(user));
     }
 
-    // =========================================================
-    // LOGIN
-    // =========================================================
     public LoginResponse login(LoginRequest request) {
 
-        String email = request.getEmail()
-                .trim()
-                .toLowerCase();
+        String email = request.getEmail().trim().toLowerCase();
 
         User user = userRepository
                 .findByEmailIgnoreCase(email)
@@ -81,19 +69,19 @@ public class UserService {
             throw new RuntimeException("Invalid email or password");
         }
 
+        String token = jwtService.generateToken(user);
+
         return new LoginResponse(
                 user.getId(),
                 user.getName(),
                 user.getEmail(),
                 user.getAge(),
                 user.getProfileIcon(),
-                user.getRole().name()
+                user.getRole().name(),
+                token
         );
     }
 
-    // =========================================================
-    // UPDATE USER PROFILE
-    // =========================================================
     public UserResponse updateUser(
             Long id,
             UserRequest request
@@ -113,9 +101,7 @@ public class UserService {
                 !request.getEmail().isBlank()) {
 
             user.setEmail(
-                    request.getEmail()
-                            .trim()
-                            .toLowerCase()
+                    request.getEmail().trim().toLowerCase()
             );
         }
 
@@ -130,14 +116,9 @@ public class UserService {
             );
         }
 
-        User updatedUser = userRepository.save(user);
-
-        return convertToResponse(updatedUser);
+        return convertToResponse(userRepository.save(user));
     }
 
-    // =========================================================
-    // GET ALL USERS
-    // =========================================================
     public List<UserResponse> getAllUsers() {
         return userRepository.findAll()
                 .stream()
@@ -145,18 +126,11 @@ public class UserService {
                 .toList();
     }
 
-    // =========================================================
-    // GET USER BY ID
-    // =========================================================
     public Optional<UserResponse> getUserById(Long id) {
         return userRepository.findById(id)
                 .map(this::convertToResponse);
     }
 
-    // =========================================================
-    // CONVERT USER TO SAFE RESPONSE
-    // Password and role are deliberately not returned here.
-    // =========================================================
     private UserResponse convertToResponse(User user) {
         return new UserResponse(
                 user.getId(),
