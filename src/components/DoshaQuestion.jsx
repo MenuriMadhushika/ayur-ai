@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import "./DoshaQuestion.css";
 
 import {
@@ -9,10 +10,12 @@ import {
 
 import API_BASE_URL from "../utils/api";
 import { getCurrentUserId } from "../utils/userSession";
+import { getDoshaInfo } from "../utils/doshaInfo";
 
-/* =========================================================
-   QUESTIONS
-   ========================================================= */
+// =========================================================
+// DOSHA QUESTIONS
+// Every answer saves Vata, Pitta, or Kapha for the backend.
+// =========================================================
 
 const questions = [
   {
@@ -32,7 +35,6 @@ const questions = [
       },
     ],
   },
-
   {
     question: "How does your skin usually feel?",
     options: [
@@ -50,7 +52,6 @@ const questions = [
       },
     ],
   },
-
   {
     question: "How does your skin react to the environment?",
     options: [
@@ -68,7 +69,6 @@ const questions = [
       },
     ],
   },
-
   {
     question: "What is your usual skin texture?",
     options: [
@@ -86,7 +86,6 @@ const questions = [
       },
     ],
   },
-
   {
     question: "How does your skin usually look?",
     options: [
@@ -104,7 +103,6 @@ const questions = [
       },
     ],
   },
-
   {
     question: "What is your common skin concern?",
     options: [
@@ -122,7 +120,6 @@ const questions = [
       },
     ],
   },
-
   {
     question: "How does your skin respond to products?",
     options: [
@@ -140,7 +137,6 @@ const questions = [
       },
     ],
   },
-
   {
     question: "Which description feels closest to your skin?",
     options: [
@@ -160,726 +156,389 @@ const questions = [
   },
 ];
 
-/* =========================================================
-   DOSHA QUESTION COMPONENT
-   ========================================================= */
+// =========================================================
+// DOSHA QUESTION PAGE
+// =========================================================
 
 const DoshaQuestion = () => {
-
   const navigate = useNavigate();
-
-  /*
-   * Temporary user ID.
-   * We will replace this with the authenticated
-   * user's ID when login/JWT is implemented.
-   */
   const userId = getCurrentUserId();
-
-  /* =====================================================
-     STATE
-     ===================================================== */
 
   const [currentQuestion, setCurrentQuestion] =
     useState(0);
 
-  const [answers, setAnswers] =
-    useState([]);
+  const [answers, setAnswers] = useState([]);
+  const [finished, setFinished] = useState(false);
+  const [result, setResult] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
 
-  const [finished, setFinished] =
-    useState(false);
-
-  const [result, setResult] =
-    useState(null);
-
-  const [submitting, setSubmitting] =
-    useState(false);
-
-  /* =====================================================
-     ANSWER QUESTION
-     ===================================================== */
+  // =======================================================
+  // ANSWER A QUESTION
+  // =======================================================
 
   const handleAnswer = (dosha) => {
+    if (submitting) return;
 
-    /*
-     * Prevent another click while the
-     * final answer is being submitted.
-     */
-    if (submitting) {
-      return;
-    }
+    const updatedAnswers = [...answers];
 
-    const updatedAnswers = [
-      ...answers,
-    ];
-
-    updatedAnswers[currentQuestion] =
-      dosha;
+    updatedAnswers[currentQuestion] = dosha;
 
     setAnswers(updatedAnswers);
 
-    /* Move to next question */
-
-    if (
-      currentQuestion <
-      questions.length - 1
-    ) {
-
-      setCurrentQuestion(
-        (previous) =>
-          previous + 1
-      );
-
+    // Move to the next question.
+    if (currentQuestion < questions.length - 1) {
+      setCurrentQuestion((previous) => previous + 1);
       return;
     }
 
-    /* Last question */
-
-    calculateResult(
-      updatedAnswers
-    );
+    // Last answer: save the full assessment.
+    calculateResult(updatedAnswers);
   };
 
-  /* =====================================================
-     SEND RESULT TO BACKEND
-     ===================================================== */
+  // =======================================================
+  // SAVE DOSHA RESULT IN SPRING BOOT + MYSQL
+  // =======================================================
 
-  const calculateResult = async (
-    finalAnswers
-  ) => {
-
-    /*
-     * Make sure all 8 questions
-     * have been answered.
-     */
+  const calculateResult = async (finalAnswers) => {
     if (
-      finalAnswers.length !==
-      questions.length
+      finalAnswers.length !== questions.length ||
+      finalAnswers.some((answer) => !answer)
     ) {
-
       alert(
         "Please answer all questions before completing the assessment."
       );
-
-      return;
-    }
-
-    /*
-     * Make sure there are no empty answers.
-     */
-    if (
-      finalAnswers.some(
-        (answer) => !answer
-      )
-    ) {
-
-      alert(
-        "Please answer all questions before completing the assessment."
-      );
-
       return;
     }
 
     setSubmitting(true);
 
     try {
-
-      /* =================================================
-         SEND ANSWERS TO SPRING BOOT
-         ================================================= */
-
       const response = await fetch(
         `${API_BASE_URL}/dosha-assessments`,
         {
           method: "POST",
-
           headers: {
             "Content-Type": "application/json",
           },
-
           body: JSON.stringify({
-            userId: userId,
+            userId,
             answers: finalAnswers,
           }),
         }
       );
 
-      /* =================================================
-         HANDLE HTTP ERROR
-         ================================================= */
-
       if (!response.ok) {
-
         let errorMessage =
-          "Failed to save Dosha assessment.";
+          "Failed to save your Dosha assessment.";
 
         try {
+          const errorData = await response.json();
 
-          const errorData =
-            await response.json();
-
-          if (
-            errorData.message
-          ) {
-
-            errorMessage =
-              errorData.message;
-
-          }
-
+          errorMessage =
+            errorData.message || errorMessage;
         } catch {
-          // Ignore JSON parsing error
+          // Keep the default error message.
         }
 
-        throw new Error(
-          errorMessage
-        );
+        throw new Error(errorMessage);
       }
 
-      /* =================================================
-         READ BACKEND RESPONSE
-         ================================================= */
+      const backendResult = await response.json();
 
-      const backendResult =
-        await response.json();
-
-      console.log(
-        "Dosha backend result:",
-        backendResult
-      );
-
-      /* =================================================
-         CONVERT BACKEND RESULT TO
-         EXISTING FRONTEND FORMAT
-         ================================================= */
-
+      // Keep the format used by the existing frontend status system.
       const doshaResult = {
-
-        dominantDosha:
-          backendResult.dominantDosha,
+        dominantDosha: backendResult.dominantDosha,
 
         scores: {
-
-          Vata:
-            backendResult.vataScore,
-
-          Pitta:
-            backendResult.pittaScore,
-
-          Kapha:
-            backendResult.kaphaScore,
-
+          Vata: backendResult.vataScore,
+          Pitta: backendResult.pittaScore,
+          Kapha: backendResult.kaphaScore,
         },
 
         percentages: {
-
-          Vata:
-            backendResult.vataPercentage,
-
-          Pitta:
-            backendResult.pittaPercentage,
-
-          Kapha:
-            backendResult.kaphaPercentage,
-
+          Vata: backendResult.vataPercentage,
+          Pitta: backendResult.pittaPercentage,
+          Kapha: backendResult.kaphaPercentage,
         },
 
-        answers:
-          finalAnswers,
-
+        answers: finalAnswers,
         completed: true,
-
-        completedAt:
-          new Date().toISOString(),
-
+        completedAt: new Date().toISOString(),
       };
 
-      /* =================================================
-         KEEP FRONTEND ASSESSMENT STATUS
-         ================================================= */
-
-      saveDoshaResult(
-        doshaResult
-      );
-
-      /* =================================================
-         DISPLAY RESULT
-         ================================================= */
-
-      setResult(
-        doshaResult
-      );
-
+      saveDoshaResult(doshaResult);
+      setResult(doshaResult);
       setFinished(true);
-
     } catch (error) {
-
-      console.error(
-        "Dosha assessment error:",
-        error
-      );
+      console.error("Dosha assessment error:", error);
 
       alert(
         error.message ||
-        "Unable to save your Dosha assessment. Please try again."
+          "Unable to save your Dosha assessment. Please try again."
       );
-
     } finally {
-
       setSubmitting(false);
-
     }
   };
 
-  /* =====================================================
-     CONTINUE AFTER RESULT
-     ===================================================== */
+  // =======================================================
+  // CONTINUE AFTER COMPLETING THE DOSHA TEST
+  // =======================================================
 
   const handleContinue = () => {
+    const status = getAssessmentStatus();
 
-    const status =
-      getAssessmentStatus();
-
-    /* Both complete */
-
-    if (
-      status.skinScanCompleted &&
-      status.doshaCompleted
-    ) {
-
-      navigate(
-        "/overall-result"
-      );
-
+    if (status.skinScanCompleted && status.doshaCompleted) {
+      navigate("/overall-result");
       return;
     }
 
-    /* Skin Scan missing */
-
-    if (
-      !status.skinScanCompleted
-    ) {
-
-      navigate(
-        "/skin-scan"
-      );
-
+    if (!status.skinScanCompleted) {
+      navigate("/skin-scan");
       return;
     }
 
-    /* Safety fallback */
-
-    navigate(
-      "/overall-result"
-    );
+    navigate("/overall-result");
   };
 
-  /* =====================================================
-     PREVIOUS QUESTION
-     ===================================================== */
+  // =======================================================
+  // PREVIOUS QUESTION
+  // =======================================================
 
   const handleBack = () => {
-
-    if (
-      currentQuestion > 0 &&
-      !submitting
-    ) {
-
-      setCurrentQuestion(
-        (previous) =>
-          previous - 1
-      );
-
+    if (currentQuestion > 0 && !submitting) {
+      setCurrentQuestion((previous) => previous - 1);
     }
   };
 
-  /* =====================================================
-     COMPLETED RESULT SCREEN
-     ===================================================== */
+  // =======================================================
+  // COMPLETED DOSHA RESULT
+  // =======================================================
 
-  if (
-    finished &&
-    result
-  ) {
+  if (finished && result) {
+    const status = getAssessmentStatus();
 
-    const status =
-      getAssessmentStatus();
-
-    const skinScanDone =
-      Boolean(
-        status.skinScanCompleted
-      );
-
-    const doshaDone =
-      Boolean(
-        status.doshaCompleted
-      );
+    const skinScanDone = Boolean(
+      status.skinScanCompleted
+    );
 
     const bothDone =
-      skinScanDone &&
-      doshaDone;
+      skinScanDone && Boolean(status.doshaCompleted);
+
+    // Friendly labels:
+    // Vata · Dry / Pitta · Sensitive / Kapha · Oily
+    const dominantInfo = getDoshaInfo(
+      result.dominantDosha
+    );
+
+    const vataInfo = getDoshaInfo("Vata");
+    const pittaInfo = getDoshaInfo("Pitta");
+    const kaphaInfo = getDoshaInfo("Kapha");
+
+    const resultTheme =
+      result.dominantDosha.toLowerCase();
+
+    const scoreCards = [
+      {
+        info: vataInfo,
+        percentage: result.percentages.Vata,
+        className: "vata",
+      },
+      {
+        info: pittaInfo,
+        percentage: result.percentages.Pitta,
+        className: "pitta",
+      },
+      {
+        info: kaphaInfo,
+        percentage: result.percentages.Kapha,
+        className: "kapha",
+      },
+    ];
 
     return (
-
-      <section className="dosha-result-page">
-
+      <section
+        className={`dosha-result-page dosha-${resultTheme}`}
+      >
         <div className="dosha-result-card">
-
           <span className="dosha-result-label">
             DOSHA TEST COMPLETE
           </span>
 
-          <h1>
-            Your AI-estimated Dosha Profile
-          </h1>
+          <h1>Your skin balance is ready</h1>
 
           <p className="dosha-result-intro">
-            Your responses suggest the following
-            dominant Dosha pattern. This is an
-            educational Ayurvedic assessment,
-            not a medical diagnosis.
+            This is an educational Ayurvedic wellness
+            assessment based on your answers. It is not a
+            medical diagnosis.
           </p>
 
-          {/* DOMINANT DOSHA */}
+          {/* PRIMARY DOSHA RESULT */}
 
           <div className="dominant-dosha">
+            <span>YOUR PRIMARY SKIN PATTERN</span>
 
-            <span>
-              DOMINANT DOSHA
-            </span>
+            <strong>{dominantInfo.label}</strong>
 
-            <strong>
-              {result.dominantDosha}
-            </strong>
-
+            <p>{dominantInfo.description}</p>
           </div>
 
-          {/* SCORES */}
+          {/* DOSHA SCORE CARDS */}
 
           <div className="dosha-score-grid">
+            {scoreCards.map((score) => (
+              <div
+                className={`dosha-score-card ${score.className}`}
+                key={score.info.label}
+              >
+                <span>{score.info.label}</span>
 
-            <div className="dosha-score-card">
+                <small>{score.info.shortLabel}</small>
 
-              <span>
-                VATA
-              </span>
-
-              <strong>
-                {result.percentages.Vata}%
-              </strong>
-
-            </div>
-
-            <div className="dosha-score-card">
-
-              <span>
-                PITTA
-              </span>
-
-              <strong>
-                {result.percentages.Pitta}%
-              </strong>
-
-            </div>
-
-            <div className="dosha-score-card">
-
-              <span>
-                KAPHA
-              </span>
-
-              <strong>
-                {result.percentages.Kapha}%
-              </strong>
-
-            </div>
-
+                <strong>{score.percentage}%</strong>
+              </div>
+            ))}
           </div>
 
           {/* ASSESSMENT STATUS */}
 
+                    {/* Shows the two completed steps clearly. */}
           <div className="dosha-assessment-status">
-
-            {/* DOSHA */}
-
-            <div className="dosha-status-item completed">
-
-              <span className="status-check">
-                ✓
-              </span>
-
-              <div>
-
-                <strong>
-                  Dosha Test
-                </strong>
-
-                <small>
-                  Completed
-                </small>
-
-              </div>
-
+            <div className="dosha-status-item">
+              <span className="status-check">✓</span>
+              <strong>Dosha Test</strong>
+              <span>Completed</span>
             </div>
 
-            {/* SKIN */}
-
-            <div
-              className={`dosha-status-item ${
-                skinScanDone
-                  ? "completed"
-                  : "required"
-              }`}
-            >
-
-              <span className="status-check">
-
-                {skinScanDone
-                  ? "✓"
-                  : "02"}
-
-              </span>
-
-              <div>
-
-                <strong>
-                  Skin Scan
-                </strong>
-
-                <small>
-
-                  {skinScanDone
-                    ? "Completed"
-                    : "Still required"}
-
-                </small>
-
-              </div>
-
+            <div className="dosha-status-item">
+              <span className="status-check">✓</span>
+              <strong>Skin Scan</strong>
+              <span>Completed</span>
             </div>
-
           </div>
 
-          {/* MESSAGE */}
+          {/* NEXT STEP */}
 
           <div className="dosha-complete-message">
-
             <strong>
-
               {bothDone
-                ? "Your Ayurvedic assessment is complete."
+                ? "Your personalized result is ready."
                 : "Your Dosha Test has been saved."}
-
             </strong>
 
             <p>
-
               {bothDone
-
-                ? "Your Skin Scan and Dosha Test are both complete. You can now view your Overall Result."
-
-                : "Complete your Skin Scan to combine both assessments and unlock your Overall Result."}
-
+                ? "Your Skin Scan and Dosha Test are complete. View your personalized Overall Result next."
+                : "Complete your Skin Scan next to unlock your personalized Overall Result."}
             </p>
-
           </div>
 
           {/* ACTIONS */}
 
           <div className="dosha-result-actions">
-
             <button
               type="button"
-              onClick={
-                handleContinue
-              }
+              onClick={handleContinue}
               className="dosha-primary-button"
             >
-
               {bothDone
                 ? "VIEW OVERALL RESULT →"
                 : "CONTINUE TO SKIN SCAN →"}
-
             </button>
 
             <button
               type="button"
-              onClick={() =>
-                navigate("/")
-              }
+              onClick={() => navigate("/")}
               className="dosha-secondary-button"
             >
               BACK TO HOME
             </button>
-
           </div>
-
         </div>
-
       </section>
-
     );
   }
 
-  /* =====================================================
-     QUESTION SCREEN
-     ===================================================== */
+  // =======================================================
+  // QUESTION SCREEN
+  // =======================================================
 
-  const question =
-    questions[currentQuestion];
+  const question = questions[currentQuestion];
 
   const progress =
-    ((currentQuestion + 1) /
-      questions.length) *
-    100;
+    ((currentQuestion + 1) / questions.length) * 100;
 
   return (
-
     <section className="dosha-question-page">
-
-      {/* HEADER */}
-
       <div className="dosha-question-header">
+        <span>AYURVEDIC DOSHA ASSESSMENT</span>
 
-        <span>
-          AYURVEDIC DOSHA ASSESSMENT
-        </span>
-
-        <h1>
-          Understand Your Dosha
-        </h1>
+        <h1>Understand Your Dosha</h1>
 
         <p>
-          Answer each question based on what feels
-          most representative of you.
+          Answer each question based on what feels most
+          representative of you.
         </p>
-
       </div>
 
-      {/* PROGRESS */}
-
       <div className="dosha-progress-wrapper">
-
         <div className="dosha-progress-info">
-
-          <span>
-            QUESTION {currentQuestion + 1}
-          </span>
-
-          <span>
-            {questions.length} QUESTIONS
-          </span>
-
+          <span>QUESTION {currentQuestion + 1}</span>
+          <span>{questions.length} QUESTIONS</span>
         </div>
 
         <div className="dosha-progress">
-
-          <div
-            style={{
-              width:
-                `${progress}%`,
-            }}
-          />
-
+          <div style={{ width: `${progress}%` }} />
         </div>
-
       </div>
 
-      {/* QUESTION CARD */}
-
       <div className="dosha-question-card">
-
         <span className="question-number">
-
-          {String(
-            currentQuestion + 1
-          ).padStart(2, "0")}
-
+          {String(currentQuestion + 1).padStart(2, "0")}
         </span>
 
-        <h2>
-          {question.question}
-        </h2>
+        <h2>{question.question}</h2>
 
         <div className="dosha-options">
+          {question.options.map((option, index) => (
+            <button
+              type="button"
+              key={option.text}
+              className="dosha-option"
+              onClick={() => handleAnswer(option.dosha)}
+              disabled={submitting}
+            >
+              <span className="option-number">
+                {String(index + 1).padStart(2, "0")}
+              </span>
 
-          {question.options.map(
-            (option, index) => (
+              <span className="option-text">
+                {option.text}
+              </span>
 
-              <button
-                type="button"
-                key={index}
-                className="dosha-option"
-                onClick={() =>
-                  handleAnswer(
-                    option.dosha
-                  )
-                }
-                disabled={submitting}
-              >
-
-                <span className="option-number">
-
-                  {String(
-                    index + 1
-                  ).padStart(2, "0")}
-
-                </span>
-
-                <span className="option-text">
-
-                  {option.text}
-
-                </span>
-
-                <span className="option-arrow">
-                  →
-                </span>
-
-              </button>
-
-            )
-          )}
-
+              <span className="option-arrow">→</span>
+            </button>
+          ))}
         </div>
 
-        {/* PREVIOUS */}
-
         {currentQuestion > 0 && (
-
           <button
             type="button"
             className="question-back-button"
-            onClick={
-              handleBack
-            }
+            onClick={handleBack}
             disabled={submitting}
           >
-
             ← Previous question
-
           </button>
-
         )}
-
       </div>
 
-      {/* DISCLAIMER */}
-
       <p className="dosha-disclaimer">
-
-        AyurAI provides an educational Ayurvedic
-        assessment and does not provide medical
-        diagnosis or treatment.
-
+        AyurAI provides an educational Ayurvedic assessment
+        and does not provide medical diagnosis or treatment.
       </p>
-
     </section>
-
   );
 };
-
-/* =========================================================
-   DEFAULT EXPORT
-   ========================================================= */
 
 export default DoshaQuestion;

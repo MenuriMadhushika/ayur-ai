@@ -148,7 +148,8 @@ function Login() {
       // SUCCESS
       // -------------------------------------------------------
 
-      navigate("/profile");
+      // Returning users start from the main Home page.
+    navigate("/", { replace: true });
 
     } catch (error) {
       console.error(
