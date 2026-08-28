@@ -1,177 +1,354 @@
-/* =====================================================
-   AYURAI USER PROFILE
-   Premium Ayurvedic Editorial Style
-===================================================== */
+/* =========================================================
+   AYURAI — USER PROFILE
+   Premium Ayurvedic Personal Dashboard
+   Editorial • Cream • Gold • Botanical
+   ========================================================= */
+
+
+/* =========================================================
+   DESIGN TOKENS
+   ========================================================= */
+
+:root {
+  --profile-bg: #f8f6f0;
+  --profile-surface: #fffdf8;
+  --profile-surface-soft: #f5f1e8;
+
+  --profile-text: #292720;
+  --profile-text-soft: #777267;
+  --profile-text-muted: #938c7e;
+
+  --profile-gold: #a17c3e;
+  --profile-gold-light: #d8bd83;
+  --profile-gold-soft: #eee2c7;
+
+  /* AyurAI Dosha system */
+  --vata-main: #718892;
+  --vata-soft: #dfe7e9;
+
+  --pitta-main: #c97861;
+  --pitta-soft: #edddd8;
+
+  --kapha-main: #7f9b72;
+  --kapha-soft: #dfe8da;
+
+  --profile-border: rgba(160, 123, 53, 0.15);
+
+  --profile-shadow:
+    0 20px 60px rgba(70, 57, 35, 0.07);
+
+  --profile-shadow-hover:
+    0 25px 70px rgba(70, 57, 35, 0.12);
+}
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
 
 .profile-page {
   min-height: 100vh;
-  padding: 120px 7% 100px;
+  padding: 120px 7% 110px;
+
   background:
     radial-gradient(
-      circle at 10% 10%,
-      rgba(201, 162, 74, 0.08),
-      transparent 30%
+      circle at 8% 8%,
+      rgba(201, 162, 74, 0.10),
+      transparent 27%
     ),
-    #f8f6f0;
-  color: #292720;
+    radial-gradient(
+      circle at 92% 32%,
+      rgba(113, 136, 146, 0.07),
+      transparent 25%
+    ),
+    radial-gradient(
+      circle at 50% 90%,
+      rgba(127, 155, 114, 0.06),
+      transparent 25%
+    ),
+    var(--profile-bg);
+
+  color: var(--profile-text);
 }
 
 
-/* =====================================================
+/* =========================================================
    HEADER
-===================================================== */
+   ========================================================= */
 
 .profile-header {
-  max-width: 850px;
-  margin: 0 auto 60px;
+  max-width: 900px;
+  margin: 0 auto 62px;
   text-align: center;
+
+  animation: profileFadeUp 0.8s ease both;
 }
 
 .profile-label {
-  display: inline-block;
-  margin-bottom: 18px;
-  font-size: 11px;
-  letter-spacing: 3px;
-  color: #a07b35;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+
+  margin-bottom: 20px;
+
+  font-size: 10px;
+  letter-spacing: 3.5px;
+  color: var(--profile-gold);
   font-weight: 600;
+}
+
+.profile-label::before,
+.profile-label::after {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: rgba(161, 124, 62, 0.4);
 }
 
 .profile-header h1 {
   margin: 0;
-  font-family: Georgia, serif;
-  font-size: clamp(42px, 6vw, 76px);
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(46px, 6vw, 78px);
   line-height: 1.02;
   font-weight: 400;
-  color: #292720;
+
+  letter-spacing: -1.5px;
+  color: var(--profile-text);
 }
 
 .profile-header h1 span {
-  color: #a17c3e;
+  color: var(--profile-gold);
   font-style: italic;
 }
 
 .profile-header p {
-  max-width: 600px;
+  max-width: 620px;
   margin: 25px auto 0;
-  color: #777267;
+
+  color: var(--profile-text-soft);
   font-size: 15px;
-  line-height: 1.8;
+  line-height: 1.9;
 }
 
 
-/* =====================================================
+/* =========================================================
    MAIN PROFILE CARD
-===================================================== */
+   ========================================================= */
 
 .profile-main-card {
   max-width: 1100px;
-  margin: 0 auto 80px;
-  padding: 30px 35px;
-  background: rgba(255, 255, 255, 0.82);
-  border: 1px solid rgba(160, 123, 53, 0.16);
-  border-radius: 24px;
+  margin: 0 auto 85px;
+
+  padding: 32px 38px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.92),
+      rgba(250, 247, 238, 0.88)
+    );
+
+  border: 1px solid var(--profile-border);
+  border-radius: 26px;
+
   display: flex;
   align-items: center;
-  gap: 24px;
-  box-shadow: 0 20px 60px rgba(70, 57, 35, 0.08);
-  backdrop-filter: blur(15px);
+  gap: 25px;
+
+  box-shadow: var(--profile-shadow);
+
+  backdrop-filter: blur(16px);
+
+  animation: profileFadeUp 0.8s 0.12s ease both;
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
 }
 
+.profile-main-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--profile-shadow-hover);
+}
+
+
+/* =========================================================
+   AVATAR
+   ========================================================= */
+
 .profile-avatar {
-  width: 88px;
-  height: 88px;
+  width: 92px;
+  height: 92px;
+
   border-radius: 50%;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f3ead6;
-  border: 1px solid rgba(166, 128, 63, 0.25);
-  font-size: 40px;
+
   flex-shrink: 0;
+
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      #fff8e8,
+      #efe2c7
+    );
+
+  border: 1px solid rgba(166, 128, 63, 0.25);
+
+  font-size: 41px;
+
+  box-shadow:
+    0 10px 30px rgba(120, 91, 43, 0.10);
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
 }
+
+.profile-main-card:hover .profile-avatar {
+  transform: scale(1.04) rotate(2deg);
+
+  box-shadow:
+    0 15px 35px rgba(120, 91, 43, 0.15);
+}
+
+
+/* =========================================================
+   USER INFO
+   ========================================================= */
 
 .profile-user-info {
   flex: 1;
 }
 
 .profile-user-info h2 {
-  margin: 0 0 5px;
-  font-family: Georgia, serif;
-  font-size: 28px;
+  margin: 0 0 6px;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 30px;
   font-weight: 400;
+
+  color: var(--profile-text);
 }
 
 .profile-user-info p {
-  margin: 0 0 10px;
-  color: #777267;
+  margin: 0 0 11px;
+
+  color: var(--profile-text-soft);
   font-size: 14px;
 }
 
 .profile-age {
-  color: #9a7940;
-  font-size: 12px;
-  letter-spacing: 1px;
+  display: inline-flex;
+
+  padding: 5px 11px;
+
+  border-radius: 20px;
+
+  background: var(--profile-gold-soft);
+  color: #80622f;
+
+  font-size: 10px;
+  letter-spacing: 1.2px;
 }
+
+
+/* =========================================================
+   EDIT PROFILE BUTTON
+   ========================================================= */
 
 .edit-profile-button {
   border: 1px solid #b39151;
-  background: transparent;
+
+  background: rgba(255, 255, 255, 0.45);
+
   color: #85662f;
-  padding: 12px 20px;
+
+  padding: 12px 21px;
+
   border-radius: 30px;
+
   cursor: pointer;
-  font-size: 12px;
-  letter-spacing: 1px;
-  transition: 0.3s;
+
+  font-size: 11px;
+  letter-spacing: 1.2px;
+
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .edit-profile-button:hover {
-  background: #a78343;
+  background: var(--profile-gold);
   color: white;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 22px rgba(161, 124, 62, 0.20);
 }
 
 
-/* =====================================================
+/* =========================================================
    SECTIONS
-===================================================== */
+   ========================================================= */
 
 .profile-section {
   max-width: 1100px;
-  margin: 0 auto 80px;
+  margin: 0 auto 88px;
+
+  animation: profileFadeUp 0.7s ease both;
 }
 
 .profile-section-heading {
-  margin-bottom: 28px;
+  margin-bottom: 30px;
 }
 
 .profile-section-heading > span {
   display: block;
-  margin-bottom: 10px;
-  font-size: 10px;
+
+  margin-bottom: 11px;
+
+  font-size: 9px;
   letter-spacing: 3px;
-  color: #a17b3c;
+
+  color: var(--profile-gold);
+
   font-weight: 600;
 }
 
 .profile-section-heading h2 {
   margin: 0;
-  font-family: Georgia, serif;
-  font-size: 34px;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 35px;
   font-weight: 400;
+
+  letter-spacing: -0.4px;
+
   color: #2d2a24;
 }
 
 .profile-section-description {
   max-width: 650px;
+
+  margin-top: 12px;
+
   color: #817d73;
-  line-height: 1.7;
+
+  line-height: 1.8;
   font-size: 14px;
 }
 
 
-/* =====================================================
+/* =========================================================
    PROFILE STATS
-===================================================== */
+   ========================================================= */
 
 .profile-stats {
   display: grid;
@@ -180,78 +357,164 @@
 }
 
 .profile-stat {
-  min-height: 160px;
-  padding: 25px;
-  border-radius: 20px;
+  min-height: 165px;
+
+  padding: 27px;
+
+  border-radius: 21px;
+
   position: relative;
   overflow: hidden;
-  transition: 0.3s;
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.profile-stat::after {
+  content: "";
+
+  position: absolute;
+
+  width: 100px;
+  height: 100px;
+
+  right: -35px;
+  bottom: -40px;
+
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.28);
 }
 
 .profile-stat:hover {
-  transform: translateY(-5px);
+  transform: translateY(-6px);
+
+  box-shadow:
+    0 18px 40px rgba(70, 57, 35, 0.08);
 }
 
 .profile-stat > span {
-  font-size: 10px;
+  font-size: 9px;
   letter-spacing: 2px;
+
   font-weight: 600;
 }
 
 .profile-stat strong {
   display: block;
-  margin-top: 24px;
-  font-family: Georgia, serif;
+
+  margin-top: 25px;
+
+  font-family: Georgia, "Times New Roman", serif;
+
   font-size: 24px;
+  line-height: 1.25;
+
   font-weight: 400;
 }
 
 .profile-stat small {
   display: block;
-  margin-top: 7px;
-  font-size: 11px;
-  opacity: 0.7;
+
+  margin-top: 8px;
+
+  font-size: 10px;
+  line-height: 1.5;
+
+  opacity: 0.72;
 }
 
 
-/* Different colors */
+/* =========================================================
+   STAT COLORS
+   ========================================================= */
 
 .dosha-stat {
-  background: #eee5d2;
+  background:
+    linear-gradient(
+      135deg,
+      #eee5d2,
+      #e8dec9
+    );
+
   color: #795d2f;
 }
 
 .skin-stat {
-  background: #e9ddd9;
+  background:
+    linear-gradient(
+      135deg,
+      #eddfdb,
+      #e7d7d2
+    );
+
   color: #895b50;
 }
 
 .hydration-stat {
-  background: #dfe8e5;
+  background:
+    linear-gradient(
+      135deg,
+      #e1e9e7,
+      #d9e5e2
+    );
+
   color: #54776f;
 }
 
 .concern-stat {
-  background: #e9e4d3;
+  background:
+    linear-gradient(
+      135deg,
+      #ebe7d7,
+      #e5dfcb
+    );
+
   color: #756d46;
 }
 
 
-/* =====================================================
-   DOSHA CIRCLE
-===================================================== */
+/* =========================================================
+   DOSHA BALANCE
+   ========================================================= */
 
 .dosha-balance-card {
-  padding: 45px;
+  padding: 48px;
+
   border-radius: 28px;
-  background: #fffdf8;
-  border: 1px solid rgba(160, 123, 53, 0.15);
+
+  background:
+    linear-gradient(
+      135deg,
+      #fffefa,
+      #faf7ef
+    );
+
+  border: 1px solid var(--profile-border);
+
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 80px;
-  box-shadow: 0 20px 60px rgba(60, 50, 35, 0.07);
+
+  gap: 85px;
+
+  box-shadow: var(--profile-shadow);
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
 }
+
+.dosha-balance-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--profile-shadow-hover);
+}
+
+
+/* =========================================================
+   DOSHA CIRCLE
+   ========================================================= */
 
 .dosha-circle-wrapper {
   display: flex;
@@ -260,143 +523,256 @@
 }
 
 .dosha-circle {
-  width: 250px;
-  height: 250px;
+  width: 255px;
+  height: 255px;
+
   border-radius: 50%;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   transform: rotate(-90deg);
+
   box-shadow:
-    0 15px 35px rgba(50, 40, 20, 0.12);
+    0 16px 38px rgba(50, 40, 20, 0.13);
+
+  position: relative;
+}
+
+.dosha-circle::before {
+  content: "";
+
+  position: absolute;
+
+  inset: -8px;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(161, 124, 62, 0.12);
 }
 
 .dosha-circle-inner {
-  width: 190px;
-  height: 190px;
+  width: 192px;
+  height: 192px;
+
   border-radius: 50%;
-  background: #fffdf8;
+
+  background:
+    radial-gradient(
+      circle,
+      #fffefa,
+      #faf7ef
+    );
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
   transform: rotate(90deg);
+
   text-align: center;
+
+  box-shadow:
+    inset 0 0 30px rgba(80, 65, 40, 0.04);
 }
 
 .dosha-circle-inner span {
-  font-size: 9px;
-  letter-spacing: 2px;
+  font-size: 8px;
+  letter-spacing: 2.5px;
+
   color: #918879;
 }
 
 .dosha-circle-inner strong {
-  margin: 7px 0;
-  font-family: Georgia, serif;
+  margin: 8px 0;
+
+  font-family: Georgia, "Times New Roman", serif;
+
   font-size: 30px;
   font-weight: 400;
+
   color: #876832;
 }
 
 .dosha-circle-inner small {
-  font-size: 11px;
+  font-size: 10px;
   color: #918879;
 }
 
 
-/* =====================================================
+/* =========================================================
    DOSHA LEGEND
-===================================================== */
+   ========================================================= */
 
 .dosha-legend {
-  width: 300px;
+  width: 310px;
 }
 
 .dosha-legend-item {
   display: flex;
   align-items: center;
+
   gap: 15px;
-  padding: 15px 0;
+
+  padding: 16px 0;
+
   border-bottom: 1px solid #ebe6dc;
 }
 
 .legend-dot {
   width: 14px;
   height: 14px;
+
   border-radius: 50%;
+
   flex-shrink: 0;
+
+  box-shadow:
+    0 0 0 4px rgba(0, 0, 0, 0.025);
 }
 
+
+/* Existing AyurAI Dosha colors */
+
 .vata-dot {
-  background: #b68b4c;
+  background: var(--vata-main);
 }
 
 .pitta-dot {
-  background: #d47b61;
+  background: var(--pitta-main);
 }
 
 .kapha-dot {
-  background: #7f9b72;
+  background: var(--kapha-main);
 }
 
 .dosha-legend-item div {
   display: flex;
   justify-content: space-between;
+
   width: 100%;
 }
 
 .dosha-legend-item strong {
-  font-family: Georgia, serif;
+  font-family: Georgia, "Times New Roman", serif;
+
   font-weight: 400;
+
   font-size: 17px;
 }
 
 .dosha-legend-item small {
   color: #887f70;
+
+  font-size: 12px;
 }
+
+
+/* =========================================================
+   REFRESH BUTTON
+   ========================================================= */
 
 .profile-refresh-button {
   width: 100%;
+
   margin-top: 25px;
+
   padding: 13px;
+
   border: 1px solid #c2a66c;
+
   border-radius: 30px;
+
   background: transparent;
+
   color: #80632e;
+
   cursor: pointer;
-  transition: 0.3s;
+
+  font-size: 11px;
+  letter-spacing: 0.8px;
+
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease;
 }
 
 .profile-refresh-button:hover {
-  background: #a78343;
+  background: var(--profile-gold);
   color: white;
+
+  transform: translateY(-2px);
 }
 
 
-/* =====================================================
+/* =========================================================
    LATEST ANALYSIS
-===================================================== */
+   ========================================================= */
 
 .latest-analysis-card {
-  padding: 30px;
-  border-radius: 22px;
-  background: #27271f;
+  padding: 31px;
+
+  border-radius: 23px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #292920,
+      #22231e
+    );
+
   color: white;
+
   display: flex;
   align-items: center;
+
   gap: 22px;
+
+  position: relative;
+  overflow: hidden;
+
+  box-shadow:
+    0 20px 50px rgba(35, 33, 25, 0.14);
+}
+
+.latest-analysis-card::after {
+  content: "";
+
+  position: absolute;
+
+  width: 180px;
+  height: 180px;
+
+  right: -70px;
+  top: -80px;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(208, 173, 103, 0.13);
 }
 
 .analysis-symbol {
-  width: 55px;
-  height: 55px;
+  width: 58px;
+  height: 58px;
+
   border-radius: 50%;
-  background: rgba(255,255,255,0.08);
+
+  background: rgba(255, 255, 255, 0.07);
+
+  border: 1px solid rgba(208, 173, 103, 0.15);
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   color: #d0ad67;
+
   font-size: 23px;
+
+  flex-shrink: 0;
 }
 
 .latest-analysis-content {
@@ -404,222 +780,412 @@
 }
 
 .latest-analysis-content > span {
-  font-size: 9px;
-  letter-spacing: 2px;
+  font-size: 8px;
+  letter-spacing: 2.5px;
+
   color: #c7a96b;
 }
 
 .latest-analysis-content h3 {
   margin: 8px 0;
-  font-family: Georgia, serif;
-  font-size: 25px;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: 26px;
   font-weight: 400;
 }
 
 .latest-analysis-content p {
   margin: 0;
+
   color: #aaa69b;
-  font-size: 13px;
+
+  font-size: 12px;
+  line-height: 1.6;
 }
 
 .view-analysis-button {
   border: 1px solid #a98a51;
+
   background: transparent;
+
   color: #d2b06c;
-  padding: 12px 20px;
+
+  padding: 12px 21px;
+
   border-radius: 30px;
+
   cursor: pointer;
+
+  font-size: 11px;
+
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.view-analysis-button:hover {
+  background: #d2b06c;
+  color: #27271f;
+
+  transform: translateY(-2px);
 }
 
 
-/* =====================================================
+/* =========================================================
    REMEDIES
-===================================================== */
+   ========================================================= */
 
 .profile-remedies-grid {
   display: grid;
+
   grid-template-columns: repeat(3, 1fr);
+
   gap: 18px;
 }
 
 .profile-remedy-card {
-  background: #fffdf8;
+  background:
+    linear-gradient(
+      145deg,
+      #fffefa,
+      #faf7ef
+    );
+
   border: 1px solid #e8e1d4;
-  border-radius: 22px;
-  padding: 28px;
+
+  border-radius: 23px;
+
+  padding: 29px;
+
   position: relative;
-  transition: 0.3s;
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
 }
 
 .profile-remedy-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 40px rgba(60, 50, 35, 0.08);
+  transform: translateY(-7px);
+
+  box-shadow:
+    0 20px 45px rgba(60, 50, 35, 0.10);
+
+  border-color:
+    rgba(161, 124, 62, 0.27);
 }
 
 .remedy-number {
   position: absolute;
+
   top: 22px;
   right: 22px;
+
   color: #c5bba9;
+
+  font-family: Georgia, serif;
+
   font-size: 11px;
 }
 
 .remedy-icon {
-  font-size: 30px;
+  font-size: 31px;
+
   margin-bottom: 20px;
 }
 
 .remedy-category {
-  font-size: 9px;
+  font-size: 8px;
+
   letter-spacing: 2px;
-  color: #a17c3e;
+
+  color: var(--profile-gold);
+
+  font-weight: 600;
 }
 
 .profile-remedy-card h3 {
   margin: 12px 0;
-  font-family: Georgia, serif;
+
+  font-family: Georgia, "Times New Roman", serif;
+
   font-weight: 400;
+
   font-size: 22px;
+  line-height: 1.3;
 }
 
 .profile-remedy-card > p {
   color: #777267;
+
   font-size: 13px;
-  line-height: 1.7;
+
+  line-height: 1.75;
 }
 
 .remedy-ingredients {
-  margin-top: 20px;
-  padding-top: 15px;
+  margin-top: 22px;
+
+  padding-top: 16px;
+
   border-top: 1px solid #ebe5da;
 }
 
 .remedy-ingredients span {
   font-size: 8px;
+
   letter-spacing: 2px;
-  color: #a17c3e;
+
+  color: var(--profile-gold);
 }
 
 .remedy-ingredients p {
+  margin: 7px 0 0;
+
   font-size: 12px;
+
+  line-height: 1.6;
+
   color: #777267;
 }
 
 
-/* Empty remedies */
+/* =========================================================
+   EMPTY REMEDIES
+   ========================================================= */
 
 .empty-remedies {
   text-align: center;
-  padding: 60px 20px;
-  background: #fffdf8;
+
+  padding: 65px 25px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #fffefa,
+      #faf7ef
+    );
+
   border: 1px solid #e8e1d4;
-  border-radius: 24px;
+
+  border-radius: 25px;
 }
 
 .empty-remedies span {
+  display: block;
+
   font-size: 40px;
+
+  margin-bottom: 8px;
 }
 
 .empty-remedies h3 {
-  font-family: Georgia, serif;
+  margin: 0;
+
+  font-family: Georgia, "Times New Roman", serif;
+
   font-weight: 400;
-  font-size: 25px;
+
+  font-size: 26px;
 }
 
 .empty-remedies p {
+  max-width: 500px;
+
+  margin: 12px auto;
+
   color: #777267;
+
   font-size: 14px;
+
+  line-height: 1.7;
 }
 
 .empty-remedies button {
-  margin-top: 15px;
+  margin-top: 16px;
+
   border: none;
+
   background: #292820;
+
   color: white;
-  padding: 13px 22px;
+
+  padding: 13px 23px;
+
   border-radius: 30px;
+
   cursor: pointer;
+
+  font-size: 11px;
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.empty-remedies button:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 10px 25px rgba(41, 40, 32, 0.18);
 }
 
 
-/* =====================================================
+/* =========================================================
    DOSHA JOURNEY
-===================================================== */
+   ========================================================= */
 
 .dosha-profile-card {
-  padding: 35px;
-  border-radius: 24px;
-  background: #eee8da;
+  padding: 37px;
+
+  border-radius: 25px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #eee8da,
+      #e9e1d0
+    );
+
   display: flex;
+
   align-items: center;
+
   justify-content: space-between;
+
   gap: 30px;
+
+  border: 1px solid rgba(161, 124, 62, 0.10);
 }
 
 .dosha-profile-card > div > span {
-  font-size: 9px;
-  letter-spacing: 2px;
+  font-size: 8px;
+
+  letter-spacing: 2.5px;
+
   color: #91723d;
 }
 
 .dosha-profile-card h2 {
-  font-family: Georgia, serif;
+  font-family: Georgia, "Times New Roman", serif;
+
   font-weight: 400;
-  font-size: 30px;
+
+  font-size: 31px;
+
   margin: 10px 0;
 }
 
 .dosha-profile-card p {
+  margin: 0;
+
   color: #756f64;
+
+  font-size: 14px;
+}
+
+.dosha-profile-card p strong {
+  color: #765a2e;
 }
 
 .retake-button {
   border: none;
+
   background: #292820;
+
   color: white;
-  padding: 14px 22px;
+
+  padding: 14px 23px;
+
   border-radius: 30px;
+
   cursor: pointer;
+
   white-space: nowrap;
+
+  font-size: 11px;
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.retake-button:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 10px 25px rgba(41, 40, 32, 0.18);
 }
 
 
-/* =====================================================
+/* =========================================================
    HISTORY
-===================================================== */
+   ========================================================= */
 
 .history-list {
   background: #fffdf8;
-  border-radius: 22px;
+
+  border-radius: 23px;
+
   border: 1px solid #e8e1d4;
+
+  overflow: hidden;
 }
 
 .history-item {
   display: flex;
+
   align-items: center;
+
   padding: 25px;
+
   gap: 22px;
+
+  transition:
+    background 0.3s ease;
+}
+
+.history-item + .history-item {
+  border-top: 1px solid #eee9df;
+}
+
+.history-item:hover {
+  background: #fcfaf5;
 }
 
 .history-date {
-  width: 55px;
-  height: 55px;
-  border-radius: 14px;
+  width: 57px;
+  height: 57px;
+
+  border-radius: 15px;
+
   background: #eee5d2;
+
   display: flex;
   flex-direction: column;
+
   align-items: center;
   justify-content: center;
+
+  flex-shrink: 0;
 }
 
 .history-date strong {
-  font-family: Georgia, serif;
+  font-family: Georgia, "Times New Roman", serif;
+
   font-size: 20px;
+
+  font-weight: 400;
 }
 
 .history-date span {
   font-size: 8px;
+
   letter-spacing: 1px;
+
+  color: #756b5b;
 }
 
 .history-info {
@@ -628,292 +1194,770 @@
 
 .history-info h3 {
   margin: 0 0 5px;
-  font-family: Georgia, serif;
+
+  font-family: Georgia, "Times New Roman", serif;
+
   font-weight: 400;
+
+  font-size: 19px;
 }
 
 .history-info p {
   margin: 0;
+
   color: #817b70;
-  font-size: 13px;
+
+  font-size: 12px;
+
+  line-height: 1.6;
 }
 
 .history-status {
   padding: 7px 13px;
+
   border-radius: 20px;
-  background: #e1eadf;
+
+  background: var(--kapha-soft);
+
   color: #597052;
-  font-size: 10px;
+
+  font-size: 9px;
+
+  letter-spacing: 0.7px;
+
+  white-space: nowrap;
 }
 
 
-/* =====================================================
-   EDIT MODAL
-===================================================== */
+/* =========================================================
+   EDIT PROFILE OVERLAY
+   ========================================================= */
 
 .edit-profile-overlay {
   position: fixed;
+
   inset: 0;
+
   z-index: 1000;
-  background: rgba(25, 24, 20, 0.65);
+
+  background:
+    rgba(25, 24, 20, 0.68);
+
   display: flex;
+
   align-items: center;
   justify-content: center;
+
   padding: 20px;
-  backdrop-filter: blur(8px);
+
+  backdrop-filter: blur(10px);
+
+  animation: overlayFade 0.25s ease both;
 }
+
+
+/* =========================================================
+   EDIT PROFILE MODAL
+   ========================================================= */
 
 .edit-profile-modal {
   width: min(600px, 100%);
+
   max-height: 90vh;
+
   overflow-y: auto;
-  background: #fffdf8;
-  border-radius: 26px;
-  padding: 35px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #fffefa,
+      #faf7ef
+    );
+
+  border-radius: 28px;
+
+  padding: 37px;
+
   position: relative;
-  box-shadow: 0 30px 100px rgba(0,0,0,0.25);
+
+  border: 1px solid rgba(161, 124, 62, 0.16);
+
+  box-shadow:
+    0 30px 100px rgba(0, 0, 0, 0.27);
+
+  animation: modalEnter 0.35s ease both;
 }
 
 .profile-modal-close {
   position: absolute;
-  top: 18px;
+
+  top: 17px;
   right: 20px;
-  border: none;
-  background: transparent;
-  font-size: 28px;
+
+  width: 34px;
+  height: 34px;
+
+  border: 1px solid #e5ded2;
+
+  border-radius: 50%;
+
+  background: #faf7ef;
+
+  font-size: 21px;
+
+  line-height: 1;
+
   color: #777;
+
   cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease;
 }
+
+.profile-modal-close:hover {
+  background: #eee5d2;
+
+  transform: rotate(90deg);
+}
+
+
+/* =========================================================
+   MODAL HEADER
+   ========================================================= */
 
 .profile-modal-header {
   display: flex;
+
   gap: 18px;
+
   align-items: center;
-  margin-bottom: 30px;
+
+  margin-bottom: 31px;
+
+  padding-right: 35px;
 }
 
 .profile-modal-avatar {
-  width: 65px;
-  height: 65px;
+  width: 67px;
+  height: 67px;
+
   border-radius: 50%;
-  background: #f1e6d0;
+
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      #fff8e8,
+      #efe2c7
+    );
+
+  border: 1px solid rgba(166, 128, 63, 0.22);
+
   display: flex;
+
   align-items: center;
   justify-content: center;
+
   font-size: 30px;
+
+  flex-shrink: 0;
 }
 
 .profile-modal-label {
-  font-size: 9px;
-  letter-spacing: 2px;
-  color: #a17c3e;
+  font-size: 8px;
+
+  letter-spacing: 2.5px;
+
+  color: var(--profile-gold);
 }
 
 .profile-modal-header h2 {
-  margin: 5px 0;
-  font-family: Georgia, serif;
+  margin: 6px 0;
+
+  font-family: Georgia, "Times New Roman", serif;
+
   font-weight: 400;
+
+  font-size: 28px;
 }
 
 .profile-modal-header p {
   margin: 0;
+
   color: #817b70;
+
   font-size: 12px;
 }
 
 
-/* =====================================================
+/* =========================================================
    PROFILE ICON CHOOSER
-===================================================== */
+   ========================================================= */
 
 .profile-icon-section {
-  margin-bottom: 25px;
+  margin-bottom: 27px;
 }
 
 .profile-icon-section > label {
   display: block;
-  margin-bottom: 12px;
-  font-size: 9px;
+
+  margin-bottom: 13px;
+
+  font-size: 8px;
+
   letter-spacing: 2px;
+
   color: #8b7347;
 }
 
 .profile-icon-grid {
   display: flex;
+
   gap: 10px;
+
   flex-wrap: wrap;
 }
 
 .profile-icon-option {
-  width: 65px;
-  height: 65px;
+  width: 66px;
+  height: 66px;
+
   border-radius: 18px;
+
   border: 1px solid #e4ddcf;
+
   background: #f8f5ed;
+
   cursor: pointer;
-  transition: 0.25s;
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+
   font-size: 28px;
 }
 
 .profile-icon-option:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px);
+
   border-color: #c4a05d;
+
+  box-shadow:
+    0 8px 20px rgba(170, 130, 55, 0.09);
 }
 
 .profile-icon-option.selected {
-  background: #efe2c5;
+  background:
+    linear-gradient(
+      145deg,
+      #f3e7c9,
+      #eadcbb
+    );
+
   border: 2px solid #b08a45;
-  box-shadow: 0 8px 20px rgba(170, 130, 55, 0.16);
+
+  box-shadow:
+    0 9px 24px rgba(170, 130, 55, 0.16);
+
+  transform: translateY(-2px);
 }
 
 
-/* =====================================================
+/* =========================================================
    FORM
-===================================================== */
+   ========================================================= */
 
 .profile-form {
   display: grid;
+
   gap: 18px;
 }
 
 .profile-input-group {
   display: grid;
+
   gap: 7px;
 }
 
 .profile-input-group label {
-  font-size: 9px;
+  font-size: 8px;
+
   letter-spacing: 2px;
+
   color: #887452;
 }
 
 .profile-input-group input {
   width: 100%;
+
   box-sizing: border-box;
-  padding: 13px 15px;
-  border-radius: 12px;
+
+  padding: 14px 15px;
+
+  border-radius: 13px;
+
   border: 1px solid #ddd6c9;
-  background: #faf8f2;
+
+  background: rgba(250, 248, 242, 0.9);
+
   outline: none;
+
+  font-family: inherit;
+
   font-size: 14px;
+
   color: #36332c;
+
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+.profile-input-group input:hover {
+  border-color: #cfc3ad;
 }
 
 .profile-input-group input:focus {
   border-color: #b29154;
-  box-shadow: 0 0 0 3px rgba(178, 145, 84, 0.08);
+
+  background: #fffefa;
+
+  box-shadow:
+    0 0 0 4px rgba(178, 145, 84, 0.08);
 }
+
+.profile-input-group input::placeholder {
+  color: #aaa398;
+}
+
+
+/* =========================================================
+   MODAL ACTIONS
+   ========================================================= */
 
 .profile-modal-divider {
   height: 1px;
+
   background: #e8e1d5;
-  margin: 25px 0;
+
+  margin: 27px 0;
 }
 
 .profile-modal-actions {
   display: flex;
+
   justify-content: flex-end;
+
   gap: 10px;
 }
 
 .profile-cancel-button,
 .profile-save-button {
-  padding: 12px 20px;
+  padding: 12px 21px;
+
   border-radius: 25px;
+
   cursor: pointer;
+
+  font-size: 11px;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
 }
 
 .profile-cancel-button {
   border: 1px solid #d5cec0;
+
   background: transparent;
+
   color: #6d675c;
+}
+
+.profile-cancel-button:hover {
+  background: #f1ede4;
+
+  transform: translateY(-2px);
 }
 
 .profile-save-button {
   border: none;
+
   background: #292820;
+
   color: white;
 }
 
+.profile-save-button:hover {
+  background: #403d32;
 
-/* =====================================================
-   RESPONSIVE
-===================================================== */
+  transform: translateY(-2px);
 
-@media (max-width: 900px) {
+  box-shadow:
+    0 9px 23px rgba(41, 40, 32, 0.18);
+}
+
+
+/* =========================================================
+   DISCLAIMER
+   ========================================================= */
+
+.analysis-disclaimer {
+  max-width: 850px;
+
+  margin-left: auto;
+  margin-right: auto;
+
+  padding: 17px 20px;
+
+  text-align: center;
+
+  color: #898276;
+
+  font-size: 11px;
+
+  line-height: 1.7;
+
+  border-top: 1px solid #e5dfd3;
+}
+
+
+/* =========================================================
+   SCROLLBAR — MODAL
+   ========================================================= */
+
+.edit-profile-modal::-webkit-scrollbar {
+  width: 6px;
+}
+
+.edit-profile-modal::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.edit-profile-modal::-webkit-scrollbar-thumb {
+  background: #d6c9b0;
+  border-radius: 10px;
+}
+
+
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
+
+@keyframes profileFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes overlayFade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalEnter {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+  .profile-page {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
 
   .profile-stats {
     grid-template-columns: repeat(2, 1fr);
   }
 
   .dosha-balance-card {
-    gap: 40px;
+    gap: 50px;
   }
 
   .profile-remedies-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
-
 }
 
-@media (max-width: 650px) {
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
 
   .profile-page {
-    padding: 90px 20px 70px;
+    padding:
+      90px
+      20px
+      70px;
   }
+
+  .profile-header {
+    margin-bottom: 45px;
+  }
+
+  .profile-header h1 {
+    font-size: clamp(43px, 12vw, 55px);
+    letter-spacing: -1px;
+  }
+
+  .profile-header p {
+    font-size: 13px;
+  }
+
+  .profile-label::before,
+  .profile-label::after {
+    width: 15px;
+  }
+
+
+  /* Profile card */
 
   .profile-main-card {
     flex-direction: column;
+
     text-align: center;
+
+    padding: 30px 22px;
+
+    margin-bottom: 65px;
   }
 
   .profile-user-info {
     width: 100%;
   }
 
+  .profile-user-info h2 {
+    font-size: 27px;
+  }
+
   .edit-profile-button {
     width: 100%;
   }
+
+
+  /* Sections */
+
+  .profile-section {
+    margin-bottom: 65px;
+  }
+
+  .profile-section-heading h2 {
+    font-size: 29px;
+  }
+
+
+  /* Stats */
 
   .profile-stats {
     grid-template-columns: 1fr;
   }
 
+  .profile-stat {
+    min-height: 145px;
+  }
+
+
+  /* Dosha */
+
   .dosha-balance-card {
     flex-direction: column;
-    padding: 30px 20px;
+
+    padding: 32px 20px;
+
+    gap: 35px;
   }
 
   .dosha-circle {
-    width: 210px;
-    height: 210px;
+    width: 215px;
+    height: 215px;
   }
 
   .dosha-circle-inner {
-    width: 160px;
-    height: 160px;
+    width: 163px;
+    height: 163px;
+  }
+
+  .dosha-circle-inner strong {
+    font-size: 26px;
   }
 
   .dosha-legend {
     width: 100%;
   }
 
+
+  /* Latest analysis */
+
   .latest-analysis-card {
     flex-direction: column;
+
     text-align: center;
+
+    padding: 28px 22px;
+  }
+
+  .latest-analysis-content {
+    width: 100%;
   }
 
   .view-analysis-button {
     width: 100%;
   }
 
+
+  /* Remedies */
+
+  .profile-remedies-grid {
+    grid-template-columns: 1fr;
+  }
+
+
+  /* Journey */
+
   .dosha-profile-card {
     flex-direction: column;
+
     align-items: flex-start;
+
+    padding: 30px 25px;
   }
 
   .retake-button {
     width: 100%;
+  }
+
+
+  /* History */
+
+  .history-item {
+    align-items: flex-start;
+
+    gap: 15px;
+
+    padding: 20px;
+  }
+
+  .history-info h3 {
+    font-size: 17px;
+  }
+
+  .history-status {
+    margin-left: 72px;
+  }
+
+
+  /* Modal */
+
+  .edit-profile-overlay {
+    padding: 12px;
+  }
+
+  .edit-profile-modal {
+    padding: 28px 21px;
+
+    border-radius: 23px;
+
+    max-height: 92vh;
+  }
+
+  .profile-modal-header {
+    align-items: flex-start;
+
+    padding-right: 25px;
+  }
+
+  .profile-modal-header h2 {
+    font-size: 24px;
+  }
+
+  .profile-icon-option {
+    width: 58px;
+    height: 58px;
+
+    font-size: 25px;
+  }
+
+  .profile-modal-actions {
+    flex-direction: column-reverse;
+  }
+
+  .profile-cancel-button,
+  .profile-save-button {
+    width: 100%;
+  }
+}
+
+
+/* =========================================================
+   SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 430px) {
+
+  .profile-page {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .profile-header h1 {
+    font-size: 43px;
+  }
+
+  .profile-header p {
+    font-size: 12px;
+  }
+
+  .profile-main-card {
+    padding: 27px 18px;
+  }
+
+  .profile-section-heading h2 {
+    font-size: 27px;
+  }
+
+  .dosha-circle {
+    width: 195px;
+    height: 195px;
+  }
+
+  .dosha-circle-inner {
+    width: 148px;
+    height: 148px;
+  }
+
+  .dosha-circle-inner strong {
+    font-size: 23px;
   }
 
   .history-item {
@@ -921,11 +1965,33 @@
   }
 
   .history-status {
-    margin-left: 77px;
+    margin-left: 72px;
   }
 
-  .profile-header h1 {
-    font-size: 48px;
+  .profile-modal-header {
+    gap: 12px;
   }
 
+  .profile-modal-avatar {
+    width: 58px;
+    height: 58px;
+
+    font-size: 26px;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .profile-page *,
+  .profile-page *::before,
+  .profile-page *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

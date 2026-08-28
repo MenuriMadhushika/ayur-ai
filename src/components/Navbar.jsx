@@ -1,125 +1,163 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import "./Navbar.css";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [profileIcon, setProfileIcon] = useState("🦋");
+
+  const profileIcons = {
+    lotus: "🪷",
+    leaf: "🍃",
+    flower: "🌺",
+    sun: "☀️",
+    butterfly: "🦋",
+    botanical: "🌿",
+  };
+
+  useEffect(() => {
+    const loadProfileIcon = () => {
+      const savedUser = localStorage.getItem("ayuraiUser");
+
+      if (!savedUser) {
+        setProfileIcon("🦋");
+        return;
+      }
+
+      try {
+        const user = JSON.parse(savedUser);
+        setProfileIcon(profileIcons[user.icon] || "🦋");
+      } catch {
+        setProfileIcon("🦋");
+      }
+    };
+
+    loadProfileIcon();
+
+    window.addEventListener(
+      "ayuraiProfileUpdated",
+      loadProfileIcon
+    );
+
+    return () => {
+      window.removeEventListener(
+        "ayuraiProfileUpdated",
+        loadProfileIcon
+      );
+    };
+  }, []);
 
   const closeMenu = () => {
     setMenuOpen(false);
   };
 
+  const navClass = ({ isActive }) =>
+    `nav-link${isActive ? " active" : ""}`;
+
+  const mobileNavClass = ({ isActive }) =>
+    `mobile-nav-link${isActive ? " active" : ""}`;
+
   return (
     <header className="navbar">
+
       <div className="navbar-inner">
 
         {/* =========================
-            LOGO
-        ========================= */}
+            BRAND
+        ========================== */}
+
         <Link
           to="/"
           className="navbar-logo"
           onClick={closeMenu}
+          aria-label="AyurAI Home"
         >
-          <span className="logo-main">Ayur</span>
+          <span className="logo-ayur">Ayur</span>
           <span className="logo-ai">AI</span>
         </Link>
 
 
         {/* =========================
             DESKTOP NAVIGATION
-        ========================= */}
-        <nav className="desktop-nav">
+        ========================== */}
 
+        <nav
+          className="desktop-nav"
+          aria-label="Primary navigation"
+        >
           <NavLink
             to="/"
-            className={({ isActive }) =>
-              isActive
-                ? "nav-link active"
-                : "nav-link"
-            }
+            end
+            className={navClass}
+            onClick={closeMenu}
           >
-            Home
+            <span>Home</span>
           </NavLink>
-
 
           <NavLink
             to="/dosha-test"
-            className={({ isActive }) =>
-              isActive
-                ? "nav-link active"
-                : "nav-link"
-            }
+            className={navClass}
+            onClick={closeMenu}
           >
-            Dosha Test
+            <span>Dosha Test</span>
           </NavLink>
-
-
-          <a
-            href="/#skin-scan"
-            className="nav-link"
-          >
-            Skin Scan
-          </a>
-
-
-          {/* HOME REMEDIES */}
-          <a
-            href="/#home-remedies"
-            className="nav-link"
-          >
-            Home Remedies
-          </a>
-
 
           <NavLink
-            to="/profile"
-            className={({ isActive }) =>
-              isActive
-                ? "nav-link active"
-                : "nav-link"
-            }
+            to="/skin-scan"
+            className={navClass}
+            onClick={closeMenu}
           >
-            Profile
+            <span>Skin Scan</span>
           </NavLink>
 
-
-          <a
-            href="/#dashboard"
-            className="nav-link"
+          <NavLink
+            to="/home-remedies"
+            className={navClass}
+            onClick={closeMenu}
           >
-            Dashboard
-          </a>
-
+            <span>Home Remedies</span>
+          </NavLink>
         </nav>
 
 
         {/* =========================
-            RIGHT SIDE
-        ========================= */}
+            RIGHT ACTIONS
+        ========================== */}
+
         <div className="navbar-actions">
 
-          <Link
-            to="/dosha-test"
-            className="nav-cta"
+          {/* Profile */}
+
+          <NavLink
+            to="/profile"
+            className={({ isActive }) =>
+              `profile-button${isActive ? " active" : ""}`
+            }
+            aria-label="Open profile"
+            title="Profile"
+            onClick={closeMenu}
           >
-            Find My Skin Type
-            <span>→</span>
-          </Link>
+            <span className="profile-icon">
+              {profileIcon}
+            </span>
+
+            <span className="profile-ring"></span>
+          </NavLink>
 
 
-          {/* MOBILE MENU BUTTON */}
+          {/* Mobile Menu */}
+
           <button
-            className={`menu-button ${
-              menuOpen ? "open" : ""
-            }`}
-            onClick={() => setMenuOpen(!menuOpen)}
+            type="button"
+            className={`menu-button${menuOpen ? " open" : ""}`}
+            onClick={() => setMenuOpen((current) => !current)}
             aria-label={
               menuOpen
                 ? "Close navigation menu"
                 : "Open navigation menu"
             }
             aria-expanded={menuOpen}
+            aria-controls="mobile-navigation"
           >
             <span></span>
             <span></span>
@@ -132,69 +170,63 @@ const Navbar = () => {
 
 
       {/* =========================
-          MOBILE MENU
-      ========================= */}
+          MOBILE NAVIGATION
+      ========================== */}
+
       <div
-        className={`mobile-menu ${
-          menuOpen ? "show" : ""
-        }`}
+        id="mobile-navigation"
+        className={`mobile-menu${menuOpen ? " show" : ""}`}
       >
 
-        <NavLink
-          to="/"
-          onClick={closeMenu}
-        >
-          Home
-        </NavLink>
+        <div className="mobile-menu-inner">
 
+          <NavLink
+            to="/"
+            end
+            onClick={closeMenu}
+            className={mobileNavClass}
+          >
+            <span className="mobile-link-number">01</span>
+            <span>Home</span>
+          </NavLink>
 
-        <NavLink
-          to="/dosha-test"
-          onClick={closeMenu}
-        >
-          Dosha Test
-        </NavLink>
+          <NavLink
+            to="/dosha-test"
+            onClick={closeMenu}
+            className={mobileNavClass}
+          >
+            <span className="mobile-link-number">02</span>
+            <span>Dosha Test</span>
+          </NavLink>
 
+          <NavLink
+            to="/skin-scan"
+            onClick={closeMenu}
+            className={mobileNavClass}
+          >
+            <span className="mobile-link-number">03</span>
+            <span>Skin Scan</span>
+          </NavLink>
 
-        <a
-          href="/#skin-scan"
-          onClick={closeMenu}
-        >
-          Skin Scan
-        </a>
+          <NavLink
+            to="/home-remedies"
+            onClick={closeMenu}
+            className={mobileNavClass}
+          >
+            <span className="mobile-link-number">04</span>
+            <span>Home Remedies</span>
+          </NavLink>
 
+          <NavLink
+            to="/profile"
+            onClick={closeMenu}
+            className={mobileNavClass}
+          >
+            <span className="mobile-link-number">05</span>
+            <span>Profile</span>
+          </NavLink>
 
-        <a
-          href="/#home-remedies"
-          onClick={closeMenu}
-        >
-          Home Remedies
-        </a>
-
-
-        <NavLink
-          to="/profile"
-          onClick={closeMenu}
-        >
-          Profile
-        </NavLink>
-
-
-        <a
-          href="/#dashboard"
-          onClick={closeMenu}
-        >
-          Dashboard
-        </a>
-
-
-        <Link
-          to="/dosha-test"
-          className="mobile-cta"
-          onClick={closeMenu}
-        >
-          Find My Skin Type →
-        </Link>
+        </div>
 
       </div>
 
