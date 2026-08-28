@@ -8,6 +8,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -17,6 +18,14 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    public SecurityConfig(
+            JwtAuthenticationFilter jwtAuthenticationFilter
+    ) {
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(
@@ -34,6 +43,12 @@ public class SecurityConfig {
                         )
                 )
                 .authorizeHttpRequests(auth -> auth
+
+                        // Future admin endpoints need a valid ADMIN token.
+                        .requestMatchers("/api/admin/**")
+                        .hasRole("ADMIN")
+
+                        // Existing AyurAI user features remain available.
                         .requestMatchers(
                                 "/api/auth/**",
                                 "/api/users/**",
@@ -42,7 +57,14 @@ public class SecurityConfig {
                                 "/api/home-remedies/**",
                                 "/api/overall-results/**"
                         ).permitAll()
+
                         .anyRequest().authenticated()
+                )
+
+                // Reads the Bearer token before Spring checks roles.
+                .addFilterBefore(
+                        jwtAuthenticationFilter,
+                        UsernamePasswordAuthenticationFilter.class
                 );
 
         return http.build();
@@ -67,6 +89,7 @@ public class SecurityConfig {
                         "GET",
                         "POST",
                         "PUT",
+                        "PATCH",
                         "DELETE",
                         "OPTIONS"
                 )
@@ -86,7 +109,6 @@ public class SecurityConfig {
         return source;
     }
 
-    // Encrypts passwords before they are stored in MySQL.
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

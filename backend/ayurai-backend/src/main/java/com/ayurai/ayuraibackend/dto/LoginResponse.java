@@ -8,6 +8,7 @@ public class LoginResponse {
     private Integer age;
     private String profileIcon;
     private String role;
+    private String token;
 
     public LoginResponse(
             Long id,
@@ -15,7 +16,8 @@ public class LoginResponse {
             String email,
             Integer age,
             String profileIcon,
-            String role
+            String role,
+            String token
     ) {
         this.id = id;
         this.name = name;
@@ -23,6 +25,7 @@ public class LoginResponse {
         this.age = age;
         this.profileIcon = profileIcon;
         this.role = role;
+        this.token = token;
     }
 
     public Long getId() {
@@ -47,5 +50,9 @@ public class LoginResponse {
 
     public String getRole() {
         return role;
+    }
+
+    public String getToken() {
+        return token;
     }
 }
