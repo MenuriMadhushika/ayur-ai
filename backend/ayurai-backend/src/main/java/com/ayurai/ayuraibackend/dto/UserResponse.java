@@ -8,11 +8,6 @@ public class UserResponse {
     private Integer age;
     private String profileIcon;
 
-
-    // =========================================================
-    // CONSTRUCTOR
-    // =========================================================
-
     public UserResponse(
             Long id,
             String name,
@@ -26,11 +21,6 @@ public class UserResponse {
         this.age = age;
         this.profileIcon = profileIcon;
     }
-
-
-    // =========================================================
-    // GETTERS
-    // =========================================================
 
     public Long getId() {
         return id;

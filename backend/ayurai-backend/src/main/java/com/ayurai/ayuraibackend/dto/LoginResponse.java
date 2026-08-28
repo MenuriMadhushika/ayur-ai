@@ -7,19 +7,22 @@ public class LoginResponse {
     private String email;
     private Integer age;
     private String profileIcon;
+    private String role;
 
     public LoginResponse(
             Long id,
             String name,
             String email,
             Integer age,
-            String profileIcon
+            String profileIcon,
+            String role
     ) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.age = age;
         this.profileIcon = profileIcon;
+        this.role = role;
     }
 
     public Long getId() {
@@ -40,5 +43,9 @@ public class LoginResponse {
 
     public String getProfileIcon() {
         return profileIcon;
+    }
+
+    public String getRole() {
+        return role;
     }
 }

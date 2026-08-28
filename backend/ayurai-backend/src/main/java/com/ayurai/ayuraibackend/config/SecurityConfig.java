@@ -25,19 +25,15 @@ public class SecurityConfig {
 
         http
                 .csrf(csrf -> csrf.disable())
-
                 .cors(cors -> cors.configurationSource(
                         corsConfigurationSource()
                 ))
-
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(
                                 SessionCreationPolicy.STATELESS
                         )
                 )
-
                 .authorizeHttpRequests(auth -> auth
-
                         .requestMatchers(
                                 "/api/auth/**",
                                 "/api/users/**",
@@ -46,7 +42,6 @@ public class SecurityConfig {
                                 "/api/home-remedies/**",
                                 "/api/overall-results/**"
                         ).permitAll()
-
                         .anyRequest().authenticated()
                 );
 
@@ -77,10 +72,7 @@ public class SecurityConfig {
                 )
         );
 
-        configuration.setAllowedHeaders(
-                List.of("*")
-        );
-
+        configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source =
@@ -94,9 +86,9 @@ public class SecurityConfig {
         return source;
     }
 
+    // Encrypts passwords before they are stored in MySQL.
     @Bean
     public PasswordEncoder passwordEncoder() {
-
         return new BCryptPasswordEncoder();
     }
 }

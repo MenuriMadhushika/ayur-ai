@@ -23,18 +23,14 @@ public class User {
 
     private String profileIcon;
 
-
-    // =========================================================
-    // CONSTRUCTOR
-    // =========================================================
+    // USER = normal AyurAI customer
+    // ADMIN = dashboard administrator
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private UserRole role = UserRole.USER;
 
     public User() {
     }
-
-
-    // =========================================================
-    // GETTERS & SETTERS
-    // =========================================================
 
     public Long getId() {
         return id;
@@ -44,7 +40,6 @@ public class User {
         this.id = id;
     }
 
-
     public String getName() {
         return name;
     }
@@ -52,7 +47,6 @@ public class User {
     public void setName(String name) {
         this.name = name;
     }
-
 
     public String getEmail() {
         return email;
@@ -62,7 +56,6 @@ public class User {
         this.email = email;
     }
 
-
     public String getPassword() {
         return password;
     }
@@ -70,7 +63,6 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
 
     public Integer getAge() {
         return age;
@@ -80,12 +72,19 @@ public class User {
         this.age = age;
     }
 
-
     public String getProfileIcon() {
         return profileIcon;
     }
 
     public void setProfileIcon(String profileIcon) {
         this.profileIcon = profileIcon;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 }

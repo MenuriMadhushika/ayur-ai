@@ -9,9 +9,10 @@ public class UserRequest {
     private String name;
 
     @NotBlank(message = "Email is required")
-    @Email(message = "Invalid email format")
+    @Email(message = "Enter a valid email address")
     private String email;
 
+    @NotBlank(message = "Password is required")
     private String password;
 
     private Integer age;
