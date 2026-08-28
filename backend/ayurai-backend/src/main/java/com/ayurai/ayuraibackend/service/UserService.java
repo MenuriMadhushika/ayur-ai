@@ -5,6 +5,7 @@ import com.ayurai.ayuraibackend.dto.LoginResponse;
 import com.ayurai.ayuraibackend.dto.UserRequest;
 import com.ayurai.ayuraibackend.dto.UserResponse;
 import com.ayurai.ayuraibackend.entity.User;
+import com.ayurai.ayuraibackend.entity.UserRole;
 import com.ayurai.ayuraibackend.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,9 +28,9 @@ public class UserService {
     }
 
     // =========================================================
-    // REGISTER
+    // REGISTER NEW USER
+    // Every new registration is a normal USER by default.
     // =========================================================
-
     public UserResponse createUser(UserRequest request) {
 
         String email = request.getEmail()
@@ -44,15 +45,14 @@ public class UserService {
 
         user.setName(request.getName());
         user.setEmail(email);
-
         user.setPassword(
-                passwordEncoder.encode(
-                        request.getPassword()
-                )
+                passwordEncoder.encode(request.getPassword())
         );
-
         user.setAge(request.getAge());
         user.setProfileIcon(request.getProfileIcon());
+
+        // Only the database administrator can promote a user to ADMIN.
+        user.setRole(UserRole.USER);
 
         User savedUser = userRepository.save(user);
 
@@ -62,7 +62,6 @@ public class UserService {
     // =========================================================
     // LOGIN
     // =========================================================
-
     public LoginResponse login(LoginRequest request) {
 
         String email = request.getEmail()
@@ -72,18 +71,14 @@ public class UserService {
         User user = userRepository
                 .findByEmailIgnoreCase(email)
                 .orElseThrow(() ->
-                        new RuntimeException(
-                                "Invalid email or password"
-                        )
+                        new RuntimeException("Invalid email or password")
                 );
 
         if (!passwordEncoder.matches(
                 request.getPassword(),
                 user.getPassword()
         )) {
-            throw new RuntimeException(
-                    "Invalid email or password"
-            );
+            throw new RuntimeException("Invalid email or password");
         }
 
         return new LoginResponse(
@@ -91,14 +86,14 @@ public class UserService {
                 user.getName(),
                 user.getEmail(),
                 user.getAge(),
-                user.getProfileIcon()
+                user.getProfileIcon(),
+                user.getRole().name()
         );
     }
 
     // =========================================================
-    // UPDATE USER
+    // UPDATE USER PROFILE
     // =========================================================
-
     public UserResponse updateUser(
             Long id,
             UserRequest request
@@ -107,9 +102,7 @@ public class UserService {
         User user = userRepository
                 .findById(id)
                 .orElseThrow(() ->
-                        new RuntimeException(
-                                "User not found"
-                        )
+                        new RuntimeException("User not found")
                 );
 
         if (request.getName() != null) {
@@ -133,14 +126,11 @@ public class UserService {
                 !request.getPassword().isBlank()) {
 
             user.setPassword(
-                    passwordEncoder.encode(
-                            request.getPassword()
-                    )
+                    passwordEncoder.encode(request.getPassword())
             );
         }
 
-        User updatedUser =
-                userRepository.save(user);
+        User updatedUser = userRepository.save(user);
 
         return convertToResponse(updatedUser);
     }
@@ -148,9 +138,7 @@ public class UserService {
     // =========================================================
     // GET ALL USERS
     // =========================================================
-
     public List<UserResponse> getAllUsers() {
-
         return userRepository.findAll()
                 .stream()
                 .map(this::convertToResponse)
@@ -160,19 +148,16 @@ public class UserService {
     // =========================================================
     // GET USER BY ID
     // =========================================================
-
     public Optional<UserResponse> getUserById(Long id) {
-
         return userRepository.findById(id)
                 .map(this::convertToResponse);
     }
 
     // =========================================================
-    // CONVERT USER → RESPONSE
+    // CONVERT USER TO SAFE RESPONSE
+    // Password and role are deliberately not returned here.
     // =========================================================
-
     private UserResponse convertToResponse(User user) {
-
         return new UserResponse(
                 user.getId(),
                 user.getName(),
