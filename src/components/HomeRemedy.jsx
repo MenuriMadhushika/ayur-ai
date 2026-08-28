@@ -1,197 +1,146 @@
-
 import React, { useEffect, useMemo, useState } from "react";
 import "./HomeRemedy.css";
-
 import {
   getAssessmentStatus,
   getDoshaResult,
   getCurrentUserId,
 } from "../utils/assessmentStatus";
-
-import API_BASE_URL from "../utils/api";
+import { getDoshaInfo } from "../utils/doshaInfo";
 
 /* =========================================================
-   REMEDY DATA
-========================================================= */
+   AYURAI — HOME REMEDIES
+   ========================================================= */
 
-const remedies = [
+const REMEDIES = [
   {
     id: 1,
-    concern: "Acne",
-    icon: "🫚",
     title: "Turmeric & Honey Care",
-    subtitle: "A simple traditional-inspired skin ritual.",
+    concern: "Acne",
+    dosha: "Pitta",
+    icon: "🪷",
     time: "10–15 min",
     difficulty: "Easy",
-    dosha: "Pitta",
-    ingredients: [
-      "1/2 teaspoon turmeric",
-      "1 teaspoon honey",
-    ],
+    frequency: "Use 1–2 times per week",
+    description: "A simple traditional-inspired skin ritual.",
+    ingredients: ["1/2 teaspoon turmeric", "1 teaspoon honey"],
+    benefits: ["Simple home-care ritual", "Leaves skin feeling refreshed", "Easy to prepare"],
     steps: [
       "Mix the turmeric and honey into a smooth paste.",
       "Apply a thin layer to clean skin.",
-      "Leave for 10–15 minutes.",
+      "Leave it for 10 minutes and take a relaxing pause.",
       "Rinse gently with lukewarm water.",
-      "Apply a gentle moisturizer.",
+      "Pat dry and follow with a gentle moisturizer.",
     ],
-    benefits: [
-      "Simple home-care ritual",
-      "Leaves skin feeling refreshed",
-      "Easy to prepare",
-    ],
-    note:
-      "Patch test first. Turmeric can temporarily stain the skin.",
+    important: "Patch test first. Turmeric can temporarily stain the skin.",
   },
-
   {
     id: 2,
-    concern: "Dryness",
-    icon: "🌿",
     title: "Aloe & Honey Hydration",
-    subtitle: "A gentle routine for dry-feeling skin.",
+    concern: "Dryness",
+    dosha: "Vata",
+    icon: "🌿",
     time: "10 min",
     difficulty: "Easy",
-    dosha: "Vata",
-    ingredients: [
-      "1 tablespoon pure aloe vera gel",
-      "1/2 teaspoon honey",
-    ],
+    frequency: "Use 1–2 times per week",
+    description: "A gentle routine for dry-feeling skin.",
+    ingredients: ["2 teaspoons aloe vera gel", "1 teaspoon honey"],
+    benefits: ["Supports a hydrated feeling", "Comforting for dry-feeling skin", "Simple and gentle ritual"],
     steps: [
-      "Mix aloe vera gel and honey.",
-      "Apply a thin layer to clean skin.",
-      "Leave for about 10 minutes.",
-      "Rinse gently.",
-      "Follow with moisturizer.",
+      "Mix aloe vera gel and honey in a clean bowl.",
+      "Apply gently to clean skin.",
+      "Leave it for 8–10 minutes.",
+      "Rinse softly with cool or lukewarm water.",
+      "Pat dry without rubbing the skin.",
     ],
-    benefits: [
-      "Leaves skin feeling hydrated",
-      "Soothing self-care ritual",
-      "Simple ingredients",
-    ],
-    note:
-      "Use clean ingredients and stop if irritation occurs.",
+    important: "Use pure aloe vera gel and stop if any discomfort appears.",
   },
-
   {
     id: 3,
-    concern: "Dullness",
-    icon: "🌾",
     title: "Oat & Yogurt Care",
-    subtitle: "A gentle skin-refreshing ritual.",
+    concern: "Dullness",
+    dosha: "Kapha",
+    icon: "🌾",
     time: "8–10 min",
     difficulty: "Easy",
-    dosha: "Kapha",
-    ingredients: [
-      "1 tablespoon finely ground oats",
-      "1 tablespoon plain yogurt",
-      "A small amount of honey",
-    ],
+    frequency: "Use once per week",
+    description: "A gentle skin-refreshing ritual.",
+    ingredients: ["1 tablespoon finely ground oats", "1 tablespoon plain yogurt"],
+    benefits: ["A soft, comforting ritual", "Helps skin feel refreshed", "Easy everyday preparation"],
     steps: [
-      "Mix the oats and yogurt into a soft paste.",
-      "Apply gently to the skin.",
-      "Leave for 8–10 minutes.",
-      "Rinse with lukewarm water.",
-      "Apply moisturizer.",
+      "Combine the oats and plain yogurt.",
+      "Apply a comfortable thin layer to clean skin.",
+      "Let the mixture rest for 8 minutes.",
+      "Rinse slowly with lukewarm water.",
+      "Finish with your usual gentle moisturizer.",
     ],
-    benefits: [
-      "Leaves skin feeling smoother",
-      "Refreshing self-care routine",
-      "Easy to prepare",
-    ],
-    note:
-      "Do not scrub aggressively.",
+    important: "Avoid this remedy if you have a known sensitivity to dairy or oats.",
   },
-
   {
     id: 4,
-    concern: "Oiliness",
-    icon: "🍃",
     title: "Aloe & Green Tea Refresh",
-    subtitle: "A lightweight refreshing skin ritual.",
+    concern: "Oiliness",
+    dosha: "Kapha",
+    icon: "🍃",
     time: "10 min",
     difficulty: "Easy",
-    dosha: "Kapha",
-    ingredients: [
-      "1 tablespoon pure aloe vera gel",
-      "1 tablespoon cooled green tea",
-    ],
+    frequency: "Use 1–2 times per week",
+    description: "A lightweight refreshing skin ritual.",
+    ingredients: ["2 teaspoons aloe vera gel", "1 teaspoon cooled green tea"],
+    benefits: ["Lightweight and refreshing", "Simple ritual for oily-feeling skin", "Comforting everyday care"],
     steps: [
-      "Prepare green tea and let it cool completely.",
-      "Mix the cooled tea with aloe vera gel.",
-      "Apply a thin layer to clean skin.",
-      "Leave for around 10 minutes.",
-      "Rinse and moisturize lightly.",
+      "Mix aloe vera gel with cooled green tea.",
+      "Apply lightly to freshly cleansed skin.",
+      "Let it rest for 8–10 minutes.",
+      "Rinse gently with cool water.",
+      "Pat dry and avoid over-cleansing.",
     ],
-    benefits: [
-      "Lightweight feeling",
-      "Refreshing routine",
-      "Simple self-care",
-    ],
-    note:
-      "Never apply hot green tea to your skin.",
+    important: "Use cooled tea only. Do not apply hot liquid to the skin.",
   },
-
   {
     id: 5,
-    concern: "Sensitive Skin",
-    icon: "🌿",
     title: "Oat & Aloe Soothing Care",
-    subtitle: "A minimal routine for sensitive-feeling skin.",
+    concern: "Sensitive Skin",
+    dosha: "Vata",
+    icon: "🌿",
     time: "10 min",
     difficulty: "Very Easy",
-    dosha: "Vata",
-    ingredients: [
-      "1 tablespoon finely ground oats",
-      "1 tablespoon pure aloe vera gel",
-    ],
+    frequency: "Use 1–2 times per week",
+    description: "A minimal routine for sensitive-feeling skin.",
+    ingredients: ["1 tablespoon finely ground oats", "2 teaspoons aloe vera gel"],
+    benefits: ["A calm and simple ritual", "Suitable for sensitive-feeling skin", "Easy to prepare at home"],
     steps: [
-      "Mix oats and aloe vera into a smooth paste.",
-      "Apply gently to clean skin.",
-      "Leave for approximately 10 minutes.",
-      "Rinse without rubbing.",
-      "Apply a fragrance-free moisturizer.",
+      "Mix the ground oats and aloe gel until soft.",
+      "Apply gently without rubbing.",
+      "Rest for 8–10 minutes.",
+      "Rinse softly with lukewarm water.",
+      "Pat dry and keep the rest of your routine minimal.",
     ],
-    benefits: [
-      "Gentle-feeling routine",
-      "Minimal ingredients",
-      "Comfort-focused self-care",
-    ],
-    note:
-      "Patch test first and avoid irritated or broken skin.",
+    important: "Patch test first, especially if your skin is currently irritated.",
   },
-
   {
     id: 6,
-    concern: "Uneven Texture",
-    icon: "🍯",
     title: "Honey & Oat Care",
-    subtitle: "A simple skin-smoothing inspired ritual.",
+    concern: "Uneven Texture",
+    dosha: "Vata",
+    icon: "🍯",
     time: "10 min",
     difficulty: "Easy",
-    dosha: "Vata",
-    ingredients: [
-      "1 tablespoon finely ground oats",
-      "1 teaspoon honey",
-    ],
+    frequency: "Use once per week",
+    description: "A simple skin-smoothing inspired ritual.",
+    ingredients: ["1 teaspoon honey", "1 tablespoon finely ground oats"],
+    benefits: ["A soft skincare ritual", "Helps create a refreshed feeling", "Easy home preparation"],
     steps: [
-      "Mix the oats and honey into a soft paste.",
-      "Apply gently to the skin.",
-      "Do not scrub aggressively.",
-      "Leave for approximately 10 minutes.",
-      "Rinse and moisturize.",
+      "Combine honey and finely ground oats.",
+      "Apply very gently using clean fingertips.",
+      "Leave it for up to 10 minutes.",
+      "Rinse with lukewarm water without scrubbing.",
+      "Finish with a gentle moisturizer.",
     ],
-    benefits: [
-      "Leaves skin feeling softer",
-      "Simple home routine",
-      "Gentle self-care approach",
-    ],
-    note:
-      "Avoid harsh physical exfoliation.",
+    important: "Do not scrub the skin. Gentle application is enough.",
   },
 ];
 
-const concerns = [
+const CONCERNS = [
   "All",
   "Acne",
   "Dryness",
@@ -201,1328 +150,426 @@ const concerns = [
   "Uneven Texture",
 ];
 
-/* =========================================================
-   DOSHA CONFIG
-========================================================= */
+const RITUAL_SCENES = [
+  { icon: "🥣", title: "Mix your ritual", description: "Prepare the ingredients slowly in a clean bowl." },
+  { icon: "🌿", title: "Apply gently", description: "Use clean hands and apply a comfortable thin layer." },
+  { icon: "⏳", title: "Let it rest", description: "Take a small pause while your ritual settles." },
+  { icon: "💧", title: "Rinse softly", description: "Use lukewarm water and avoid rubbing your skin." },
+  { icon: "✨", title: "Finish your ritual", description: "Pat dry gently and continue with moisturizer." },
+];
 
-const doshaConfig = {
-  Vata: {
-    label: "VATA",
-    className: "dosha-vata",
-    description:
-      "Light, dry and delicate-inspired care rituals.",
-  },
+const getThemeClass = (dosha) =>
+  `dosha-${String(dosha || "").toLowerCase()}`;
 
-  Pitta: {
-    label: "PITTA",
-    className: "dosha-pitta",
-    description:
-      "Cooling, gentle and soothing-inspired care rituals.",
-  },
+const HomeRemedy = () => {
+  const [assessment, setAssessment] = useState({});
+  const [doshaResult, setDoshaResult] = useState({});
+  const [activeConcern, setActiveConcern] = useState("All");
+  const [searchText, setSearchText] = useState("");
+  const [selectedRemedy, setSelectedRemedy] = useState(null);
+  const [currentStep, setCurrentStep] = useState(0);
+  const [savedRemedyIds, setSavedRemedyIds] = useState([]);
+  const [completedRemedyIds, setCompletedRemedyIds] = useState([]);
 
-  Kapha: {
-    label: "KAPHA",
-    className: "dosha-kapha",
-    description:
-      "Light, refreshing and balancing-inspired care rituals.",
-  },
-};
-
-/* =========================================================
-   STORAGE HELPERS
-========================================================= */
-
-const getStorageKey = (userId, type) => {
-  const safeUserId = userId || "guest";
-  return `ayurai_${type}_${safeUserId}`;
-};
-
-const readStorageArray = (key) => {
-  try {
-    const stored = localStorage.getItem(key);
-
-    if (!stored) {
-      return [];
-    }
-
-    const parsed = JSON.parse(stored);
-
-    return Array.isArray(parsed) ? parsed : [];
-  } catch (error) {
-    console.error(
-      "Unable to read AyurAI remedy storage:",
-      error
-    );
-
-    return [];
-  }
-};
-
-/* =========================================================
-   COMPONENT
-========================================================= */
-
-function HomeRemedy() {
-  const [selectedConcern, setSelectedConcern] =
-    useState("All");
-
-  const [search, setSearch] = useState("");
-
-  const [selectedRemedy, setSelectedRemedy] =
-    useState(null);
-
-  const [step, setStep] = useState(0);
-
-  /* =======================================================
-     EXTRA USER FEATURES
-  ======================================================= */
-
-  const [currentUserId, setCurrentUserId] =
-    useState("guest");
-
-  const [favoriteRemedies, setFavoriteRemedies] =
-    useState([]);
-
-  const [completedRemedies, setCompletedRemedies] =
-    useState([]);
-
-  const [showSavedOnly, setShowSavedOnly] =
-    useState(false);
-
-  /* =======================================================
-     LOAD USER ID + SAVED DATA
-  ======================================================= */
+  const userId = getCurrentUserId() || 1;
+  const storageKey = `ayurai-remedies-${userId}`;
 
   useEffect(() => {
-    let userId = "guest";
-
-    try {
-      const storedUserId = getCurrentUserId();
-
-      if (
-        storedUserId !== null &&
-        storedUserId !== undefined &&
-        String(storedUserId).trim() !== ""
-      ) {
-        userId = String(storedUserId);
-      }
-    } catch (error) {
-      console.warn(
-        "Unable to retrieve current AyurAI user ID. Using guest storage.",
-        error
-      );
-    }
-
-    setCurrentUserId(userId);
-
-    const favoriteKey = getStorageKey(
-      userId,
-      "favorite_remedies"
-    );
-
-    const completedKey = getStorageKey(
-      userId,
-      "completed_remedies"
-    );
-
-    setFavoriteRemedies(
-      readStorageArray(favoriteKey)
-    );
-
-    setCompletedRemedies(
-      readStorageArray(completedKey)
-    );
-  }, []);
-
-  /* =======================================================
-     SAVE FAVORITES
-  ======================================================= */
-
-  useEffect(() => {
-    try {
-      const key = getStorageKey(
-        currentUserId,
-        "favorite_remedies"
-      );
-
-      localStorage.setItem(
-        key,
-        JSON.stringify(favoriteRemedies)
-      );
-    } catch (error) {
-      console.error(
-        "Unable to save AyurAI favorite remedies:",
-        error
-      );
-    }
-  }, [favoriteRemedies, currentUserId]);
-
-  /* =======================================================
-     SAVE COMPLETED REMEDIES
-  ======================================================= */
-
-  useEffect(() => {
-    try {
-      const key = getStorageKey(
-        currentUserId,
-        "completed_remedies"
-      );
-
-      localStorage.setItem(
-        key,
-        JSON.stringify(completedRemedies)
-      );
-    } catch (error) {
-      console.error(
-        "Unable to save AyurAI completed remedies:",
-        error
-      );
-    }
-  }, [completedRemedies, currentUserId]);
-
-  /* =======================================================
-     MODAL KEYBOARD + BODY SCROLL
-  ======================================================= */
-
-  useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (event.key === "Escape") {
-        setSelectedRemedy(null);
-        setStep(0);
-      }
+    const loadResults = () => {
+      setAssessment(getAssessmentStatus() || {});
+      setDoshaResult(getDoshaResult() || {});
     };
 
-    if (selectedRemedy) {
-      document.addEventListener(
-        "keydown",
-        handleKeyDown
-      );
+    loadResults();
 
-      document.body.style.overflow = "hidden";
-    }
+    window.addEventListener("ayurai-assessment-updated", loadResults);
+    window.addEventListener("ayuraiAssessmentUpdated", loadResults);
 
     return () => {
-      document.removeEventListener(
-        "keydown",
-        handleKeyDown
-      );
-
-      document.body.style.overflow = "";
+      window.removeEventListener("ayurai-assessment-updated", loadResults);
+      window.removeEventListener("ayuraiAssessmentUpdated", loadResults);
     };
-  }, [selectedRemedy]);
-
-  /* =======================================================
-     LOAD ASSESSMENT
-  ======================================================= */
-
-  const assessment = useMemo(() => {
-    try {
-      const status = getAssessmentStatus();
-      const doshaResult = getDoshaResult();
-
-      const dominantDosha =
-        doshaResult?.dominantDosha || null;
-
-      return {
-        doshaCompleted: Boolean(
-          status?.doshaCompleted
-        ),
-        dominantDosha,
-      };
-    } catch (error) {
-      console.error(
-        "Unable to load AyurAI remedy personalization:",
-        error
-      );
-
-      return {
-        doshaCompleted: false,
-        dominantDosha: null,
-      };
-    }
   }, []);
 
-  const currentDosha =
-    assessment.dominantDosha &&
-    doshaConfig[assessment.dominantDosha]
-      ? doshaConfig[assessment.dominantDosha]
-      : null;
+  useEffect(() => {
+    const savedData = JSON.parse(localStorage.getItem(storageKey) || "{}");
+    setSavedRemedyIds(savedData.saved || []);
+    setCompletedRemedyIds(savedData.completed || []);
+  }, [storageKey]);
 
-  /* =======================================================
-     PERSONALIZED REMEDIES
-  ======================================================= */
-
-  const recommendedRemedies = useMemo(() => {
-    if (!assessment.dominantDosha) {
-      return [];
-    }
-
-    return remedies.filter(
-      (remedy) =>
-        remedy.dosha.toLowerCase() ===
-        assessment.dominantDosha.toLowerCase()
+  useEffect(() => {
+    localStorage.setItem(
+      storageKey,
+      JSON.stringify({
+        saved: savedRemedyIds,
+        completed: completedRemedyIds,
+      })
     );
-  }, [assessment.dominantDosha]);
+  }, [savedRemedyIds, completedRemedyIds, storageKey]);
 
-  /* =======================================================
-     FILTERED LIBRARY
-  ======================================================= */
+  const dominantDosha =
+    assessment?.dominantDosha ||
+    assessment?.doshaResult?.dominantDosha ||
+    assessment?.overallResult?.dominantDosha ||
+    doshaResult?.dominantDosha ||
+    doshaResult?.dominant ||
+    null;
+
+  const dominantInfo = getDoshaInfo(dominantDosha);
+
+  /* First matching Dosha remedy becomes the one main recommendation. */
+  const recommendedRemedy = useMemo(() => {
+    if (!dominantDosha) return null;
+
+    return REMEDIES.find((remedy) => remedy.dosha === dominantDosha) || null;
+  }, [dominantDosha]);
 
   const filteredRemedies = useMemo(() => {
-    const searchValue = search.trim().toLowerCase();
+    const search = searchText.toLowerCase().trim();
 
-    const filtered = remedies.filter((remedy) => {
-      const concernMatch =
-        selectedConcern === "All" ||
-        remedy.concern === selectedConcern;
+    const matchingRemedies = REMEDIES.filter((remedy) => {
+      const matchesConcern =
+        activeConcern === "All" || remedy.concern === activeConcern;
 
-      const searchMatch =
-        !searchValue ||
-        remedy.title
-          .toLowerCase()
-          .includes(searchValue) ||
-        remedy.concern
-          .toLowerCase()
-          .includes(searchValue) ||
-        remedy.subtitle
-          .toLowerCase()
-          .includes(searchValue) ||
-        remedy.dosha
-          .toLowerCase()
-          .includes(searchValue);
+      const matchesSearch = `${remedy.title} ${remedy.concern} ${remedy.dosha}`
+        .toLowerCase()
+        .includes(search);
 
-      const savedMatch =
-        !showSavedOnly ||
-        favoriteRemedies.includes(remedy.id);
-
-      return (
-        concernMatch &&
-        searchMatch &&
-        savedMatch
-      );
+      return matchesConcern && matchesSearch;
     });
 
-    /* Put user's Dosha remedies first */
-
-    if (assessment.dominantDosha) {
-      return [...filtered].sort((a, b) => {
-        const aMatch =
-          a.dosha === assessment.dominantDosha;
-
-        const bMatch =
-          b.dosha === assessment.dominantDosha;
-
-        if (aMatch && !bMatch) return -1;
-        if (!aMatch && bMatch) return 1;
-
-        return a.id - b.id;
-      });
-    }
-
-    return filtered;
-  }, [
-    selectedConcern,
-    search,
-    assessment.dominantDosha,
-    showSavedOnly,
-    favoriteRemedies,
-  ]);
-
-  /* =======================================================
-     FAVORITE TOGGLE
-  ======================================================= */
-
-  const toggleFavorite = (remedyId) => {
-    setFavoriteRemedies((current) => {
-      if (current.includes(remedyId)) {
-        return current.filter(
-          (id) => id !== remedyId
-        );
-      }
-
-      return [...current, remedyId];
+    /* This puts the one recommended ritual first. */
+    return [...matchingRemedies].sort((first, second) => {
+      if (first.id === recommendedRemedy?.id) return -1;
+      if (second.id === recommendedRemedy?.id) return 1;
+      return 0;
     });
+  }, [activeConcern, searchText, recommendedRemedy]);
+
+  const isSaved = (id) => savedRemedyIds.includes(id);
+  const isCompleted = (id) => completedRemedyIds.includes(id);
+
+  const toggleSaved = (id) => {
+    setSavedRemedyIds((current) =>
+      current.includes(id)
+        ? current.filter((savedId) => savedId !== id)
+        : [...current, id]
+    );
   };
 
-  const isFavorite = (remedyId) =>
-    favoriteRemedies.includes(remedyId);
-
-  /* =======================================================
-     COMPLETED TOGGLE
-  ======================================================= */
-
-  const toggleCompleted = (remedyId) => {
-    setCompletedRemedies((current) => {
-      if (current.includes(remedyId)) {
-        return current.filter(
-          (id) => id !== remedyId
-        );
-      }
-
-      return [...current, remedyId];
-    });
+  const toggleCompleted = (id) => {
+    setCompletedRemedyIds((current) =>
+      current.includes(id)
+        ? current.filter((completedId) => completedId !== id)
+        : [...current, id]
+    );
   };
-
-  const isCompleted = (remedyId) =>
-    completedRemedies.includes(remedyId);
-
-  /* =======================================================
-     MODAL
-  ======================================================= */
 
   const openRemedy = (remedy) => {
     setSelectedRemedy(remedy);
-    setStep(0);
-
-    setTimeout(() => {
-      const modal =
-        document.querySelector(
-          ".remedy-modal"
-        );
-
-      if (modal) {
-        modal.scrollTop = 0;
-      }
-    }, 0);
+    setCurrentStep(0);
   };
 
-  const closeRemedy = () => {
-    setSelectedRemedy(null);
-    setStep(0);
-  };
-
-  const previousStep = () => {
-    setStep((current) =>
-      Math.max(current - 1, 0)
-    );
-  };
-
-  const nextStep = () => {
-    if (!selectedRemedy) return;
-
-    setStep((current) =>
-      Math.min(
-        current + 1,
-        selectedRemedy.steps.length - 1
-      )
-    );
-  };
-
-  const resetFilters = () => {
-    setSearch("");
-    setSelectedConcern("All");
-    setShowSavedOnly(false);
-  };
-
-  /* =======================================================
-     API REFERENCE
-     =======================================================
-
-     API_BASE_URL is intentionally kept available for the
-     future backend integration.
-
-     Your current UI continues to use the existing local
-     remedy data so nothing visually changes.
-  ======================================================= */
-
-  void API_BASE_URL;
+  const activeScene = RITUAL_SCENES[Math.min(currentStep, 4)];
 
   return (
     <main className="home-remedy-page">
+      <section className="remedy-hero">
+        <span className="eyebrow">AYURAI · HOME WELLNESS</span>
 
-      {/* =====================================================
-          HERO
-      ===================================================== */}
+        <h1>
+          Simple Care, <em>Inspired by Nature.</em>
+        </h1>
 
-      <section className="remedy-hero compact-remedy-hero">
-
-        <div className="hero-content">
-
-          <span className="remedy-eyebrow">
-            AYURAI • HOME WELLNESS
-          </span>
-
-          <h1>
-            Simple Care,
-            <span> Inspired by Nature.</span>
-          </h1>
-
-          <p>
-            Explore gentle Ayurvedic-inspired home care
-            ideas for your everyday skin concerns.
-          </p>
-
-        </div>
-
+        <p>Explore gentle self-care ideas for everyday skin concerns.</p>
       </section>
 
-
-      {/* =====================================================
-          PERSONALIZED DOSHA
-      ===================================================== */}
-
-      {assessment.doshaCompleted &&
-        assessment.dominantDosha &&
-        recommendedRemedies.length > 0 && (
-
+      {recommendedRemedy && (
         <section
-          className={`personalized-remedy-section ${
-            currentDosha?.className || ""
-          }`}
+          className={`compact-recommendation ${getThemeClass(dominantDosha)}`}
         >
+          <div className="compact-recommendation-main">
+            <span>✦ RECOMMENDED FOR YOU</span>
+            <strong>{recommendedRemedy.title}</strong>
 
-          <div className="personalized-remedy-header">
-
-            <div>
-
-              <span className="remedy-section-label">
-                PERSONALIZED FOR YOU
-              </span>
-
-              <h2>
-                Explore your{" "}
-                <span>
-                  {assessment.dominantDosha}
-                </span>{" "}
-                inspired care
-              </h2>
-
-              <p>
-                Based on your saved Ayurvedic assessment,
-                these remedies match your AI-estimated
-                dominant Dosha pattern.
-              </p>
-
-            </div>
-
-            <div
-              className={`personalized-dosha-badge ${
-                currentDosha?.className || ""
-              }`}
-            >
-
-              <span>YOUR DOSHA</span>
-
-              <strong>
-                {assessment.dominantDosha}
-              </strong>
-
-            </div>
-
+            <p>
+              Recommended because {dominantInfo.description.toLowerCase()}
+            </p>
           </div>
 
-
-          {/* DOSHA CHARACTER */}
-
-          {currentDosha && (
-
-            <div className="dosha-guidance-line">
-
-              <span>✦</span>
-
-              <p>
-                {currentDosha.description}
-              </p>
-
-            </div>
-
-          )}
-
-
-          <div className="personalized-remedy-grid">
-
-            {recommendedRemedies.map((remedy) => (
-
-              <article
-                className="personalized-remedy-card"
-                key={remedy.id}
-              >
-
-                <div className="personalized-remedy-icon">
-                  {remedy.icon}
-                </div>
-
-                <div className="personalized-remedy-content">
-
-                  <span>
-                    {remedy.concern}
-                  </span>
-
-                  <h3>
-                    {remedy.title}
-                  </h3>
-
-                  <p>
-                    {remedy.subtitle}
-                  </p>
-
-                  <div className="personalized-remedy-meta">
-
-                    <span>
-                      ◷ {remedy.time}
-                    </span>
-
-                    <span>
-                      ♧ {remedy.difficulty}
-                    </span>
-
-                  </div>
-
-                  <button
-                    type="button"
-                    onClick={() =>
-                      openRemedy(remedy)
-                    }
-                  >
-                    Explore Recommended Care →
-                  </button>
-
-                </div>
-
-              </article>
-
-            ))}
-
+          <div className="compact-frequency">
+            <span>GENTLE ROUTINE</span>
+            <strong>{recommendedRemedy.frequency}</strong>
           </div>
 
+          <button type="button" onClick={() => openRemedy(recommendedRemedy)}>
+            Explore →
+          </button>
         </section>
       )}
 
-
-      {/* =====================================================
-          LIBRARY
-      ===================================================== */}
-
       <section className="remedy-library">
-
-        <div className="remedy-library-header">
-
+        <div className="library-heading">
           <div>
-
-            <span className="remedy-section-label">
-              REMEDY LIBRARY
-            </span>
-
-            <h2>
-              What does your skin need?
-            </h2>
-
-            <p>
-              Choose a concern and discover a simple
-              self-care ritual.
-            </p>
-
+            <span className="eyebrow">REMEDY LIBRARY</span>
+            <h2>What does your skin need?</h2>
+            <p>Choose a concern and discover a simple self-care ritual.</p>
           </div>
 
-
-          <div className="remedy-search">
-
+          <label className="remedy-search">
             <span>⌕</span>
-
             <input
-              type="text"
+              type="search"
+              value={searchText}
               placeholder="Search remedies"
-              value={search}
-              onChange={(event) =>
-                setSearch(event.target.value)
-              }
+              onChange={(event) => setSearchText(event.target.value)}
             />
-
-            {search && (
-
-              <button
-                type="button"
-                onClick={() => setSearch("")}
-                aria-label="Clear search"
-              >
-                ×
-              </button>
-
-            )}
-
-          </div>
-
+          </label>
         </div>
 
-
-        {/* ===================================================
-            CONCERNS
-        =================================================== */}
-
         <div className="remedy-filters">
-
-          {concerns.map((concern) => (
-
+          {CONCERNS.map((concern) => (
             <button
-              key={concern}
               type="button"
-              className={
-                selectedConcern === concern
-                  ? "active"
-                  : ""
-              }
-              onClick={() =>
-                setSelectedConcern(concern)
-              }
+              key={concern}
+              className={activeConcern === concern ? "active" : ""}
+              onClick={() => setActiveConcern(concern)}
             >
               {concern}
             </button>
-
           ))}
-
         </div>
 
-
-        {/* ===================================================
-            EXTRA REMEDY CONTROLS
-        =================================================== */}
-
-        <div
-          className="remedy-extra-controls"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: "12px",
-            flexWrap: "wrap",
-            marginTop: "18px",
-            marginBottom: "12px",
-          }}
-        >
-
-          <button
-            type="button"
-            onClick={() =>
-              setShowSavedOnly(
-                (current) => !current
-              )
-            }
-            style={{
-              border: "1px solid rgba(120, 100, 60, 0.2)",
-              background: showSavedOnly
-                ? "rgba(180, 150, 80, 0.12)"
-                : "transparent",
-              borderRadius: "999px",
-              padding: "9px 15px",
-              cursor: "pointer",
-              fontSize: "0.85rem",
-            }}
-          >
-            {showSavedOnly
-              ? "♥ Showing Saved"
-              : "♡ Saved Remedies"}
-          </button>
-
-          <div
-            style={{
-              display: "flex",
-              gap: "14px",
-              alignItems: "center",
-              fontSize: "0.82rem",
-              opacity: 0.75,
-            }}
-          >
-            <span>
-              ♥ {favoriteRemedies.length} saved
-            </span>
-
-            <span>
-              ✓ {completedRemedies.length} completed
-            </span>
-          </div>
-
-        </div>
-
-
-        {/* ===================================================
-            RESULT COUNT
-        =================================================== */}
-
-        <div className="remedy-results-info">
+        <div className="remedy-library-meta">
+          <span>{filteredRemedies.length} rituals available</span>
 
           <span>
-            {filteredRemedies.length}{" "}
-            {filteredRemedies.length === 1
-              ? "ritual"
-              : "rituals"}{" "}
-            available
+            ♡ {savedRemedyIds.length} saved · ✓ {completedRemedyIds.length} completed
           </span>
-
-          {assessment.dominantDosha && (
-            <span className="library-dosha-note">
-              ✦ {assessment.dominantDosha}-informed
-              recommendations appear first
-            </span>
-          )}
-
         </div>
 
+        <div className="remedy-grid">
+          {filteredRemedies.map((remedy) => {
+            const remedyInfo = getDoshaInfo(remedy.dosha);
+            const recommended = remedy.id === recommendedRemedy?.id;
 
-        {/* ===================================================
-            CARDS
-        =================================================== */}
-
-        {filteredRemedies.length > 0 ? (
-
-          <div className="remedy-grid">
-
-            {filteredRemedies.map((remedy) => {
-
-              const isRecommended =
-                assessment.dominantDosha &&
-                remedy.dosha.toLowerCase() ===
-                assessment.dominantDosha.toLowerCase();
-
-              const remedyDosha =
-                doshaConfig[remedy.dosha];
-
-              return (
-
-                <article
-                  className={`remedy-card ${
-                    isRecommended
-                      ? "recommended-remedy"
-                      : ""
-                  } ${
-                    remedyDosha?.className || ""
-                  }`}
-                  key={remedy.id}
-                >
-
-                  {isRecommended && (
-
-                    <span className="recommended-badge">
-                      ✦ Recommended for you
-                    </span>
-
-                  )}
-
-
-                  <div className="remedy-card-header">
-
-                    <div className="remedy-card-icon">
-                      {remedy.icon}
-                    </div>
-
-                    <span
-                      className="remedy-dosha"
-                      data-dosha={remedy.dosha}
-                    >
-                      {remedy.dosha}
-                    </span>
-
-                  </div>
-
-
-                  <span className="remedy-concern">
-                    {remedy.concern}
+            return (
+              <article
+                className={`remedy-card ${getThemeClass(remedy.dosha)}`}
+                key={remedy.id}
+              >
+                {recommended && (
+                  <span className="recommended-badge">
+                    ✦ Recommended for you
                   </span>
+                )}
 
-                  <h3>
-                    {remedy.title}
-                  </h3>
+                <div className="remedy-card-top">
+                  <span className="remedy-icon">{remedy.icon}</span>
+                  <span className="remedy-dosha-tag">{remedyInfo.label}</span>
+                </div>
 
-                  <p>
-                    {remedy.subtitle}
-                  </p>
+                <span className="remedy-concern">{remedy.concern}</span>
+                <h3>{remedy.title}</h3>
+                <p>{remedy.description}</p>
 
+                <div className="remedy-card-details">
+                  <span>◷ {remedy.time}</span>
+                  <span>♧ {remedy.difficulty}</span>
+                </div>
 
-                  <div className="remedy-meta">
+                <div className="card-frequency">
+                  ✦ {remedy.frequency}
+                </div>
 
-                    <span>
-                      ◷ {remedy.time}
-                    </span>
+                <button
+                  type="button"
+                  className="explore-remedy-button"
+                  onClick={() => openRemedy(remedy)}
+                >
+                  Explore Ritual <span>→</span>
+                </button>
 
-                    <span>
-                      ♧ {remedy.difficulty}
-                    </span>
-
-                  </div>
-
-
-                  <button
-                    type="button"
-                    className="remedy-view-button"
-                    onClick={() =>
-                      openRemedy(remedy)
-                    }
-                  >
-                    Explore Remedy
-                    <span>→</span>
-                  </button>
-
-
-                  {/* =================================================
-                      EXTRA SAVE BUTTON
-                  ================================================= */}
-
-                  <button
-                    type="button"
-                    onClick={() =>
-                      toggleFavorite(remedy.id)
-                    }
-                    aria-label={
-                      isFavorite(remedy.id)
-                        ? `Remove ${remedy.title} from saved remedies`
-                        : `Save ${remedy.title}`
-                    }
-                    style={{
-                      marginTop: "10px",
-                      width: "100%",
-                      border: "none",
-                      background: "transparent",
-                      cursor: "pointer",
-                      fontSize: "0.85rem",
-                      padding: "6px",
-                      opacity: 0.85,
-                    }}
-                  >
-                    {isFavorite(remedy.id)
-                      ? "♥ Saved to My Remedies"
-                      : "♡ Save for Later"}
-                  </button>
-
-                  {isCompleted(remedy.id) && (
-                    <div
-                      style={{
-                        textAlign: "center",
-                        fontSize: "0.75rem",
-                        marginTop: "3px",
-                        opacity: 0.65,
-                      }}
-                    >
-                      ✓ Ritual completed
-                    </div>
-                  )}
-
-                </article>
-
-              );
-            })}
-
-          </div>
-
-        ) : (
-
-          <div className="remedy-empty">
-
-            <span>◌</span>
-
-            <h3>
-              No remedies found
-            </h3>
-
-            <p>
-              Try another concern or search term.
-            </p>
-
-            <button
-              type="button"
-              onClick={resetFilters}
-            >
-              Reset Filters
-            </button>
-
-          </div>
-
-        )}
-
-      </section>
-
-
-      {/* =====================================================
-          GUIDANCE
-      ===================================================== */}
-
-      <section className="remedy-guidance">
-
-        <div className="guidance-icon">
-          ✦
+                <button
+                  type="button"
+                  className={`save-card-button ${isSaved(remedy.id) ? "saved" : ""}`}
+                  onClick={() => toggleSaved(remedy.id)}
+                >
+                  {isSaved(remedy.id) ? "♥ Saved" : "♡ Save for Later"}
+                </button>
+              </article>
+            );
+          })}
         </div>
-
-        <div>
-
-          <span>
-            AYURAI REMINDER
-          </span>
-
-          <h2>
-            Keep your skincare ritual simple.
-          </h2>
-
-          <p>
-            These are Ayurvedic-inspired self-care
-            ideas, not medical treatments. Patch test
-            new ingredients and stop if irritation occurs.
-          </p>
-
-        </div>
-
       </section>
-
-
-      {/* =====================================================
-          DETAIL MODAL
-      ===================================================== */}
 
       {selectedRemedy && (
-
         <div
-          className="remedy-modal-backdrop"
-          onClick={closeRemedy}
+          className="remedy-modal-overlay"
+          onMouseDown={() => setSelectedRemedy(null)}
         >
-
-          <div
-            className={`remedy-modal ${
-              doshaConfig[selectedRemedy.dosha]
-                ?.className || ""
-            }`}
-            onClick={(event) =>
-              event.stopPropagation()
-            }
+          <section
+            className={`remedy-modal ${getThemeClass(selectedRemedy.dosha)}`}
+            onMouseDown={(event) => event.stopPropagation()}
           >
-
             <button
               type="button"
-              className="remedy-modal-close"
-              onClick={closeRemedy}
-              aria-label="Close remedy"
+              className="modal-close-button"
+              onClick={() => setSelectedRemedy(null)}
             >
               ×
             </button>
 
-
-            {/* =================================================
-                MODAL TOP
-            ================================================= */}
-
-            <div className="modal-top">
-
-              <div className="modal-icon">
-                {selectedRemedy.icon}
-              </div>
+            <div className="modal-header">
+              <span className="modal-remedy-icon">{selectedRemedy.icon}</span>
 
               <div>
-
-                <span>
-                  {selectedRemedy.concern}
-                </span>
-
-                <h2>
-                  {selectedRemedy.title}
-                </h2>
-
-                <p>
-                  {selectedRemedy.subtitle}
-                </p>
-
+                <span className="remedy-concern">{selectedRemedy.concern}</span>
+                <h2>{selectedRemedy.title}</h2>
+                <p>{selectedRemedy.description}</p>
               </div>
-
             </div>
 
-
-            {/* =================================================
-                QUICK INFO
-            ================================================= */}
-
-            <div className="modal-details">
-
+            <div className="remedy-stat-row">
               <div>
                 <span>TIME</span>
-                <strong>
-                  {selectedRemedy.time}
-                </strong>
+                <strong>{selectedRemedy.time}</strong>
               </div>
 
               <div>
                 <span>DIFFICULTY</span>
-                <strong>
-                  {selectedRemedy.difficulty}
-                </strong>
+                <strong>{selectedRemedy.difficulty}</strong>
               </div>
 
               <div>
-                <span>DOSHA</span>
-                <strong>
-                  {selectedRemedy.dosha}
-                </strong>
+                <span>SKIN PATTERN</span>
+                <strong>{getDoshaInfo(selectedRemedy.dosha).label}</strong>
               </div>
-
             </div>
 
+            <div className="weekly-routine-highlight">
+              <span>✦ YOUR GENTLE ROUTINE</span>
+              <strong>{selectedRemedy.frequency}</strong>
+              <p>Use this as occasional self-care, not every day.</p>
+            </div>
 
-            {/* =================================================
-                PERSONALIZED MESSAGE
-            ================================================= */}
+            <div className="allergy-note">
+              <strong>Allergy check</strong>
+              <span>
+                Do not use this ritual if you are allergic or sensitive to any
+                listed ingredient. Stop using it if you feel irritation,
+                burning, swelling, or discomfort.
+              </span>
+            </div>
 
-            {assessment.dominantDosha &&
-              selectedRemedy.dosha.toLowerCase() ===
-                assessment.dominantDosha.toLowerCase() && (
-
-              <div className="modal-personalized-note">
-
-                <span>✦</span>
-
-                <p>
-                  This remedy is aligned with your
-                  AI-estimated{" "}
-                  {assessment.dominantDosha} Dosha
-                  pattern from your AyurAI assessment.
-                </p>
-
-              </div>
-
-            )}
-
-
-            {/* =================================================
-                EXTRA SAVE / COMPLETE ACTIONS
-            ================================================= */}
-
-            <div
-              style={{
-                display: "flex",
-                gap: "10px",
-                flexWrap: "wrap",
-                margin: "18px 0",
-              }}
-            >
-
+            <div className="modal-action-row">
               <button
                 type="button"
-                onClick={() =>
-                  toggleFavorite(
-                    selectedRemedy.id
-                  )
-                }
-                style={{
-                  flex: "1 1 180px",
-                  padding: "11px 15px",
-                  borderRadius: "10px",
-                  border:
-                    "1px solid rgba(120, 100, 60, 0.2)",
-                  background:
-                    isFavorite(selectedRemedy.id)
-                      ? "rgba(180, 150, 80, 0.12)"
-                      : "transparent",
-                  cursor: "pointer",
-                }}
+                className={isSaved(selectedRemedy.id) ? "active-action" : ""}
+                onClick={() => toggleSaved(selectedRemedy.id)}
               >
-                {isFavorite(
-                  selectedRemedy.id
-                )
-                  ? "♥ Saved Remedy"
-                  : "♡ Save Remedy"}
+                {isSaved(selectedRemedy.id) ? "♥ Saved" : "♡ Save Ritual"}
               </button>
 
               <button
                 type="button"
-                onClick={() =>
-                  toggleCompleted(
-                    selectedRemedy.id
-                  )
-                }
-                style={{
-                  flex: "1 1 180px",
-                  padding: "11px 15px",
-                  borderRadius: "10px",
-                  border:
-                    "1px solid rgba(120, 100, 60, 0.2)",
-                  background:
-                    isCompleted(
-                      selectedRemedy.id
-                    )
-                      ? "rgba(120, 150, 100, 0.12)"
-                      : "transparent",
-                  cursor: "pointer",
-                }}
+                className={isCompleted(selectedRemedy.id) ? "active-action" : ""}
+                onClick={() => toggleCompleted(selectedRemedy.id)}
               >
-                {isCompleted(
-                  selectedRemedy.id
-                )
-                  ? "✓ Ritual Completed"
+                {isCompleted(selectedRemedy.id)
+                  ? "✓ Completed"
                   : "○ Mark as Completed"}
               </button>
-
             </div>
 
-
-            {/* =================================================
-                INGREDIENTS
-            ================================================= */}
-
-            <section className="modal-content-section">
-
-              <span className="modal-label">
-                01 • INGREDIENTS
-              </span>
-
-              <ul className="ingredient-list">
-
-                {selectedRemedy.ingredients.map(
-                  (ingredient, index) => (
-
-                    <li key={index}>
-
-                      <span>
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-
-                      {ingredient}
-
-                    </li>
-
-                  )
-                )}
-
+            <section className="modal-section">
+              <span className="eyebrow">01 · INGREDIENTS</span>
+              <ul className="ritual-list ingredients-list">
+                {selectedRemedy.ingredients.map((ingredient) => (
+                  <li key={ingredient}>✓ {ingredient}</li>
+                ))}
               </ul>
-
             </section>
 
-
-            {/* =================================================
-                BENEFITS
-            ================================================= */}
-
-            <section className="modal-content-section">
-
-              <span className="modal-label">
-                02 • BENEFITS
-              </span>
-
-              <div className="benefit-list">
-
-                {selectedRemedy.benefits.map(
-                  (benefit, index) => (
-
-                    <div key={index}>
-
-                      <span>✓</span>
-
-                      {benefit}
-
-                    </div>
-
-                  )
-                )}
-
-              </div>
-
+            <section className="modal-section">
+              <span className="eyebrow">02 · BENEFITS</span>
+              <ul className="ritual-list benefits-list">
+                {selectedRemedy.benefits.map((benefit) => (
+                  <li key={benefit}>✓ {benefit}</li>
+                ))}
+              </ul>
             </section>
 
+            <section className="modal-section">
+              <span className="eyebrow">03 · YOUR STEP-BY-STEP RITUAL</span>
 
-            {/* =================================================
-                STEPS
-            ================================================= */}
+              <div className={`ritual-stage ${getThemeClass(selectedRemedy.dosha)}`}>
+                <span className="ritual-scene-icon">{activeScene.icon}</span>
 
-            <section className="modal-content-section">
-
-              <span className="modal-label">
-                03 • STEP-BY-STEP RITUAL
-              </span>
-
-              <div className="step-indicators">
-
-                {selectedRemedy.steps.map(
-                  (_, index) => (
-
-                    <button
-                      key={index}
-                      type="button"
-                      className={
-                        index === step
-                          ? "active"
-                          : ""
-                      }
-                      onClick={() =>
-                        setStep(index)
-                      }
-                    >
-                      {index + 1}
-                    </button>
-
-                  )
-                )}
-
+                <div>
+                  <span className="ritual-stage-label">
+                    STEP {currentStep + 1} OF {selectedRemedy.steps.length}
+                  </span>
+                  <h3>{activeScene.title}</h3>
+                  <p>{activeScene.description}</p>
+                </div>
               </div>
 
-
-              <div className="active-step">
-
-                <span>
-                  STEP{" "}
-                  {String(step + 1).padStart(2, "0")}
-                </span>
-
-                <p>
-                  {selectedRemedy.steps[step]}
-                </p>
-
+              <div className="ritual-step-dots">
+                {selectedRemedy.steps.map((step, index) => (
+                  <button
+                    type="button"
+                    key={step}
+                    className={index === currentStep ? "active" : ""}
+                    onClick={() => setCurrentStep(index)}
+                  >
+                    {index + 1}
+                  </button>
+                ))}
               </div>
 
+              <div className="active-ritual-step">
+                <span>STEP {currentStep + 1}</span>
+                <p>{selectedRemedy.steps[currentStep]}</p>
+              </div>
 
-              <div className="step-navigation">
-
+              <div className="ritual-navigation">
                 <button
                   type="button"
-                  disabled={step === 0}
-                  onClick={previousStep}
+                  disabled={currentStep === 0}
+                  onClick={() => setCurrentStep((step) => Math.max(step - 1, 0))}
                 >
                   ← Previous
                 </button>
 
-                <span>
-                  {step + 1} /{" "}
-                  {selectedRemedy.steps.length}
-                </span>
+                <span>{currentStep + 1} / {selectedRemedy.steps.length}</span>
 
                 <button
                   type="button"
-                  disabled={
-                    step ===
-                    selectedRemedy.steps.length - 1
+                  className="next-step-button"
+                  disabled={currentStep === selectedRemedy.steps.length - 1}
+                  onClick={() =>
+                    setCurrentStep((step) =>
+                      Math.min(step + 1, selectedRemedy.steps.length - 1)
+                    )
                   }
-                  onClick={nextStep}
                 >
-                  Next →
+                  {currentStep === selectedRemedy.steps.length - 1
+                    ? "Ritual Complete ✓"
+                    : "Next Step →"}
                 </button>
-
               </div>
-
             </section>
 
-
-            {/* =================================================
-                SAFETY NOTE
-            ================================================= */}
-
-            <div className="remedy-safety-note">
-
-              <span>✦</span>
-
-              <p>
-                {selectedRemedy.note}
-              </p>
-
+            <div className="important-note">
+              <strong>Important</strong>
+              <span>{selectedRemedy.important}</span>
             </div>
-
-
-            <button
-              type="button"
-              className="modal-back-button"
-              onClick={closeRemedy}
-            >
-              Back to Remedies
-            </button>
-
-          </div>
-
+          </section>
         </div>
-
       )}
-
     </main>
   );
-}
+};
 
 export default HomeRemedy;

@@ -1,2512 +1,726 @@
-/* =========================================================
-   AYURAI — HOME REMEDIES
-   Dosha Color System
-   VATA • PITTA • KAPHA
-   Premium Ayurvedic Luxury
-   ========================================================= */
-
-
-/* =========================================================
-   DOSHA COLOR VARIABLES
-   ========================================================= */
-
-:root {
-
-  /* =========================
-     VATA — MUTED BLUE GREY
-     ========================= */
-
-  --vata-main: #718892;
-  --vata-dark: #4d626b;
-  --vata-light: #e7eef0;
-  --vata-soft: #f3f7f8;
-  --vata-border: #c8d7dc;
-
-
-  /* =========================
-     PITTA — WARM TERRACOTTA
-     ========================= */
-
-  --pitta-main: #c87961;
-  --pitta-dark: #934c3b;
-  --pitta-light: #f7e6df;
-  --pitta-soft: #fdf6f2;
-  --pitta-border: #e8c6bb;
-
-
-  /* =========================
-     KAPHA — SAGE GREEN
-     ========================= */
-
-  --kapha-main: #718b68;
-  --kapha-dark: #4e6848;
-  --kapha-light: #e7eee3;
-  --kapha-soft: #f5f8f3;
-  --kapha-border: #cbd9c6;
-
-
-  /* =========================
-     AYURAI SYSTEM COLORS
-     ========================= */
-
-  --ayur-gold: #a17c3e;
-  --cream: #f8f6f0;
-  --paper: #fffdf8;
-  --text: #302d26;
-  --muted: #777267;
-}
-
-
-/* =========================================================
-   PAGE
-   ========================================================= */
-
 .home-remedy-page {
   min-height: 100vh;
-
-  padding-top: 1px;
-
-  background:
-    radial-gradient(
-      circle at 10% 10%,
-      rgba(201, 162, 74, 0.08),
-      transparent 30%
-    ),
-    var(--cream);
-
-  color: var(--text);
+  padding: 56px 24px 100px;
+  color: #2d2a23;
+  background: #fbfaf6;
 }
 
-
-/* =========================================================
-   HERO
-   ========================================================= */
+.eyebrow,
+.remedy-concern,
+.remedy-stat-row span,
+.ritual-stage-label,
+.active-ritual-step > span {
+  display: block;
+  color: #af812c;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+}
 
 .remedy-hero {
-  position: relative;
-
-  min-height: 300px;
-
-  padding: 55px 7% 50px;
-
-  display: flex;
-  align-items: center;
-
-  overflow: hidden;
-
-  background:
-    radial-gradient(
-      circle at 82% 45%,
-      rgba(201, 162, 74, 0.08),
-      transparent 30%
-    ),
-    var(--cream);
+  max-width: 900px;
+  margin: 0 auto 25px;
+  text-align: center;
 }
 
-.remedy-hero-content,
-.hero-content {
-  position: relative;
-  z-index: 2;
-
-  width: 100%;
-  max-width: 1100px;
-
-  margin: 0 auto;
-}
-
-.remedy-eyebrow {
-  display: inline-block;
-
-  margin-bottom: 15px;
-
-  font-size: 10px;
-  font-weight: 600;
-
-  letter-spacing: 3px;
-
-  color: var(--ayur-gold);
+.remedy-hero h1,
+.library-heading h2,
+.remedy-card h3,
+.remedy-modal h2,
+.ritual-stage h3 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 500;
 }
 
 .remedy-hero h1 {
+  margin: 12px 0;
+  font-size: clamp(2.9rem, 5vw, 4.7rem);
+  line-height: 1;
+}
+
+.remedy-hero h1 em {
+  color: #b18a3e;
+  font-weight: 400;
+}
+
+.remedy-hero p,
+.library-heading p {
   margin: 0;
-
-  max-width: 650px;
-
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
-
-  font-size: clamp(40px, 5vw, 64px);
-
-  line-height: 1.04;
-
-  font-weight: 400;
-
-  letter-spacing: -1.5px;
-
-  color: var(--text);
+  color: #766f64;
 }
 
-.remedy-hero h1 span {
-  display: inline;
+/* Small recommendation strip */
 
-  color: var(--ayur-gold);
-
-  font-style: italic;
-}
-
-.remedy-hero p {
-  max-width: 540px;
-
-  margin: 18px 0 0;
-
-  color: var(--muted);
-
-  font-size: 13px;
-
-  line-height: 1.8;
-}
-
-
-/* =========================================================
-   HERO ORBIT
-   ========================================================= */
-
-.hero-orbit {
-  position: absolute;
-
-  right: 12%;
-  top: 50%;
-
-  width: 150px;
-  height: 150px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border: 1px solid rgba(160, 123, 53, 0.22);
-
-  border-radius: 50%;
-
-  color: var(--ayur-gold);
-
-  font-size: 27px;
-
-  transform: translateY(-50%);
-
-  animation: remedyFloat 6s ease-in-out infinite;
-}
-
-.hero-orbit::before,
-.hero-orbit::after {
-  content: "";
-
-  position: absolute;
-
-  border: 1px solid rgba(160, 123, 53, 0.14);
-
-  border-radius: 50%;
-}
-
-.hero-orbit::before {
-  inset: 23px;
-}
-
-.hero-orbit::after {
-  inset: 48px;
-}
-
-@keyframes remedyFloat {
-
-  0%,
-  100% {
-    transform: translateY(-50%) rotate(0deg);
-  }
-
-  50% {
-    transform: translateY(-54%) rotate(6deg);
-  }
-}
-/* =========================================================
-   PERSONALIZED REMEDY SECTION
-   ========================================================= */
-
-.personalized-remedy-section {
-  width: 100%;
-  box-sizing: border-box;
-
-  padding: 55px 7% 60px;
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(247, 230, 223, 0.42),
-      rgba(255, 253, 248, 0.75)
-    );
-
-  border-top: 1px solid rgba(200, 121, 97, 0.10);
-  border-bottom: 1px solid rgba(200, 121, 97, 0.10);
-}
-
-
-/* =========================================================
-   PERSONALIZED HEADER
-   ========================================================= */
-
-.personalized-remedy-header {
-  max-width: 1100px;
-
-  margin: 0 auto 30px;
-
-  display: flex;
-
-  align-items: flex-end;
-
-  justify-content: space-between;
-
-  gap: 35px;
-}
-
-.personalized-remedy-header > div:first-child {
-  max-width: 760px;
-}
-
-.personalized-remedy-header .remedy-section-label {
-  margin-bottom: 10px;
-
-  color: var(--pitta-dark);
-}
-
-.personalized-remedy-header h2 {
-  margin: 0;
-
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
-
-  font-size: clamp(28px, 3vw, 40px);
-
-  line-height: 1.15;
-
-  font-weight: 400;
-
-  color: var(--text);
-}
-
-.personalized-remedy-header h2 span {
-  color: var(--pitta-main);
-
-  font-style: italic;
-}
-
-.personalized-remedy-header p {
-  max-width: 700px;
-
-  margin: 10px 0 0;
-
-  color: #756f67;
-
-  font-size: 12px;
-
-  line-height: 1.75;
-}
-
-
-/* =========================================================
-   DOSHA BADGE
-   ========================================================= */
-
-.personalized-dosha-badge {
-  min-width: 105px;
-
-  padding: 15px 18px;
-
-  flex-shrink: 0;
-
-  text-align: center;
-
-  border: 1px solid var(--pitta-border);
-
-  border-radius: 15px;
-
-  background: var(--pitta-light);
-
-  box-shadow:
-    0 8px 22px rgba(170, 91, 70, 0.08);
-}
-
-.personalized-dosha-badge span {
-  display: block;
-
-  margin-bottom: 5px;
-
-  color: var(--pitta-dark);
-
-  font-size: 8px;
-
-  font-weight: 700;
-
-  letter-spacing: 1.8px;
-}
-
-.personalized-dosha-badge strong {
-  display: block;
-
-  color: var(--pitta-main);
-
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
-
-  font-size: 21px;
-
-  font-weight: 400;
-}
-
-
-/* =========================================================
-   PERSONALIZED CARD GRID
-   ========================================================= */
-
-.personalized-remedy-grid {
-  max-width: 1100px;
-
-  margin: 0 auto;
-
+.compact-recommendation {
   display: grid;
-
-  grid-template-columns:
-    repeat(3, 1fr);
-
-  gap: 18px;
-}
-
-
-/* =========================================================
-   PERSONALIZED CARD
-   ========================================================= */
-
-.personalized-remedy-card {
-  position: relative;
-
-  min-height: 190px;
-
-  padding: 23px;
-
-  display: flex;
-
-  align-items: flex-start;
-
-  gap: 17px;
-
-  box-sizing: border-box;
-
-  overflow: hidden;
-
-  border: 1px solid var(--pitta-border);
-
-  border-radius: 20px;
-
-  background:
-    linear-gradient(
-      145deg,
-      #fffaf7,
-      #f8e8e1
-    );
-
-  box-shadow:
-    0 12px 30px rgba(170, 91, 70, 0.08);
-
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-}
-
-.personalized-remedy-card:hover {
-  transform: translateY(-6px);
-
-  box-shadow:
-    0 20px 40px rgba(170, 91, 70, 0.15);
-}
-
-
-/* =========================================================
-   DECORATIVE CIRCLE
-   ========================================================= */
-
-.personalized-remedy-card::before {
-  content: "";
-
-  position: absolute;
-
-  width: 150px;
-  height: 150px;
-
-  top: -85px;
-  right: -70px;
-
-  border-radius: 50%;
-
-  background:
-    rgba(200, 121, 97, 0.10);
-
-  pointer-events: none;
-}
-
-
-/* =========================================================
-   PERSONALIZED ICON
-   ========================================================= */
-
-.personalized-remedy-icon {
-  position: relative;
-
-  z-index: 2;
-
-  width: 48px;
-  height: 48px;
-
-  flex-shrink: 0;
-
-  display: flex;
-
+  grid-template-columns: 1fr auto auto;
+  gap: 22px;
   align-items: center;
-  justify-content: center;
-
-  border-radius: 15px;
-
-  background: #f0d0c5;
-
-  color: var(--pitta-dark);
-
-  font-size: 21px;
-
-  transition:
-    transform 0.3s ease;
+  max-width: 1050px;
+  margin: 0 auto 35px;
+  padding: 16px 20px;
+  border: 1px solid;
+  border-radius: 16px;
 }
 
-.personalized-remedy-card:hover
-.personalized-remedy-icon {
-  transform:
-    rotate(-5deg)
-    scale(1.06);
+.compact-recommendation.dosha-vata {
+  border-color: #bfd8e7;
+  background: #eef7fb;
 }
 
-
-/* =========================================================
-   PERSONALIZED CONTENT
-   ========================================================= */
-
-.personalized-remedy-content {
-  position: relative;
-
-  z-index: 2;
-
-  flex: 1;
+.compact-recommendation.dosha-pitta {
+  border-color: #f2c9bd;
+  background: #fff2ed;
 }
 
-.personalized-remedy-content > span {
+.compact-recommendation.dosha-kapha {
+  border-color: #c8dcc3;
+  background: #f1f8ef;
+}
+
+.compact-recommendation-main > span,
+.compact-frequency > span {
   display: block;
-
-  margin-bottom: 5px;
-
-  color: var(--pitta-dark);
-
-  font-size: 8px;
-
-  font-weight: 700;
-
-  letter-spacing: 1.8px;
-
-  text-transform: uppercase;
+  color: #a27629;
+  font-size: 0.63rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
 }
 
-.personalized-remedy-content h3 {
+.compact-recommendation-main strong {
+  display: block;
+  margin: 4px 0;
+  font-family: Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.compact-recommendation-main p,
+.compact-frequency {
   margin: 0;
-
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
-
-  font-size: 21px;
-
-  line-height: 1.25;
-
-  font-weight: 400;
-
-  color: var(--text);
+  color: #6e6559;
+  font-size: 0.78rem;
 }
 
-.personalized-remedy-content p {
-  margin: 7px 0 14px;
-
-  color: #756d66;
-
-  font-size: 11px;
-
-  line-height: 1.65;
+.compact-frequency {
+  min-width: 165px;
+  padding-left: 20px;
+  border-left: 1px solid rgba(135, 110, 65, 0.2);
 }
 
+.compact-frequency strong {
+  display: block;
+  margin-top: 5px;
+  color: #433a2d;
+  font-size: 0.84rem;
+}
 
-/* =========================================================
-   PERSONALIZED BUTTON
-   ========================================================= */
-
-.personalized-remedy-content button {
-  min-height: 36px;
-
-  padding: 0 13px;
-
-  border: 1px solid #dfb5a7;
-
-  border-radius: 10px;
-
-  background: rgba(255, 255, 255, 0.45);
-
-  color: var(--pitta-dark);
-
+.compact-recommendation button {
+  padding: 10px 15px;
+  border: 0;
+  border-radius: 9px;
   cursor: pointer;
-
-  font: inherit;
-
-  font-size: 9px;
-
-  font-weight: 700;
-
-  transition:
-    background 0.25s ease,
-    color 0.25s ease,
-    transform 0.25s ease;
+  color: #fff;
+  background: #2d2a23;
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 800;
 }
 
-.personalized-remedy-content button:hover {
-  background: var(--pitta-dark);
-
-  border-color: var(--pitta-dark);
-
-  color: white;
-
-  transform: translateY(-1px);
+.compact-recommendation button:hover {
+  background: #b18a3e;
 }
 
-
-/* =========================================================
-   PERSONALIZED SECTION — VATA
-   Future dynamic support
-   ========================================================= */
-
-.personalized-remedy-section[data-dosha="Vata"] {
-  background:
-    linear-gradient(
-      135deg,
-      rgba(231, 238, 240, 0.55),
-      rgba(255, 253, 248, 0.8)
-    );
-}
-
-
-/* =========================================================
-   PERSONALIZED SECTION — KAPHA
-   Future dynamic support
-   ========================================================= */
-
-.personalized-remedy-section[data-dosha="Kapha"] {
-  background:
-    linear-gradient(
-      135deg,
-      rgba(231, 238, 227, 0.55),
-      rgba(255, 253, 248, 0.8)
-    );
-}
-
-/* =========================================================
-   LIBRARY
-   ========================================================= */
+/* Remedy library */
 
 .remedy-library {
-  max-width: 1100px;
-
+  max-width: 1050px;
   margin: 0 auto;
-
-  padding: 45px 7% 70px;
 }
 
-
-/* =========================================================
-   LIBRARY HEADER
-   ========================================================= */
-
-.remedy-library-header {
+.library-heading {
   display: flex;
-
-  align-items: flex-end;
-
+  align-items: end;
   justify-content: space-between;
-
-  gap: 30px;
-
-  margin-bottom: 24px;
+  gap: 22px;
+  margin-bottom: 20px;
 }
 
-.remedy-section-label {
-  display: block;
-
-  margin-bottom: 9px;
-
-  font-size: 9px;
-  font-weight: 600;
-
-  letter-spacing: 3px;
-
-  color: var(--ayur-gold);
+.library-heading h2 {
+  margin: 8px 0 6px;
+  font-size: clamp(2.2rem, 4vw, 3.5rem);
 }
-
-.remedy-library-header h2 {
-  margin: 0;
-
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
-
-  font-size: clamp(28px, 3vw, 36px);
-
-  line-height: 1.15;
-
-  font-weight: 400;
-
-  color: var(--text);
-}
-
-.remedy-library-header p {
-  margin: 8px 0 0;
-
-  color: #817d73;
-
-  font-size: 13px;
-
-  line-height: 1.7;
-}
-
-
-/* =========================================================
-   SEARCH
-   ========================================================= */
 
 .remedy-search {
-  width: 250px;
-
-  height: 42px;
-
   display: flex;
   align-items: center;
-
-  gap: 9px;
-
-  padding: 0 13px;
-
-  box-sizing: border-box;
-
-  border: 1px solid #ddd6c9;
-
-  border-radius: 25px;
-
-  background: rgba(255, 253, 248, 0.85);
-
-  transition: 0.3s ease;
-}
-
-.remedy-search:focus-within {
-  border-color: #b29154;
-
-  box-shadow:
-    0 0 0 3px rgba(178, 145, 84, 0.07);
-}
-
-.remedy-search > span {
-  color: var(--ayur-gold);
-
-  font-size: 16px;
+  min-width: 245px;
+  padding: 12px 15px;
+  border: 1px solid #e3d8c9;
+  border-radius: 999px;
+  background: #fffefa;
 }
 
 .remedy-search input {
   width: 100%;
-
-  border: none;
-
-  outline: none;
-
+  margin-left: 8px;
+  border: 0;
+  outline: 0;
   background: transparent;
-
-  color: #36332c;
-
-  font: inherit;
-
-  font-size: 12px;
+  color: #2d2a23;
+  font-family: inherit;
 }
-
-.remedy-search input::placeholder {
-  color: #9a968c;
-}
-
-.remedy-search button {
-  width: 22px;
-  height: 22px;
-
-  border: none;
-
-  border-radius: 50%;
-
-  background: #eee9df;
-
-  color: #706b61;
-
-  cursor: pointer;
-
-  transition: 0.2s ease;
-}
-
-.remedy-search button:hover {
-  background: #e3dbc9;
-
-  color: #80632e;
-}
-
-
-/* =========================================================
-   FILTERS
-   ========================================================= */
 
 .remedy-filters {
   display: flex;
-
   flex-wrap: wrap;
-
-  gap: 7px;
-
-  margin-bottom: 30px;
+  gap: 9px;
+  margin-bottom: 18px;
 }
 
 .remedy-filters button {
-  padding: 8px 14px;
-
-  border: 1px solid #ddd6c9;
-
-  border-radius: 22px;
-
-  background: transparent;
-
-  color: #777267;
-
+  padding: 8px 16px;
+  border: 1px solid #e4d7c7;
+  border-radius: 999px;
   cursor: pointer;
-
-  font: inherit;
-
-  font-size: 10px;
-
-  transition: 0.25s ease;
+  color: #746a5d;
+  background: #fffdfa;
+  font-family: inherit;
 }
 
+.remedy-filters button.active,
 .remedy-filters button:hover {
-  border-color: #b9a16e;
-
-  color: #80632e;
-
-  transform: translateY(-2px);
-}
-
-.remedy-filters button.active {
-  border-color: #292820;
-
-  background: #292820;
-
+  border-color: #2d2a23;
   color: white;
-
-  box-shadow:
-    0 6px 15px rgba(40, 39, 32, 0.12);
+  background: #2d2a23;
 }
 
-
-/* =========================================================
-   DOSHA LEGEND
-   ========================================================= */
-
-.remedy-dosha-legend {
+.remedy-library-meta {
   display: flex;
-
-  align-items: center;
-
-  flex-wrap: wrap;
-
-  gap: 10px;
-
-  margin-bottom: 24px;
-
-  padding: 13px 16px;
-
-  border: 1px solid #e5dfd3;
-
-  border-radius: 14px;
-
-  background: rgba(255, 253, 248, 0.7);
-
-  color: #817b70;
-
-  font-size: 10px;
+  justify-content: space-between;
+  color: #746a5d;
+  font-size: 0.84rem;
 }
-
-.remedy-dosha-legend strong {
-  margin-right: 4px;
-
-  color: #5d574d;
-
-  font-size: 9px;
-
-  letter-spacing: 1.5px;
-}
-
-.dosha-legend-item {
-  display: inline-flex;
-
-  align-items: center;
-
-  gap: 6px;
-
-  padding: 5px 9px;
-
-  border-radius: 20px;
-
-  font-weight: 600;
-}
-
-.dosha-legend-item.vata {
-  background: var(--vata-light);
-
-  color: var(--vata-dark);
-}
-
-.dosha-legend-item.pitta {
-  background: var(--pitta-light);
-
-  color: var(--pitta-dark);
-}
-
-.dosha-legend-item.kapha {
-  background: var(--kapha-light);
-
-  color: var(--kapha-dark);
-}
-
-.dosha-dot {
-  width: 7px;
-  height: 7px;
-
-  border-radius: 50%;
-}
-
-.vata .dosha-dot {
-  background: var(--vata-main);
-}
-
-.pitta .dosha-dot {
-  background: var(--pitta-main);
-}
-
-.kapha .dosha-dot {
-  background: var(--kapha-main);
-}
-
-
-/* =========================================================
-   GRID
-   ========================================================= */
 
 .remedy-grid {
   display: grid;
-
-  grid-template-columns:
-    repeat(3, 1fr);
-
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
+  margin-top: 16px;
 }
-
-
-/* =========================================================
-   BASE REMEDY CARD
-   ========================================================= */
 
 .remedy-card {
-  position: relative;
-
-  min-height: 270px;
-
+  min-height: 362px;
   padding: 23px;
-
-  display: flex;
-
-  flex-direction: column;
-
-  overflow: hidden;
-
+  border: 1px solid;
   border-radius: 21px;
-
-  background: var(--paper);
-
-  box-shadow:
-    0 12px 35px rgba(60, 50, 35, 0.06);
-
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-
-  animation:
-    remedyCardAppear 0.45s ease both;
 }
 
-
-/* =========================================================
-   VATA CARD
-   MUTED BLUE-GREY
-   ========================================================= */
-
-.remedy-card:has(.remedy-dosha[data-dosha="Vata"]) {
-
-  background:
-    linear-gradient(
-      145deg,
-      #f3f7f8 0%,
-      #e5edef 100%
-    );
-
-  border: 1px solid var(--vata-border);
-
-  box-shadow:
-    0 14px 38px rgba(78, 98, 107, 0.10);
+.remedy-card.dosha-vata {
+  border-color: #c1d9e6;
+  background: #eef7fb;
 }
 
-
-/* =========================================================
-   PITTA CARD
-   ========================================================= */
-
-.remedy-card:has(.remedy-dosha[data-dosha="Pitta"]) {
-
-  background:
-    linear-gradient(
-      145deg,
-      #fdf6f2 0%,
-      #f7e5de 100%
-    );
-
-  border: 1px solid var(--pitta-border);
-
-  box-shadow:
-    0 14px 38px rgba(170, 91, 70, 0.10);
+.remedy-card.dosha-pitta {
+  border-color: #f3c8ba;
+  background: #fff1ec;
 }
 
-
-/* =========================================================
-   KAPHA CARD
-   ========================================================= */
-
-.remedy-card:has(.remedy-dosha[data-dosha="Kapha"]) {
-
-  background:
-    linear-gradient(
-      145deg,
-      #f5f8f3 0%,
-      #e6eee2 100%
-    );
-
-  border: 1px solid var(--kapha-border);
-
-  box-shadow:
-    0 14px 38px rgba(80, 108, 73, 0.10);
+.remedy-card.dosha-kapha {
+  border-color: #c7ddc3;
+  background: #f1f8ef;
 }
 
-
-/* =========================================================
-   CARD HOVER
-   ========================================================= */
-
-.remedy-card:hover {
-  transform: translateY(-7px);
+.recommended-badge {
+  display: inline-block;
+  margin-bottom: 15px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  color: #fff;
+  background: #2d2a23;
+  font-size: 0.63rem;
+  font-weight: 700;
 }
 
-.remedy-card:has(.remedy-dosha[data-dosha="Vata"]):hover {
-
-  box-shadow:
-    0 22px 48px rgba(78, 98, 107, 0.18);
-}
-
-.remedy-card:has(.remedy-dosha[data-dosha="Pitta"]):hover {
-
-  box-shadow:
-    0 22px 48px rgba(170, 91, 70, 0.18);
-}
-
-.remedy-card:has(.remedy-dosha[data-dosha="Kapha"]):hover {
-
-  box-shadow:
-    0 22px 48px rgba(80, 108, 73, 0.18);
-}
-
-
-/* =========================================================
-   CARD DECORATION
-   ========================================================= */
-
-.remedy-card::before {
-  content: "";
-
-  position: absolute;
-
-  width: 170px;
-  height: 170px;
-
-  top: -90px;
-  right: -90px;
-
-  border-radius: 50%;
-
-  pointer-events: none;
-}
-
-.remedy-card::after {
-  content: "";
-
-  position: absolute;
-
-  width: 80px;
-  height: 80px;
-
-  bottom: -45px;
-  left: -45px;
-
-  border-radius: 50%;
-
-  pointer-events: none;
-}
-
-
-/* =========================================================
-   VATA DECORATION
-   ========================================================= */
-
-.remedy-card:has(.remedy-dosha[data-dosha="Vata"])::before {
-
-  background:
-    rgba(113, 136, 146, 0.14);
-}
-
-.remedy-card:has(.remedy-dosha[data-dosha="Vata"])::after {
-
-  background:
-    rgba(113, 136, 146, 0.08);
-}
-
-
-/* =========================================================
-   PITTA DECORATION
-   ========================================================= */
-
-.remedy-card:has(.remedy-dosha[data-dosha="Pitta"])::before {
-
-  background:
-    rgba(200, 121, 97, 0.14);
-}
-
-.remedy-card:has(.remedy-dosha[data-dosha="Pitta"])::after {
-
-  background:
-    rgba(200, 121, 97, 0.08);
-}
-
-
-/* =========================================================
-   KAPHA DECORATION
-   ========================================================= */
-
-.remedy-card:has(.remedy-dosha[data-dosha="Kapha"])::before {
-
-  background:
-    rgba(113, 139, 104, 0.14);
-}
-
-.remedy-card:has(.remedy-dosha[data-dosha="Kapha"])::after {
-
-  background:
-    rgba(113, 139, 104, 0.08);
-}
-
-
-@keyframes remedyCardAppear {
-
-  from {
-    opacity: 0;
-
-    transform:
-      translateY(14px);
-  }
-
-  to {
-    opacity: 1;
-
-    transform:
-      translateY(0);
-  }
-}
-
-
-/* =========================================================
-   CARD HEADER
-   ========================================================= */
-
-.remedy-card-header {
-  position: relative;
-
-  z-index: 2;
-
+.remedy-card-top {
   display: flex;
-
   align-items: center;
-
   justify-content: space-between;
-
-  margin-bottom: 17px;
+  margin-bottom: 18px;
 }
 
-
-/* =========================================================
-   CARD ICON
-   ========================================================= */
-
-.remedy-card-icon {
-  width: 43px;
-  height: 43px;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
+.remedy-icon,
+.modal-remedy-icon {
+  display: grid;
+  place-items: center;
   border-radius: 14px;
-
-  font-size: 19px;
-
-  transition:
-    transform 0.3s ease;
+  background: rgba(255, 255, 255, 0.7);
 }
 
-.remedy-card:hover .remedy-card-icon {
-
-  transform:
-    rotate(-5deg)
-    scale(1.05);
+.remedy-icon {
+  width: 45px;
+  height: 45px;
+  font-size: 1.4rem;
 }
 
-
-/* =========================================================
-   VATA ICON
-   ========================================================= */
-
-.remedy-card:has(.remedy-dosha[data-dosha="Vata"])
-  .remedy-card-icon {
-
-  background: #d7e2e6;
-
-  color: var(--vata-dark);
-}
-
-
-/* =========================================================
-   PITTA ICON
-   ========================================================= */
-
-.remedy-card:has(.remedy-dosha[data-dosha="Pitta"])
-  .remedy-card-icon {
-
-  background: #f0d0c5;
-
-  color: var(--pitta-dark);
-}
-
-
-/* =========================================================
-   KAPHA ICON
-   ========================================================= */
-
-.remedy-card:has(.remedy-dosha[data-dosha="Kapha"])
-  .remedy-card-icon {
-
-  background: #d6e3d1;
-
-  color: var(--kapha-dark);
-}
-
-
-/* =========================================================
-   DOSHA BADGE
-   ========================================================= */
-
-.remedy-dosha {
-  position: relative;
-
-  z-index: 3;
-
-  padding: 6px 11px;
-
-  border-radius: 18px;
-
-  font-size: 8px;
-
+.remedy-dosha-tag {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  font-size: 0.66rem;
   font-weight: 700;
-
-  letter-spacing: 1.4px;
-
-  text-transform: uppercase;
 }
-
-
-/* =========================================================
-   VATA BADGE
-   ========================================================= */
-
-.remedy-dosha[data-dosha="Vata"] {
-
-  background: var(--vata-main);
-
-  color: white;
-
-  box-shadow:
-    0 5px 13px rgba(113, 136, 146, 0.25);
-}
-
-
-/* =========================================================
-   PITTA BADGE
-   ========================================================= */
-
-.remedy-dosha[data-dosha="Pitta"] {
-
-  background: var(--pitta-main);
-
-  color: white;
-
-  box-shadow:
-    0 5px 13px rgba(200, 121, 97, 0.25);
-}
-
-
-/* =========================================================
-   KAPHA BADGE
-   ========================================================= */
-
-.remedy-dosha[data-dosha="Kapha"] {
-
-  background: var(--kapha-main);
-
-  color: white;
-
-  box-shadow:
-    0 5px 13px rgba(113, 139, 104, 0.25);
-}
-
-
-/* =========================================================
-   CARD CONTENT
-   ========================================================= */
-
-.remedy-concern {
-  position: relative;
-
-  z-index: 2;
-
-  margin-bottom: 6px;
-
-  font-size: 9px;
-
-  font-weight: 700;
-
-  letter-spacing: 2px;
-
-  text-transform: uppercase;
-}
-
-
-/* =========================================================
-   VATA TEXT
-   ========================================================= */
-
-.remedy-card:has(.remedy-dosha[data-dosha="Vata"])
-  .remedy-concern {
-
-  color: var(--vata-dark);
-}
-
-
-/* =========================================================
-   PITTA TEXT
-   ========================================================= */
-
-.remedy-card:has(.remedy-dosha[data-dosha="Pitta"])
-  .remedy-concern {
-
-  color: var(--pitta-dark);
-}
-
-
-/* =========================================================
-   KAPHA TEXT
-   ========================================================= */
-
-.remedy-card:has(.remedy-dosha[data-dosha="Kapha"])
-  .remedy-concern {
-
-  color: var(--kapha-dark);
-}
-
 
 .remedy-card h3 {
-  position: relative;
-
-  z-index: 2;
-
-  margin: 0;
-
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
-
-  font-size: 21px;
-
-  line-height: 1.25;
-
-  font-weight: 400;
-
-  color: #302d26;
+  margin: 9px 0;
+  font-size: 1.58rem;
+  line-height: 1.08;
 }
 
 .remedy-card p {
-  position: relative;
-
-  z-index: 2;
-
-  margin: 9px 0 15px;
-
-  color: #706b62;
-
-  font-size: 12px;
-
-  line-height: 1.7;
-}
-
-
-/* =========================================================
-   CARD META
-   ========================================================= */
-
-.remedy-meta {
-  position: relative;
-
-  z-index: 2;
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 14px;
-
-  margin-bottom: 17px;
-
-  color: #817a70;
-
-  font-size: 9px;
-}
-
-.remedy-meta span {
-  display: inline-flex;
-
-  align-items: center;
-
-  gap: 4px;
-}
-
-
-/* =========================================================
-   VIEW BUTTON
-   ========================================================= */
-
-.remedy-view-button {
-  position: relative;
-
-  z-index: 3;
-
-  width: 100%;
-
-  min-height: 39px;
-
-  margin-top: auto;
-
-  padding: 0 13px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: space-between;
-
-  border-radius: 11px;
-
-  background: rgba(255, 255, 255, 0.42);
-
-  cursor: pointer;
-
-  font: inherit;
-
-  font-size: 10px;
-
-  font-weight: 700;
-
-  transition:
-    background 0.3s ease,
-    color 0.3s ease,
-    border 0.3s ease;
-}
-
-
-/* =========================================================
-   VATA BUTTON
-   ========================================================= */
-
-.remedy-card:has(.remedy-dosha[data-dosha="Vata"])
-  .remedy-view-button {
-
-  border: 1px solid #b9cbd1;
-
-  color: var(--vata-dark);
-}
-
-.remedy-card:has(.remedy-dosha[data-dosha="Vata"])
-  .remedy-view-button:hover {
-
-  background: var(--vata-dark);
-
-  border-color: var(--vata-dark);
-
-  color: white;
-}
-
-
-/* =========================================================
-   PITTA BUTTON
-   ========================================================= */
-
-.remedy-card:has(.remedy-dosha[data-dosha="Pitta"])
-  .remedy-view-button {
-
-  border: 1px solid #dfb5a7;
-
-  color: var(--pitta-dark);
-}
-
-.remedy-card:has(.remedy-dosha[data-dosha="Pitta"])
-  .remedy-view-button:hover {
-
-  background: var(--pitta-dark);
-
-  border-color: var(--pitta-dark);
-
-  color: white;
-}
-
-
-/* =========================================================
-   KAPHA BUTTON
-   ========================================================= */
-
-.remedy-card:has(.remedy-dosha[data-dosha="Kapha"])
-  .remedy-view-button {
-
-  border: 1px solid #bdceb8;
-
-  color: var(--kapha-dark);
-}
-
-.remedy-card:has(.remedy-dosha[data-dosha="Kapha"])
-  .remedy-view-button:hover {
-
-  background: var(--kapha-dark);
-
-  border-color: var(--kapha-dark);
-
-  color: white;
-}
-
-
-.remedy-view-button span {
-
-  font-size: 15px;
-
-  transition:
-    transform 0.25s ease;
-}
-
-.remedy-view-button:hover span {
-
-  transform:
-    translateX(4px);
-}
-
-
-/* =========================================================
-   EMPTY STATE
-   ========================================================= */
-
-.remedy-empty {
-
-  padding: 55px 20px;
-
-  text-align: center;
-
-  border: 1px dashed #d8d0c2;
-
-  border-radius: 20px;
-
-  background: var(--paper);
-}
-
-.remedy-empty > span {
-
-  color: var(--ayur-gold);
-
-  font-size: 30px;
-}
-
-.remedy-empty h3 {
-
-  margin: 12px 0 6px;
-
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
-
-  font-size: 23px;
-
-  font-weight: 400;
-}
-
-.remedy-empty p {
-
-  margin: 0 0 17px;
-
-  color: #817b70;
-
-  font-size: 13px;
-}
-
-.remedy-empty button {
-
-  padding: 10px 18px;
-
-  border: none;
-
-  border-radius: 25px;
-
-  background: #292820;
-
-  color: white;
-
-  cursor: pointer;
-
-  font-size: 11px;
-
-  transition: 0.25s ease;
-}
-
-.remedy-empty button:hover {
-
-  background: var(--ayur-gold);
-}
-
-
-/* =========================================================
-   GUIDANCE
-   ========================================================= */
-
-.remedy-guidance {
-
-  max-width: 1050px;
-
-  margin: 5px auto 65px;
-
-  padding: 25px 30px;
-
-  display: flex;
-
-  align-items: flex-start;
-
-  gap: 17px;
-
-  border: 1px solid rgba(160, 123, 53, 0.15);
-
-  border-radius: 22px;
-
-  background: #eee8da;
-
-  box-shadow:
-    0 10px 30px rgba(60, 50, 35, 0.035);
-}
-
-.guidance-icon {
-
-  width: 40px;
-  height: 40px;
-
-  flex-shrink: 0;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 50%;
-
-  background: #292820;
-
-  color: #d0ad67;
-
-  font-size: 14px;
-}
-
-.remedy-guidance span {
-
-  color: var(--ayur-gold);
-
-  font-size: 8px;
-
-  font-weight: 600;
-
-  letter-spacing: 2px;
-}
-
-.remedy-guidance h2 {
-
-  margin: 6px 0;
-
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
-
-  font-size: 22px;
-
-  font-weight: 400;
-}
-
-.remedy-guidance p {
-
-  max-width: 700px;
-
+  min-height: 43px;
   margin: 0;
-
-  color: #756f64;
-
-  font-size: 11px;
-
-  line-height: 1.7;
+  color: #756c61;
+  font-size: 0.9rem;
+  line-height: 1.5;
 }
 
-
-/* =========================================================
-   MODAL BACKDROP
-   ========================================================= */
-
-.remedy-modal-backdrop {
-
-  position: fixed;
-
-  inset: 0;
-
-  z-index: 9999;
-
+.remedy-card-details {
   display: flex;
+  gap: 13px;
+  margin: 17px 0 9px;
+  color: #756c61;
+  font-size: 0.72rem;
+}
 
-  align-items: center;
+.card-frequency {
+  margin-bottom: 14px;
+  color: #856729;
+  font-size: 0.73rem;
+  font-weight: 700;
+}
 
-  justify-content: center;
+.explore-remedy-button {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border: 1px solid currentColor;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #4a4034;
+  background: rgba(255, 255, 255, 0.52);
+  font-family: inherit;
+  font-size: 0.76rem;
+  font-weight: 800;
+}
 
+.explore-remedy-button:hover {
+  color: #fff;
+  background: #2d2a23;
+}
+
+.save-card-button {
+  display: block;
+  width: 100%;
+  margin-top: 13px;
+  border: 0;
+  cursor: pointer;
+  background: transparent;
+  color: #3e3932;
+  font-family: inherit;
+  font-size: 0.84rem;
+}
+
+.save-card-button.saved {
+  color: #b85c53;
+  font-weight: 700;
+}
+
+/* Remedy popup */
+
+.remedy-modal-overlay {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  display: grid;
+  place-items: center;
   padding: 20px;
-
-  background:
-    rgba(25, 24, 20, 0.65);
-
-  backdrop-filter:
-    blur(8px);
-
-  animation:
-    remedyModalFade 0.25s ease;
+  overflow-y: auto;
+  background: rgba(38, 35, 29, 0.58);
+  backdrop-filter: blur(7px);
 }
-
-@keyframes remedyModalFade {
-
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-
-/* =========================================================
-   MODAL
-   ========================================================= */
 
 .remedy-modal {
-
   position: relative;
-
-  width:
-    min(680px, 100%);
-
-  max-height: 88vh;
-
+  width: min(680px, 100%);
+  max-height: calc(100vh - 40px);
   overflow-y: auto;
-
-  padding: 30px;
-
-  border: 1px solid #e4dccd;
-
-  border-radius: 24px;
-
-  background: var(--paper);
-
-  box-shadow:
-    0 30px 100px rgba(0, 0, 0, 0.25);
-
-  animation:
-    remedyModalSlide 0.3s ease;
+  padding: 32px 29px;
+  border-radius: 21px;
+  background: #fffdfa;
 }
 
-@keyframes remedyModalSlide {
-
-  from {
-
-    opacity: 0;
-
-    transform:
-      translateY(20px)
-      scale(0.98);
-  }
-
-  to {
-
-    opacity: 1;
-
-    transform:
-      translateY(0)
-      scale(1);
-  }
-}
-
-
-/* =========================================================
-   MODAL CLOSE
-   ========================================================= */
-
-.remedy-modal-close {
-
+.modal-close-button {
   position: absolute;
-
   top: 17px;
-  right: 18px;
-
-  width: 33px;
-  height: 33px;
-
-  border: 1px solid #ddd6c9;
-
+  right: 20px;
+  width: 34px;
+  height: 34px;
+  border: 1px solid #e5d8c8;
   border-radius: 50%;
-
-  background: #faf8f2;
-
-  color: #777267;
-
   cursor: pointer;
-
-  font-size: 18px;
-
-  transition: 0.25s ease;
+  background: #fffdfa;
+  font-size: 1.3rem;
 }
 
-.remedy-modal-close:hover {
-
-  background: #292820;
-
-  border-color: #292820;
-
-  color: white;
-}
-
-
-/* =========================================================
-   MODAL TOP
-   ========================================================= */
-
-.modal-top {
-
+.modal-header {
   display: flex;
-
-  gap: 17px;
-
-  padding-right: 42px;
+  gap: 15px;
+  padding-right: 35px;
 }
 
-.modal-icon {
-
-  width: 55px;
-  height: 55px;
-
-  flex-shrink: 0;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 16px;
-
-  background: #f1e6d0;
-
-  color: var(--ayur-gold);
-
-  font-size: 25px;
+.modal-remedy-icon {
+  width: 46px;
+  height: 46px;
+  flex: 0 0 auto;
+  font-size: 1.45rem;
 }
 
-.modal-top > div:last-child > span {
-
-  color: var(--ayur-gold);
-
-  font-size: 8px;
-
-  font-weight: 600;
-
-  letter-spacing: 2px;
-
-  text-transform: uppercase;
+.remedy-modal h2 {
+  margin: 6px 0;
+  font-size: 2.4rem;
 }
 
-.modal-top h2 {
-
-  margin: 5px 0;
-
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
-
-  font-size: 27px;
-
-  font-weight: 400;
-}
-
-.modal-top p {
-
+.modal-header p {
   margin: 0;
-
-  color: #777267;
-
-  font-size: 12px;
-
-  line-height: 1.7;
+  color: #756c61;
+  font-size: 0.9rem;
 }
 
-
-/* =========================================================
-   MODAL DETAILS
-   ========================================================= */
-
-.modal-details {
-
+.remedy-stat-row {
   display: grid;
-
-  grid-template-columns:
-    repeat(3, 1fr);
-
-  margin: 25px 0;
-
-  border-top:
-    1px solid #e8e1d5;
-
-  border-bottom:
-    1px solid #e8e1d5;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 24px 0 17px;
+  border-top: 1px solid #e8ddcf;
+  border-bottom: 1px solid #e8ddcf;
 }
 
-.modal-details div {
-
+.remedy-stat-row div {
   padding: 13px;
-
-  border-right:
-    1px solid #e8e1d5;
 }
 
-.modal-details div:last-child {
-
-  border-right: none;
+.remedy-stat-row div + div {
+  border-left: 1px solid #e8ddcf;
 }
 
-.modal-details span {
+.remedy-stat-row span {
+  margin-bottom: 6px;
+  font-size: 0.58rem;
+}
 
+.remedy-stat-row strong {
+  font-size: 0.8rem;
+}
+
+.weekly-routine-highlight {
+  margin-bottom: 13px;
+  padding: 14px;
+  border: 1px solid #ead29e;
+  border-radius: 12px;
+  background: #fff7df;
+}
+
+.weekly-routine-highlight span {
   display: block;
-
-  margin-bottom: 5px;
-
-  color: #a09a8f;
-
-  font-size: 8px;
-
-  font-weight: 600;
-
-  letter-spacing: 1.5px;
+  color: #a87920;
+  font-size: 0.63rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
 }
 
-.modal-details strong {
-
-  color: #59534a;
-
-  font-size: 12px;
-
+.weekly-routine-highlight strong {
+  display: block;
+  margin: 5px 0;
+  font-family: Georgia, serif;
+  font-size: 1.25rem;
   font-weight: 500;
 }
 
-
-/* =========================================================
-   MODAL CONTENT
-   ========================================================= */
-
-.modal-content-section {
-
-  margin-top: 25px;
-}
-
-.modal-label {
-
-  display: block;
-
-  margin-bottom: 11px;
-
-  color: var(--ayur-gold);
-
-  font-size: 8px;
-
-  font-weight: 600;
-
-  letter-spacing: 2px;
-}
-
-
-/* =========================================================
-   INGREDIENTS
-   ========================================================= */
-
-.ingredient-list {
-
-  display: grid;
-
-  gap: 7px;
-
-  padding: 0;
-
+.weekly-routine-highlight p {
   margin: 0;
+  color: #776747;
+  font-size: 0.78rem;
+}
 
+/* Allergy message */
+
+.allergy-note {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+  padding: 14px;
+  border-left: 3px solid #c9785d;
+  border-radius: 0 11px 11px 0;
+  color: #6d4f4b;
+  background: #fbe8e6;
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.allergy-note strong {
+  flex: 0 0 auto;
+  color: #9b4235;
+}
+
+.modal-action-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin: 18px 0 26px;
+}
+
+.modal-action-row button {
+  padding: 12px;
+  border: 1px solid #ddcfbd;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #fffdfa;
+  color: #51473a;
+  font-family: inherit;
+}
+
+.modal-action-row button.active-action,
+.modal-action-row button:hover {
+  color: white;
+  background: #2d2a23;
+}
+
+.modal-section {
+  margin-top: 23px;
+}
+
+.ritual-list {
+  display: grid;
+  gap: 8px;
+  padding: 0;
   list-style: none;
 }
 
-.ingredient-list li {
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 10px;
-
-  padding: 9px 11px;
-
+.ritual-list li {
+  padding: 11px 13px;
   border-radius: 10px;
-
-  background: #f3eee4;
-
-  color: #625c52;
-
-  font-size: 11px;
+  font-size: 0.83rem;
 }
 
-.ingredient-list li span {
-
-  color: var(--ayur-gold);
-
-  font-size: 8px;
-
-  font-weight: 600;
+.ingredients-list li {
+  background: #f6f0e5;
 }
 
-
-/* =========================================================
-   BENEFITS
-   ========================================================= */
-
-.benefit-list {
-
-  display: grid;
-
-  gap: 7px;
+.benefits-list li {
+  background: #f0f7ee;
 }
 
-.benefit-list div {
-
+.ritual-stage {
   display: flex;
-
   align-items: center;
-
-  gap: 9px;
-
-  color: #625d54;
-
-  font-size: 11px;
-}
-
-.benefit-list span {
-
-  color: #7f9b72;
-
-  font-weight: 700;
-}
-
-
-/* =========================================================
-   STEPS
-   ========================================================= */
-
-.step-indicators {
-
-  display: flex;
-
-  gap: 7px;
-
-  margin-bottom: 11px;
-}
-
-.step-indicators button {
-
-  width: 29px;
-  height: 29px;
-
-  border: 1px solid #ddd6c9;
-
-  border-radius: 50%;
-
-  background: transparent;
-
-  color: #777267;
-
-  cursor: pointer;
-
-  font-size: 9px;
-
-  transition: 0.25s ease;
-}
-
-.step-indicators button:hover {
-
-  border-color: var(--ayur-gold);
-
-  color: #80632e;
-}
-
-.step-indicators button.active {
-
-  background: #292820;
-
-  border-color: #292820;
-
-  color: white;
-}
-
-.active-step {
-
-  min-height: 90px;
-
-  padding: 17px;
-
-  border-radius: 13px;
-
-  background: #eee8da;
-}
-
-.active-step span {
-
-  color: var(--ayur-gold);
-
-  font-size: 8px;
-
-  font-weight: 600;
-
-  letter-spacing: 1.5px;
-}
-
-.active-step p {
-
-  margin: 8px 0 0;
-
-  color: #59534a;
-
-  font-size: 12px;
-
-  line-height: 1.7;
-}
-
-
-/* =========================================================
-   STEP NAVIGATION
-   ========================================================= */
-
-.step-navigation {
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: space-between;
-
+  gap: 18px;
   margin-top: 11px;
+  padding: 21px;
+  border: 1px solid #d8c9af;
+  border-radius: 17px;
 }
 
-.step-navigation button {
-
-  padding: 7px 12px;
-
-  border: 1px solid #d8d0c2;
-
-  border-radius: 9px;
-
-  background: #faf8f2;
-
-  color: #625d54;
-
-  cursor: pointer;
-
-  font-size: 10px;
-
-  transition: 0.25s ease;
+.ritual-stage.dosha-vata {
+  background: #eff8fc;
 }
 
-.step-navigation button:not(:disabled):hover {
-
-  background: #292820;
-
-  border-color: #292820;
-
-  color: white;
+.ritual-stage.dosha-pitta {
+  background: #fff1ec;
 }
 
-.step-navigation button:disabled {
-
-  opacity: 0.35;
-
-  cursor: not-allowed;
+.ritual-stage.dosha-kapha {
+  background: #f0f8ee;
 }
 
-.step-navigation span {
-
-  color: #969085;
-
-  font-size: 9px;
+.ritual-scene-icon {
+  display: grid;
+  width: 76px;
+  height: 76px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.75);
+  font-size: 2.55rem;
+  animation: ritual-float 2.4s ease-in-out infinite;
 }
 
+@keyframes ritual-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
 
-/* =========================================================
-   SAFETY NOTE
-   ========================================================= */
-
-.remedy-safety-note {
-
-  display: flex;
-
-  align-items: flex-start;
-
-  gap: 10px;
-
-  margin-top: 24px;
-
-  padding: 13px;
-
-  border-left:
-    3px solid #b39151;
-
-  background: #f3ead6;
+  50% {
+    transform: translateY(-7px);
+  }
 }
 
-.remedy-safety-note span {
-
-  color: var(--ayur-gold);
-
-  font-size: 12px;
+.ritual-stage h3 {
+  margin: 6px 0;
+  font-size: 1.65rem;
 }
 
-.remedy-safety-note p {
-
+.ritual-stage p {
   margin: 0;
-
-  color: #756f64;
-
-  font-size: 10px;
-
-  line-height: 1.7;
+  color: #675e52;
+  font-size: 0.85rem;
+  line-height: 1.5;
 }
 
+.ritual-step-dots {
+  display: flex;
+  gap: 9px;
+  margin: 16px 0 11px;
+}
 
-/* =========================================================
-   MODAL BACK
-   ========================================================= */
-
-.modal-back-button {
-
-  width: 100%;
-
-  margin-top: 20px;
-
-  min-height: 41px;
-
-  border: none;
-
-  border-radius: 11px;
-
-  background: #292820;
-
-  color: white;
-
+.ritual-step-dots button {
+  width: 31px;
+  height: 31px;
+  border: 1px solid #dfd0be;
+  border-radius: 50%;
   cursor: pointer;
-
-  font-size: 11px;
-
-  font-weight: 600;
-
-  transition: 0.25s ease;
+  color: #826c49;
+  background: #fffdfa;
 }
 
-.modal-back-button:hover {
-
-  background: var(--ayur-gold);
+.ritual-step-dots button.active {
+  border-color: #2d2a23;
+  color: white;
+  background: #2d2a23;
 }
 
-
-/* =========================================================
-   TABLET
-   ========================================================= */
-
-@media (max-width: 950px) {
-
-  .remedy-hero {
-
-    min-height: 280px;
-
-    padding-left: 6%;
-    padding-right: 6%;
-  }
-
-  .hero-orbit {
-
-    right: 5%;
-
-    width: 125px;
-    height: 125px;
-  }
-
-  .remedy-library {
-
-    padding-left: 6%;
-    padding-right: 6%;
-  }
-
-  .remedy-grid {
-
-    grid-template-columns:
-      repeat(2, 1fr);
-  }
+.active-ritual-step {
+  padding: 16px;
+  border-radius: 12px;
+  background: #f5efe2;
 }
 
+.active-ritual-step p {
+  margin: 8px 0 0;
+  color: #494136;
+}
 
-/* =========================================================
-   MOBILE
-   ========================================================= */
+.ritual-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+}
 
-@media (max-width: 700px) {
+.ritual-navigation button {
+  padding: 8px 11px;
+  border: 1px solid #ddcfbd;
+  border-radius: 9px;
+  cursor: pointer;
+  color: #665c4e;
+  background: #fffdfa;
+  font-family: inherit;
+  font-size: 0.74rem;
+}
 
-  .remedy-hero {
+.ritual-navigation .next-step-button {
+  color: white;
+  background: #2d2a23;
+}
 
-    min-height: 280px;
+.ritual-navigation button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
 
-    padding:
-      70px
-      20px
-      50px;
+.important-note {
+  display: flex;
+  gap: 10px;
+  margin-top: 23px;
+  padding: 14px;
+  border-left: 3px solid #c9785d;
+  border-radius: 0 11px 11px 0;
+  color: #6d4f4b;
+  background: #fbe8e6;
+  font-size: 0.8rem;
+}
+
+.important-note strong {
+  color: #9b4235;
+}
+
+@media (max-width: 780px) {
+  .compact-recommendation {
+    grid-template-columns: 1fr;
+    gap: 12px;
   }
 
-  .remedy-hero h1 {
-
-    font-size: 40px;
-
-    letter-spacing: -1px;
+  .compact-frequency {
+    padding-left: 0;
+    border-left: 0;
   }
 
-  .remedy-hero p {
-
-    max-width: 480px;
-
-    font-size: 12px;
-  }
-
-  .hero-orbit {
-    display: none;
-  }
-
-  .remedy-library {
-
-    padding:
-      40px
-      18px
-      55px;
-  }
-
-  .remedy-library-header {
-
-    flex-direction: column;
-
-    align-items: stretch;
-
-    gap: 18px;
+  .library-heading {
+    display: block;
   }
 
   .remedy-search {
     width: 100%;
+    margin-top: 17px;
+  }
+
+  .remedy-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .home-remedy-page {
+    padding: 45px 16px 70px;
   }
 
   .remedy-grid {
     grid-template-columns: 1fr;
   }
 
-  .remedy-card {
-    min-height: 245px;
+  .remedy-library-meta {
+    display: block;
   }
 
-  .remedy-dosha-legend {
-
-    align-items: flex-start;
-
-    flex-direction: column;
+  .remedy-library-meta span + span {
+    display: block;
+    margin-top: 6px;
   }
 
-  .remedy-guidance {
-
-    margin:
-      0
-      18px
-      50px;
-
-    padding: 21px;
-  }
-
-  .remedy-modal-backdrop {
+  .remedy-modal-overlay {
     padding: 10px;
   }
 
   .remedy-modal {
-
-    max-height: 92vh;
-
-    padding:
-      24px
-      19px;
-
-    border-radius: 19px;
+    padding: 27px 18px;
   }
 
-  .modal-top h2 {
-    font-size: 23px;
-  }
-}
-
-
-/* =========================================================
-   SMALL MOBILE
-   ========================================================= */
-
-@media (max-width: 450px) {
-
-  .remedy-hero {
-
-    padding:
-      65px
-      18px
-      45px;
-  }
-
-  .remedy-hero h1 {
-    font-size: 35px;
-  }
-
-  .remedy-filters {
-    gap: 5px;
-  }
-
-  .remedy-filters button {
-
-    padding:
-      7px
-      10px;
-
-    font-size: 9px;
-  }
-
-  .remedy-card {
-    padding: 20px;
-  }
-
-  .modal-details {
-
+  .remedy-stat-row {
     grid-template-columns: 1fr;
   }
 
-  .modal-details div {
-
-    border-right: none;
-
-    border-bottom:
-      1px solid #e8e1d5;
+  .remedy-stat-row div + div {
+    border-top: 1px solid #e8ddcf;
+    border-left: 0;
   }
 
-  .modal-details div:last-child {
-    border-bottom: none;
+  .modal-action-row {
+    grid-template-columns: 1fr;
   }
 
-  .modal-top {
-    gap: 11px;
-  }
-
-  .modal-icon {
-
-    width: 46px;
-    height: 46px;
-
-    font-size: 20px;
+  .ritual-stage {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }

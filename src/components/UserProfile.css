@@ -1,120 +1,61 @@
 /* =========================================================
    AYURAI — USER PROFILE
-   Premium Ayurvedic Personal Dashboard
-   Editorial • Cream • Gold • Botanical
-   ========================================================= */
-
-
-/* =========================================================
-   DESIGN TOKENS
-   ========================================================= */
+========================================================= */
 
 :root {
   --profile-bg: #f8f6f0;
   --profile-surface: #fffdf8;
-  --profile-surface-soft: #f5f1e8;
-
   --profile-text: #292720;
   --profile-text-soft: #777267;
-  --profile-text-muted: #938c7e;
-
   --profile-gold: #a17c3e;
-  --profile-gold-light: #d8bd83;
-  --profile-gold-soft: #eee2c7;
+  --profile-border: rgba(160, 123, 53, 0.16);
 
-  /* AyurAI Dosha system */
-  --vata-main: #718892;
-  --vata-soft: #dfe7e9;
+  --vata-main: #6f8da8;
+  --vata-soft: #e6f0f5;
 
-  --pitta-main: #c97861;
-  --pitta-soft: #edddd8;
+  --pitta-main: #c9785d;
+  --pitta-soft: #fdf0eb;
 
   --kapha-main: #7f9b72;
-  --kapha-soft: #dfe8da;
-
-  --profile-border: rgba(160, 123, 53, 0.15);
-
-  --profile-shadow:
-    0 20px 60px rgba(70, 57, 35, 0.07);
-
-  --profile-shadow-hover:
-    0 25px 70px rgba(70, 57, 35, 0.12);
+  --kapha-soft: #eff5ed;
 }
 
-
-/* =========================================================
-   PAGE
-   ========================================================= */
+/* ---------- PAGE ---------- */
 
 .profile-page {
   min-height: 100vh;
-  padding: 120px 7% 110px;
-
+  padding: 110px 7% 90px;
   background:
-    radial-gradient(
-      circle at 8% 8%,
-      rgba(201, 162, 74, 0.10),
-      transparent 27%
-    ),
-    radial-gradient(
-      circle at 92% 32%,
-      rgba(113, 136, 146, 0.07),
-      transparent 25%
-    ),
-    radial-gradient(
-      circle at 50% 90%,
-      rgba(127, 155, 114, 0.06),
-      transparent 25%
-    ),
+    radial-gradient(circle at 8% 8%, rgba(201, 162, 74, 0.1), transparent 27%),
+    radial-gradient(circle at 92% 32%, rgba(111, 141, 168, 0.08), transparent 25%),
+    radial-gradient(circle at 50% 90%, rgba(127, 155, 114, 0.07), transparent 25%),
     var(--profile-bg);
-
   color: var(--profile-text);
 }
 
-
-/* =========================================================
-   HEADER
-   ========================================================= */
+/* ---------- HEADER ---------- */
 
 .profile-header {
-  max-width: 900px;
-  margin: 0 auto 62px;
+  max-width: 850px;
+  margin: 0 auto 58px;
   text-align: center;
-
-  animation: profileFadeUp 0.8s ease both;
 }
 
-.profile-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-
-  margin-bottom: 20px;
-
-  font-size: 10px;
-  letter-spacing: 3.5px;
+.profile-label,
+.profile-section-heading > span {
   color: var(--profile-gold);
-  font-weight: 600;
-}
-
-.profile-label::before,
-.profile-label::after {
-  content: "";
-  width: 28px;
-  height: 1px;
-  background: rgba(161, 124, 62, 0.4);
+  font-family: Arial, sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.17em;
 }
 
 .profile-header h1 {
-  margin: 0;
-
+  margin: 16px 0;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(46px, 6vw, 78px);
-  line-height: 1.02;
-  font-weight: 400;
-
-  letter-spacing: -1.5px;
-  color: var(--profile-text);
+  font-size: clamp(2.8rem, 6vw, 4.6rem);
+  font-weight: 500;
+  line-height: 1.05;
 }
 
 .profile-header h1 span {
@@ -123,232 +64,118 @@
 }
 
 .profile-header p {
-  max-width: 620px;
-  margin: 25px auto 0;
-
+  max-width: 650px;
+  margin: 0 auto;
   color: var(--profile-text-soft);
-  font-size: 15px;
-  line-height: 1.9;
+  font-family: Arial, sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.75;
 }
 
-
-/* =========================================================
-   MAIN PROFILE CARD
-   ========================================================= */
+/* ---------- USER CARD ---------- */
 
 .profile-main-card {
-  max-width: 1100px;
-  margin: 0 auto 85px;
-
-  padding: 32px 38px;
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.92),
-      rgba(250, 247, 238, 0.88)
-    );
-
-  border: 1px solid var(--profile-border);
-  border-radius: 26px;
-
   display: flex;
   align-items: center;
-  gap: 25px;
-
-  box-shadow: var(--profile-shadow);
-
-  backdrop-filter: blur(16px);
-
-  animation: profileFadeUp 0.8s 0.12s ease both;
-
-  transition:
-    transform 0.35s ease,
-    box-shadow 0.35s ease;
+  gap: 22px;
+  max-width: 1000px;
+  margin: 0 auto 74px;
+  padding: 26px 30px;
+  border: 1px solid var(--profile-border);
+  border-radius: 24px;
+  background: rgba(255, 253, 248, 0.9);
+  box-shadow: 0 16px 42px rgba(70, 57, 35, 0.06);
 }
 
-.profile-main-card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--profile-shadow-hover);
-}
-
-
-/* =========================================================
-   AVATAR
-   ========================================================= */
-
-.profile-avatar {
-  width: 92px;
-  height: 92px;
-
-  border-radius: 50%;
-
-  display: flex;
+.profile-avatar,
+.profile-modal-avatar {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-
-  flex-shrink: 0;
-
-  background:
-    radial-gradient(
-      circle at 35% 30%,
-      #fff8e8,
-      #efe2c7
-    );
-
-  border: 1px solid rgba(166, 128, 63, 0.25);
-
-  font-size: 41px;
-
-  box-shadow:
-    0 10px 30px rgba(120, 91, 43, 0.10);
-
-  transition:
-    transform 0.35s ease,
-    box-shadow 0.35s ease;
+  flex: 0 0 68px;
+  width: 68px;
+  height: 68px;
+  border: 1px solid rgba(166, 128, 63, 0.24);
+  border-radius: 50%;
+  background: linear-gradient(145deg, #fff8e8, #efe2c7);
+  font-size: 2rem;
 }
-
-.profile-main-card:hover .profile-avatar {
-  transform: scale(1.04) rotate(2deg);
-
-  box-shadow:
-    0 15px 35px rgba(120, 91, 43, 0.15);
-}
-
-
-/* =========================================================
-   USER INFO
-   ========================================================= */
 
 .profile-user-info {
   flex: 1;
 }
 
 .profile-user-info h2 {
-  margin: 0 0 6px;
-
+  margin: 0;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 30px;
-  font-weight: 400;
-
-  color: var(--profile-text);
+  font-size: 1.75rem;
+  font-weight: 500;
 }
 
 .profile-user-info p {
-  margin: 0 0 11px;
-
+  margin: 5px 0;
   color: var(--profile-text-soft);
-  font-size: 14px;
+  font-family: Arial, sans-serif;
+  font-size: 0.86rem;
 }
 
-.profile-age {
-  display: inline-flex;
-
-  padding: 5px 11px;
-
-  border-radius: 20px;
-
-  background: var(--profile-gold-soft);
-  color: #80622f;
-
-  font-size: 10px;
-  letter-spacing: 1.2px;
+.profile-user-info span {
+  color: #91723d;
+  font-family: Arial, sans-serif;
+  font-size: 0.72rem;
 }
 
-
-/* =========================================================
-   EDIT PROFILE BUTTON
-   ========================================================= */
-
-.edit-profile-button {
-  border: 1px solid #b39151;
-
-  background: rgba(255, 255, 255, 0.45);
-
-  color: #85662f;
-
-  padding: 12px 21px;
-
-  border-radius: 30px;
-
-  cursor: pointer;
-
-  font-size: 11px;
-  letter-spacing: 1.2px;
-
-  transition:
-    background 0.3s ease,
-    color 0.3s ease,
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-}
-
-.edit-profile-button:hover {
-  background: var(--profile-gold);
+.edit-profile-button,
+.retake-button,
+.empty-remedies button {
+  padding: 13px 20px;
+  border: 0;
+  border-radius: 999px;
+  background: #292820;
   color: white;
-
-  transform: translateY(-2px);
-
-  box-shadow:
-    0 8px 22px rgba(161, 124, 62, 0.20);
+  cursor: pointer;
+  font-family: Arial, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  transition: transform 0.2s ease, background 0.2s ease;
 }
 
+.edit-profile-button:hover,
+.retake-button:hover,
+.empty-remedies button:hover {
+  background: var(--profile-gold);
+  transform: translateY(-2px);
+}
 
-/* =========================================================
-   SECTIONS
-   ========================================================= */
+/* ---------- SECTIONS ---------- */
 
 .profile-section {
-  max-width: 1100px;
-  margin: 0 auto 88px;
-
-  animation: profileFadeUp 0.7s ease both;
+  max-width: 1200px;
+  margin: 0 auto 70px;
 }
 
 .profile-section-heading {
-  margin-bottom: 30px;
-}
-
-.profile-section-heading > span {
-  display: block;
-
-  margin-bottom: 11px;
-
-  font-size: 9px;
-  letter-spacing: 3px;
-
-  color: var(--profile-gold);
-
-  font-weight: 600;
+  margin-bottom: 24px;
 }
 
 .profile-section-heading h2 {
-  margin: 0;
-
+  margin: 10px 0 7px;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 35px;
-  font-weight: 400;
-
-  letter-spacing: -0.4px;
-
-  color: #2d2a24;
+  font-size: clamp(1.9rem, 4vw, 2.75rem);
+  font-weight: 500;
 }
 
-.profile-section-description {
-  max-width: 650px;
-
-  margin-top: 12px;
-
-  color: #817d73;
-
-  line-height: 1.8;
-  font-size: 14px;
+.profile-section-heading p {
+  max-width: 700px;
+  margin: 0;
+  color: var(--profile-text-soft);
+  font-family: Arial, sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.7;
 }
 
-
-/* =========================================================
-   PROFILE STATS
-   ========================================================= */
+/* ---------- QUICK INSIGHTS ---------- */
 
 .profile-stats {
   display: grid;
@@ -357,284 +184,158 @@
 }
 
 .profile-stat {
-  min-height: 165px;
-
-  padding: 27px;
-
-  border-radius: 21px;
-
   position: relative;
+  min-height: 170px;
   overflow: hidden;
-
-  transition:
-    transform 0.35s ease,
-    box-shadow 0.35s ease;
-}
-
-.profile-stat::after {
-  content: "";
-
-  position: absolute;
-
-  width: 100px;
-  height: 100px;
-
-  right: -35px;
-  bottom: -40px;
-
-  border-radius: 50%;
-
-  background: rgba(255, 255, 255, 0.28);
+  padding: 25px;
+  border-radius: 21px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .profile-stat:hover {
-  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(70, 57, 35, 0.1);
+  transform: translateY(-5px);
+}
 
-  box-shadow:
-    0 18px 40px rgba(70, 57, 35, 0.08);
+.profile-stat::after {
+  position: absolute;
+  right: -35px;
+  bottom: -40px;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  content: "";
 }
 
 .profile-stat > span {
-  font-size: 9px;
-  letter-spacing: 2px;
-
-  font-weight: 600;
+  font-family: Arial, sans-serif;
+  font-size: 0.61rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
 }
 
 .profile-stat strong {
-  display: block;
-
-  margin-top: 25px;
-
+  display: -webkit-box;
+  margin-top: 22px;
+  overflow: hidden;
   font-family: Georgia, "Times New Roman", serif;
-
-  font-size: 24px;
-  line-height: 1.25;
-
-  font-weight: 400;
+  font-size: 1.45rem;
+  font-weight: 500;
+  line-height: 1.18;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .profile-stat small {
   display: block;
-
-  margin-top: 8px;
-
-  font-size: 10px;
-  line-height: 1.5;
-
-  opacity: 0.72;
+  margin-top: 9px;
+  font-family: Arial, sans-serif;
+  font-size: 0.68rem;
+  line-height: 1.55;
 }
 
-
-/* =========================================================
-   STAT COLORS
-   ========================================================= */
-
 .dosha-stat {
-  background:
-    linear-gradient(
-      135deg,
-      #eee5d2,
-      #e8dec9
-    );
-
+  background: linear-gradient(135deg, #eee5d2, #e8dec9);
   color: #795d2f;
 }
 
 .skin-stat {
-  background:
-    linear-gradient(
-      135deg,
-      #eddfdb,
-      #e7d7d2
-    );
-
+  background: var(--pitta-soft);
   color: #895b50;
 }
 
 .hydration-stat {
-  background:
-    linear-gradient(
-      135deg,
-      #e1e9e7,
-      #d9e5e2
-    );
-
+  background: var(--vata-soft);
   color: #54776f;
 }
 
 .concern-stat {
-  background:
-    linear-gradient(
-      135deg,
-      #ebe7d7,
-      #e5dfcb
-    );
-
-  color: #756d46;
+  background: var(--kapha-soft);
+  color: #587052;
 }
 
-
-/* =========================================================
-   DOSHA BALANCE
-   ========================================================= */
+/* ---------- DOSHA / SKIN BALANCE ---------- */
 
 .dosha-balance-card {
-  padding: 48px;
-
-  border-radius: 28px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #fffefa,
-      #faf7ef
-    );
-
-  border: 1px solid var(--profile-border);
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   gap: 85px;
-
-  box-shadow: var(--profile-shadow);
-
-  transition:
-    transform 0.35s ease,
-    box-shadow 0.35s ease;
-}
-
-.dosha-balance-card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--profile-shadow-hover);
-}
-
-
-/* =========================================================
-   DOSHA CIRCLE
-   ========================================================= */
-
-.dosha-circle-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 42px;
+  border: 1px solid var(--profile-border);
+  border-radius: 25px;
+  background: var(--profile-surface);
+  box-shadow: 0 16px 42px rgba(70, 57, 35, 0.05);
 }
 
 .dosha-circle {
-  width: 255px;
-  height: 255px;
-
-  border-radius: 50%;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
-  transform: rotate(-90deg);
-
-  box-shadow:
-    0 16px 38px rgba(50, 40, 20, 0.13);
-
-  position: relative;
-}
-
-.dosha-circle::before {
-  content: "";
-
-  position: absolute;
-
-  inset: -8px;
-
+  width: 255px;
+  height: 255px;
   border-radius: 50%;
-
-  border: 1px solid rgba(161, 124, 62, 0.12);
+  box-shadow: 0 16px 38px rgba(50, 40, 20, 0.13);
+  transform: rotate(-90deg);
 }
 
 .dosha-circle-inner {
-  width: 192px;
-  height: 192px;
-
-  border-radius: 50%;
-
-  background:
-    radial-gradient(
-      circle,
-      #fffefa,
-      #faf7ef
-    );
-
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  transform: rotate(90deg);
-
+  width: 192px;
+  height: 192px;
+  border-radius: 50%;
+  background: #fffefa;
+  box-shadow: inset 0 0 30px rgba(80, 65, 40, 0.04);
   text-align: center;
-
-  box-shadow:
-    inset 0 0 30px rgba(80, 65, 40, 0.04);
+  transform: rotate(90deg);
 }
 
 .dosha-circle-inner span {
-  font-size: 8px;
-  letter-spacing: 2.5px;
-
   color: #918879;
+  font-family: Arial, sans-serif;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
 }
 
 .dosha-circle-inner strong {
-  margin: 8px 0;
-
+  max-width: 150px;
+  margin: 10px 0 7px;
+  color: #614c2b;
   font-family: Georgia, "Times New Roman", serif;
-
-  font-size: 30px;
-  font-weight: 400;
-
-  color: #876832;
+  font-size: 1.45rem;
+  font-weight: 500;
+  line-height: 1.1;
 }
 
 .dosha-circle-inner small {
-  font-size: 10px;
   color: #918879;
+  font-family: Arial, sans-serif;
+  font-size: 0.65rem;
 }
 
-
-/* =========================================================
-   DOSHA LEGEND
-   ========================================================= */
-
 .dosha-legend {
-  width: 310px;
+  width: min(100%, 340px);
 }
 
 .dosha-legend-item {
   display: flex;
   align-items: center;
-
   gap: 15px;
-
-  padding: 16px 0;
-
+  padding: 17px 0;
   border-bottom: 1px solid #ebe6dc;
 }
 
 .legend-dot {
+  flex: 0 0 14px;
   width: 14px;
   height: 14px;
-
   border-radius: 50%;
-
-  flex-shrink: 0;
-
-  box-shadow:
-    0 0 0 4px rgba(0, 0, 0, 0.025);
 }
-
-
-/* Existing AyurAI Dosha colors */
 
 .vata-dot {
   background: var(--vata-main);
@@ -651,128 +352,62 @@
 .dosha-legend-item div {
   display: flex;
   justify-content: space-between;
-
   width: 100%;
 }
 
 .dosha-legend-item strong {
   font-family: Georgia, "Times New Roman", serif;
-
-  font-weight: 400;
-
-  font-size: 17px;
+  font-size: 1.08rem;
+  font-weight: 500;
 }
 
 .dosha-legend-item small {
   color: #887f70;
-
-  font-size: 12px;
+  font-family: Arial, sans-serif;
+  font-size: 0.82rem;
 }
-
-
-/* =========================================================
-   REFRESH BUTTON
-   ========================================================= */
 
 .profile-refresh-button {
   width: 100%;
-
-  margin-top: 25px;
-
+  margin-top: 22px;
   padding: 13px;
-
   border: 1px solid #c2a66c;
-
-  border-radius: 30px;
-
+  border-radius: 999px;
   background: transparent;
-
   color: #80632e;
-
   cursor: pointer;
-
-  font-size: 11px;
-  letter-spacing: 0.8px;
-
-  transition:
-    background 0.3s ease,
-    color 0.3s ease,
-    transform 0.3s ease;
+  font-family: Arial, sans-serif;
+  font-size: 0.72rem;
 }
 
 .profile-refresh-button:hover {
-  background: var(--profile-gold);
-  color: white;
-
-  transform: translateY(-2px);
+  background: #f3e8d0;
 }
 
-
-/* =========================================================
-   LATEST ANALYSIS
-   ========================================================= */
+/* ---------- LATEST ANALYSIS ---------- */
 
 .latest-analysis-card {
-  padding: 31px;
-
-  border-radius: 23px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #292920,
-      #22231e
-    );
-
-  color: white;
-
   display: flex;
   align-items: center;
-
-  gap: 22px;
-
-  position: relative;
-  overflow: hidden;
-
-  box-shadow:
-    0 20px 50px rgba(35, 33, 25, 0.14);
-}
-
-.latest-analysis-card::after {
-  content: "";
-
-  position: absolute;
-
-  width: 180px;
-  height: 180px;
-
-  right: -70px;
-  top: -80px;
-
-  border-radius: 50%;
-
-  border: 1px solid rgba(208, 173, 103, 0.13);
+  gap: 21px;
+  padding: 30px;
+  border-radius: 23px;
+  background: linear-gradient(135deg, #292920, #22231e);
+  box-shadow: 0 20px 50px rgba(35, 33, 25, 0.14);
+  color: white;
 }
 
 .analysis-symbol {
-  width: 58px;
-  height: 58px;
-
-  border-radius: 50%;
-
-  background: rgba(255, 255, 255, 0.07);
-
-  border: 1px solid rgba(208, 173, 103, 0.15);
-
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-
+  flex: 0 0 56px;
+  width: 56px;
+  height: 56px;
+  border: 1px solid rgba(208, 173, 103, 0.18);
+  border-radius: 50%;
   color: #d0ad67;
-
-  font-size: 23px;
-
-  flex-shrink: 0;
+  font-size: 1.5rem;
 }
 
 .latest-analysis-content {
@@ -780,412 +415,235 @@
 }
 
 .latest-analysis-content > span {
-  font-size: 8px;
-  letter-spacing: 2.5px;
-
   color: #c7a96b;
+  font-family: Arial, sans-serif;
+  font-size: 0.61rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
 }
 
 .latest-analysis-content h3 {
   margin: 8px 0;
-
   font-family: Georgia, "Times New Roman", serif;
-
-  font-size: 26px;
-  font-weight: 400;
+  font-size: 1.55rem;
+  font-weight: 500;
 }
 
 .latest-analysis-content p {
   margin: 0;
-
-  color: #aaa69b;
-
-  font-size: 12px;
+  color: #c0bbb0;
+  font-family: Arial, sans-serif;
+  font-size: 0.78rem;
   line-height: 1.6;
 }
 
 .view-analysis-button {
+  padding: 12px 18px;
   border: 1px solid #a98a51;
-
+  border-radius: 999px;
   background: transparent;
-
-  color: #d2b06c;
-
-  padding: 12px 21px;
-
-  border-radius: 30px;
-
+  color: #e1c887;
   cursor: pointer;
-
-  font-size: 11px;
-
-  transition:
-    background 0.3s ease,
-    color 0.3s ease,
-    transform 0.3s ease;
+  font-family: Arial, sans-serif;
+  font-size: 0.7rem;
 }
 
 .view-analysis-button:hover {
   background: #d2b06c;
   color: #27271f;
-
-  transform: translateY(-2px);
 }
 
-
-/* =========================================================
-   REMEDIES
-   ========================================================= */
+/* ---------- HOME REMEDIES ---------- */
 
 .profile-remedies-grid {
   display: grid;
-
   grid-template-columns: repeat(3, 1fr);
-
   gap: 18px;
 }
 
 .profile-remedy-card {
-  background:
-    linear-gradient(
-      145deg,
-      #fffefa,
-      #faf7ef
-    );
-
-  border: 1px solid #e8e1d4;
-
-  border-radius: 23px;
-
-  padding: 29px;
-
   position: relative;
-
-  transition:
-    transform 0.35s ease,
-    box-shadow 0.35s ease,
-    border-color 0.35s ease;
+  padding: 28px;
+  border: 1px solid #e8e1d4;
+  border-radius: 22px;
+  background: linear-gradient(145deg, #fffefa, #faf7ef);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .profile-remedy-card:hover {
-  transform: translateY(-7px);
-
-  box-shadow:
-    0 20px 45px rgba(60, 50, 35, 0.10);
-
-  border-color:
-    rgba(161, 124, 62, 0.27);
+  border-color: rgba(161, 124, 62, 0.3);
+  box-shadow: 0 20px 45px rgba(60, 50, 35, 0.1);
+  transform: translateY(-6px);
 }
 
 .remedy-number {
   position: absolute;
-
-  top: 22px;
+  top: 20px;
   right: 22px;
-
   color: #c5bba9;
-
-  font-family: Georgia, serif;
-
-  font-size: 11px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.75rem;
 }
 
 .remedy-icon {
-  font-size: 31px;
-
-  margin-bottom: 20px;
+  margin-bottom: 18px;
+  font-size: 1.85rem;
 }
 
-.remedy-category {
-  font-size: 8px;
-
-  letter-spacing: 2px;
-
+.remedy-category,
+.remedy-ingredients span {
   color: var(--profile-gold);
-
-  font-weight: 600;
+  font-family: Arial, sans-serif;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
 }
 
 .profile-remedy-card h3 {
-  margin: 12px 0;
-
+  margin: 11px 0;
   font-family: Georgia, "Times New Roman", serif;
-
-  font-weight: 400;
-
-  font-size: 22px;
-  line-height: 1.3;
+  font-size: 1.35rem;
+  font-weight: 500;
+  line-height: 1.25;
 }
 
-.profile-remedy-card > p {
-  color: #777267;
-
-  font-size: 13px;
-
-  line-height: 1.75;
+.profile-remedy-card > p,
+.remedy-ingredients p {
+  color: var(--profile-text-soft);
+  font-family: Arial, sans-serif;
+  font-size: 0.8rem;
+  line-height: 1.7;
 }
 
 .remedy-ingredients {
-  margin-top: 22px;
-
-  padding-top: 16px;
-
+  margin-top: 20px;
+  padding-top: 15px;
   border-top: 1px solid #ebe5da;
-}
-
-.remedy-ingredients span {
-  font-size: 8px;
-
-  letter-spacing: 2px;
-
-  color: var(--profile-gold);
 }
 
 .remedy-ingredients p {
   margin: 7px 0 0;
-
-  font-size: 12px;
-
-  line-height: 1.6;
-
-  color: #777267;
 }
 
-
-/* =========================================================
-   EMPTY REMEDIES
-   ========================================================= */
-
-.empty-remedies {
-  text-align: center;
-
-  padding: 65px 25px;
-
-  background:
-    linear-gradient(
-      145deg,
-      #fffefa,
-      #faf7ef
-    );
-
+.empty-remedies,
+.empty-history {
+  padding: 52px 25px;
   border: 1px solid #e8e1d4;
-
-  border-radius: 25px;
+  border-radius: 23px;
+  background: var(--profile-surface);
+  text-align: center;
 }
 
-.empty-remedies span {
+.empty-remedies > span,
+.empty-history > span {
   display: block;
-
-  font-size: 40px;
-
-  margin-bottom: 8px;
+  margin-bottom: 9px;
+  font-size: 2rem;
 }
 
 .empty-remedies h3 {
   margin: 0;
-
   font-family: Georgia, "Times New Roman", serif;
-
-  font-weight: 400;
-
-  font-size: 26px;
+  font-size: 1.65rem;
+  font-weight: 500;
 }
 
-.empty-remedies p {
-  max-width: 500px;
-
+.empty-remedies p,
+.empty-history p {
+  max-width: 560px;
   margin: 12px auto;
-
-  color: #777267;
-
-  font-size: 14px;
-
+  color: var(--profile-text-soft);
+  font-family: Arial, sans-serif;
+  font-size: 0.86rem;
   line-height: 1.7;
 }
 
-.empty-remedies button {
-  margin-top: 16px;
-
-  border: none;
-
-  background: #292820;
-
-  color: white;
-
-  padding: 13px 23px;
-
-  border-radius: 30px;
-
-  cursor: pointer;
-
-  font-size: 11px;
-
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-}
-
-.empty-remedies button:hover {
-  transform: translateY(-2px);
-
-  box-shadow:
-    0 10px 25px rgba(41, 40, 32, 0.18);
-}
-
-
-/* =========================================================
-   DOSHA JOURNEY
-   ========================================================= */
+/* ---------- JOURNEY CARD ---------- */
 
 .dosha-profile-card {
-  padding: 37px;
-
-  border-radius: 25px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #eee8da,
-      #e9e1d0
-    );
-
   display: flex;
-
   align-items: center;
-
   justify-content: space-between;
-
-  gap: 30px;
-
-  border: 1px solid rgba(161, 124, 62, 0.10);
+  gap: 28px;
+  max-width: 1200px;
+  margin: 0 auto 70px;
+  padding: 36px;
+  border: 1px solid rgba(161, 124, 62, 0.14);
+  border-radius: 25px;
+  background: linear-gradient(135deg, #eee8da, #e9e1d0);
 }
 
-.dosha-profile-card > div > span {
-  font-size: 8px;
-
-  letter-spacing: 2.5px;
-
+.dosha-profile-card span {
   color: #91723d;
+  font-family: Arial, sans-serif;
+  font-size: 0.61rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
 }
 
 .dosha-profile-card h2 {
-  font-family: Georgia, "Times New Roman", serif;
-
-  font-weight: 400;
-
-  font-size: 31px;
-
   margin: 10px 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 2rem;
+  font-weight: 500;
 }
 
 .dosha-profile-card p {
   margin: 0;
-
   color: #756f64;
-
-  font-size: 14px;
+  font-family: Arial, sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.65;
 }
 
 .dosha-profile-card p strong {
   color: #765a2e;
 }
 
-.retake-button {
-  border: none;
-
-  background: #292820;
-
-  color: white;
-
-  padding: 14px 23px;
-
-  border-radius: 30px;
-
-  cursor: pointer;
-
-  white-space: nowrap;
-
-  font-size: 11px;
-
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-}
-
-.retake-button:hover {
-  transform: translateY(-2px);
-
-  box-shadow:
-    0 10px 25px rgba(41, 40, 32, 0.18);
-}
-
-
-/* =========================================================
-   HISTORY
-   ========================================================= */
+/* ---------- HISTORY ---------- */
 
 .history-list {
-  background: #fffdf8;
-
-  border-radius: 23px;
-
-  border: 1px solid #e8e1d4;
-
   overflow: hidden;
+  border: 1px solid #e8e1d4;
+  border-radius: 23px;
+  background: #fffdf8;
 }
 
 .history-item {
   display: flex;
-
   align-items: center;
-
-  padding: 25px;
-
-  gap: 22px;
-
-  transition:
-    background 0.3s ease;
+  gap: 21px;
+  padding: 24px;
 }
 
 .history-item + .history-item {
   border-top: 1px solid #eee9df;
 }
 
-.history-item:hover {
-  background: #fcfaf5;
-}
-
 .history-date {
-  width: 57px;
-  height: 57px;
-
-  border-radius: 15px;
-
-  background: #eee5d2;
-
   display: flex;
+  flex: 0 0 56px;
   flex-direction: column;
-
   align-items: center;
   justify-content: center;
-
-  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 15px;
+  background: #eee5d2;
 }
 
 .history-date strong {
   font-family: Georgia, "Times New Roman", serif;
-
-  font-size: 20px;
-
-  font-weight: 400;
+  font-size: 1.25rem;
+  font-weight: 500;
 }
 
 .history-date span {
-  font-size: 8px;
-
-  letter-spacing: 1px;
-
   color: #756b5b;
+  font-family: Arial, sans-serif;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
 }
 
 .history-info {
@@ -1194,608 +652,264 @@
 
 .history-info h3 {
   margin: 0 0 5px;
-
   font-family: Georgia, "Times New Roman", serif;
-
-  font-weight: 400;
-
-  font-size: 19px;
+  font-size: 1.2rem;
+  font-weight: 500;
 }
 
 .history-info p {
   margin: 0;
-
   color: #817b70;
-
-  font-size: 12px;
-
+  font-family: Arial, sans-serif;
+  font-size: 0.78rem;
   line-height: 1.6;
 }
 
 .history-status {
-  padding: 7px 13px;
-
-  border-radius: 20px;
-
+  padding: 7px 12px;
+  border-radius: 999px;
   background: var(--kapha-soft);
-
   color: #597052;
-
-  font-size: 9px;
-
-  letter-spacing: 0.7px;
-
-  white-space: nowrap;
+  font-family: Arial, sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
 }
 
-
-/* =========================================================
-   EDIT PROFILE OVERLAY
-   ========================================================= */
+/* ---------- EDIT PROFILE MODAL ---------- */
 
 .edit-profile-overlay {
   position: fixed;
-
-  inset: 0;
-
   z-index: 1000;
-
-  background:
-    rgba(25, 24, 20, 0.68);
-
+  inset: 0;
   display: flex;
-
   align-items: center;
   justify-content: center;
-
   padding: 20px;
-
-  backdrop-filter: blur(10px);
-
-  animation: overlayFade 0.25s ease both;
+  background: rgba(25, 24, 20, 0.68);
+  backdrop-filter: blur(8px);
 }
 
-
-/* =========================================================
-   EDIT PROFILE MODAL
-   ========================================================= */
-
 .edit-profile-modal {
-  width: min(600px, 100%);
-
-  max-height: 90vh;
-
-  overflow-y: auto;
-
-  background:
-    linear-gradient(
-      145deg,
-      #fffefa,
-      #faf7ef
-    );
-
-  border-radius: 28px;
-
-  padding: 37px;
-
   position: relative;
-
-  border: 1px solid rgba(161, 124, 62, 0.16);
-
-  box-shadow:
-    0 30px 100px rgba(0, 0, 0, 0.27);
-
-  animation: modalEnter 0.35s ease both;
+  width: min(100%, 580px);
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 36px;
+  border: 1px solid rgba(161, 124, 62, 0.2);
+  border-radius: 26px;
+  background: linear-gradient(145deg, #fffefa, #faf7ef);
+  box-shadow: 0 30px 100px rgba(0, 0, 0, 0.27);
 }
 
 .profile-modal-close {
   position: absolute;
-
-  top: 17px;
-  right: 20px;
-
-  width: 34px;
-  height: 34px;
-
+  top: 16px;
+  right: 18px;
+  width: 33px;
+  height: 33px;
   border: 1px solid #e5ded2;
-
   border-radius: 50%;
-
   background: #faf7ef;
-
-  font-size: 21px;
-
-  line-height: 1;
-
   color: #777;
-
   cursor: pointer;
-
-  transition:
-    background 0.25s ease,
-    transform 0.25s ease;
+  font-size: 1.25rem;
 }
-
-.profile-modal-close:hover {
-  background: #eee5d2;
-
-  transform: rotate(90deg);
-}
-
-
-/* =========================================================
-   MODAL HEADER
-   ========================================================= */
 
 .profile-modal-header {
   display: flex;
-
-  gap: 18px;
-
   align-items: center;
-
-  margin-bottom: 31px;
-
-  padding-right: 35px;
+  gap: 17px;
+  margin-bottom: 28px;
+  padding-right: 30px;
 }
 
-.profile-modal-avatar {
-  width: 67px;
-  height: 67px;
-
-  border-radius: 50%;
-
-  background:
-    radial-gradient(
-      circle at 35% 30%,
-      #fff8e8,
-      #efe2c7
-    );
-
-  border: 1px solid rgba(166, 128, 63, 0.22);
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  font-size: 30px;
-
-  flex-shrink: 0;
-}
-
-.profile-modal-label {
-  font-size: 8px;
-
-  letter-spacing: 2.5px;
-
-  color: var(--profile-gold);
+.profile-modal-header > div:last-child > span,
+.profile-icon-section > label,
+.profile-form label {
+  color: #887452;
+  font-family: Arial, sans-serif;
+  font-size: 0.61rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
 }
 
 .profile-modal-header h2 {
   margin: 6px 0;
-
   font-family: Georgia, "Times New Roman", serif;
-
-  font-weight: 400;
-
-  font-size: 28px;
+  font-size: 1.8rem;
+  font-weight: 500;
 }
 
 .profile-modal-header p {
   margin: 0;
-
   color: #817b70;
-
-  font-size: 12px;
+  font-family: Arial, sans-serif;
+  font-size: 0.78rem;
 }
 
-
-/* =========================================================
-   PROFILE ICON CHOOSER
-   ========================================================= */
-
 .profile-icon-section {
-  margin-bottom: 27px;
+  margin-bottom: 25px;
 }
 
 .profile-icon-section > label {
   display: block;
-
-  margin-bottom: 13px;
-
-  font-size: 8px;
-
-  letter-spacing: 2px;
-
-  color: #8b7347;
+  margin-bottom: 12px;
 }
 
 .profile-icon-grid {
   display: flex;
-
-  gap: 10px;
-
   flex-wrap: wrap;
+  gap: 10px;
 }
 
 .profile-icon-option {
-  width: 66px;
-  height: 66px;
-
-  border-radius: 18px;
-
+  width: 61px;
+  height: 61px;
   border: 1px solid #e4ddcf;
-
+  border-radius: 17px;
   background: #f8f5ed;
-
   cursor: pointer;
-
-  transition:
-    transform 0.25s ease,
-    border-color 0.25s ease,
-    background 0.25s ease,
-    box-shadow 0.25s ease;
-
-  font-size: 28px;
+  font-size: 1.55rem;
 }
 
-.profile-icon-option:hover {
-  transform: translateY(-4px);
-
-  border-color: #c4a05d;
-
-  box-shadow:
-    0 8px 20px rgba(170, 130, 55, 0.09);
-}
-
+.profile-icon-option:hover,
 .profile-icon-option.selected {
-  background:
-    linear-gradient(
-      145deg,
-      #f3e7c9,
-      #eadcbb
-    );
-
-  border: 2px solid #b08a45;
-
-  box-shadow:
-    0 9px 24px rgba(170, 130, 55, 0.16);
-
+  border-color: #b08a45;
+  background: #f3e7c9;
   transform: translateY(-2px);
 }
 
-
-/* =========================================================
-   FORM
-   ========================================================= */
-
 .profile-form {
   display: grid;
-
-  gap: 18px;
+  gap: 17px;
 }
 
-.profile-input-group {
+.profile-form label {
   display: grid;
-
   gap: 7px;
 }
 
-.profile-input-group label {
-  font-size: 8px;
-
-  letter-spacing: 2px;
-
-  color: #887452;
-}
-
-.profile-input-group input {
+.profile-form input {
   width: 100%;
-
   box-sizing: border-box;
-
-  padding: 14px 15px;
-
-  border-radius: 13px;
-
+  padding: 13px 14px;
   border: 1px solid #ddd6c9;
-
-  background: rgba(250, 248, 242, 0.9);
-
-  outline: none;
-
-  font-family: inherit;
-
-  font-size: 14px;
-
-  color: #36332c;
-
-  transition:
-    border-color 0.25s ease,
-    box-shadow 0.25s ease,
-    background 0.25s ease;
-}
-
-.profile-input-group input:hover {
-  border-color: #cfc3ad;
-}
-
-.profile-input-group input:focus {
-  border-color: #b29154;
-
+  border-radius: 12px;
   background: #fffefa;
-
-  box-shadow:
-    0 0 0 4px rgba(178, 145, 84, 0.08);
+  color: #36332c;
+  font-family: Arial, sans-serif;
+  font-size: 0.9rem;
+  outline: none;
 }
 
-.profile-input-group input::placeholder {
-  color: #aaa398;
+.profile-form input:focus {
+  border-color: #b29154;
+  box-shadow: 0 0 0 4px rgba(178, 145, 84, 0.1);
 }
 
-
-/* =========================================================
-   MODAL ACTIONS
-   ========================================================= */
-
-.profile-modal-divider {
-  height: 1px;
-
-  background: #e8e1d5;
-
-  margin: 27px 0;
+.profile-form-error {
+  margin: 15px 0 0;
+  color: #a74737;
+  font-family: Arial, sans-serif;
+  font-size: 0.8rem;
 }
 
 .profile-modal-actions {
   display: flex;
-
   justify-content: flex-end;
-
   gap: 10px;
+  margin-top: 27px;
+  padding-top: 22px;
+  border-top: 1px solid #e8e1d5;
 }
 
 .profile-cancel-button,
 .profile-save-button {
-  padding: 12px 21px;
-
-  border-radius: 25px;
-
+  padding: 12px 20px;
+  border-radius: 999px;
   cursor: pointer;
-
-  font-size: 11px;
-
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease,
-    background 0.25s ease;
+  font-family: Arial, sans-serif;
+  font-size: 0.72rem;
 }
 
 .profile-cancel-button {
   border: 1px solid #d5cec0;
-
   background: transparent;
-
   color: #6d675c;
 }
 
-.profile-cancel-button:hover {
-  background: #f1ede4;
-
-  transform: translateY(-2px);
-}
-
 .profile-save-button {
-  border: none;
-
+  border: 0;
   background: #292820;
-
   color: white;
 }
 
 .profile-save-button:hover {
   background: #403d32;
-
-  transform: translateY(-2px);
-
-  box-shadow:
-    0 9px 23px rgba(41, 40, 32, 0.18);
 }
 
-
-/* =========================================================
-   DISCLAIMER
-   ========================================================= */
+/* ---------- DISCLAIMER ---------- */
 
 .analysis-disclaimer {
   max-width: 850px;
-
-  margin-left: auto;
-  margin-right: auto;
-
-  padding: 17px 20px;
-
-  text-align: center;
-
-  color: #898276;
-
-  font-size: 11px;
-
-  line-height: 1.7;
-
+  margin: 0 auto;
+  padding: 18px;
   border-top: 1px solid #e5dfd3;
+  color: #898276;
+  font-family: Arial, sans-serif;
+  font-size: 0.72rem;
+  line-height: 1.7;
+  text-align: center;
 }
 
+/* ---------- RESPONSIVE ---------- */
 
-/* =========================================================
-   SCROLLBAR — MODAL
-   ========================================================= */
-
-.edit-profile-modal::-webkit-scrollbar {
-  width: 6px;
-}
-
-.edit-profile-modal::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.edit-profile-modal::-webkit-scrollbar-thumb {
-  background: #d6c9b0;
-  border-radius: 10px;
-}
-
-
-/* =========================================================
-   ANIMATIONS
-   ========================================================= */
-
-@keyframes profileFadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(18px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes overlayFade {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes modalEnter {
-  from {
-    opacity: 0;
-    transform: translateY(18px) scale(0.98);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-
-/* =========================================================
-   TABLET
-   ========================================================= */
-
-@media (max-width: 1000px) {
-
-  .profile-page {
-    padding-left: 5%;
-    padding-right: 5%;
-  }
-
+@media (max-width: 1050px) {
   .profile-stats {
     grid-template-columns: repeat(2, 1fr);
-  }
-
-  .dosha-balance-card {
-    gap: 50px;
   }
 
   .profile-remedies-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .dosha-balance-card {
+    gap: 48px;
+  }
 }
 
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
-@media (max-width: 700px) {
-
+@media (max-width: 720px) {
   .profile-page {
-    padding:
-      90px
-      20px
-      70px;
+    padding: 82px 20px 65px;
   }
 
-  .profile-header {
-    margin-bottom: 45px;
+  .profile-main-card,
+  .latest-analysis-card,
+  .dosha-profile-card {
+    flex-direction: column;
+    align-items: flex-start;
   }
-
-  .profile-header h1 {
-    font-size: clamp(43px, 12vw, 55px);
-    letter-spacing: -1px;
-  }
-
-  .profile-header p {
-    font-size: 13px;
-  }
-
-  .profile-label::before,
-  .profile-label::after {
-    width: 15px;
-  }
-
-
-  /* Profile card */
 
   .profile-main-card {
-    flex-direction: column;
-
     text-align: center;
-
-    padding: 30px 22px;
-
-    margin-bottom: 65px;
   }
 
-  .profile-user-info {
-    width: 100%;
-  }
-
-  .profile-user-info h2 {
-    font-size: 27px;
-  }
-
+  .profile-avatar,
+  .profile-user-info,
   .edit-profile-button {
+    align-self: center;
+  }
+
+  .edit-profile-button,
+  .view-analysis-button,
+  .retake-button {
     width: 100%;
   }
-
-
-  /* Sections */
-
-  .profile-section {
-    margin-bottom: 65px;
-  }
-
-  .profile-section-heading h2 {
-    font-size: 29px;
-  }
-
-
-  /* Stats */
-
-  .profile-stats {
-    grid-template-columns: 1fr;
-  }
-
-  .profile-stat {
-    min-height: 145px;
-  }
-
-
-  /* Dosha */
 
   .dosha-balance-card {
     flex-direction: column;
-
-    padding: 32px 20px;
-
-    gap: 35px;
+    gap: 32px;
+    padding: 30px 20px;
   }
 
   .dosha-circle {
@@ -1804,108 +918,30 @@
   }
 
   .dosha-circle-inner {
-    width: 163px;
-    height: 163px;
-  }
-
-  .dosha-circle-inner strong {
-    font-size: 26px;
+    width: 160px;
+    height: 160px;
   }
 
   .dosha-legend {
     width: 100%;
   }
 
-
-  /* Latest analysis */
-
-  .latest-analysis-card {
-    flex-direction: column;
-
-    text-align: center;
-
-    padding: 28px 22px;
-  }
-
-  .latest-analysis-content {
-    width: 100%;
-  }
-
-  .view-analysis-button {
-    width: 100%;
-  }
-
-
-  /* Remedies */
-
-  .profile-remedies-grid {
+  .profile-remedies-grid,
+  .profile-stats {
     grid-template-columns: 1fr;
   }
 
-
-  /* Journey */
-
-  .dosha-profile-card {
-    flex-direction: column;
-
-    align-items: flex-start;
-
-    padding: 30px 25px;
-  }
-
-  .retake-button {
-    width: 100%;
-  }
-
-
-  /* History */
-
   .history-item {
     align-items: flex-start;
-
-    gap: 15px;
-
-    padding: 20px;
-  }
-
-  .history-info h3 {
-    font-size: 17px;
+    flex-wrap: wrap;
   }
 
   .history-status {
-    margin-left: 72px;
-  }
-
-
-  /* Modal */
-
-  .edit-profile-overlay {
-    padding: 12px;
+    margin-left: 76px;
   }
 
   .edit-profile-modal {
-    padding: 28px 21px;
-
-    border-radius: 23px;
-
-    max-height: 92vh;
-  }
-
-  .profile-modal-header {
-    align-items: flex-start;
-
-    padding-right: 25px;
-  }
-
-  .profile-modal-header h2 {
-    font-size: 24px;
-  }
-
-  .profile-icon-option {
-    width: 58px;
-    height: 58px;
-
-    font-size: 25px;
+    padding: 29px 21px;
   }
 
   .profile-modal-actions {
@@ -1918,32 +954,14 @@
   }
 }
 
-
-/* =========================================================
-   SMALL PHONES
-   ========================================================= */
-
 @media (max-width: 430px) {
-
   .profile-page {
-    padding-left: 16px;
     padding-right: 16px;
+    padding-left: 16px;
   }
 
   .profile-header h1 {
-    font-size: 43px;
-  }
-
-  .profile-header p {
-    font-size: 12px;
-  }
-
-  .profile-main-card {
-    padding: 27px 18px;
-  }
-
-  .profile-section-heading h2 {
-    font-size: 27px;
+    font-size: 2.7rem;
   }
 
   .dosha-circle {
@@ -1952,46 +970,16 @@
   }
 
   .dosha-circle-inner {
-    width: 148px;
-    height: 148px;
+    width: 145px;
+    height: 145px;
   }
 
-  .dosha-circle-inner strong {
-    font-size: 23px;
+  .latest-analysis-card {
+    padding: 24px 20px;
+    text-align: center;
   }
 
-  .history-item {
-    flex-wrap: wrap;
-  }
-
-  .history-status {
-    margin-left: 72px;
-  }
-
-  .profile-modal-header {
-    gap: 12px;
-  }
-
-  .profile-modal-avatar {
-    width: 58px;
-    height: 58px;
-
-    font-size: 26px;
-  }
-}
-
-
-/* =========================================================
-   REDUCED MOTION
-   ========================================================= */
-
-@media (prefers-reduced-motion: reduce) {
-
-  .profile-page *,
-  .profile-page *::before,
-  .profile-page *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+  .analysis-symbol {
+    align-self: center;
   }
 }

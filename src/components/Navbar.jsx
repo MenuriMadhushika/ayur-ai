@@ -1,10 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import {
+  Link,
+  NavLink,
+  useNavigate,
+} from "react-router-dom";
+
 import "./Navbar.css";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
   const [menuOpen, setMenuOpen] = useState(false);
+  const [profileMenuOpen, setProfileMenuOpen] =
+    useState(false);
+
   const [profileIcon, setProfileIcon] = useState("🦋");
+
+  // =========================================================
+  // PROFILE ICONS
+  // =========================================================
 
   const profileIcons = {
     lotus: "🪷",
@@ -14,6 +28,10 @@ const Navbar = () => {
     butterfly: "🦋",
     botanical: "🌿",
   };
+
+  // =========================================================
+  // LOAD SAVED PROFILE ICON
+  // =========================================================
 
   useEffect(() => {
     const loadProfileIcon = () => {
@@ -26,7 +44,10 @@ const Navbar = () => {
 
       try {
         const user = JSON.parse(savedUser);
-        setProfileIcon(profileIcons[user.icon] || "🦋");
+
+        setProfileIcon(
+          profileIcons[user.icon] || "🦋"
+        );
       } catch {
         setProfileIcon("🦋");
       }
@@ -47,8 +68,13 @@ const Navbar = () => {
     };
   }, []);
 
-  const closeMenu = () => {
+  // =========================================================
+  // MENU HELPERS
+  // =========================================================
+
+  const closeMenus = () => {
     setMenuOpen(false);
+    setProfileMenuOpen(false);
   };
 
   const navClass = ({ isActive }) =>
@@ -57,29 +83,41 @@ const Navbar = () => {
   const mobileNavClass = ({ isActive }) =>
     `mobile-nav-link${isActive ? " active" : ""}`;
 
+  // =========================================================
+  // LOGOUT
+  // =========================================================
+
+  const handleLogout = () => {
+    // Remove saved login session.
+    localStorage.removeItem("ayuraiUser");
+    localStorage.removeItem("ayuraiUserId");
+
+    // FUTURE:
+    // Add token removal here when JWT authentication is used.
+    // localStorage.removeItem("ayuraiToken");
+
+    closeMenus();
+
+    // Users cannot return to private pages using Back.
+    navigate("/login", { replace: true });
+  };
+
   return (
     <header className="navbar">
-
       <div className="navbar-inner">
-
-        {/* =========================
-            BRAND
-        ========================== */}
+        {/* BRAND */}
 
         <Link
           to="/"
           className="navbar-logo"
-          onClick={closeMenu}
+          onClick={closeMenus}
           aria-label="AyurAI Home"
         >
           <span className="logo-ayur">Ayur</span>
           <span className="logo-ai">AI</span>
         </Link>
 
-
-        {/* =========================
-            DESKTOP NAVIGATION
-        ========================== */}
+        {/* DESKTOP NAVIGATION */}
 
         <nav
           className="desktop-nav"
@@ -89,68 +127,94 @@ const Navbar = () => {
             to="/"
             end
             className={navClass}
-            onClick={closeMenu}
+            onClick={closeMenus}
           >
-            <span>Home</span>
+            Home
           </NavLink>
 
           <NavLink
             to="/dosha-test"
             className={navClass}
-            onClick={closeMenu}
+            onClick={closeMenus}
           >
-            <span>Dosha Test</span>
+            Dosha Test
           </NavLink>
 
           <NavLink
             to="/skin-scan"
             className={navClass}
-            onClick={closeMenu}
+            onClick={closeMenus}
           >
-            <span>Skin Scan</span>
+            Skin Scan
           </NavLink>
 
           <NavLink
             to="/home-remedies"
             className={navClass}
-            onClick={closeMenu}
+            onClick={closeMenus}
           >
-            <span>Home Remedies</span>
+            Home Remedies
           </NavLink>
         </nav>
 
-
-        {/* =========================
-            RIGHT ACTIONS
-        ========================== */}
+        {/* PROFILE + MOBILE MENU */}
 
         <div className="navbar-actions">
+          <div className="profile-menu-wrapper">
+            <button
+              type="button"
+              className="profile-button"
+              onClick={() =>
+                setProfileMenuOpen(
+                  (current) => !current
+                )
+              }
+              aria-label="Open profile menu"
+              aria-expanded={profileMenuOpen}
+            >
+              <span className="profile-icon">
+                {profileIcon}
+              </span>
 
-          {/* Profile */}
+              <span className="profile-ring" />
+            </button>
 
-          <NavLink
-            to="/profile"
-            className={({ isActive }) =>
-              `profile-button${isActive ? " active" : ""}`
-            }
-            aria-label="Open profile"
-            title="Profile"
-            onClick={closeMenu}
-          >
-            <span className="profile-icon">
-              {profileIcon}
-            </span>
+            {/* Profile menu shown after clicking profile icon */}
 
-            <span className="profile-ring"></span>
-          </NavLink>
+            {profileMenuOpen && (
+              <div className="profile-dropdown">
+                <Link
+                  to="/profile"
+                  onClick={closeMenus}
+                >
+                  My Profile
+                </Link>
 
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
 
-          {/* Mobile Menu */}
+                {/* FUTURE ADMIN FEATURE:
+                    Add an Admin Dashboard link here only
+                    when the logged-in user has role ADMIN. */}
+              </div>
+            )}
+          </div>
+
+          {/* Mobile menu button */}
 
           <button
             type="button"
-            className={`menu-button${menuOpen ? " open" : ""}`}
-            onClick={() => setMenuOpen((current) => !current)}
+            className={`menu-button${
+              menuOpen ? " open" : ""
+            }`}
+            onClick={() => {
+              setMenuOpen((current) => !current);
+              setProfileMenuOpen(false);
+            }}
             aria-label={
               menuOpen
                 ? "Close navigation menu"
@@ -159,31 +223,24 @@ const Navbar = () => {
             aria-expanded={menuOpen}
             aria-controls="mobile-navigation"
           >
-            <span></span>
-            <span></span>
-            <span></span>
+            <span />
+            <span />
+            <span />
           </button>
-
         </div>
-
       </div>
 
-
-      {/* =========================
-          MOBILE NAVIGATION
-      ========================== */}
+      {/* MOBILE NAVIGATION */}
 
       <div
         id="mobile-navigation"
         className={`mobile-menu${menuOpen ? " show" : ""}`}
       >
-
         <div className="mobile-menu-inner">
-
           <NavLink
             to="/"
             end
-            onClick={closeMenu}
+            onClick={closeMenus}
             className={mobileNavClass}
           >
             <span className="mobile-link-number">01</span>
@@ -192,7 +249,7 @@ const Navbar = () => {
 
           <NavLink
             to="/dosha-test"
-            onClick={closeMenu}
+            onClick={closeMenus}
             className={mobileNavClass}
           >
             <span className="mobile-link-number">02</span>
@@ -201,7 +258,7 @@ const Navbar = () => {
 
           <NavLink
             to="/skin-scan"
-            onClick={closeMenu}
+            onClick={closeMenus}
             className={mobileNavClass}
           >
             <span className="mobile-link-number">03</span>
@@ -210,7 +267,7 @@ const Navbar = () => {
 
           <NavLink
             to="/home-remedies"
-            onClick={closeMenu}
+            onClick={closeMenus}
             className={mobileNavClass}
           >
             <span className="mobile-link-number">04</span>
@@ -219,17 +276,22 @@ const Navbar = () => {
 
           <NavLink
             to="/profile"
-            onClick={closeMenu}
+            onClick={closeMenus}
             className={mobileNavClass}
           >
             <span className="mobile-link-number">05</span>
-            <span>Profile</span>
+            <span>My Profile</span>
           </NavLink>
 
+          <button
+            type="button"
+            className="mobile-logout-button"
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
         </div>
-
       </div>
-
     </header>
   );
 };

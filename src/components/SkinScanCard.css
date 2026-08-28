@@ -1,43 +1,39 @@
 /* =========================================================
-   AYURAI SKIN SCAN
-   Premium Ayurvedic Editorial Theme
+   AYURAI — SKIN SCAN CARD
+   Premium, simple, and mobile-friendly interface.
 ========================================================= */
 
 .skin-scan-section {
-  width: 100%;
-  max-width: 1240px;
+  width: min(100%, 1240px);
   margin: 0 auto;
-  padding: 90px 32px 120px;
-  color: #29261f;
+  padding: 86px 28px 110px;
+  color: #302d25;
 }
 
-/* =========================================================
-   HEADER
-========================================================= */
+/* ---------- INTRODUCTION ---------- */
 
 .scan-heading {
   max-width: 760px;
-  margin: 0 auto 55px;
+  margin: 0 auto 52px;
   text-align: center;
 }
 
 .section-label {
   display: inline-block;
-  margin-bottom: 15px;
   color: #a88435;
   font-family: Arial, sans-serif;
-  font-size: 11px;
+  font-size: 0.68rem;
   font-weight: 700;
-  letter-spacing: 2.5px;
+  letter-spacing: 0.19em;
 }
 
-.scan-heading h2 {
-  margin: 0;
-  color: #29261f;
+.scan-heading h2,
+.skin-scan-complete h2 {
+  margin: 13px 0 0;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(38px, 5vw, 62px);
-  font-weight: 400;
-  line-height: 1.05;
+  font-size: clamp(2.35rem, 5vw, 4rem);
+  font-weight: 500;
+  line-height: 1.1;
 }
 
 .scan-heading h2 span {
@@ -47,124 +43,95 @@
 
 .scan-heading p {
   max-width: 650px;
-  margin: 22px auto 0;
-  color: #777064;
+  margin: 20px auto 0;
+  color: #716b60;
   font-family: Arial, sans-serif;
-  font-size: 14px;
-  line-height: 1.8;
+  font-size: 0.96rem;
+  line-height: 1.75;
 }
 
-/* =========================================================
-   MAIN SCAN CONTAINER
-========================================================= */
+/* ---------- MAIN SCAN CARD ---------- */
 
 .scan-container {
   display: grid;
   grid-template-columns: 0.85fr 1.15fr;
   min-height: 520px;
   overflow: hidden;
-  border: 1px solid rgba(168, 132, 53, 0.2);
-  border-radius: 28px;
+  border: 1px solid rgba(168, 132, 53, 0.22);
+  border-radius: 26px;
   background: #fbfaf6;
   box-shadow: 0 20px 60px rgba(52, 43, 27, 0.07);
 }
-
-/* =========================================================
-   LEFT INFO
-========================================================= */
 
 .scan-info {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 60px 55px;
-  background:
-    linear-gradient(
-      145deg,
-      rgba(247, 239, 218, 0.8),
-      rgba(251, 250, 246, 0.95)
-    );
+  padding: 56px;
+  background: linear-gradient(
+    145deg,
+    rgba(247, 239, 218, 0.82),
+    rgba(251, 250, 246, 0.96)
+  );
 }
 
 .scan-number {
   margin-bottom: 22px;
   color: #a88435;
   font-family: Arial, sans-serif;
-  font-size: 10px;
+  font-size: 0.68rem;
   font-weight: 700;
-  letter-spacing: 2px;
+  letter-spacing: 0.16em;
 }
 
 .scan-info h3 {
   margin: 0 0 17px;
-  color: #2e2a23;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 37px;
-  font-weight: 400;
+  font-size: clamp(2rem, 3vw, 2.5rem);
+  font-weight: 500;
   line-height: 1.15;
 }
 
 .scan-info > p {
-  max-width: 480px;
+  max-width: 460px;
   margin: 0;
-  color: #746e63;
+  color: #716b60;
   font-family: Arial, sans-serif;
-  font-size: 14px;
+  font-size: 0.92rem;
   line-height: 1.8;
 }
 
-/* =========================================================
-   FEATURES
-========================================================= */
-
 .scan-features {
-  display: flex;
-  flex-direction: column;
-  gap: 13px;
+  display: grid;
+  gap: 14px;
   margin-top: 30px;
 }
 
 .scan-features span {
-  display: flex;
-  align-items: center;
-  gap: 11px;
-  color: #514c42;
+  color: #504b41;
   font-family: Arial, sans-serif;
-  font-size: 12px;
+  font-size: 0.82rem;
 }
 
-.scan-features b {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 19px;
-  height: 19px;
-  border-radius: 50%;
-  background: #a88435;
-  color: #fff;
-  font-size: 10px;
+.scan-features span::first-letter {
+  color: #a88435;
 }
-
-/* =========================================================
-   NOTE
-========================================================= */
 
 .scan-note {
   display: flex;
-  align-items: flex-start;
   gap: 12px;
-  margin-top: 35px;
-  padding-top: 23px;
-  border-top: 1px solid rgba(100, 90, 70, 0.14);
+  margin-top: 34px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(100, 90, 70, 0.15);
 }
 
-.scan-note-icon {
-  display: flex;
-  flex-shrink: 0;
+.scan-note > span {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 31px;
-  height: 31px;
+  flex: 0 0 30px;
+  width: 30px;
+  height: 30px;
   border: 1px solid rgba(168, 132, 53, 0.35);
   border-radius: 50%;
   color: #a88435;
@@ -172,565 +139,300 @@
 
 .scan-note p {
   margin: 0;
-  color: #8a8377;
+  color: #81796d;
   font-family: Arial, sans-serif;
-  font-size: 10.5px;
+  font-size: 0.72rem;
   line-height: 1.7;
 }
 
-/* =========================================================
-   UPLOAD AREA
-========================================================= */
+/* ---------- UPLOAD AREA ---------- */
 
 .upload-wrapper {
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   min-height: 520px;
   background: #f4f0e7;
 }
 
 .upload-area {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  min-height: 520px;
-  padding: 45px;
-}
-
-.upload-content {
   width: 100%;
-  max-width: 420px;
+  padding: 42px;
   text-align: center;
 }
 
-/* =========================================================
-   CAMERA ICON
-========================================================= */
+.upload-content {
+  width: min(100%, 390px);
+  margin: 0 auto;
+}
 
-.upload-icon-button {
+.upload-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 78px;
-  height: 78px;
-  margin-bottom: 25px;
+  width: 76px;
+  height: 76px;
+  margin-bottom: 23px;
   border: 1px solid rgba(168, 132, 53, 0.45);
   border-radius: 50%;
-  background: rgba(255, 253, 247, 0.9);
-  color: #a88435;
-  cursor: pointer;
-  box-shadow: 0 10px 30px rgba(94, 72, 27, 0.09);
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease,
-    background 0.25s ease;
-}
-
-.upload-icon-button:hover {
-  transform: translateY(-4px);
   background: #fffdf8;
-  box-shadow: 0 15px 35px rgba(94, 72, 27, 0.14);
+  color: #a88435;
+  font-size: 2rem;
 }
 
 .upload-content h3 {
   margin: 0;
-  color: #322e27;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 28px;
-  font-weight: 400;
+  font-size: 1.85rem;
+  font-weight: 500;
 }
 
 .upload-content p {
-  margin: 12px 0 0;
+  margin: 13px 0 24px;
   color: #817a6e;
   font-family: Arial, sans-serif;
-  font-size: 13px;
+  font-size: 0.88rem;
 }
 
-/* =========================================================
-   DIVIDER
-========================================================= */
-
-.or-divider {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin: 25px 0;
-  color: #aaa294;
+.upload-button,
+.analyze-button,
+.continue-dosha-button {
+  border: 0;
+  background: #2e2a23;
+  color: white;
+  cursor: pointer;
   font-family: Arial, sans-serif;
-  font-size: 9px;
-  letter-spacing: 2px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  transition: transform 0.2s ease, background 0.2s ease;
 }
 
-.or-divider::before,
-.or-divider::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: rgba(105, 92, 68, 0.16);
+.upload-button:hover,
+.analyze-button:hover:not(:disabled),
+.continue-dosha-button:hover {
+  transform: translateY(-2px);
+  background: #a88435;
 }
-
-/* =========================================================
-   UPLOAD BUTTON
-========================================================= */
 
 .upload-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 190px;
-  padding: 15px 25px;
-  border: 1px solid #a88435;
-  border-radius: 2px;
-  background: #a88435;
-  color: #fff;
-  font-family: Arial, sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 1.7px;
-  cursor: pointer;
-  transition:
-    background 0.25s ease,
-    transform 0.25s ease;
-}
-
-.upload-button:hover {
-  transform: translateY(-2px);
-  background: #92732e;
+  min-width: 180px;
+  padding: 15px 23px;
+  border-radius: 4px;
 }
 
 .upload-content small {
   display: block;
-  margin-top: 16px;
-  color: #9b9488;
+  margin-top: 15px;
+  color: #958c7e;
   font-family: Arial, sans-serif;
-  font-size: 9px;
+  font-size: 0.67rem;
 }
 
-/* =========================================================
-   IMAGE PREVIEW
-========================================================= */
+/* ---------- COMPACT PHOTO PREVIEW ---------- */
 
-/* Outer Card Container */
-.skin-scan-card, 
-.card-container {
-  display: flex;
-  flex-direction: column;
-  height: 100%;            /* Fills vertical space of parent column */
-  min-height: 50px;       /* Set desired full card height */
-  overflow: hidden;
-  border-radius: 16px;     /* Smooth outer card corners */
-}
-
-/* Image Wrapper */
 .image-preview-container {
-  width: 100%;
-  flex: 1;                 /* Grows dynamically to fill all vertical space */
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 28px;
 }
 
 .image-preview {
   position: relative;
-  width: 100%;
-  height: 80%;            /* Expands fully to fill container */
-  flex: 1;
+  width: min(100%, 340px);
+  height: 340px;
+  overflow: hidden;
+  border: 1px solid rgba(168, 132, 53, 0.28);
+  border-radius: 20px;
+  background: #e9e2d5;
+  box-shadow: 0 15px 32px rgba(63, 49, 27, 0.12);
 }
 
 .image-preview img {
+  display: block;
   width: 100%;
-  height: 80%;
-  object-fit: cover;       /* Ensures image fills space perfectly without distortion */
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
 }
 
-/* "Change photo" bar attached at the bottom */
-.change-photo-btn {
-  width: 100%;
-  background-color: #F8F3E8;
-  text-align: center;
-  padding: 14px 0;
-  cursor: pointer;
-}
-
-.image-status {
+.image-status,
+.scan-status {
   position: absolute;
   top: 20px;
-  left: 20px;
+  left: 50%;
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 9px 13px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 20px;
-  background: rgba(25, 23, 20, 0.68);
-  color: #fff;
+  border-radius: 999px;
+  background: rgba(35, 31, 25, 0.75);
+  color: white;
   font-family: Arial, sans-serif;
-  font-size: 9px;
+  font-size: 0.62rem;
   font-weight: 700;
-  letter-spacing: 1px;
-  backdrop-filter: blur(8px);
-}
-
-.status-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #b6a063;
-  box-shadow: 0 0 10px rgba(210, 181, 103, 0.8);
-}
-
-/* =========================================================
-   CHANGE PHOTO
-========================================================= */
-
-.change-photo-small {
-  width: 100%;
-  padding: 15px;
-  border: 0;
-  border-top: 1px solid rgba(168, 132, 53, 0.18);
-  background: #fbfaf6;
-  color: #8d6d2e;
-  font-family: Arial, sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  cursor: pointer;
-  transition: background 0.25s ease;
-}
-
-.change-photo-small:hover {
-  background: #f4efe2;
-}
-
-/* =========================================================
-   AI SCAN OVERLAY
-========================================================= */
-
-.ai-scan-overlay {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  background: rgba(38, 34, 28, 0.2);
-}
-
-.scan-glow {
-  position: absolute;
-  inset: 15%;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(210, 179, 100, 0.18),
-    transparent 65%
-  );
-  animation: scanGlow 2s ease-in-out infinite;
-}
-
-@keyframes scanGlow {
-  0%,
-  100% {
-    transform: scale(0.9);
-    opacity: 0.5;
-  }
-
-  50% {
-    transform: scale(1.08);
-    opacity: 1;
-  }
-}
-
-/* =========================================================
-   FACE FRAME
-========================================================= */
-
-.face-scan-frame {
-  position: absolute;
-  top: 18%;
-  left: 50%;
-  width: 48%;
-  height: 62%;
+  letter-spacing: 0.1em;
   transform: translateX(-50%);
-  border: 1px solid rgba(224, 195, 120, 0.7);
-  border-radius: 48% 48% 42% 42%;
-  box-shadow:
-    0 0 25px rgba(193, 158, 72, 0.25),
-    inset 0 0 20px rgba(193, 158, 72, 0.08);
-}
-
-/* =========================================================
-   SCAN CORNERS
-========================================================= */
-
-.scan-corner {
-  position: absolute;
-  width: 32px;
-  height: 32px;
-  border-color: rgba(224, 195, 120, 0.9);
-  border-style: solid;
-}
-
-.top-left {
-  top: 15%;
-  left: 22%;
-  border-width: 2px 0 0 2px;
-}
-
-.top-right {
-  top: 15%;
-  right: 22%;
-  border-width: 2px 2px 0 0;
-}
-
-.bottom-left {
-  bottom: 15%;
-  left: 22%;
-  border-width: 0 0 2px 2px;
-}
-
-.bottom-right {
-  right: 22%;
-  bottom: 15%;
-  border-width: 0 2px 2px 0;
-}
-
-/* =========================================================
-   FACE POINTS
-========================================================= */
-
-.face-point {
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #e1c27c;
-  box-shadow: 0 0 12px rgba(224, 194, 120, 0.9);
-  animation: pointPulse 1.4s ease-in-out infinite;
-}
-
-.point-one {
-  top: 34%;
-  left: 43%;
-}
-
-.point-two {
-  top: 34%;
-  right: 43%;
-}
-
-.point-three {
-  top: 49%;
-  left: 50%;
-}
-
-.point-four {
-  top: 60%;
-  left: 43%;
-}
-
-.point-five {
-  top: 60%;
-  right: 43%;
-}
-
-@keyframes pointPulse {
-  0%,
-  100% {
-    transform: scale(0.7);
-    opacity: 0.5;
-  }
-
-  50% {
-    transform: scale(1.4);
-    opacity: 1;
-  }
-}
-
-/* =========================================================
-   SCAN LINE
-========================================================= */
-
-.photo-scan-line {
-  position: absolute;
-  left: 15%;
-  right: 15%;
-  height: 1px;
-  background: #d7b86c;
-  box-shadow:
-    0 0 12px #d7b86c,
-    0 0 30px rgba(215, 184, 108, 0.7);
-  animation: scanLine 2.3s linear infinite;
-}
-
-@keyframes scanLine {
-  0% {
-    top: 18%;
-    opacity: 0;
-  }
-
-  10% {
-    opacity: 1;
-  }
-
-  90% {
-    opacity: 1;
-  }
-
-  100% {
-    top: 82%;
-    opacity: 0;
-  }
-}
-
-/* =========================================================
-   SCAN STATUS
-========================================================= */
-
-.scan-status {
-  position: absolute;
-  top: 25px;
-  left: 50%;
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  transform: translateX(-50%);
-  padding: 10px 15px;
-  border: 1px solid rgba(224, 195, 120, 0.25);
-  border-radius: 20px;
-  background: rgba(30, 27, 22, 0.75);
-  color: #ead39b;
-  font-family: Arial, sans-serif;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
   white-space: nowrap;
-  backdrop-filter: blur(8px);
 }
 
+.status-dot,
 .scan-pulse {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #d5b66d;
-  animation: pulse 1s ease-in-out infinite;
+  background: #d5b464;
 }
 
-@keyframes pulse {
+.scan-pulse {
+  animation: scanPulse 1s infinite;
+}
+
+@keyframes scanPulse {
   50% {
-    transform: scale(1.5);
-    opacity: 0.4;
+    opacity: 0.3;
+    transform: scale(1.6);
   }
 }
 
-/* =========================================================
-   DETECTION TEXT
-========================================================= */
-
-.scan-detection {
-  position: absolute;
-  bottom: 75px;
-  left: 50%;
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  transform: translateX(-50%);
-  color: #eee4c9;
+.change-photo-small {
+  margin-top: 16px;
+  padding: 10px 16px;
+  border: 1px solid rgba(168, 132, 53, 0.35);
+  border-radius: 999px;
+  background: #fffdf8;
+  color: #8f702f;
+  cursor: pointer;
   font-family: Arial, sans-serif;
-  font-size: 10px;
-  white-space: nowrap;
+  font-size: 0.75rem;
 }
 
-/* =========================================================
-   SCAN PROGRESS
-========================================================= */
-
-.scan-progress {
-  position: absolute;
-  right: 15%;
-  bottom: 35px;
-  left: 15%;
-  height: 3px;
-  overflow: hidden;
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 0.18);
+.change-photo-small:hover {
+  background: #f8f0df;
 }
 
-.scan-progress-bar {
-  height: 100%;
-  border-radius: inherit;
-  background: #d4b56b;
-  box-shadow: 0 0 12px rgba(212, 181, 107, 0.8);
-  transition: width 0.08s linear;
-}
+/* ---------- SCAN ANIMATION ---------- */
 
-/* =========================================================
-   COMPLETE OVERLAY
-========================================================= */
-
+.ai-scan-overlay,
 .scan-complete-overlay {
   position: absolute;
   inset: 0;
+  border-radius: 20px;
+}
+
+.ai-scan-overlay {
+  overflow: hidden;
+  background: rgba(25, 31, 26, 0.2);
+  backdrop-filter: brightness(0.9);
+}
+
+.scan-frame {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 58%;
+  height: 67%;
+  border: 1px solid #dfbc5b;
+  border-radius: 46% 46% 42% 42%;
+  box-shadow: 0 0 28px rgba(223, 188, 91, 0.38);
+  transform: translate(-50%, -48%);
+}
+
+.scan-line {
+  position: absolute;
+  top: 22%;
+  right: 13%;
+  left: 13%;
+  height: 2px;
+  background: #e4c262;
+  box-shadow: 0 0 14px #e4c262;
+  animation: scanLine 2s ease-in-out infinite;
+}
+
+@keyframes scanLine {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(190px);
+  }
+}
+
+.ai-scan-overlay > p {
+  position: absolute;
+  right: 18px;
+  bottom: 48px;
+  left: 18px;
+  margin: 0;
+  color: white;
+  font-family: Arial, sans-serif;
+  font-size: 0.68rem;
+  text-align: center;
+}
+
+.scan-progress {
+  position: absolute;
+  right: 18px;
+  bottom: 19px;
+  left: 18px;
+  height: 3px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.scan-progress div {
+  height: 100%;
+  border-radius: inherit;
+  background: #e4c262;
+  transition: width 0.1s linear;
+}
+
+.scan-complete-overlay {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 14px;
-  background: rgba(36, 32, 26, 0.58);
-  color: #fff;
+  gap: 13px;
+  background: rgba(25, 30, 24, 0.58);
   backdrop-filter: blur(4px);
+  color: white;
 }
 
-.scan-complete-icon {
-  display: flex;
+.complete-check {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 62px;
-  height: 62px;
-  border: 1px solid rgba(225, 198, 128, 0.8);
+  width: 55px;
+  height: 55px;
+  border: 1px solid #dfbc5b;
   border-radius: 50%;
-  background: rgba(168, 132, 53, 0.25);
-  color: #e5c67d;
+  color: #f3d27c;
+  font-size: 1.8rem;
 }
 
-.scan-complete-overlay > span {
+.scan-complete-overlay strong {
   font-family: Arial, sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 2px;
+  font-size: 0.68rem;
+  letter-spacing: 0.15em;
 }
 
-/* =========================================================
-   ANALYZE ACTION
-========================================================= */
+/* ---------- ANALYZE ACTION ---------- */
 
 .analysis-action {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 35px 0 60px;
+  margin-top: 32px;
+  text-align: center;
 }
 
 .analyze-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
   min-width: 230px;
-  padding: 16px 22px;
-  border: 0;
-  border-radius: 3px;
-  background: #2f2b24;
-  color: #fff;
-  font-family: Arial, sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  cursor: pointer;
-  transition:
-    transform 0.25s ease,
-    background 0.25s ease;
-}
-
-.analyze-button:hover:not(:disabled) {
-  transform: translateY(-3px);
-  background: #a88435;
+  padding: 17px 23px;
+  border-radius: 4px;
 }
 
 .analyze-button:disabled {
@@ -738,67 +440,36 @@
   opacity: 0.75;
 }
 
-.analyze-icon {
-  color: #d7b86c;
+.analysis-action p {
+  margin: 12px 0 0;
+  color: #776f63;
+  font-family: Arial, sans-serif;
+  font-size: 0.78rem;
 }
 
-.arrow {
-  margin-left: auto;
-}
-
-/* =========================================================
-   SKIN SCAN COMPLETE
-========================================================= */
+/* ---------- COMPLETION SECTION ---------- */
 
 .skin-scan-complete {
-  margin: 0 auto 70px;
-  padding: 60px;
-  border: 1px solid rgba(168, 132, 53, 0.22);
-  border-radius: 25px;
-  background:
-    linear-gradient(
-      135deg,
-      #fbfaf6,
-      #f7f1e4
-    );
-  box-shadow: 0 20px 60px rgba(52, 43, 27, 0.06);
+  margin-top: 42px;
+  padding: clamp(32px, 5vw, 58px);
+  border: 1px solid rgba(168, 132, 53, 0.25);
+  border-radius: 24px;
+  background: #fbfaf6;
+  box-shadow: 0 16px 44px rgba(52, 43, 27, 0.05);
 }
 
-.complete-heading {
-  max-width: 760px;
-  margin-bottom: 40px;
+.skin-scan-complete h2 {
+  font-size: clamp(2rem, 4vw, 3.2rem);
 }
 
-.complete-label {
-  display: inline-block;
-  margin-bottom: 13px;
-  color: #a88435;
+.complete-intro {
+  max-width: 680px;
+  margin: 17px 0 32px;
+  color: #70695d;
   font-family: Arial, sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 2.2px;
+  font-size: 0.92rem;
+  line-height: 1.75;
 }
-
-.complete-heading h2 {
-  margin: 0;
-  color: #2d2922;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(31px, 4vw, 46px);
-  font-weight: 400;
-}
-
-.complete-heading p {
-  max-width: 650px;
-  margin: 18px 0 0;
-  color: #777064;
-  font-family: Arial, sans-serif;
-  font-size: 13px;
-  line-height: 1.8;
-}
-
-/* =========================================================
-   ASSESSMENT STATUS
-========================================================= */
 
 .assessment-status-grid {
   display: grid;
@@ -823,25 +494,24 @@
   background: rgba(168, 132, 53, 0.07);
 }
 
-.assessment-status.pending {
-  border-color: rgba(100, 95, 82, 0.14);
-}
-
 .assessment-status-icon {
-  display: flex;
-  flex-shrink: 0;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
+  flex: 0 0 43px;
   width: 43px;
   height: 43px;
   border: 1px solid rgba(168, 132, 53, 0.35);
   border-radius: 50%;
   color: #a88435;
+  font-family: Arial, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
 }
 
 .assessment-status.completed .assessment-status-icon {
   background: #a88435;
-  color: #fff;
+  color: white;
 }
 
 .assessment-status-content {
@@ -852,31 +522,30 @@
 .assessment-status-content > span {
   color: #a88435;
   font-family: Arial, sans-serif;
-  font-size: 9px;
+  font-size: 0.64rem;
   font-weight: 700;
-  letter-spacing: 1px;
+  letter-spacing: 0.1em;
 }
 
 .assessment-status-content strong {
   margin-top: 4px;
-  color: #363129;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 18px;
-  font-weight: 400;
+  font-size: 1.15rem;
+  font-weight: 500;
 }
 
 .assessment-status-content small {
-  margin-top: 3px;
-  color: #888073;
+  margin-top: 4px;
+  color: #81796d;
   font-family: Arial, sans-serif;
-  font-size: 10px;
+  font-size: 0.72rem;
 }
 
 .assessment-connector {
   position: relative;
   height: 1px;
   margin: 0 15px;
-  background: rgba(168, 132, 53, 0.3);
+  background: rgba(168, 132, 53, 0.35);
 }
 
 .assessment-connector span {
@@ -885,100 +554,64 @@
   left: 50%;
   width: 7px;
   height: 7px;
-  transform: translate(-50%, -50%);
-  border: 2px solid #f7f1e4;
+  border: 2px solid #fbfaf6;
   border-radius: 50%;
   background: #a88435;
+  transform: translate(-50%, -50%);
 }
-
-/* =========================================================
-   COMPLETE MESSAGE
-========================================================= */
 
 .complete-message {
   display: flex;
-  align-items: flex-start;
-  gap: 15px;
-  margin-top: 30px;
-  padding: 20px 22px;
-  border: 1px solid rgba(168, 132, 53, 0.18);
+  gap: 14px;
+  padding: 18px 20px;
+  border: 1px solid rgba(168, 132, 53, 0.2);
   border-radius: 12px;
-  background: rgba(255, 253, 247, 0.75);
+  background: #fffdf8;
 }
 
 .complete-message.overall-ready {
-  border-color: rgba(126, 143, 108, 0.35);
-  background: rgba(126, 143, 108, 0.08);
+  border-color: rgba(127, 155, 114, 0.35);
+  background: #eff5ed;
 }
 
-.complete-message-icon {
-  display: flex;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  background: rgba(168, 132, 53, 0.1);
+.complete-message > span {
   color: #a88435;
+  font-size: 1.1rem;
 }
 
 .complete-message p {
   margin: 0;
-  color: #777064;
+  color: #70695d;
   font-family: Arial, sans-serif;
-  font-size: 12px;
+  font-size: 0.82rem;
   line-height: 1.7;
 }
 
 .complete-message strong {
-  color: #3b352b;
+  color: #3d382f;
 }
-
-/* =========================================================
-   COMPLETE ACTION
-========================================================= */
 
 .complete-action {
   display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-top: 30px;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 28px;
 }
 
 .continue-dosha-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 18px;
-  padding: 16px 23px;
-  border: 0;
-  border-radius: 3px;
-  background: #2e2a23;
-  color: #fff;
-  font-family: Arial, sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 1.3px;
-  cursor: pointer;
-  transition:
-    transform 0.25s ease,
-    background 0.25s ease;
-}
-
-.continue-dosha-button:hover {
-  transform: translateY(-2px);
-  background: #a88435;
+  padding: 16px 21px;
+  border-radius: 4px;
 }
 
 .another-photo-button {
   padding: 15px 18px;
   border: 1px solid rgba(100, 90, 70, 0.22);
-  border-radius: 3px;
+  border-radius: 4px;
   background: transparent;
   color: #756e63;
-  font-family: Arial, sans-serif;
-  font-size: 10px;
   cursor: pointer;
+  font-family: Arial, sans-serif;
+  font-size: 0.72rem;
 }
 
 .another-photo-button:hover {
@@ -986,640 +619,7 @@
   color: #a88435;
 }
 
-/* =========================================================
-   ANALYSIS RESULT
-========================================================= */
-
-.analysis-result {
-  margin-top: 80px;
-}
-
-.result-heading {
-  max-width: 700px;
-  margin-bottom: 35px;
-}
-
-.result-heading h2 {
-  margin: 0;
-  color: #2f2b24;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 42px;
-  font-weight: 400;
-}
-
-.result-heading p {
-  margin-top: 13px;
-  color: #81796d;
-  font-family: Arial, sans-serif;
-  font-size: 12px;
-  line-height: 1.7;
-}
-
-/* =========================================================
-   ASSESSMENT BANNER
-========================================================= */
-
-.dosha-result-banner {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 20px;
-  margin-bottom: 28px;
-  padding: 25px;
-  border: 1px solid rgba(168, 132, 53, 0.25);
-  border-radius: 15px;
-  background:
-    linear-gradient(
-      120deg,
-      rgba(168, 132, 53, 0.09),
-      rgba(255, 253, 247, 0.9)
-    );
-}
-
-.dosha-result-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 53px;
-  height: 53px;
-  border-radius: 50%;
-  background: rgba(168, 132, 53, 0.12);
-  color: #a88435;
-}
-
-.dosha-result-content {
-  display: flex;
-  flex-direction: column;
-}
-
-.dosha-result-content > span {
-  color: #a88435;
-  font-family: Arial, sans-serif;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-}
-
-.dosha-result-content strong {
-  margin-top: 5px;
-  color: #302c25;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 21px;
-  font-weight: 400;
-}
-
-.dosha-result-content p {
-  max-width: 700px;
-  margin: 6px 0 0;
-  color: #817a6e;
-  font-family: Arial, sans-serif;
-  font-size: 11px;
-  line-height: 1.6;
-}
-
-.dosha-result-banner button {
-  padding: 13px 18px;
-  border: 1px solid #a88435;
-  border-radius: 3px;
-  background: #a88435;
-  color: #fff;
-  font-family: Arial, sans-serif;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  cursor: pointer;
-}
-
-/* =========================================================
-   RESULT GRID
-========================================================= */
-
-.result-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 17px;
-}
-
-.result-card {
-  position: relative;
-  min-height: 240px;
-  padding: 27px;
-  overflow: hidden;
-  border: 1px solid rgba(100, 90, 70, 0.13);
-  border-radius: 15px;
-  background: #fbfaf6;
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
-}
-
-.result-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 15px 35px rgba(58, 48, 30, 0.08);
-}
-
-.result-number {
-  position: absolute;
-  top: 20px;
-  right: 22px;
-  color: #c2b9aa;
-  font-family: Arial, sans-serif;
-  font-size: 9px;
-  letter-spacing: 1px;
-}
-
-.result-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 42px;
-  height: 42px;
-  margin-bottom: 23px;
-  border: 1px solid rgba(168, 132, 53, 0.3);
-  border-radius: 50%;
-  color: #a88435;
-}
-
-.result-label {
-  display: block;
-  margin-bottom: 8px;
-  color: #a88435;
-  font-family: Arial, sans-serif;
-  font-size: 8px;
-  font-weight: 700;
-  letter-spacing: 1.4px;
-}
-
-.result-card strong {
-  display: block;
-  color: #3a352c;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 19px;
-  font-weight: 400;
-}
-
-.result-card p {
-  margin: 10px 0 0;
-  color: #827b70;
-  font-family: Arial, sans-serif;
-  font-size: 10.5px;
-  line-height: 1.65;
-}
-
-/* =========================================================
-   HYDRATION
-========================================================= */
-
-.hydration-meter {
-  height: 4px;
-  margin-top: 20px;
-  overflow: hidden;
-  border-radius: 5px;
-  background: #e7e0d4;
-}
-
-.hydration-meter-fill {
-  height: 100%;
-  border-radius: inherit;
-  background: #a88435;
-}
-
-.result-card small {
-  display: block;
-  margin-top: 7px;
-  color: #958c7e;
-  font-family: Arial, sans-serif;
-  font-size: 9px;
-}
-
-/* =========================================================
-   CARE SECTION
-========================================================= */
-
-.ayurvedic-care-section {
-  margin-top: 85px;
-  padding-top: 65px;
-  border-top: 1px solid rgba(100, 90, 70, 0.12);
-}
-
-.care-section-header {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 30px;
-}
-
-.care-section-header h2 {
-  margin: 5px 0 8px;
-  color: #302c25;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 39px;
-  font-weight: 400;
-}
-
-.care-section-header p {
-  margin: 0;
-  color: #80796d;
-  font-family: Arial, sans-serif;
-  font-size: 11px;
-  line-height: 1.7;
-}
-
-.routine-progress {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.progress-circle {
-  display: flex;
-  align-items: baseline;
-  justify-content: center;
-  width: 55px;
-  height: 55px;
-  padding-top: 17px;
-  border: 1px solid rgba(168, 132, 53, 0.35);
-  border-radius: 50%;
-  color: #a88435;
-}
-
-.progress-circle span {
-  font-family: Georgia, serif;
-  font-size: 18px;
-}
-
-.progress-circle small {
-  font-family: Arial, sans-serif;
-  font-size: 8px;
-}
-
-.routine-progress > div:last-child {
-  display: flex;
-  flex-direction: column;
-}
-
-.routine-progress strong {
-  color: #514b40;
-  font-family: Arial, sans-serif;
-  font-size: 10px;
-}
-
-.routine-progress span {
-  margin-top: 4px;
-  color: #948b7d;
-  font-family: Arial, sans-serif;
-  font-size: 9px;
-}
-
-/* =========================================================
-   ROUTINE PROGRESS BAR
-========================================================= */
-
-.routine-progress-bar {
-  width: 100%;
-  height: 3px;
-  margin: 30px 0;
-  overflow: hidden;
-  border-radius: 4px;
-  background: #e8e1d5;
-}
-
-.routine-progress-bar > div {
-  height: 100%;
-  background: #a88435;
-  transition: width 0.3s ease;
-}
-
-/* =========================================================
-   CARE PLAN GRID
-========================================================= */
-
-.care-plan-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 17px;
-}
-
-.care-plan-card {
-  overflow: hidden;
-  border: 1px solid rgba(100, 90, 70, 0.13);
-  border-radius: 15px;
-  background: #fbfaf6;
-}
-
-.care-card-header {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  width: 100%;
-  gap: 15px;
-  padding: 24px;
-  border: 0;
-  background: transparent;
-  text-align: left;
-  cursor: pointer;
-}
-
-.care-card-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 43px;
-  height: 43px;
-  border-radius: 50%;
-  background: rgba(168, 132, 53, 0.1);
-  color: #a88435;
-  font-size: 19px;
-}
-
-.care-card-title {
-  min-width: 0;
-}
-
-.care-card-title > span {
-  color: #a88435;
-  font-family: Arial, sans-serif;
-  font-size: 8px;
-  font-weight: 700;
-  letter-spacing: 1.4px;
-}
-
-.care-card-title h3 {
-  margin: 5px 0 5px;
-  color: #38332b;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 18px;
-  font-weight: 400;
-}
-
-.care-card-title p {
-  margin: 0;
-  color: #898174;
-  font-family: Arial, sans-serif;
-  font-size: 9.5px;
-  line-height: 1.55;
-}
-
-.care-card-toggle {
-  color: #a88435;
-  font-family: Arial, sans-serif;
-  font-size: 21px;
-  font-weight: 300;
-}
-
-/* =========================================================
-   CARE CONTENT
-========================================================= */
-
-.care-card-content {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.35s ease;
-}
-
-.care-card-content.expanded {
-  grid-template-rows: 1fr;
-}
-
-.care-card-content > .care-steps {
-  min-height: 0;
-  overflow: hidden;
-}
-
-.care-steps {
-  padding: 0 24px 24px;
-}
-
-.care-step {
-  display: grid;
-  grid-template-columns: 30px 1fr auto;
-  align-items: center;
-  width: 100%;
-  gap: 12px;
-  padding: 13px 0;
-  border: 0;
-  border-top: 1px solid rgba(100, 90, 70, 0.1);
-  background: transparent;
-  text-align: left;
-  cursor: pointer;
-}
-
-.step-number {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 27px;
-  height: 27px;
-  border: 1px solid rgba(168, 132, 53, 0.3);
-  border-radius: 50%;
-  color: #a88435;
-  font-family: Arial, sans-serif;
-  font-size: 9px;
-}
-
-.step-content {
-  display: flex;
-  flex-direction: column;
-}
-
-.step-content strong {
-  color: #4a4439;
-  font-family: Arial, sans-serif;
-  font-size: 10px;
-}
-
-.step-content span {
-  margin-top: 3px;
-  color: #948b7e;
-  font-family: Arial, sans-serif;
-  font-size: 8.5px;
-  line-height: 1.5;
-}
-
-.step-check {
-  color: #a88435;
-  font-size: 17px;
-}
-
-.care-step.completed .step-number {
-  background: #a88435;
-  color: #fff;
-}
-
-.care-step.completed .step-content strong {
-  text-decoration: line-through;
-  opacity: 0.65;
-}
-
-/* =========================================================
-   SIMPLE ROUTINE
-========================================================= */
-
-.simple-routine {
-  margin-top: 45px;
-  padding: 35px;
-  border: 1px solid rgba(100, 90, 70, 0.12);
-  border-radius: 17px;
-  background: #f7f3ea;
-}
-
-.simple-routine-heading h3 {
-  margin: 5px 0 25px;
-  color: #373229;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 24px;
-  font-weight: 400;
-}
-
-.routine-flow {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr auto 1fr;
-  align-items: center;
-  gap: 15px;
-}
-
-.routine-flow-card {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  padding: 17px;
-  border: 1px solid rgba(100, 90, 70, 0.12);
-  border-radius: 10px;
-  background: #fffdf8;
-}
-
-.routine-flow-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: rgba(168, 132, 53, 0.1);
-  color: #a88435;
-}
-
-.routine-flow-card div:last-child {
-  display: flex;
-  flex-direction: column;
-}
-
-.routine-flow-card span {
-  color: #a88435;
-  font-family: Arial, sans-serif;
-  font-size: 7px;
-  font-weight: 700;
-  letter-spacing: 1.3px;
-}
-
-.routine-flow-card strong {
-  margin-top: 4px;
-  color: #403a31;
-  font-family: Georgia, serif;
-  font-size: 16px;
-  font-weight: 400;
-}
-
-.routine-flow-card p {
-  margin: 3px 0 0;
-  color: #928a7d;
-  font-family: Arial, sans-serif;
-  font-size: 8px;
-}
-
-.routine-arrow {
-  color: #a88435;
-  font-size: 18px;
-}
-
-/* =========================================================
-   OVERALL ANALYSIS ACTION
-========================================================= */
-
-.overall-analysis-action {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 30px;
-  margin-top: 45px;
-  padding: 30px 32px;
-  border: 1px solid rgba(168, 132, 53, 0.28);
-  border-radius: 16px;
-  background:
-    linear-gradient(
-      110deg,
-      rgba(168, 132, 53, 0.08),
-      rgba(255, 253, 247, 0.9)
-    );
-}
-
-.overall-analysis-action > div {
-  max-width: 700px;
-}
-
-.overall-analysis-action > div > span {
-  color: #a88435;
-  font-family: Arial, sans-serif;
-  font-size: 8px;
-  font-weight: 700;
-  letter-spacing: 1.7px;
-}
-
-.overall-analysis-action h3 {
-  margin: 7px 0;
-  color: #363128;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 22px;
-  font-weight: 400;
-}
-
-.overall-analysis-action p {
-  margin: 0;
-  color: #827a6e;
-  font-family: Arial, sans-serif;
-  font-size: 10.5px;
-  line-height: 1.65;
-}
-
-.overall-analysis-action button {
-  flex-shrink: 0;
-  padding: 15px 21px;
-  border: 0;
-  border-radius: 3px;
-  background: #a88435;
-  color: #fff;
-  font-family: Arial, sans-serif;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  cursor: pointer;
-  transition:
-    background 0.25s ease,
-    transform 0.25s ease;
-}
-
-.overall-analysis-action button:hover {
-  transform: translateY(-2px);
-  background: #8e6d2d;
-}
-
-/* =========================================================
-   DISCLAIMER
-========================================================= */
-
-.analysis-disclaimer {
-  max-width: 800px;
-  margin: 30px auto 0;
-  color: #9a9285;
-  font-family: Arial, sans-serif;
-  font-size: 9px;
-  line-height: 1.7;
-  text-align: center;
-}
-
-/* =========================================================
-   UPLOAD MODAL
-========================================================= */
+/* ---------- PHOTO SOURCE MODAL ---------- */
 
 .upload-options-overlay {
   position: fixed;
@@ -1628,16 +628,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 25px;
+  padding: 22px;
   background: rgba(33, 29, 24, 0.58);
   backdrop-filter: blur(8px);
 }
 
 .upload-options-card {
   position: relative;
-  width: 100%;
-  max-width: 460px;
-  padding: 40px;
+  width: min(100%, 440px);
+  padding: 38px;
   border: 1px solid rgba(168, 132, 53, 0.3);
   border-radius: 20px;
   background: #fbfaf6;
@@ -1646,182 +645,105 @@
 
 .upload-options-close {
   position: absolute;
-  top: 17px;
-  right: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 31px;
-  height: 31px;
+  top: 15px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
   border: 1px solid rgba(80, 70, 55, 0.15);
   border-radius: 50%;
   background: transparent;
   color: #756e63;
-  font-size: 20px;
   cursor: pointer;
-}
-
-.upload-options-symbol {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 52px;
-  height: 52px;
-  margin-bottom: 20px;
-  border: 1px solid rgba(168, 132, 53, 0.3);
-  border-radius: 50%;
-  color: #a88435;
-}
-
-.upload-options-label {
-  color: #a88435;
-  font-family: Arial, sans-serif;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 1.7px;
+  font-size: 1.3rem;
 }
 
 .upload-options-card h3 {
-  margin: 8px 0;
-  color: #342f27;
+  margin: 10px 0;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 29px;
-  font-weight: 400;
+  font-size: 1.8rem;
+  font-weight: 500;
 }
 
 .upload-options-card > p {
-  margin: 0 0 25px;
-  color: #827a6e;
+  margin: 0 0 24px;
+  color: #81796d;
   font-family: Arial, sans-serif;
-  font-size: 11px;
-  line-height: 1.7;
-}
-
-.upload-options-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  font-size: 0.84rem;
+  line-height: 1.65;
 }
 
 .upload-option-button {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: 40px 1fr auto;
   align-items: center;
-  gap: 14px;
+  gap: 13px;
   width: 100%;
-  padding: 16px;
-  border: 1px solid rgba(100, 90, 70, 0.14);
-  border-radius: 10px;
+  margin-top: 11px;
+  padding: 15px;
+  border: 1px solid rgba(100, 90, 70, 0.15);
+  border-radius: 11px;
   background: #fffdf8;
-  text-align: left;
   cursor: pointer;
-  transition:
-    border-color 0.25s ease,
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
+  text-align: left;
 }
 
 .upload-option-button:hover {
-  transform: translateY(-2px);
-  border-color: rgba(168, 132, 53, 0.4);
-  box-shadow: 0 10px 25px rgba(58, 48, 30, 0.07);
+  border-color: rgba(168, 132, 53, 0.45);
+  background: #fdf7eb;
 }
 
-.option-icon {
-  display: flex;
+.upload-option-button > span {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 39px;
   height: 39px;
   border-radius: 50%;
-  background: rgba(168, 132, 53, 0.1);
+  background: #f3ead9;
   color: #a88435;
+  font-size: 1.1rem;
 }
 
-.option-text {
-  display: flex;
-  flex-direction: column;
-}
-
-.option-text strong {
-  color: #403a31;
+.upload-option-button strong,
+.upload-option-button small {
+  display: block;
   font-family: Arial, sans-serif;
-  font-size: 11px;
 }
 
-.option-text small {
+.upload-option-button strong {
+  color: #403a31;
+  font-size: 0.8rem;
+}
+
+.upload-option-button small {
   margin-top: 4px;
   color: #938b7e;
-  font-family: Arial, sans-serif;
-  font-size: 8.5px;
+  font-size: 0.69rem;
 }
 
-.option-arrow {
+.upload-option-button b {
   color: #a88435;
-  font-size: 17px;
 }
 
-.upload-options-cancel {
-  width: 100%;
-  margin-top: 17px;
-  padding: 13px;
-  border: 0;
-  background: transparent;
-  color: #81796d;
-  font-family: Arial, sans-serif;
-  font-size: 10px;
-  cursor: pointer;
-}
+/* ---------- MOBILE ---------- */
 
-/* =========================================================
-   RESPONSIVE
-========================================================= */
-
-@media (max-width: 1050px) {
+@media (max-width: 960px) {
   .scan-container {
     grid-template-columns: 1fr;
   }
 
   .upload-wrapper {
-    min-height: 480px;
-  }
-
-  .upload-area {
-    min-height: 480px;
-  }
-
-  .image-preview-container {
-    min-height: 480px;
-  }
-
-  .image-preview {
-    min-height: 430px;
-  }
-
-  .image-preview img {
-    min-height: 430px;
-  }
-
-  .result-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .care-plan-grid {
-    grid-template-columns: 1fr;
+    min-height: 440px;
   }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 700px) {
   .skin-scan-section {
-    padding: 60px 18px 80px;
+    padding: 55px 16px 75px;
   }
 
   .scan-info {
-    padding: 40px 28px;
-  }
-
-  .skin-scan-complete {
-    padding: 35px 24px;
+    padding: 40px 27px;
   }
 
   .assessment-status-grid {
@@ -1835,83 +757,56 @@
     margin: 0 auto;
   }
 
-  .assessment-connector span {
-    top: 50%;
-  }
-
   .complete-action {
     flex-direction: column;
-    align-items: stretch;
   }
 
   .continue-dosha-button,
   .another-photo-button {
-    justify-content: center;
-    width: 100%;
-  }
-
-  .dosha-result-banner {
-    grid-template-columns: auto 1fr;
-  }
-
-  .dosha-result-banner button {
-    grid-column: 1 / -1;
-    width: 100%;
-  }
-
-  .care-section-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .routine-flow {
-    grid-template-columns: 1fr;
-  }
-
-  .routine-arrow {
-    display: none;
-  }
-
-  .overall-analysis-action {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .overall-analysis-action button {
     width: 100%;
   }
 }
 
 @media (max-width: 520px) {
-  .scan-heading h2 {
-    font-size: 39px;
+  .scan-heading {
+    margin-bottom: 35px;
   }
 
-  .scan-info h3 {
-    font-size: 30px;
+  .upload-wrapper {
+    min-height: 400px;
   }
 
-  .upload-area {
-    padding: 30px 20px;
-  }
-
-  .result-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .result-heading h2 {
-    font-size: 34px;
-  }
-
-  .care-section-header h2 {
-    font-size: 32px;
-  }
-
-  .simple-routine {
-    padding: 23px;
+  .image-preview {
+    width: min(100%, 285px);
+    height: 285px;
   }
 
   .upload-options-card {
-    padding: 32px 23px;
+    padding: 32px 22px;
   }
+
+  .scan-info h3 {
+    font-size: 2rem;
+  }
+}
+/* Clickable camera icon before photo upload. */
+.upload-icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 76px;
+  height: 76px;
+  margin-bottom: 23px;
+  border: 1px solid rgba(168, 132, 53, 0.45);
+  border-radius: 50%;
+  background: #fffdf8;
+  color: #a88435;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(94, 72, 27, 0.09);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.upload-icon-button:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 35px rgba(94, 72, 27, 0.14);
 }

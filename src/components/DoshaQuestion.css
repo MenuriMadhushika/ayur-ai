@@ -1,695 +1,483 @@
-/* ============================================================
-   AYURAI — DOSHA QUESTION
-   Premium Ayurvedic Editorial Style
-   ============================================================ */
+/* =========================================================
+   AYURAI — DOSHA QUESTION + RESULT PAGE
+   Friendly colours:
+   Vata  = blue / dry
+   Pitta = coral / sensitive
+   Kapha = green / oily
+========================================================= */
+
+/* ---------- QUESTION PAGE ---------- */
 
 .dosha-question-page {
-  min-height: 100vh;
+  min-height: calc(100vh - 74px);
+  padding: 72px 24px 48px;
   background:
-    radial-gradient(
-      circle at 15% 10%,
-      rgba(183, 157, 92, 0.08),
-      transparent 30%
-    ),
-    #f7f3ea;
-  color: #292821;
-  padding: 70px 24px 90px;
+    radial-gradient(circle at top right, rgba(213, 189, 139, 0.18), transparent 28%),
+    #f8f5ee;
+  color: #302d25;
 }
 
-/* ============================================================
-   HEADER
-   ============================================================ */
+.dosha-question-header,
+.dosha-question-card,
+.dosha-disclaimer {
+  width: min(100%, 760px);
+  margin: 0 auto;
+}
 
 .dosha-question-header {
-  width: min(720px, 100%);
-  margin: 0 auto 55px;
-  text-align: center;
-}
-
-.dosha-question-header > span {
-  display: inline-block;
-  margin-bottom: 16px;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 2.4px;
-  color: #9a8046;
+  margin-bottom: 24px;
 }
 
 .dosha-question-header h1 {
-  margin: 0;
+  margin: 0 0 10px;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(38px, 5vw, 64px);
-  line-height: 1.05;
-  font-weight: 400;
-  letter-spacing: -1.5px;
-  color: #28271f;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  font-weight: 500;
+  color: #29271f;
 }
 
 .dosha-question-header p {
-  max-width: 590px;
-  margin: 22px auto 0;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 15px;
-  line-height: 1.8;
-  color: #777267;
+  margin: 0;
+  color: #716b60;
+  line-height: 1.7;
 }
 
-/* ============================================================
-   PROGRESS
-   ============================================================ */
-
 .dosha-progress-wrapper {
-  width: min(760px, 100%);
-  margin: 0 auto 34px;
+  margin-top: 28px;
 }
 
 .dosha-progress-info {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 10px;
+  justify-content: space-between;
+  margin-bottom: 9px;
+  font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 1.8px;
-  color: #8a8173;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #9a7838;
 }
 
 .dosha-progress {
-  width: 100%;
-  height: 4px;
-  background: #e3ddd0;
-  border-radius: 20px;
+  height: 7px;
   overflow: hidden;
+  border-radius: 999px;
+  background: #e6dfd1;
 }
 
 .dosha-progress > div {
   height: 100%;
-  background: #a78a50;
   border-radius: inherit;
-  transition: width 0.45s ease;
+  background: linear-gradient(90deg, #a98a4a, #d0ad64);
+  transition: width 0.3s ease;
 }
-
-/* ============================================================
-   QUESTION CARD
-   ============================================================ */
 
 .dosha-question-card {
-  position: relative;
-  width: min(760px, 100%);
-  margin: 0 auto;
-  padding: 48px;
-  background: rgba(255, 253, 248, 0.96);
-  border: 1px solid rgba(154, 128, 70, 0.17);
-  border-radius: 18px;
-  box-shadow:
-    0 18px 55px rgba(61, 54, 40, 0.07),
-    0 3px 12px rgba(61, 54, 40, 0.04);
-  animation: doshaCardEnter 0.45s ease both;
+  padding: clamp(28px, 5vw, 48px);
+  border: 1px solid #e8decc;
+  border-radius: 24px;
+  background: rgba(255, 253, 248, 0.92);
+  box-shadow: 0 18px 42px rgba(79, 62, 34, 0.08);
 }
-
-@keyframes doshaCardEnter {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* ============================================================
-   QUESTION NUMBER
-   ============================================================ */
 
 .question-number {
-  position: absolute;
-  top: 26px;
-  right: 30px;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 38px;
-  line-height: 1;
-  color: rgba(154, 128, 70, 0.12);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  height: 28px;
+  margin-bottom: 20px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: #f4ead7;
+  color: #987533;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
 }
-
-/* ============================================================
-   QUESTION TITLE
-   ============================================================ */
 
 .dosha-question-card h2 {
-  max-width: 610px;
-  margin: 0 0 34px;
-  padding-right: 45px;
+  margin: 0 0 30px;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(25px, 3vw, 35px);
-  line-height: 1.25;
-  font-weight: 400;
-  color: #302e26;
+  font-size: clamp(1.6rem, 3vw, 2.25rem);
+  font-weight: 500;
+  line-height: 1.3;
+  color: #302d25;
 }
 
-/* ============================================================
-   OPTIONS
-   ============================================================ */
-
 .dosha-options {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  display: grid;
+  gap: 14px;
 }
 
 .dosha-option {
-  position: relative;
-  display: grid;
-  grid-template-columns: 48px 1fr 34px;
+  display: flex;
   align-items: center;
   width: 100%;
-  min-height: 72px;
-  padding: 10px 14px 10px 12px;
-  border: 1px solid #e3ddd2;
-  border-radius: 12px;
+  padding: 17px 18px;
+  border: 1px solid #e4dac8;
+  border-radius: 14px;
   background: #fffdf9;
+  color: #3b382f;
   cursor: pointer;
   text-align: left;
-  transition:
-    border-color 0.25s ease,
-    background 0.25s ease,
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
+  transition: 0.2s ease;
 }
 
 .dosha-option:hover {
-  border-color: #bba679;
-  background: #fbf8f0;
-  transform: translateX(3px);
-  box-shadow: 0 7px 20px rgba(139, 113, 58, 0.06);
+  transform: translateY(-2px);
+  border-color: #b89858;
+  background: #fcf7ec;
+  box-shadow: 0 10px 20px rgba(103, 80, 38, 0.09);
 }
-
-.dosha-option:focus-visible {
-  outline: 2px solid #a78a50;
-  outline-offset: 3px;
-}
-
-/* ============================================================
-   OPTION NUMBER
-   ============================================================ */
 
 .option-number {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
-  border: 1px solid #e1d9ca;
+  flex: 0 0 31px;
+  width: 31px;
+  height: 31px;
+  margin-right: 14px;
   border-radius: 50%;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 10px;
+  background: #f3ead9;
+  color: #9c793b;
+  font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 1px;
-  color: #918675;
-  transition:
-    border-color 0.25s ease,
-    background 0.25s ease,
-    color 0.25s ease;
 }
-
-.dosha-option:hover .option-number {
-  border-color: #bba679;
-  color: #876d3e;
-}
-
-/* ============================================================
-   OPTION TEXT
-   ============================================================ */
 
 .option-text {
-  padding-right: 15px;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 14px;
-  line-height: 1.5;
-  color: #48443a;
+  flex: 1;
+  font-size: 0.98rem;
+  line-height: 1.45;
 }
 
-/* ============================================================
-   OPTION ARROW
-   ============================================================ */
-
 .option-arrow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  color: #b1a693;
-  transition:
-    transform 0.25s ease,
-    color 0.25s ease;
+  margin-left: 12px;
+  color: #a8894c;
+  font-size: 1.35rem;
+  transition: transform 0.2s ease;
 }
 
 .dosha-option:hover .option-arrow {
   transform: translateX(4px);
-  color: #9f824a;
 }
 
-/* ============================================================
-   PREVIOUS BUTTON
-   ============================================================ */
-
 .question-back-button {
-  display: inline-flex;
-  align-items: center;
-  margin-top: 28px;
-  padding: 8px 0;
+  margin-top: 24px;
+  padding: 10px 0;
   border: 0;
   background: transparent;
-  color: #8c806d;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 11px;
-  font-weight: 600;
+  color: #736c5e;
   cursor: pointer;
-  transition:
-    color 0.25s ease,
-    transform 0.25s ease;
+  font: inherit;
 }
 
 .question-back-button:hover {
-  color: #806538;
-  transform: translateX(-3px);
+  color: #9a7838;
 }
-
-/* ============================================================
-   DISCLAIMER
-   ============================================================ */
 
 .dosha-disclaimer {
-  max-width: 680px;
-  margin: 30px auto 0;
+  margin-top: 22px;
+  color: #81796c;
+  font-size: 0.78rem;
+  line-height: 1.6;
   text-align: center;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 10px;
-  line-height: 1.7;
-  color: #9b9387;
 }
 
-/* ============================================================
-   RESULT PAGE
-   ============================================================ */
+/* ---------- RESULT PAGE ---------- */
 
 .dosha-result-page {
-  min-height: 100vh;
-  padding: 80px 24px 100px;
+  --theme-color: #a58a55;
+  --theme-light: #f5eddc;
+
+  min-height: calc(100vh - 74px);
+  padding: 72px 24px 54px;
   background:
-    radial-gradient(
-      circle at 50% 0%,
-      rgba(183, 157, 92, 0.10),
-      transparent 40%
-    ),
-    #f7f3ea;
-  color: #292821;
+    radial-gradient(circle at 16% 16%, var(--theme-light), transparent 28%),
+    radial-gradient(circle at 84% 85%, rgba(213, 189, 139, 0.16), transparent 28%),
+    #f8f5ee;
+  color: #302d25;
+}
+
+/* The dominant result gently changes the page accent colour. */
+.dosha-result-page.dosha-vata {
+  --theme-color: #6f8da8;
+  --theme-light: #e6f0f5;
+}
+
+.dosha-result-page.dosha-pitta {
+  --theme-color: #c9785d;
+  --theme-light: #fdf0eb;
+}
+
+.dosha-result-page.dosha-kapha {
+  --theme-color: #7f9b72;
+  --theme-light: #eff5ed;
 }
 
 .dosha-result-card {
-  width: min(900px, 100%);
+  width: min(100%, 960px);
   margin: 0 auto;
-  padding: 55px;
-  background: rgba(255, 253, 248, 0.97);
-  border: 1px solid rgba(154, 128, 70, 0.18);
-  border-radius: 22px;
-  box-shadow:
-    0 22px 65px rgba(61, 54, 40, 0.08);
-  animation: doshaCardEnter 0.55s ease both;
+  padding: clamp(30px, 5vw, 58px);
+  border: 1px solid #e8decc;
+  border-radius: 28px;
+  background: rgba(255, 253, 248, 0.94);
+  box-shadow: 0 20px 50px rgba(79, 62, 34, 0.09);
+  text-align: center;
 }
 
 .dosha-result-label {
-  display: block;
-  margin-bottom: 15px;
-  text-align: center;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 10px;
+  margin: 0 0 15px;
+  color: var(--theme-color);
+  font-size: 0.74rem;
   font-weight: 700;
-  letter-spacing: 2.2px;
-  color: #9a8046;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
 }
 
 .dosha-result-card h1 {
   margin: 0;
-  text-align: center;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(38px, 5vw, 58px);
-  line-height: 1.1;
-  font-weight: 400;
-  color: #2d2b24;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 500;
+  line-height: 1.14;
+  color: #2e2b24;
 }
 
 .dosha-result-intro {
-  max-width: 600px;
-  margin: 20px auto 38px;
-  text-align: center;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 14px;
-  line-height: 1.75;
-  color: #7c766b;
+  width: min(100%, 640px);
+  margin: 18px auto 0;
+  color: #70695d;
+  font-size: 1rem;
+  line-height: 1.7;
 }
-
-/* ============================================================
-   DOMINANT DOSHA
-   ============================================================ */
 
 .dominant-dosha {
-  padding: 40px 25px;
-  margin-bottom: 25px;
-  text-align: center;
-  border: 1px solid rgba(158, 128, 68, 0.25);
-  border-radius: 18px;
-  background:
-    radial-gradient(
-      circle at center,
-      rgba(180, 151, 91, 0.12),
-      transparent 65%
-    ),
-    #fffdf8;
+  width: min(100%, 620px);
+  margin: 36px auto 34px;
+  padding: 28px 24px;
+  border: 1px solid color-mix(in srgb, var(--theme-color) 30%, white);
+  border-radius: 20px;
+  background: var(--theme-light);
 }
 
-.dominant-dosha span {
-  display: block;
-  margin-bottom: 12px;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 10px;
+.dominant-dosha p {
+  margin: 0 0 9px;
+  color: var(--theme-color);
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 2px;
-  color: #9d824c;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
 .dominant-dosha strong {
   display: block;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(48px, 7vw, 78px);
-  line-height: 1;
-  font-weight: 400;
-  color: #987b44;
+  font-size: clamp(1.9rem, 5vw, 3rem);
+  font-weight: 500;
+  color: #302d25;
 }
 
-/* ============================================================
-   SCORE GRID
-   ============================================================ */
+.dominant-dosha span {
+  display: block;
+  margin-top: 10px;
+  color: #686155;
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
 
+/* Three simple coloured cards make the scores easy to understand. */
 .dosha-score-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
-  margin-bottom: 30px;
+  margin: 0 auto 32px;
+  text-align: left;
 }
 
 .dosha-score-card {
-  padding: 25px;
-  text-align: center;
-  background: #fffdf8;
-  border: 1px solid #e3ddd2;
-  border-radius: 14px;
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
+  padding: 21px;
+  border: 1px solid #e7dece;
+  border-radius: 18px;
+  background: #fffdfa;
 }
 
-.dosha-score-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 28px rgba(61, 53, 40, 0.07);
+.dosha-score-card.vata {
+  background: #eef5f8;
+  border-color: #c8dce7;
+}
+
+.dosha-score-card.pitta {
+  background: #fdf0eb;
+  border-color: #efcabe;
+}
+
+.dosha-score-card.kapha {
+  background: #eff5ed;
+  border-color: #cadbc5;
+}
+
+.dosha-score-card p {
+  margin: 0 0 7px;
+  color: #625d54;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.dosha-score-card h3 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: #332f27;
 }
 
 .dosha-score-card span {
   display: block;
-  margin-bottom: 10px;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 21px;
-  color: #464238;
+  margin-top: 6px;
+  color: #746d62;
+  font-size: 0.84rem;
 }
 
 .dosha-score-card strong {
   display: block;
+  margin-top: 19px;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 30px;
-  font-weight: 400;
-  color: #9c8049;
+  font-size: 2rem;
+  font-weight: 500;
 }
 
-/* ============================================================
-   ASSESSMENT STATUS
-   ============================================================ */
+.dosha-score-card.vata strong {
+  color: #587891;
+}
+
+.dosha-score-card.pitta strong {
+  color: #b95f48;
+}
+
+.dosha-score-card.kapha strong {
+  color: #63825a;
+}
 
 .dosha-assessment-status {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-  margin-bottom: 25px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin: 0 auto 30px;
 }
 
 .dosha-status-item {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 20px;
-  border: 1px solid #e3ddd2;
+  justify-content: center;
+  gap: 10px;
+  padding: 15px;
+  border: 1px solid #e8decc;
   border-radius: 14px;
-  background: #fffdf8;
-}
-
-.dosha-status-item.completed {
-  border-color: rgba(158, 128, 68, 0.3);
-  background: #faf6ec;
+  background: #faf7f0;
+  color: #544f45;
+  font-size: 0.9rem;
 }
 
 .status-check {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  flex: 0 0 40px;
+  width: 23px;
+  height: 23px;
   border-radius: 50%;
-  border: 1px solid #ddd5c7;
-  color: #938a7b;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 12px;
+  background: #7f9b72;
+  color: white;
+  font-size: 0.78rem;
   font-weight: 700;
 }
 
-.dosha-status-item.completed .status-check {
-  background: #a58a55;
-  border-color: #a58a55;
-  color: #fff;
-}
-
-.dosha-status-item div {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.dosha-status-item strong {
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 18px;
-  font-weight: 400;
-  color: #403d34;
-}
-
-.dosha-status-item small {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 10px;
-  color: #938c80;
-}
-
-/* ============================================================
-   COMPLETE MESSAGE
-   ============================================================ */
-
 .dosha-complete-message {
-  padding: 22px 24px;
-  margin-bottom: 28px;
-  border-radius: 14px;
-  background: #f1eadc;
-  border: 1px solid rgba(160, 132, 76, 0.18);
+  margin: 0 auto 26px;
+  padding: 18px 20px;
+  border-left: 4px solid var(--theme-color);
+  border-radius: 0 14px 14px 0;
+  background: #f5f0e6;
+  color: #625b50;
+  line-height: 1.6;
+  text-align: left;
 }
-
-.dosha-complete-message strong {
-  display: block;
-  margin-bottom: 7px;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 20px;
-  font-weight: 400;
-  color: #38352c;
-}
-
-.dosha-complete-message p {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 12px;
-  line-height: 1.7;
-  color: #797267;
-}
-
-/* ============================================================
-   ACTIONS
-   ============================================================ */
 
 .dosha-result-actions {
   display: flex;
   justify-content: center;
-  align-items: center;
-  gap: 14px;
+  flex-wrap: wrap;
+  gap: 13px;
 }
 
-.dosha-primary-button {
-  min-height: 50px;
-  padding: 0 24px;
-  border: 1px solid #9f824a;
-  border-radius: 7px;
-  background: #9f824a;
-  color: #fff;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 1.4px;
-  cursor: pointer;
-  transition:
-    background 0.25s ease,
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
-}
-
-.dosha-primary-button:hover {
-  background: #856b3d;
-  transform: translateY(-2px);
-  box-shadow: 0 9px 22px rgba(107, 83, 38, 0.16);
-}
-
-.dosha-secondary-button {
-  min-height: 50px;
-  padding: 0 20px;
-  border: 1px solid #d8d0c1;
-  border-radius: 7px;
+.dosha-result-actions button {
+  min-width: 190px;
+  padding: 14px 21px;
+  border: 1px solid #d5c29b;
+  border-radius: 10px;
   background: transparent;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 1px;
-  color: #777064;
+  color: #675735;
   cursor: pointer;
-  transition:
-    background 0.25s ease,
-    border-color 0.25s ease;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: 0.2s ease;
 }
 
-.dosha-secondary-button:hover {
-  background: #fffdf8;
-  border-color: #bba981;
+.dosha-result-actions .primary-action {
+  border-color: var(--theme-color);
+  background: var(--theme-color);
+  color: white;
 }
 
-/* ============================================================
-   TABLET
-   ============================================================ */
+.dosha-result-actions button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 9px 18px rgba(72, 57, 30, 0.13);
+}
 
-@media (max-width: 800px) {
+/* ---------- MOBILE ---------- */
+
+@media (max-width: 720px) {
   .dosha-question-page,
   .dosha-result-page {
-    padding: 50px 18px 70px;
+    padding: 42px 16px 36px;
   }
 
   .dosha-question-card,
   .dosha-result-card {
-    padding: 36px 25px;
+    border-radius: 20px;
   }
 
-  .dosha-score-grid {
-    grid-template-columns: 1fr;
-  }
-
+  .dosha-score-grid,
   .dosha-assessment-status {
     grid-template-columns: 1fr;
   }
+
+  .dosha-score-card {
+    text-align: center;
+  }
 }
 
-/* ============================================================
-   MOBILE
-   ============================================================ */
-
-@media (max-width: 560px) {
-  .dosha-question-page,
-  .dosha-result-page {
-    padding: 38px 13px 55px;
-  }
-
-  .dosha-question-header {
-    margin-bottom: 38px;
-  }
-
-  .dosha-question-header h1 {
-    font-size: 40px;
-  }
-
-  .dosha-question-header p {
-    font-size: 13px;
-  }
-
+@media (max-width: 430px) {
   .dosha-question-card,
   .dosha-result-card {
-    padding: 30px 17px;
-    border-radius: 14px;
-  }
-
-  .question-number {
-    top: 20px;
-    right: 19px;
-    font-size: 30px;
-  }
-
-  .dosha-question-card h2 {
-    padding-right: 30px;
-    font-size: 25px;
-    margin-bottom: 27px;
+    padding: 25px 18px;
   }
 
   .dosha-option {
-    grid-template-columns: 40px 1fr 30px;
-    min-height: 68px;
-    padding: 9px 9px 9px 8px;
-  }
-
-  .option-number {
-    width: 32px;
-    height: 32px;
+    padding: 15px 13px;
   }
 
   .option-text {
-    font-size: 12.5px;
+    font-size: 0.9rem;
   }
 
-  .question-back-button {
-    margin-top: 23px;
-  }
-
-  .dosha-result-card h1 {
-    font-size: 38px;
-  }
-
-  .dominant-dosha {
-    padding: 35px 18px;
-  }
-
-  .dominant-dosha strong {
-    font-size: 55px;
-  }
-
-  .dosha-score-card {
-    padding: 21px;
-  }
-
-  .dosha-result-actions {
-    flex-direction: column;
-  }
-
-  .dosha-primary-button,
-  .dosha-secondary-button {
+  .dosha-result-actions button {
     width: 100%;
   }
 }

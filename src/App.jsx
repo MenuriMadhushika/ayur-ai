@@ -1,5 +1,10 @@
 import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+} from "react-router-dom";
 
 import "./App.css";
 
@@ -39,9 +44,7 @@ function Home() {
           AYURVEDIC SKINCARE
         </div>
 
-        <h2>
-          Discover Your Ayurvedic Skin Balance
-        </h2>
+        <h2>Discover Your Ayurvedic Skin Balance</h2>
 
         <p className="section-description">
           Ayurveda describes three natural energies called
@@ -57,14 +60,11 @@ function Home() {
 
       <section className="personalized-section">
         <div className="personalized-content">
-
           <span className="section-label">
             PERSONALIZED CARE
           </span>
 
-          <h2>
-            Beauty Guided by Ayurveda
-          </h2>
+          <h2>Beauty Guided by Ayurveda</h2>
 
           <p>
             AyurAI combines Ayurvedic principles with
@@ -73,30 +73,17 @@ function Home() {
           </p>
 
           <div className="feature-row">
-
             <div className="feature-item">
-              <span className="feature-number">
-                01
-              </span>
-
-              <h3>
-                Discover
-              </h3>
-
+              <span className="feature-number">01</span>
+              <h3>Discover</h3>
               <p>
                 Understand your Ayurvedic skin type and Dosha.
               </p>
             </div>
 
             <div className="feature-item">
-              <span className="feature-number">
-                02
-              </span>
-
-              <h3>
-                Analyse
-              </h3>
-
+              <span className="feature-number">02</span>
+              <h3>Analyse</h3>
               <p>
                 Explore AI-powered skin analysis for your
                 concerns.
@@ -104,19 +91,12 @@ function Home() {
             </div>
 
             <div className="feature-item">
-              <span className="feature-number">
-                03
-              </span>
-
-              <h3>
-                Personalize
-              </h3>
-
+              <span className="feature-number">03</span>
+              <h3>Personalize</h3>
               <p>
                 Receive Ayurvedic home-care recommendations.
               </p>
             </div>
-
           </div>
         </div>
       </section>
@@ -124,19 +104,15 @@ function Home() {
   );
 }
 
-
 // =========================================================
 // PROTECTED ROUTE
 // =========================================================
 
 function ProtectedRoute({ children }) {
+  const savedUser = localStorage.getItem("ayuraiUser");
+  const savedUserId = localStorage.getItem("ayuraiUserId");
 
-  const savedUser =
-    localStorage.getItem("ayuraiUser");
-
-  const savedUserId =
-    localStorage.getItem("ayuraiUserId");
-
+  // Users must log in before opening private pages.
   if (!savedUser || !savedUserId) {
     return <Navigate to="/login" replace />;
   }
@@ -144,53 +120,41 @@ function ProtectedRoute({ children }) {
   return children;
 }
 
-
 // =========================================================
-// APP
+// APP LAYOUT
 // =========================================================
 
 function App() {
+  const location = useLocation();
 
+  // Login and Register are focused pages.
+  // The navbar is hidden here to avoid distracting users.
+  const authPages = ["/login", "/register"];
+
+  const shouldShowNavbar = !authPages.includes(
+    location.pathname
+  );
+
+  // FUTURE ADMIN FEATURE:
+  // Later, you can check the saved user role here.
+  // Example: user.role === "ADMIN"
+  // Then show a separate AdminNavbar or AdminDashboard.
   return (
     <div className="app">
-
-      <Navbar />
+      {shouldShowNavbar && <Navbar />}
 
       <Routes>
+        {/* PUBLIC AUTH PAGES */}
 
-        {/* =================================================
-            REGISTER
-        ================================================= */}
+        <Route path="/register" element={<Register />} />
 
-        <Route
-          path="/register"
-          element={<Register />}
-        />
+        <Route path="/login" element={<Login />} />
 
+        {/* PUBLIC HOME PAGE */}
 
-        {/* =================================================
-            LOGIN
-        ================================================= */}
+        <Route path="/" element={<Home />} />
 
-        <Route
-          path="/login"
-          element={<Login />}
-        />
-
-
-        {/* =================================================
-            HOME
-        ================================================= */}
-
-        <Route
-          path="/"
-          element={<Home />}
-        />
-
-
-        {/* =================================================
-            PROTECTED — DOSHA TEST
-        ================================================= */}
+        {/* PROTECTED USER PAGES */}
 
         <Route
           path="/dosha-test"
@@ -201,11 +165,6 @@ function App() {
           }
         />
 
-
-        {/* =================================================
-            PROTECTED — SKIN SCAN
-        ================================================= */}
-
         <Route
           path="/skin-scan"
           element={
@@ -214,11 +173,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
-
-        {/* =================================================
-            PROTECTED — HOME REMEDIES
-        ================================================= */}
 
         <Route
           path="/home-remedies"
@@ -229,11 +183,6 @@ function App() {
           }
         />
 
-
-        {/* =================================================
-            PROTECTED — PROFILE
-        ================================================= */}
-
         <Route
           path="/profile"
           element={
@@ -242,11 +191,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
-
-        {/* =================================================
-            PROTECTED — OVERALL RESULT
-        ================================================= */}
 
         <Route
           path="/overall-result"
@@ -257,8 +201,10 @@ function App() {
           }
         />
 
-      </Routes>
+        {/* Unknown links return users to the home page. */}
 
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
     </div>
   );
 }
