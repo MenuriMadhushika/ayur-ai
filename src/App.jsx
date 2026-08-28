@@ -8,10 +8,6 @@ import {
 
 import "./App.css";
 
-// =========================================================
-// COMPONENTS
-// =========================================================
-
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import DoshaSelector from "./components/DoshaSelector";
@@ -24,15 +20,8 @@ import HowItWorks from "./components/HowItWorks";
 import Register from "./components/Register";
 import Login from "./components/Login";
 
-// =========================================================
-// PAGES
-// =========================================================
-
 import SkinScan from "./pages/SkinScan";
-
-// =========================================================
-// HOME PAGE
-// =========================================================
+import AdminDashboard from "./pages/AdminDashboard";
 
 function Home() {
   return (
@@ -104,15 +93,11 @@ function Home() {
   );
 }
 
-// =========================================================
-// PROTECTED ROUTE
-// =========================================================
-
+// Requires any signed-in account.
 function ProtectedRoute({ children }) {
   const savedUser = localStorage.getItem("ayuraiUser");
   const savedUserId = localStorage.getItem("ayuraiUserId");
 
-  // Users must log in before opening private pages.
   if (!savedUser || !savedUserId) {
     return <Navigate to="/login" replace />;
   }
@@ -120,41 +105,47 @@ function ProtectedRoute({ children }) {
   return children;
 }
 
-// =========================================================
-// APP LAYOUT
-// =========================================================
+// Requires an ADMIN account.
+function AdminRoute({ children }) {
+  const savedUser = localStorage.getItem("ayuraiUser");
+
+  if (!savedUser) {
+    return <Navigate to="/login" replace />;
+  }
+
+  try {
+    const user = JSON.parse(savedUser);
+
+    if (user.role !== "ADMIN") {
+      return <Navigate to="/" replace />;
+    }
+  } catch {
+    return <Navigate to="/login" replace />;
+  }
+
+  return children;
+}
 
 function App() {
   const location = useLocation();
 
-  // Login and Register are focused pages.
-  // The navbar is hidden here to avoid distracting users.
   const authPages = ["/login", "/register"];
 
-  const shouldShowNavbar = !authPages.includes(
-    location.pathname
-  );
+  // Admin uses its own dashboard header.
+  const isAdminPage = location.pathname.startsWith("/admin");
 
-  // FUTURE ADMIN FEATURE:
-  // Later, you can check the saved user role here.
-  // Example: user.role === "ADMIN"
-  // Then show a separate AdminNavbar or AdminDashboard.
+  const shouldShowNavbar =
+    !authPages.includes(location.pathname) && !isAdminPage;
+
   return (
     <div className="app">
       {shouldShowNavbar && <Navbar />}
 
       <Routes>
-        {/* PUBLIC AUTH PAGES */}
-
         <Route path="/register" element={<Register />} />
-
         <Route path="/login" element={<Login />} />
 
-        {/* PUBLIC HOME PAGE */}
-
         <Route path="/" element={<Home />} />
-
-        {/* PROTECTED USER PAGES */}
 
         <Route
           path="/dosha-test"
@@ -201,7 +192,14 @@ function App() {
           }
         />
 
-        {/* Unknown links return users to the home page. */}
+        <Route
+          path="/admin"
+          element={
+            <AdminRoute>
+              <AdminDashboard />
+            </AdminRoute>
+          }
+        />
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

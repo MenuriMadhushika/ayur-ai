@@ -1,6 +1,34 @@
 const API_BASE_URL = "http://localhost:8081/api";
 
+// =========================================================
+// COMMON REQUEST HELPERS
+// =========================================================
+
+const getErrorMessage = async (response) => {
+  const text = await response.text();
+
+  return text || `Request failed: ${response.status}`;
+};
+
+// Adds the saved login token to protected admin requests.
+const getAdminHeaders = () => {
+  const token = localStorage.getItem("ayuraiToken");
+
+  if (!token) {
+    throw new Error(
+      "Your admin session has expired. Please log in again."
+    );
+  }
+
+  return {
+    Authorization: `Bearer ${token}`,
+  };
+};
+
+// =========================================================
 // SKIN SCAN
+// =========================================================
+
 export const createSkinScan = async (skinScanData) => {
   const response = await fetch(`${API_BASE_URL}/skin-scans`, {
     method: "POST",
@@ -11,17 +39,19 @@ export const createSkinScan = async (skinScanData) => {
   });
 
   if (!response.ok) {
-    throw new Error(await response.text());
+    throw new Error(await getErrorMessage(response));
   }
 
   return response.json();
 };
 
 export const getUserSkinScans = async (userId) => {
-  const response = await fetch(`${API_BASE_URL}/skin-scans/user/${userId}`);
+  const response = await fetch(
+    `${API_BASE_URL}/skin-scans/user/${userId}`
+  );
 
   if (!response.ok) {
-    throw new Error(await response.text());
+    throw new Error(await getErrorMessage(response));
   }
 
   return response.json();
@@ -33,24 +63,30 @@ export const getLatestSkinScan = async (userId) => {
   );
 
   if (!response.ok) {
-    throw new Error(await response.text());
+    throw new Error(await getErrorMessage(response));
   }
 
   return response.json();
 };
 
+// =========================================================
 // DOSHA ASSESSMENT
+// =========================================================
+
 export const createDoshaAssessment = async (assessmentData) => {
-  const response = await fetch(`${API_BASE_URL}/dosha-assessments`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(assessmentData),
-  });
+  const response = await fetch(
+    `${API_BASE_URL}/dosha-assessments`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(assessmentData),
+    }
+  );
 
   if (!response.ok) {
-    throw new Error(await response.text());
+    throw new Error(await getErrorMessage(response));
   }
 
   return response.json();
@@ -62,7 +98,7 @@ export const getUserDoshaAssessments = async (userId) => {
   );
 
   if (!response.ok) {
-    throw new Error(await response.text());
+    throw new Error(await getErrorMessage(response));
   }
 
   return response.json();
@@ -74,18 +110,21 @@ export const getLatestDoshaAssessment = async (userId) => {
   );
 
   if (!response.ok) {
-    throw new Error(await response.text());
+    throw new Error(await getErrorMessage(response));
   }
 
   return response.json();
 };
 
+// =========================================================
 // HOME REMEDIES
+// =========================================================
+
 export const getAllHomeRemedies = async () => {
   const response = await fetch(`${API_BASE_URL}/home-remedies`);
 
   if (!response.ok) {
-    throw new Error(await response.text());
+    throw new Error(await getErrorMessage(response));
   }
 
   return response.json();
@@ -97,13 +136,16 @@ export const getHomeRemediesByDosha = async (dosha) => {
   );
 
   if (!response.ok) {
-    throw new Error(await response.text());
+    throw new Error(await getErrorMessage(response));
   }
 
   return response.json();
 };
 
-export const getPersonalizedHomeRemedies = async (dosha, skinType) => {
+export const getPersonalizedHomeRemedies = async (
+  dosha,
+  skinType
+) => {
   const response = await fetch(
     `${API_BASE_URL}/home-remedies/personalized?dosha=${encodeURIComponent(
       dosha
@@ -111,24 +153,30 @@ export const getPersonalizedHomeRemedies = async (dosha, skinType) => {
   );
 
   if (!response.ok) {
-    throw new Error(await response.text());
+    throw new Error(await getErrorMessage(response));
   }
 
   return response.json();
 };
 
-// OVERALL RESULT
+// =========================================================
+// OVERALL RESULTS
+// =========================================================
+
 export const createOverallResult = async (userId) => {
-  const response = await fetch(`${API_BASE_URL}/overall-results`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ userId }),
-  });
+  const response = await fetch(
+    `${API_BASE_URL}/overall-results`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId }),
+    }
+  );
 
   if (!response.ok) {
-    throw new Error(await response.text());
+    throw new Error(await getErrorMessage(response));
   }
 
   return response.json();
@@ -140,7 +188,66 @@ export const getLatestOverallResult = async (userId) => {
   );
 
   if (!response.ok) {
-    throw new Error(await response.text());
+    throw new Error(await getErrorMessage(response));
+  }
+
+  return response.json();
+};
+
+// =========================================================
+// ADMIN DASHBOARD
+// =========================================================
+
+export const getAdminDashboard = async () => {
+  const response = await fetch(
+    `${API_BASE_URL}/admin/dashboard`,
+    {
+      headers: getAdminHeaders(),
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error(await getErrorMessage(response));
+  }
+
+  return response.json();
+};
+
+// =========================================================
+// ADMIN USERS
+// Safe account details only — never includes passwords.
+// =========================================================
+
+export const getAdminUsers = async () => {
+  const response = await fetch(
+    `${API_BASE_URL}/admin/users`,
+    {
+      headers: getAdminHeaders(),
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error(await getErrorMessage(response));
+  }
+
+  return response.json();
+};
+
+// =========================================================
+// ADMIN USER ACTIVITY
+// Read-only summary of one user's saved assessment activity.
+// =========================================================
+
+export const getAdminUserActivity = async (userId) => {
+  const response = await fetch(
+    `${API_BASE_URL}/admin/users/${userId}/activity`,
+    {
+      headers: getAdminHeaders(),
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error(await getErrorMessage(response));
   }
 
   return response.json();
