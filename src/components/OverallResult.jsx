@@ -4,6 +4,7 @@ import "./OverallResult.css";
 
 import { createOverallResult } from "../utils/api";
 import { getCurrentUserId } from "../utils/userSession";
+import { formatSkinType } from "../utils/skinTypeInfo";
 
 const OverallResult = () => {
   const navigate = useNavigate();
@@ -118,7 +119,7 @@ const OverallResult = () => {
 
         <p className="overall-hero-text">
           {result.summary ||
-            "Your Skin Scan and Dosha Test have been combined into one personalized wellness result."}
+            "Your Skin Profile and Dosha Test have been combined into one personalized wellness result. Explore suitable home remedies next."}
         </p>
 
         <div className="score-chips">
@@ -144,9 +145,9 @@ const OverallResult = () => {
           <h2>Your skin profile</h2>
 
           <div className="skin-detail">
-            <span>Estimated skin type</span>
+            <span>Your skin type</span>
             <strong>
-              {result.estimatedSkinType || "Not available"}
+              {formatSkinType(result.estimatedSkinType)}
             </strong>
           </div>
 
@@ -239,7 +240,7 @@ const OverallResult = () => {
           className="overall-primary-action"
           onClick={() => navigate("/home-remedies")}
         >
-          EXPLORE HOME REMEDIES <span>→</span>
+          VIEW SUITABLE HOME REMEDIES <span>→</span>
         </button>
 
         <button

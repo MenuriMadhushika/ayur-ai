@@ -4,8 +4,12 @@ import { useNavigate } from "react-router-dom";
 import "./UserProfile.css";
 
 import { getAssessmentStatus } from "../utils/assessmentStatus";
-import API_BASE_URL from "../utils/api";
+import API_BASE_URL, {
+  getAuthenticatedHeaders,
+  getAuthenticatedJsonHeaders,
+} from "../utils/api";
 import { getDoshaInfo } from "../utils/doshaInfo";
+import { formatSkinType } from "../utils/skinTypeInfo";
 
 /* =========================================================
    AYURAI — USER PROFILE
@@ -206,7 +210,9 @@ const UserProfile = () => {
     if (!userId) return;
 
     try {
-      const response = await fetch(`${API_BASE_URL}/users/${userId}`);
+      const response = await fetch(`${API_BASE_URL}/users/${userId}`, {
+        headers: getAuthenticatedHeaders(),
+      });
 
       if (!response.ok) return;
 
@@ -248,8 +254,12 @@ const UserProfile = () => {
 
     try {
       const [doshaResponse, skinResponse] = await Promise.all([
-        fetch(`${API_BASE_URL}/dosha-assessments/user/${userId}/latest`),
-        fetch(`${API_BASE_URL}/skin-scans/user/${userId}/latest`),
+        fetch(`${API_BASE_URL}/dosha-assessments/user/${userId}/latest`, {
+          headers: getAuthenticatedHeaders(),
+        }),
+        fetch(`${API_BASE_URL}/skin-scans/user/${userId}/latest`, {
+          headers: getAuthenticatedHeaders(),
+        }),
       ]);
 
       if (doshaResponse.ok) {
@@ -411,9 +421,7 @@ const UserProfile = () => {
     try {
       const response = await fetch(`${API_BASE_URL}/users/${userId}`, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: getAuthenticatedJsonHeaders(),
         body: JSON.stringify({
           name: editForm.name.trim(),
           email: editForm.email.trim().toLowerCase(),
@@ -469,7 +477,9 @@ const UserProfile = () => {
   const kapha = Number(percentages.Kapha) || 0;
   const totalPercentage = vata + pitta + kapha;
 
-  const skinType = cleanValue(skinScanResult?.skinType);
+  const skinType = skinScanResult?.skinType
+    ? formatSkinType(skinScanResult.skinType)
+    : "Not analyzed";
   const concern = cleanValue(skinScanResult?.texture);
 
   const hydration =
@@ -689,7 +699,7 @@ const UserProfile = () => {
 
         <div className="profile-stats">
           <article className="profile-stat dosha-stat">
-            <span>YOUR SKIN PATTERN</span>
+            <span>YOUR AYURVEDIC PATTERN</span>
             <strong>{dominantLabel}</strong>
             <small>
               {dominantDosha
@@ -699,9 +709,9 @@ const UserProfile = () => {
           </article>
 
           <article className="profile-stat skin-stat">
-            <span>ESTIMATED SKIN TYPE</span>
+            <span>YOUR SKIN TYPE</span>
             <strong>{skinType}</strong>
-            <small>AI-estimated visible characteristics</small>
+            <small>Selected in your skin profile</small>
           </article>
 
           <article className="profile-stat hydration-stat">
@@ -800,18 +810,18 @@ const UserProfile = () => {
 
       <section className="profile-section">
         <div className="profile-section-heading">
-          <span>03 · LATEST ANALYSIS</span>
-          <h2>Your Latest Skin Scan</h2>
+          <span>03 · LATEST SKIN PROFILE</span>
+          <h2>Your Latest Skin Profile</h2>
         </div>
 
         <div className="latest-analysis-card">
           <div className="analysis-symbol">✦</div>
 
           <div className="latest-analysis-content">
-            <span>AI SKIN ANALYSIS</span>
+            <span>SKIN-TYPE CHECK-IN</span>
             <h3>{skinType}</h3>
             <p>
-              {hydration} hydration · {concern} · {dominantLabel}
+              {concern} · {dominantLabel}
             </p>
           </div>
 
@@ -820,7 +830,7 @@ const UserProfile = () => {
             className="view-analysis-button"
             onClick={() => navigate("/skin-scan")}
           >
-            View Skin Scan →
+            View Skin Profile →
           </button>
         </div>
       </section>
@@ -834,7 +844,7 @@ const UserProfile = () => {
           <span>04 · PERSONALIZED CARE</span>
           <h2>Recommended Home Remedies</h2>
           <p>
-            Gentle self-care ideas based on your current skin pattern.
+            Gentle self-care ideas based on your skin type and Ayurvedic wellness pattern.
           </p>
         </div>
 
@@ -884,7 +894,7 @@ const UserProfile = () => {
           <h2>Your Skin Balance Journey</h2>
 
           <p>
-            Your current primary skin pattern is{" "}
+            Your current primary Ayurvedic pattern is{" "}
             <strong>{dominantLabel}</strong>.
           </p>
         </div>
@@ -918,7 +928,7 @@ const UserProfile = () => {
 
               <div className="history-info">
                 <h3>Skin Balance Assessment</h3>
-                <p>Primary skin pattern · {dominantLabel}</p>
+                <p>Primary Ayurvedic pattern · {dominantLabel}</p>
               </div>
 
               <span className="history-status">Completed</span>
@@ -933,7 +943,7 @@ const UserProfile = () => {
               </div>
 
               <div className="history-info">
-                <h3>AI Skin Scan</h3>
+                <h3>Skin Profile</h3>
                 <p>
                   {skinType} · {concern}
                 </p>
@@ -953,8 +963,8 @@ const UserProfile = () => {
       </section>
 
       <p className="analysis-disclaimer">
-        AyurAI provides AI-estimated visual observations and educational
-        Ayurvedic guidance. It does not diagnose, treat, or prevent medical
+        AyurAI provides an educational skin-type check-in and Ayurvedic
+        wellness guidance. It does not diagnose, treat, or prevent medical
         conditions.
       </p>
     </section>

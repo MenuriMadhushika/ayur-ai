@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import API_BASE_URL from "../utils/api";
 import "./Register.css";
 
 function Register() {
@@ -68,7 +69,7 @@ function Register() {
 
     try {
       const response = await fetch(
-        "http://localhost:8081/api/users",
+        `${API_BASE_URL}/users`,
         {
           method: "POST",
 

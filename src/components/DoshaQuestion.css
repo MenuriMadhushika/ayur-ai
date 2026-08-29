@@ -369,6 +369,28 @@
   margin: 0 auto 30px;
 }
 
+.dosha-explainer {
+  max-width: 650px;
+  margin: 18px auto 24px;
+  padding: 16px 18px;
+  border: 1px solid #dbe7ee;
+  border-radius: 14px;
+  background: #f4fafc;
+  color: #4f6470;
+  line-height: 1.6;
+  text-align: left;
+}
+
+.dosha-explainer strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #315d76;
+}
+
+.dosha-explainer p {
+  margin: 0;
+}
+
 .dosha-status-item {
   display: flex;
   align-items: center;
@@ -393,6 +415,16 @@
   color: white;
   font-size: 0.78rem;
   font-weight: 700;
+}
+
+.dosha-status-item.pending {
+  border-style: dashed;
+  background: #fffaf1;
+}
+
+.dosha-status-item.pending .status-check {
+  background: #f5ead3;
+  color: #9b7128;
 }
 
 .dosha-complete-message {

@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 function DoshaCard() {
   return (
     <div className="dosha-card">
-      <h2>What is your Ayurvedic type?</h2>
+      <h2>Explore Ayurvedic wellness patterns</h2>
       
       <div className="dosha-list">
-        <p>VATA 🌬️ Dry</p>
-        <p>PITTA 🔥 Sensitive</p>
-        <p>KAPHA 🌿 Oily</p>
+        <p>VATA 🌬️ Movement & change</p>
+        <p>PITTA 🔥 Warmth & focus</p>
+        <p>KAPHA 🌿 Steadiness & calm</p>
       </div>
 
       <div style={{ marginTop: "16px" }}>

@@ -3,15 +3,23 @@ import "./HomeRemedy.css";
 import {
   getAssessmentStatus,
   getDoshaResult,
+  getSkinScanResult,
   getCurrentUserId,
 } from "../utils/assessmentStatus";
 import { getDoshaInfo } from "../utils/doshaInfo";
+import {
+  getAllHomeRemedies,
+  getLatestDoshaAssessment,
+  getLatestSkinScan,
+} from "../utils/api";
 
 /* =========================================================
    AYURAI — HOME REMEDIES
    ========================================================= */
 
-const REMEDIES = [
+// Shown only if the API is temporarily unavailable. Normally all remedies
+// are loaded from the admin-managed Spring Boot remedy library.
+const FALLBACK_REMEDIES = [
   {
     id: 1,
     title: "Turmeric & Honey Care",
@@ -161,9 +169,51 @@ const RITUAL_SCENES = [
 const getThemeClass = (dosha) =>
   `dosha-${String(dosha || "").toLowerCase()}`;
 
+const toList = (value, splitBy = /\r?\n/) =>
+  String(value || "")
+    .split(splitBy)
+    .map((item) => item.trim())
+    .filter(Boolean);
+
+// Converts the database record into the interactive ritual format used here.
+const mapApiRemedy = (remedy) => {
+  const ingredients = toList(remedy.ingredients, /\r?\n|,/);
+  const benefits = toList(remedy.benefits);
+  const steps = toList(remedy.instructions);
+
+  return {
+    id: remedy.id,
+    title: remedy.title || "Untitled ritual",
+    concern: remedy.category || "General care",
+    dosha: remedy.dosha || "Vata",
+    skinType: remedy.skinType || "",
+    icon: remedy.icon || "🌿",
+    time: remedy.duration || "10 min",
+    difficulty: remedy.difficulty || "Easy",
+    frequency: remedy.frequency || "Use 1–2 times per week",
+    description:
+      remedy.description || "A gentle self-care ritual.",
+    ingredients: ingredients.length
+      ? ingredients
+      : ["Ingredients will be added soon."],
+    benefits: benefits.length
+      ? benefits
+      : ["A gentle, simple self-care ritual."],
+    steps: steps.length
+      ? steps
+      : ["Follow the guidance from your AyurAI care routine."],
+    important:
+      remedy.importantNote ||
+      "Patch test first. Do not use this ritual if you are allergic or sensitive to any listed ingredient. Stop if discomfort occurs.",
+  };
+};
+
 const HomeRemedy = () => {
   const [assessment, setAssessment] = useState({});
   const [doshaResult, setDoshaResult] = useState({});
+  const [skinScanResult, setSkinScanResult] = useState({});
+  const [remedies, setRemedies] = useState(FALLBACK_REMEDIES);
+  const [remedyError, setRemedyError] = useState("");
   const [activeConcern, setActiveConcern] = useState("All");
   const [searchText, setSearchText] = useState("");
   const [selectedRemedy, setSelectedRemedy] = useState(null);
@@ -171,16 +221,46 @@ const HomeRemedy = () => {
   const [savedRemedyIds, setSavedRemedyIds] = useState([]);
   const [completedRemedyIds, setCompletedRemedyIds] = useState([]);
 
-  const userId = getCurrentUserId() || 1;
-  const storageKey = `ayurai-remedies-${userId}`;
+  const userId = getCurrentUserId();
+  const storageKey = `ayurai-remedies-${userId || "session"}`;
 
   useEffect(() => {
-    const loadResults = () => {
+    const loadResults = async () => {
       setAssessment(getAssessmentStatus() || {});
       setDoshaResult(getDoshaResult() || {});
+      setSkinScanResult(getSkinScanResult() || {});
+
+      // Load the latest saved assessments as well. This keeps recommendations
+      // available after a refresh, a new login, or a different device.
+      if (!userId) return;
+
+      const [doshaResponse, skinResponse] = await Promise.allSettled([
+        getLatestDoshaAssessment(userId),
+        getLatestSkinScan(userId),
+      ]);
+
+      if (doshaResponse.status === "fulfilled") {
+        setDoshaResult({
+          ...doshaResponse.value,
+          completed: true,
+        });
+      }
+
+      if (skinResponse.status === "fulfilled") {
+        setSkinScanResult({
+          ...skinResponse.value,
+          skinType:
+            skinResponse.value.estimatedSkinType ||
+            skinResponse.value.skinType ||
+            "",
+          completed: true,
+        });
+      }
     };
 
-    loadResults();
+    loadResults().catch(() => {
+      // Saved browser data remains available if the backend is temporarily offline.
+    });
 
     window.addEventListener("ayurai-assessment-updated", loadResults);
     window.addEventListener("ayuraiAssessmentUpdated", loadResults);
@@ -189,6 +269,30 @@ const HomeRemedy = () => {
       window.removeEventListener("ayurai-assessment-updated", loadResults);
       window.removeEventListener("ayuraiAssessmentUpdated", loadResults);
     };
+  }, [userId]);
+
+  useEffect(() => {
+    const loadRemedies = async () => {
+      try {
+        setRemedyError("");
+
+        const response = await getAllHomeRemedies();
+        const mappedRemedies = response.map(mapApiRemedy);
+
+        setRemedies(
+          mappedRemedies.length
+            ? mappedRemedies
+            : FALLBACK_REMEDIES
+        );
+      } catch {
+        // The page remains usable with its local fallback if the API is offline.
+        setRemedyError(
+          "Showing the available rituals while the remedy library reconnects."
+        );
+      }
+    };
+
+    loadRemedies();
   }, []);
 
   useEffect(() => {
@@ -217,17 +321,47 @@ const HomeRemedy = () => {
 
   const dominantInfo = getDoshaInfo(dominantDosha);
 
-  /* First matching Dosha remedy becomes the one main recommendation. */
+  const currentSkinType =
+    assessment?.skinScanResult?.skinType ||
+    assessment?.skinType ||
+    skinScanResult?.skinType ||
+    skinScanResult?.estimatedSkinType ||
+    null;
+
+  const normalizedSkinType = String(currentSkinType || "")
+    .replace(/^AI-estimated\s*/i, "")
+    .trim()
+    .toLowerCase();
+
+  /* Prefer a remedy matching both the user's wellness pattern and skin type. */
   const recommendedRemedy = useMemo(() => {
     if (!dominantDosha) return null;
 
-    return REMEDIES.find((remedy) => remedy.dosha === dominantDosha) || null;
-  }, [dominantDosha]);
+    const matchesPattern = (remedy) => remedy.dosha === dominantDosha;
+    const matchesSkinType = (remedy) => {
+      const remedySkinType = String(remedy.skinType || "")
+        .trim()
+        .toLowerCase();
+
+      return (
+        !normalizedSkinType ||
+        !remedySkinType ||
+        remedySkinType === "all" ||
+        remedySkinType === normalizedSkinType
+      );
+    };
+
+    return (
+      remedies.find(
+        (remedy) => matchesPattern(remedy) && matchesSkinType(remedy)
+      ) || remedies.find(matchesPattern) || null
+    );
+  }, [dominantDosha, normalizedSkinType, remedies]);
 
   const filteredRemedies = useMemo(() => {
     const search = searchText.toLowerCase().trim();
 
-    const matchingRemedies = REMEDIES.filter((remedy) => {
+    const matchingRemedies = remedies.filter((remedy) => {
       const matchesConcern =
         activeConcern === "All" || remedy.concern === activeConcern;
 
@@ -244,7 +378,7 @@ const HomeRemedy = () => {
       if (second.id === recommendedRemedy?.id) return 1;
       return 0;
     });
-  }, [activeConcern, searchText, recommendedRemedy]);
+  }, [activeConcern, searchText, recommendedRemedy, remedies]);
 
   const isSaved = (id) => savedRemedyIds.includes(id);
   const isCompleted = (id) => completedRemedyIds.includes(id);
@@ -270,7 +404,8 @@ const HomeRemedy = () => {
     setCurrentStep(0);
   };
 
-  const activeScene = RITUAL_SCENES[Math.min(currentStep, 4)];
+  const activeScene =
+    RITUAL_SCENES[currentStep % RITUAL_SCENES.length];
 
   return (
     <main className="home-remedy-page">
@@ -293,7 +428,8 @@ const HomeRemedy = () => {
             <strong>{recommendedRemedy.title}</strong>
 
             <p>
-              Recommended because {dominantInfo.description.toLowerCase()}
+              Recommended because it supports your {currentSkinType || "current"}{" "}
+              skin type and {dominantInfo.label.toLowerCase()}.
             </p>
           </div>
 
@@ -339,6 +475,12 @@ const HomeRemedy = () => {
             </button>
           ))}
         </div>
+
+        {remedyError && (
+          <p className="remedy-library-message" role="status">
+            {remedyError}
+          </p>
+        )}
 
         <div className="remedy-library-meta">
           <span>{filteredRemedies.length} rituals available</span>

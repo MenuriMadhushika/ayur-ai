@@ -8,7 +8,9 @@ import {
   getAssessmentStatus,
 } from "../utils/assessmentStatus";
 
-import API_BASE_URL from "../utils/api";
+import API_BASE_URL, {
+  getAuthenticatedJsonHeaders,
+} from "../utils/api";
 import { getCurrentUserId } from "../utils/userSession";
 import { getDoshaInfo } from "../utils/doshaInfo";
 
@@ -217,9 +219,7 @@ const DoshaQuestion = () => {
         `${API_BASE_URL}/dosha-assessments`,
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: getAuthenticatedJsonHeaders(),
           body: JSON.stringify({
             userId,
             answers: finalAnswers,
@@ -325,8 +325,7 @@ const DoshaQuestion = () => {
     const bothDone =
       skinScanDone && Boolean(status.doshaCompleted);
 
-    // Friendly labels:
-    // Vata · Dry / Pitta · Sensitive / Kapha · Oily
+    // Friendly Ayurvedic wellness-pattern labels.
     const dominantInfo = getDoshaInfo(
       result.dominantDosha
     );
@@ -376,11 +375,20 @@ const DoshaQuestion = () => {
           {/* PRIMARY DOSHA RESULT */}
 
           <div className="dominant-dosha">
-            <span>YOUR PRIMARY SKIN PATTERN</span>
+            <span>YOUR PRIMARY AYURVEDIC PATTERN</span>
 
             <strong>{dominantInfo.label}</strong>
 
             <p>{dominantInfo.description}</p>
+          </div>
+
+          <div className="dosha-explainer">
+            <strong>What does this mean?</strong>
+            <p>
+              Vata, Pitta, and Kapha are traditional Ayurvedic wellness
+              patterns. They are not skin types or medical diagnoses. Your
+              skin type is selected separately in your Skin Profile.
+            </p>
           </div>
 
           {/* DOSHA SCORE CARDS */}
@@ -410,10 +418,16 @@ const DoshaQuestion = () => {
               <span>Completed</span>
             </div>
 
-            <div className="dosha-status-item">
-              <span className="status-check">✓</span>
-              <strong>Skin Scan</strong>
-              <span>Completed</span>
+            <div
+              className={`dosha-status-item ${
+                skinScanDone ? "" : "pending"
+              }`}
+            >
+              <span className="status-check">
+                {skinScanDone ? "✓" : "02"}
+              </span>
+              <strong>Skin Profile</strong>
+              <span>{skinScanDone ? "Completed" : "Still required"}</span>
             </div>
           </div>
 
@@ -428,8 +442,8 @@ const DoshaQuestion = () => {
 
             <p>
               {bothDone
-                ? "Your Skin Scan and Dosha Test are complete. View your personalized Overall Result next."
-                : "Complete your Skin Scan next to unlock your personalized Overall Result."}
+                ? "Your Skin Profile and Dosha Test are complete. View your personalized Overall Result and suitable home remedies next."
+                : "Complete your Skin Profile next to unlock your personalized Overall Result and suitable home remedies."}
             </p>
           </div>
 
@@ -443,7 +457,7 @@ const DoshaQuestion = () => {
             >
               {bothDone
                 ? "VIEW OVERALL RESULT →"
-                : "CONTINUE TO SKIN SCAN →"}
+                : "CONTINUE TO SKIN PROFILE →"}
             </button>
 
             <button

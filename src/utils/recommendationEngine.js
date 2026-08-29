@@ -49,6 +49,14 @@ const normalizeSkinType = (skinType) => {
 
   const value = normalize(skinType);
 
+  if (value.includes("combination")) {
+    return "combination";
+  }
+
+  if (value.includes("normal")) {
+    return "normal";
+  }
+
   if (value.includes("dry")) {
     return "dry";
   }
@@ -61,7 +69,7 @@ const normalizeSkinType = (skinType) => {
     return "sensitive";
   }
 
-  return "dry";
+  return "normal";
 };
 
 
@@ -87,6 +95,29 @@ const normalizeConcerns = (concerns) => {
    ========================================================= */
 
 const skinTypeRecommendations = {
+
+  /* =======================================================
+     NORMAL SKIN
+     ======================================================= */
+
+  normal: {
+
+    summary:
+      "Your skin-type check-in suggests a balanced routine with gentle cleansing, regular moisturising, and daily sun protection.",
+
+    tips: [
+
+      "Use a gentle cleanser and avoid over-cleansing.",
+
+      "Apply a comfortable moisturiser after cleansing.",
+
+      "Keep your routine simple and consistent.",
+
+      "Use broad-spectrum sunscreen during daytime exposure."
+
+    ]
+
+  },
 
   /* =======================================================
      DRY SKIN
@@ -134,6 +165,32 @@ const skinTypeRecommendations = {
       "Avoid frequently touching or squeezing visible blemishes.",
 
       "Use sunscreen suitable for your skin type."
+
+    ]
+
+  },
+
+
+  /* =======================================================
+     COMBINATION SKIN
+     ======================================================= */
+
+  combination: {
+
+    summary:
+      "Your skin-type check-in suggests combination skin, where different facial areas can have different needs. Use balanced, gentle care and avoid treating every area the same way.",
+
+    tips: [
+
+      "Use a mild cleanser without excessive scrubbing.",
+
+      "Apply lightweight moisture to comfortable areas and extra hydration only where skin feels dry.",
+
+      "Avoid harsh products that can make dry areas feel uncomfortable.",
+
+      "Choose non-comedogenic products if some areas become oily or congested.",
+
+      "Use sunscreen during daytime exposure."
 
     ]
 
@@ -404,7 +461,7 @@ const removeDuplicates = (items) => {
 
 export const generateRecommendation = ({
   dosha = null,
-  skinType = "Dry",
+  skinType = "Normal",
   concerns = []
 }) => {
 
@@ -546,7 +603,7 @@ export const generateRecommendation = ({
 
 export const generateSkinProfile = ({
   dosha = null,
-  skinType = "Dry",
+  skinType = "Normal",
   concerns = [],
   hydration = 68,
   confidence = 86

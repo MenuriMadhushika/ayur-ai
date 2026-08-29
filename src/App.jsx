@@ -22,6 +22,7 @@ import Login from "./components/Login";
 
 import SkinScan from "./pages/SkinScan";
 import AdminDashboard from "./pages/AdminDashboard";
+import AdminLayout from "./pages/AdminLayout";
 
 function Home() {
   return (
@@ -65,9 +66,9 @@ function Home() {
             <div className="feature-item">
               <span className="feature-number">01</span>
               <h3>Discover</h3>
-              <p>
-                Understand your Ayurvedic skin type and Dosha.
-              </p>
+                <p>
+                  Explore your skin type and Ayurvedic wellness pattern.
+                </p>
             </div>
 
             <div className="feature-item">
@@ -193,13 +194,17 @@ function App() {
         />
 
         <Route
-          path="/admin"
           element={
             <AdminRoute>
-              <AdminDashboard />
+              <AdminLayout />
             </AdminRoute>
           }
-        />
+        >
+          <Route path="/admin" element={<AdminDashboard view="dashboard" />} />
+          <Route path="/admin/users" element={<AdminDashboard view="users" />} />
+          <Route path="/admin/assessments" element={<AdminDashboard view="assessments" />} />
+          <Route path="/admin/remedies" element={<AdminDashboard view="remedies" />} />
+        </Route>
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
