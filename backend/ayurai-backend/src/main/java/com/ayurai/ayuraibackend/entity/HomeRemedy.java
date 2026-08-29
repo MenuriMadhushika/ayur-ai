@@ -30,6 +30,21 @@ public class HomeRemedy {
 
     private String category;
 
+    // Details used by the interactive Home Remedy experience.
+    private String icon;
+
+    private String duration;
+
+    private String difficulty;
+
+    private String frequency;
+
+    @Column(columnDefinition = "TEXT")
+    private String benefits;
+
+    @Column(columnDefinition = "TEXT")
+    private String importantNote;
+
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
@@ -111,6 +126,54 @@ public class HomeRemedy {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
+
+    public String getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(String difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public String getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(String frequency) {
+        this.frequency = frequency;
+    }
+
+    public String getBenefits() {
+        return benefits;
+    }
+
+    public void setBenefits(String benefits) {
+        this.benefits = benefits;
+    }
+
+    public String getImportantNote() {
+        return importantNote;
+    }
+
+    public void setImportantNote(String importantNote) {
+        this.importantNote = importantNote;
     }
 
     public LocalDateTime getCreatedAt() {
