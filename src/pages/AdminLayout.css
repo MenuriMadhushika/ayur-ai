@@ -1,0 +1,102 @@
+.admin-workspace {
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  min-height: 100vh;
+  background: #faf8f3;
+}
+
+.admin-sidebar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 34px 22px 24px;
+  box-sizing: border-box;
+  border-right: 1px solid #e6dece;
+  background: #2d2a22;
+  color: #fffdf8;
+}
+
+.admin-sidebar-brand {
+  margin: 0 12px 46px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.08em;
+}
+
+.admin-sidebar-brand span { color: #f7f1e4; }
+.admin-sidebar-brand em { color: #d7ad59; font-style: italic; }
+
+.admin-sidebar-brand small {
+  display: block;
+  margin-top: 10px;
+  color: #cdbf9d;
+  font-family: inherit;
+  font-size: 0.62rem;
+  font-style: normal;
+  letter-spacing: 0.16em;
+}
+
+.admin-sidebar-nav {
+  display: grid;
+  gap: 7px;
+}
+
+.admin-sidebar-link {
+  padding: 13px 14px;
+  border-radius: 10px;
+  color: #dcd4c5;
+  font-size: 0.92rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: 0.2s ease;
+}
+
+.admin-sidebar-link:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
+
+.admin-sidebar-link.active {
+  background: #f1e3bd;
+  color: #4a3920;
+}
+
+.admin-sidebar-footer {
+  display: grid;
+  gap: 12px;
+  margin-top: auto;
+  padding: 18px 12px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  color: #cfc6b5;
+  font-size: 0.76rem;
+}
+
+.admin-sidebar-footer button {
+  width: fit-content;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #fffdf8;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+}
+
+@media (max-width: 800px) {
+  .admin-workspace { grid-template-columns: 1fr; }
+
+  .admin-sidebar {
+    position: static;
+    min-height: auto;
+    padding: 18px 20px;
+  }
+
+  .admin-sidebar-brand { margin: 0 0 18px; font-size: 1.6rem; }
+  .admin-sidebar-nav { grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .admin-sidebar-link { padding: 10px 8px; font-size: 0.72rem; text-align: center; }
+  .admin-sidebar-footer { display: none; }
+}
+
+@media (max-width: 510px) {
+  .admin-sidebar-nav { grid-template-columns: repeat(2, 1fr); }
+}

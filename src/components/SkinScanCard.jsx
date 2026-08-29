@@ -10,6 +10,7 @@ import {
 
 import { createSkinScan } from "../utils/api";
 import { getCurrentUserId } from "../utils/userSession";
+import { SKIN_TYPES } from "../utils/skinTypeInfo";
 
 /* =========================================================
    CLICKABLE CAMERA ICON
@@ -56,6 +57,7 @@ const SkinScanCard = () => {
   const [analysisComplete, setAnalysisComplete] = useState(false);
   const [doshaCompleted, setDoshaCompleted] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
+  const [selectedSkinType, setSelectedSkinType] = useState("");
 
   /* Checks whether the user already completed the Dosha Test. */
   const checkAssessmentStatus = () => {
@@ -108,6 +110,7 @@ const SkinScanCard = () => {
     setIsScanning(false);
     setAnalysisComplete(false);
     setShowOptions(false);
+    setSelectedSkinType("");
   };
 
   const handleFileChange = (event) => {
@@ -120,6 +123,7 @@ const SkinScanCard = () => {
     setProgress(0);
     setIsScanning(false);
     setAnalysisComplete(false);
+    setSelectedSkinType("");
   };
 
   /* =========================================================
@@ -137,9 +141,9 @@ const SkinScanCard = () => {
       const backendResult = await createSkinScan({
         userId,
         imagePath: "uploads/skin-scan.jpg",
-        estimatedSkinType: "AI-estimated combination skin",
+        estimatedSkinType: selectedSkinType,
         visibleCharacteristics:
-          "AI-estimated visible skin characteristics from uploaded image",
+          `Skin-type check-in: ${selectedSkinType}. Photo added for the user's personal AyurAI journey.`,
         analysisStatus: "COMPLETED",
       });
 
@@ -148,8 +152,8 @@ const SkinScanCard = () => {
         completed: true,
         completedAt: new Date().toISOString(),
         skinType: backendResult.estimatedSkinType,
-        hydration: "AI-estimated",
-        concern: "AI-observed",
+        hydration: "Not available",
+        concern: "Not available",
         texture: backendResult.visibleCharacteristics,
       });
 
@@ -172,6 +176,11 @@ const SkinScanCard = () => {
 
   const handleAnalyze = () => {
     if (!image || isScanning) return;
+
+    if (!selectedSkinType) {
+      alert("Choose the skin type that best matches your usual skin before continuing.");
+      return;
+    }
 
     setProgress(0);
     setAnalysisComplete(false);
@@ -224,51 +233,70 @@ const SkinScanCard = () => {
 
   const scanMessage =
     progress < 30
-      ? "Detecting facial region..."
+      ? "Preparing your skin profile..."
       : progress < 65
-      ? "Observing visible skin characteristics..."
+      ? "Saving your skin-type check-in..."
       : progress < 90
-      ? "Preparing your assessment..."
-      : "Saving your scan safely...";
+      ? "Preparing your personalized guidance..."
+      : "Saving your profile safely...";
 
   return (
     <section className="skin-scan-section">
       <header className="scan-heading">
-        <span className="section-label">AI SKIN ANALYSIS</span>
+        <span className="section-label">SKIN PROFILE</span>
 
         <h2>
           Understand Your <span>Skin</span>
         </h2>
 
         <p>
-          Upload a clear facial photo and let AyurAI estimate visible skin
-          characteristics to support your Ayurvedic skincare journey.
+          Add a clear facial photo and choose the skin type that best describes
+          your usual skin. AyurAI combines this with your Ayurvedic wellness
+          pattern for educational guidance.
         </p>
       </header>
 
       <section className="scan-container">
         <div className="scan-info">
-          <span className="scan-number">01 — SKIN SCAN</span>
+          <span className="scan-number">01 — SKIN PROFILE</span>
 
           <h3>Begin with your skin.</h3>
 
           <p>
-            Your photo is used to estimate visible characteristics such as skin
-            appearance, hydration, and texture.
+            Choose the skin type that is most true on most days. Your photo
+            stays part of your personal skincare journey.
           </p>
 
           <div className="scan-features">
-            <span>✓ AI-estimated visible skin characteristics</span>
-            <span>✓ Simple and personalized guidance</span>
-            <span>✓ Designed for your Ayurvedic journey</span>
+            <span>✓ Clear skin-type check-in</span>
+            <span>✓ Simple, personalized educational guidance</span>
+            <span>✓ Your photo supports your personal skincare journey</span>
+          </div>
+
+          <div className="skin-type-checkin">
+            <span>YOUR USUAL SKIN TYPE</span>
+            <p>Choose one option. You can update it with a new profile later.</p>
+            <div className="skin-type-options" role="group" aria-label="Usual skin type">
+              {SKIN_TYPES.map((skinType) => (
+                <button
+                  key={skinType.value}
+                  type="button"
+                  className={selectedSkinType === skinType.value ? "selected" : ""}
+                  onClick={() => setSelectedSkinType(skinType.value)}
+                  title={skinType.description}
+                >
+                  {skinType.label}
+                </button>
+              ))}
+            </div>
           </div>
 
           <div className="scan-note">
             <span>✦</span>
 
             <p>
-              For best results, use a clear, front-facing photo taken in natural
-              or well-lit conditions. This tool provides an AI estimate and is
+              A photo can help you keep your skincare journey together. Your
+              selected skin type and Ayurvedic pattern are educational only,
               not a medical diagnosis.
             </p>
           </div>
@@ -322,7 +350,7 @@ const SkinScanCard = () => {
 
                     <div className="scan-status">
                       <span className="scan-pulse" />
-                      AI ANALYSIS IN PROGRESS
+                      SAVING YOUR SKIN PROFILE
                     </div>
 
                     <p>{scanMessage}</p>
@@ -336,7 +364,7 @@ const SkinScanCard = () => {
                 {analysisComplete && (
                   <div className="scan-complete-overlay">
                     <span className="complete-check">✓</span>
-                    <strong>SKIN SCAN COMPLETE</strong>
+                    <strong>SKIN PROFILE SAVED</strong>
                   </div>
                 )}
               </div>
@@ -363,22 +391,22 @@ const SkinScanCard = () => {
             onClick={handleAnalyze}
             disabled={isScanning}
           >
-            {isScanning ? "ANALYZING..." : "✦ ANALYZE MY SKIN  →"}
+            {isScanning ? "SAVING..." : "✦ SAVE MY SKIN PROFILE  →"}
           </button>
 
-          <p>AI-estimated results · Not a medical diagnosis</p>
+          <p>Educational skin-type check-in · Not a medical diagnosis</p>
         </div>
       )}
 
       {analysisComplete && (
         <section className="skin-scan-complete">
-          <span className="section-label">SKIN SCAN COMPLETE</span>
+          <span className="section-label">SKIN PROFILE COMPLETE</span>
 
-          <h2>Your first assessment is complete.</h2>
+          <h2>Your skin profile is complete.</h2>
 
           <p className="complete-intro">
-            Your Skin Scan has been saved. AyurAI will combine it with your
-            Dosha Test to create your Overall Ayurvedic Result.
+            Your selected skin type has been saved. AyurAI will combine it with
+            your Dosha Test to create your Overall Ayurvedic Result.
           </p>
 
           <div className="assessment-status-grid">
@@ -387,7 +415,7 @@ const SkinScanCard = () => {
 
               <div className="assessment-status-content">
                 <span>01</span>
-                <strong>Skin Scan</strong>
+                <strong>Skin Profile</strong>
                 <small>Completed</small>
               </div>
             </div>
@@ -429,7 +457,7 @@ const SkinScanCard = () => {
                   : "One more assessment is required."}
               </strong>{" "}
               {doshaCompleted
-                ? "Your Skin Scan and Dosha Test are ready to be combined into your Overall Ayurvedic Result."
+                ? "Your skin profile and Dosha Test are ready to be combined into your Overall Ayurvedic Result."
                 : "Complete your Dosha Test so AyurAI can create your personalized Overall Result."}
             </p>
           </div>
@@ -448,7 +476,7 @@ const SkinScanCard = () => {
               className="another-photo-button"
               onClick={handleChangePhoto}
             >
-              Analyze another photo
+              Create another profile
             </button>
           </div>
         </section>

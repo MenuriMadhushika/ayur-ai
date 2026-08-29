@@ -11,10 +11,10 @@ const DoshaSelector = () => {
       name: "VATA",
       icon: "🌬️",
       element: "AIR & SPACE",
-      type: "Dry & Delicate",
+      type: "Ayurvedic wellness pattern",
       description:
-        "Vata skin tends to feel dry, delicate and dehydrated.",
-      care: "Hydration • Nourishment • Gentle Care",
+        "Vata is traditionally associated with movement, lightness, and change. Skin type is considered separately.",
+      care: "Grounding • Nourishment • Gentle routines",
       accent: "vata",
     },
     {
@@ -22,10 +22,10 @@ const DoshaSelector = () => {
       name: "PITTA",
       icon: "🔥",
       element: "FIRE & WATER",
-      type: "Sensitive & Reactive",
+      type: "Ayurvedic wellness pattern",
       description:
-        "Pitta skin can be warm, sensitive and prone to redness.",
-      care: "Cooling • Soothing • Calming Care",
+        "Pitta is traditionally associated with warmth, focus, and transformation. Skin type is considered separately.",
+      care: "Cooling • Steady • Calming routines",
       accent: "pitta",
     },
     {
@@ -33,10 +33,10 @@ const DoshaSelector = () => {
       name: "KAPHA",
       icon: "🌿",
       element: "EARTH & WATER",
-      type: "Oily & Congested",
+      type: "Ayurvedic wellness pattern",
       description:
-        "Kapha skin often produces more oil and may become congested.",
-      care: "Balancing • Clarifying • Lightweight Care",
+        "Kapha is traditionally associated with steadiness, nourishment, and calm. Skin type is considered separately.",
+      care: "Refreshing • Balanced • Consistent routines",
       accent: "kapha",
     },
   ];

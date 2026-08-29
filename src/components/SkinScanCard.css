@@ -101,6 +101,55 @@
   line-height: 1.8;
 }
 
+.skin-type-checkin {
+  margin-top: 24px;
+  padding: 17px;
+  border: 1px solid #e6d9bf;
+  border-radius: 14px;
+  background: rgba(255, 253, 248, 0.82);
+}
+
+.skin-type-checkin > span {
+  color: #a88435;
+  font-family: Arial, sans-serif;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.skin-type-checkin > p {
+  margin: 7px 0 12px;
+  color: #716b60;
+  font-family: Arial, sans-serif;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.skin-type-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.skin-type-options button {
+  padding: 8px 11px;
+  border: 1px solid #decfae;
+  border-radius: 999px;
+  background: #fffdf8;
+  color: #3c362d;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.78rem;
+  transition: 0.2s ease;
+}
+
+.skin-type-options button:hover,
+.skin-type-options button.selected {
+  border-color: #a88435;
+  background: #2e2a23;
+  color: #fffdf8;
+}
+
 .scan-features {
   display: grid;
   gap: 14px;

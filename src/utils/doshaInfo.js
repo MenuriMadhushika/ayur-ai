@@ -5,35 +5,35 @@
 
 export const DOSHA_INFO = {
   Vata: {
-    label: "Vata · Dry",
-    shortLabel: "Dry & Delicate",
+    label: "Vata · Ayurvedic pattern",
+    shortLabel: "Vata pattern",
     color: "#6f8da8",
     description:
-      "Vata skin can feel dry, fine, or easily dehydrated.",
+      "An Ayurvedic wellness pattern traditionally associated with movement, lightness, and change.",
   },
 
   Pitta: {
-    label: "Pitta · Sensitive",
-    shortLabel: "Sensitive & Reactive",
+    label: "Pitta · Ayurvedic pattern",
+    shortLabel: "Pitta pattern",
     color: "#c9785d",
     description:
-      "Pitta skin can feel warm, sensitive, or prone to redness.",
+      "An Ayurvedic wellness pattern traditionally associated with warmth, focus, and transformation.",
   },
 
   Kapha: {
-    label: "Kapha · Oily",
-    shortLabel: "Oily & Composed",
+    label: "Kapha · Ayurvedic pattern",
+    shortLabel: "Kapha pattern",
     color: "#7f9b72",
     description:
-      "Kapha skin can feel smooth, naturally oily, or prone to clogged pores.",
+      "An Ayurvedic wellness pattern traditionally associated with steadiness, nourishment, and calm.",
   },
 };
 
 // Returns friendly information safely for any Dosha name.
 export const getDoshaInfo = (dosha) => {
   return DOSHA_INFO[dosha] || {
-    label: "Your skin balance",
-    shortLabel: "Balanced",
+    label: "Your Ayurvedic pattern",
+    shortLabel: "Balanced pattern",
     color: "#a58a55",
     description:
       "Your result combines your skin observations and assessment answers.",
