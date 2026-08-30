@@ -10,17 +10,17 @@ import "./Hero.css";
 const JOURNEY_STEPS = [
   {
     number: "01",
-    title: "Understand your skin",
-    description: "Explore AI-estimated visible skin characteristics.",
+    title: "Know your skin type",
+    description: "Record the skin type that feels most true for you on most days.",
     visual: "scan",
-    label: "SKIN INSIGHT",
+    label: "SKIN PROFILE",
   },
   {
     number: "02",
     title: "Discover your balance",
-    description: "Learn your Dry, Sensitive, or Oily skin pattern.",
+    description: "Explore your Ayurvedic wellness pattern through a short questionnaire.",
     visual: "balance",
-    label: "SKIN BALANCE",
+    label: "WELLNESS PATTERN",
   },
   {
     number: "03",
@@ -64,7 +64,7 @@ const Hero = () => {
         <div className="hero-content">
           <div className="hero-eyebrow">
             <span className="eyebrow-line" />
-            <span>AI-POWERED AYURVEDIC WELLNESS</span>
+            <span>AYURVEDIC SKINCARE &amp; WELLNESS</span>
             <span className="eyebrow-dot" />
           </div>
 
@@ -75,9 +75,9 @@ const Hero = () => {
           </h1>
 
           <p className="hero-description">
-            Discover visible characteristics of your skin through AI-assisted
-            analysis and explore personalized Ayurvedic approaches for your
-            natural care and balance.
+            Start with a simple skin profile and Ayurvedic wellness
+            questionnaire, then explore gentle care ideas suited to your
+            unique journey.
           </p>
 
           <div className="hero-actions">
@@ -86,7 +86,7 @@ const Hero = () => {
               className="hero-primary-btn"
               onClick={openSkinScan}
             >
-              <span>Start Skin Scan</span>
+              <span>Start Skin Profile</span>
               <span className="primary-arrow">→</span>
             </button>
 
@@ -96,35 +96,35 @@ const Hero = () => {
               onClick={() => navigate("/dosha-test")}
             >
               <span className="secondary-icon">✦</span>
-              <span>Discover Your Skin Balance</span>
+              <span>Take Dosha Test</span>
             </button>
           </div>
 
           <div className="hero-note">
             <span className="hero-note-icon">✦</span>
             <span>
-              AI-estimated insights · Inspired by Ayurvedic principles
+              Skin type · Wellness pattern · Gentle care
             </span>
           </div>
 
           <div className="hero-meta">
             <div className="hero-meta-item">
-              <strong>AI</strong>
-              <span>Skin Insights</span>
+              <strong>5</strong>
+              <span>Skin Types</span>
             </div>
 
             <span className="hero-meta-divider" />
 
             <div className="hero-meta-item">
               <strong>3</strong>
-              <span>Skin Patterns</span>
+              <span>Wellness Patterns</span>
             </div>
 
             <span className="hero-meta-divider" />
 
             <div className="hero-meta-item">
               <strong>01</strong>
-              <span>Personal Journey</span>
+              <span>Care Journey</span>
             </div>
           </div>
         </div>
@@ -179,7 +179,7 @@ const Hero = () => {
                   </div>
 
                   <span className="journey-visual-caption">
-                    AI-ESTIMATED SKIN INSIGHT
+                    SKIN PROFILE CHECK-IN
                   </span>
                 </div>
               )}
@@ -191,17 +191,17 @@ const Hero = () => {
 
                   <div className="balance-node balance-vata">
                     <span>Vata</span>
-                    <strong>Dry</strong>
+                    <strong>Movement</strong>
                   </div>
 
                   <div className="balance-node balance-pitta">
                     <span>Pitta</span>
-                    <strong>Sensitive</strong>
+                    <strong>Warmth</strong>
                   </div>
 
                   <div className="balance-node balance-kapha">
                     <span>Kapha</span>
-                    <strong>Oily</strong>
+                    <strong>Steadiness</strong>
                   </div>
 
                   <span className="journey-visual-caption">
@@ -265,8 +265,8 @@ const Hero = () => {
           <div className="floating-label floating-label-top">
             <span className="floating-icon">🌿</span>
             <div>
-              <small>AI</small>
-              <strong>Skin Insight</strong>
+              <small>SKINCARE</small>
+              <strong>Skin Profile</strong>
             </div>
           </div>
 

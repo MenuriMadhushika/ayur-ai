@@ -15,6 +15,7 @@ const Navbar = () => {
     useState(false);
 
   const [profileIcon, setProfileIcon] = useState("🦋");
+  const [isAdmin, setIsAdmin] = useState(false);
 
   // =========================================================
   // PROFILE ICONS
@@ -39,6 +40,7 @@ const Navbar = () => {
 
       if (!savedUser) {
         setProfileIcon("🦋");
+        setIsAdmin(false);
         return;
       }
 
@@ -48,7 +50,9 @@ const Navbar = () => {
         setProfileIcon(
           profileIcons[user.icon] || "🦋"
         );
+        setIsAdmin(user.role === "ADMIN");
       } catch {
+        setIsAdmin(false);
         setProfileIcon("🦋");
       }
     };
@@ -91,10 +95,7 @@ const Navbar = () => {
     // Remove saved login session.
     localStorage.removeItem("ayuraiUser");
     localStorage.removeItem("ayuraiUserId");
-
-    // FUTURE:
-    // Add token removal here when JWT authentication is used.
-    // localStorage.removeItem("ayuraiToken");
+    localStorage.removeItem("ayuraiToken");
 
     closeMenus();
 
@@ -145,7 +146,7 @@ const Navbar = () => {
             className={navClass}
             onClick={closeMenus}
           >
-            Skin Scan
+            Skin Profile
           </NavLink>
 
           <NavLink
@@ -155,6 +156,7 @@ const Navbar = () => {
           >
             Home Remedies
           </NavLink>
+
         </nav>
 
         {/* PROFILE + MOBILE MENU */}
@@ -189,6 +191,12 @@ const Navbar = () => {
                 >
                   My Profile
                 </Link>
+
+                {isAdmin && (
+                  <Link to="/admin" onClick={closeMenus}>
+                    Admin workspace
+                  </Link>
+                )}
 
                 <button
                   type="button"
@@ -262,7 +270,7 @@ const Navbar = () => {
             className={mobileNavClass}
           >
             <span className="mobile-link-number">03</span>
-            <span>Skin Scan</span>
+            <span>Skin Profile</span>
           </NavLink>
 
           <NavLink
@@ -282,6 +290,17 @@ const Navbar = () => {
             <span className="mobile-link-number">05</span>
             <span>My Profile</span>
           </NavLink>
+
+          {isAdmin && (
+            <NavLink
+              to="/admin"
+              onClick={closeMenus}
+              className={mobileNavClass}
+            >
+              <span className="mobile-link-number">07</span>
+              <span>Admin workspace</span>
+            </NavLink>
+          )}
 
           <button
             type="button"

@@ -113,7 +113,7 @@ const OverallResult = () => {
         </div>
 
         <h1>
-          Your dominant Dosha is{" "}
+          Your primary wellness pattern is{" "}
           <em>{dominantDosha}</em>
         </h1>
 
@@ -152,7 +152,7 @@ const OverallResult = () => {
           </div>
 
           <div className="skin-detail">
-            <span>Visible characteristics</span>
+            <span>Saved skin-profile note</span>
             <strong>
               {result.visibleCharacteristics || "Not available"}
             </strong>
@@ -167,7 +167,7 @@ const OverallResult = () => {
             <span className="result-tag">DOSHA BALANCE</span>
           </div>
 
-          <h2>Your Dosha balance</h2>
+          <h2>Your Dosha pattern</h2>
 
           <div className="dosha-bars">
             {scores.map((score) => (
@@ -188,8 +188,8 @@ const OverallResult = () => {
           </div>
 
           <p>
-            Your current result shows a stronger{" "}
-            <strong>{dominantDosha}</strong> pattern.
+            Your answers currently show a stronger{" "}
+            <strong>{dominantDosha}</strong> wellness pattern.
           </p>
         </article>
 
@@ -240,7 +240,7 @@ const OverallResult = () => {
           className="overall-primary-action"
           onClick={() => navigate("/home-remedies")}
         >
-          VIEW SUITABLE HOME REMEDIES <span>→</span>
+          VIEW RECOMMENDED REMEDIES <span>→</span>
         </button>
 
         <button

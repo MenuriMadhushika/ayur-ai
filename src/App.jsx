@@ -73,10 +73,10 @@ function Home() {
 
             <div className="feature-item">
               <span className="feature-number">02</span>
-              <h3>Analyse</h3>
+              <h3>Understand</h3>
               <p>
-                Explore AI-powered skin analysis for your
-                concerns.
+                Record your skin type and explore your
+                Ayurvedic wellness pattern.
               </p>
             </div>
 
@@ -192,6 +192,8 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route path="/care-plan" element={<Navigate to="/home-remedies" replace />} />
 
         <Route
           element={

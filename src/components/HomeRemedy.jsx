@@ -11,6 +11,7 @@ import {
   getAllHomeRemedies,
   getLatestDoshaAssessment,
   getLatestSkinScan,
+  getPersonalizedHomeRemedies,
 } from "../utils/api";
 
 /* =========================================================
@@ -220,6 +221,7 @@ const HomeRemedy = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [savedRemedyIds, setSavedRemedyIds] = useState([]);
   const [completedRemedyIds, setCompletedRemedyIds] = useState([]);
+  const [backendRecommendation, setBackendRecommendation] = useState(null);
 
   const userId = getCurrentUserId();
   const storageKey = `ayurai-remedies-${userId || "session"}`;
@@ -333,9 +335,49 @@ const HomeRemedy = () => {
     .trim()
     .toLowerCase();
 
+  // The highlighted ritual comes from the backend after both assessments
+  // are saved, so the user sees the same recommendation on every device.
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadBackendRecommendation = async () => {
+      if (!dominantDosha || !normalizedSkinType) {
+        setBackendRecommendation(null);
+        return;
+      }
+
+      try {
+        const response = await getPersonalizedHomeRemedies(
+          dominantDosha,
+          normalizedSkinType
+        );
+
+        if (!cancelled) {
+          setBackendRecommendation(
+            response.length ? mapApiRemedy(response[0]) : null
+          );
+        }
+      } catch {
+        if (!cancelled) {
+          setBackendRecommendation(null);
+        }
+      }
+    };
+
+    loadBackendRecommendation();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [dominantDosha, normalizedSkinType]);
+
   /* Prefer a remedy matching both the user's wellness pattern and skin type. */
   const recommendedRemedy = useMemo(() => {
     if (!dominantDosha) return null;
+
+    if (backendRecommendation) {
+      return backendRecommendation;
+    }
 
     const matchesPattern = (remedy) => remedy.dosha === dominantDosha;
     const matchesSkinType = (remedy) => {
@@ -356,7 +398,7 @@ const HomeRemedy = () => {
         (remedy) => matchesPattern(remedy) && matchesSkinType(remedy)
       ) || remedies.find(matchesPattern) || null
     );
-  }, [dominantDosha, normalizedSkinType, remedies]);
+  }, [backendRecommendation, dominantDosha, normalizedSkinType, remedies]);
 
   const filteredRemedies = useMemo(() => {
     const search = searchText.toLowerCase().trim();

@@ -81,6 +81,11 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+::selection {
+  background: rgba(183, 154, 90, 0.28);
+  color: var(--forest-dark);
+}
+
 
 button,
 input,
@@ -109,12 +114,22 @@ a {
 .app {
   min-height: 100vh;
 
-  background: var(--white);
+  background: var(--ivory);
 }
 
 
 main {
   overflow: hidden;
+}
+
+/* One calm, visible keyboard focus treatment across every journey page. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
 }
 
 
