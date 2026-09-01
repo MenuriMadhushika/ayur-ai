@@ -2,9 +2,12 @@ package com.ayurai.ayuraibackend.controller;
 
 import com.ayurai.ayuraibackend.dto.UserRequest;
 import com.ayurai.ayuraibackend.dto.UserResponse;
+import com.ayurai.ayuraibackend.entity.User;
+import com.ayurai.ayuraibackend.service.UserAccessService;
 import com.ayurai.ayuraibackend.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,13 +21,16 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final UserAccessService userAccessService;
 
     // =========================================================
     // CONSTRUCTOR
     // =========================================================
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService,
+                          UserAccessService userAccessService) {
         this.userService = userService;
+        this.userAccessService = userAccessService;
     }
 
     // =========================================================
@@ -60,7 +66,10 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> getUserById(
-            @PathVariable Long id) {
+            @PathVariable Long id,
+            @AuthenticationPrincipal User authenticatedUser) {
+
+        userAccessService.requireOwner(authenticatedUser, id);
 
         return userService.getUserById(id)
                 .map(ResponseEntity::ok)
@@ -74,7 +83,10 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<UserResponse> updateUser(
             @PathVariable Long id,
-            @Valid @RequestBody UserRequest request) {
+            @Valid @RequestBody UserRequest request,
+            @AuthenticationPrincipal User authenticatedUser) {
+
+        userAccessService.requireOwner(authenticatedUser, id);
 
         UserResponse response =
                 userService.updateUser(id, request);

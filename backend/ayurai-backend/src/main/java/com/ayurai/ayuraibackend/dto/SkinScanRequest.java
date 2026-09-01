@@ -1,6 +1,9 @@
 package com.ayurai.ayuraibackend.dto;
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 public class SkinScanRequest {
 
@@ -9,8 +12,12 @@ public class SkinScanRequest {
 
     private String imagePath;
 
+    @NotBlank(message = "Please choose your usual skin type")
+    @Pattern(regexp = "(?i)normal|dry|oily|combination|sensitive",
+            message = "Skin type must be Normal, Dry, Oily, Combination, or Sensitive")
     private String estimatedSkinType;
 
+    @Size(max = 500, message = "Skin profile notes must be 500 characters or fewer")
     private String visibleCharacteristics;
 
     private String analysisStatus;

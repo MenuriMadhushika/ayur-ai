@@ -34,9 +34,25 @@ public class HomeRemedyService {
             String skinType) {
 
         return homeRemedyRepository
-                .findByDoshaIgnoreCaseAndSkinTypeIgnoreCase(
-                        dosha,
+                .findByDoshaIgnoreCase(dosha)
+                .stream()
+                .filter(remedy -> matchesSkinType(
+                        remedy.getSkinType(),
                         skinType
-                );
+                ))
+                .toList();
+    }
+
+    // "All" remedies are intentionally available to every skin type.
+    private boolean matchesSkinType(
+            String remedySkinType,
+            String selectedSkinType) {
+
+        if (remedySkinType == null || remedySkinType.isBlank()) {
+            return true;
+        }
+
+        return "all".equalsIgnoreCase(remedySkinType)
+                || remedySkinType.equalsIgnoreCase(selectedSkinType);
     }
 }

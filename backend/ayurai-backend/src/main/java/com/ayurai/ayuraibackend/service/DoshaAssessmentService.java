@@ -176,16 +176,33 @@ public class DoshaAssessmentService {
             int vata,
             int pitta,
             int kapha) {
+        int highestScore = Math.max(vata, Math.max(pitta, kapha));
+        String primaryDosha;
+        int secondHighestScore;
+        String secondaryDosha;
 
         if (vata >= pitta && vata >= kapha) {
-            return "Vata";
+            primaryDosha = "Vata";
+            secondHighestScore = Math.max(pitta, kapha);
+            secondaryDosha = pitta >= kapha ? "Pitta" : "Kapha";
+        } else if (pitta >= vata && pitta >= kapha) {
+            primaryDosha = "Pitta";
+            secondHighestScore = Math.max(vata, kapha);
+            secondaryDosha = vata >= kapha ? "Vata" : "Kapha";
+        } else {
+            primaryDosha = "Kapha";
+            secondHighestScore = Math.max(vata, pitta);
+            secondaryDosha = vata >= pitta ? "Vata" : "Pitta";
         }
 
-        if (pitta >= vata && pitta >= kapha) {
-            return "Pitta";
+        // A one-point difference is a meaningful close result in an
+        // eight-question check-in. Keep both patterns visible instead of
+        // forcing the user into a single label.
+        if (highestScore - secondHighestScore <= 1) {
+            return primaryDosha + "-" + secondaryDosha;
         }
 
-        return "Kapha";
+        return primaryDosha;
     }
 
     // =========================================================
