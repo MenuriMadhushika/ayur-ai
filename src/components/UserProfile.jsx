@@ -503,7 +503,11 @@ const UserProfile = () => {
     profileIcons.find((item) => item.id === user.icon) ||
     profileIcons[0];
 
-  const recommendedRemedies = remediesByDosha[dominantDosha] || [];
+  const assessmentsReady = skinCompleted && doshaCompleted;
+  const nextAssessmentPath = skinCompleted ? "/dosha-test" : "/skin-scan";
+  const nextAssessmentLabel = skinCompleted
+    ? "Complete Dosha Test"
+    : "Complete Skin Profile";
 
   const doshaDate = formatDate(doshaResult?.completedAt);
   const skinDate = formatDate(skinScanResult?.completedAt);
@@ -522,8 +526,8 @@ const UserProfile = () => {
         </h1>
 
         <p>
-          Keep your skin insights, skin balance assessment, and personalized
-          wellness journey in one place.
+          Keep your skin profile, Dosha result, and personalized care journey
+          in one calm place.
         </p>
       </header>
 
@@ -717,13 +721,13 @@ const UserProfile = () => {
           <article className="profile-stat hydration-stat">
             <span>HYDRATION</span>
             <strong>{hydration}</strong>
-            <small>Available when supported by analysis</small>
+            <small>Available when recorded in your profile</small>
           </article>
 
           <article className="profile-stat concern-stat">
             <span>SKIN OBSERVATION</span>
             <strong>{concern}</strong>
-            <small>AI-observed visible characteristic</small>
+            <small>Saved with your skin-type check-in</small>
           </article>
         </div>
       </section>
@@ -734,11 +738,11 @@ const UserProfile = () => {
 
       <section className="profile-section">
         <div className="profile-section-heading">
-          <span>02 · SKIN BALANCE</span>
-          <h2>Your Assessment Result</h2>
+          <span>02 · AYURVEDIC WELLNESS PATTERN</span>
+          <h2>Your Dosha Result</h2>
           <p>
-            These colours make your three skin-balance patterns easier to
-            understand.
+            Vata, Pitta, and Kapha are Ayurvedic wellness patterns. They are
+            considered separately from your skin type.
           </p>
         </div>
 
@@ -751,7 +755,7 @@ const UserProfile = () => {
                   ? `conic-gradient(
                       #6f8da8 0 ${vata}%,
                       #c9785d ${vata}% ${vata + pitta}%,
-                      #7f9b72 ${vata + pitta}% 100%
+                      #b48a42 ${vata + pitta}% 100%
                     )`
                   : "#e5dfd2",
             }}
@@ -842,43 +846,42 @@ const UserProfile = () => {
       <section className="profile-section">
         <div className="profile-section-heading">
           <span>04 · PERSONALIZED CARE</span>
-          <h2>Recommended Home Remedies</h2>
+          <h2>Personalized Care</h2>
           <p>
             Gentle self-care ideas based on your skin type and Ayurvedic wellness pattern.
           </p>
         </div>
 
-        {recommendedRemedies.length > 0 ? (
-          <div className="profile-remedies-grid">
-            {recommendedRemedies.map((remedy, index) => (
-              <article className="profile-remedy-card" key={remedy.title}>
-                <span className="remedy-number">0{index + 1}</span>
-                <div className="remedy-icon">{remedy.icon}</div>
-                <span className="remedy-category">{remedy.category}</span>
-                <h3>{remedy.title}</h3>
-                <p>{remedy.description}</p>
+        {assessmentsReady ? (
+          <div className="profile-care-decision profile-care-ready">
+            <span className="profile-care-icon">✦</span>
+            <div>
+              <span>YOUR COMBINED RESULT IS READY</span>
+              <h3>See remedies matched to both results.</h3>
+              <p>
+                Explore gentle home remedies selected for your skin profile
+                and Ayurvedic wellness pattern.
+              </p>
+            </div>
 
-                <div className="remedy-ingredients">
-                  <span>INGREDIENTS</span>
-                  <p>{remedy.ingredients}</p>
-                </div>
-              </article>
-            ))}
+            <button type="button" onClick={() => navigate("/home-remedies")}>
+              View Recommended Remedies →
+            </button>
           </div>
         ) : (
-          <div className="empty-remedies">
-            <span>🌸</span>
-            <h3>Begin Your AyurAI Journey</h3>
-            <p>
-              Complete the Skin Balance Assessment to unlock personalized
-              self-care suggestions.
-            </p>
+          <div className="profile-care-decision">
+            <span className="profile-care-icon">◌</span>
+            <div>
+              <span>ONE STEP AT A TIME</span>
+              <h3>Complete both assessments for recommendations.</h3>
+              <p>
+                AyurAI recommends home-care rituals only after it has both
+                your skin profile and your Ayurvedic wellness pattern.
+              </p>
+            </div>
 
-            <button
-              type="button"
-              onClick={() => navigate("/dosha-test")}
-            >
-              Take Skin Balance Assessment →
+            <button type="button" onClick={() => navigate(nextAssessmentPath)}>
+              {nextAssessmentLabel} →
             </button>
           </div>
         )}
@@ -890,11 +893,11 @@ const UserProfile = () => {
 
       <section className="dosha-profile-card">
         <div>
-          <span>05 · SKIN BALANCE ASSESSMENT</span>
-          <h2>Your Skin Balance Journey</h2>
+          <span>05 · DOSHA TEST</span>
+          <h2>Your Ayurvedic Wellness Journey</h2>
 
           <p>
-            Your current primary Ayurvedic pattern is{" "}
+            Your current primary wellness pattern is{" "}
             <strong>{dominantLabel}</strong>.
           </p>
         </div>

@@ -12,7 +12,11 @@ import API_BASE_URL, {
   getAuthenticatedJsonHeaders,
 } from "../utils/api";
 import { getCurrentUserId } from "../utils/userSession";
-import { getDoshaInfo } from "../utils/doshaInfo";
+import {
+  getDoshaInfo,
+  getPrimaryDosha,
+  isMixedDosha,
+} from "../utils/doshaInfo";
 
 // =========================================================
 // DOSHA QUESTIONS
@@ -334,8 +338,8 @@ const DoshaQuestion = () => {
     const pittaInfo = getDoshaInfo("Pitta");
     const kaphaInfo = getDoshaInfo("Kapha");
 
-    const resultTheme =
-      result.dominantDosha.toLowerCase();
+    const resultTheme = getPrimaryDosha(result.dominantDosha).toLowerCase();
+    const blendedPattern = isMixedDosha(result.dominantDosha);
 
     const scoreCards = [
       {
@@ -364,7 +368,7 @@ const DoshaQuestion = () => {
             DOSHA TEST COMPLETE
           </span>
 
-          <h1>Your skin balance is ready</h1>
+          <h1>Your wellness pattern is ready</h1>
 
           <p className="dosha-result-intro">
             This is an educational Ayurvedic wellness
@@ -375,7 +379,7 @@ const DoshaQuestion = () => {
           {/* PRIMARY DOSHA RESULT */}
 
           <div className="dominant-dosha">
-            <span>YOUR PRIMARY AYURVEDIC PATTERN</span>
+            <span>YOUR AYURVEDIC WELLNESS PATTERN</span>
 
             <strong>{dominantInfo.label}</strong>
 
@@ -385,9 +389,11 @@ const DoshaQuestion = () => {
           <div className="dosha-explainer">
             <strong>What does this mean?</strong>
             <p>
-              Vata, Pitta, and Kapha are traditional Ayurvedic wellness
-              patterns. They are not skin types or medical diagnoses. Your
-              skin type is selected separately in your Skin Profile.
+              Vata can describe dryness and change; Pitta can describe warmth
+              and sensitivity; Kapha can describe steadiness and nourishment.
+              {blendedPattern
+                ? " Your close scores form a blended pattern."
+                : " These are wellness patterns, not skin types or medical diagnoses."}
             </p>
           </div>
 
@@ -490,8 +496,8 @@ const DoshaQuestion = () => {
         <h1>Understand Your Dosha</h1>
 
         <p>
-          Answer each question based on what feels most
-          representative of you.
+          In Ayurveda, Doshas are simple wellness patterns—not diagnoses.
+          Choose the answer that feels most like you on most days.
         </p>
       </div>
 

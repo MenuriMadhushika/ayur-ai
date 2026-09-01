@@ -75,10 +75,10 @@
   max-width: 1180px;
   margin: 0 auto 56px;
   padding: 18px 22px;
-  border: 1px solid #cde0cb;
+  border: 1px solid #c8ddea;
   border-radius: 16px;
-  background: #f1f8ef;
-  color: #416442;
+  background: #eef7fc;
+  color: #526f83;
 }
 
 .admin-status-card div {
@@ -90,7 +90,7 @@
 
 .admin-status-card p {
   margin: 0;
-  color: #617060;
+  color: #687a84;
   font-size: 0.9rem;
 }
 
@@ -98,7 +98,7 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: #6f9b70;
+  background: #6f8da8;
 }
 
 .admin-overview,
@@ -140,8 +140,8 @@
 }
 
 .admin-card-green {
-  border-color: #c6ddc3;
-  background: #edf6eb;
+  border-color: #e5cf9b;
+  background: #fff5df;
 }
 
 .admin-card-number {
@@ -221,9 +221,9 @@
 }
 
 .admin-success {
-  border: 1px solid #cde0cb;
-  background: #f1f8ef;
-  color: #416442;
+  border: 1px solid #c8ddea;
+  background: #eef7fc;
+  color: #526f83;
 }
 
 .admin-remedy-library {
@@ -580,8 +580,8 @@
 }
 
 .admin-role-user {
-  background: #edf3ef;
-  color: #557258;
+  background: #eef6fb;
+  color: #526f83;
 }
 
 .admin-activity-button {
@@ -894,8 +894,8 @@
 }
 
 .admin-overall-insight {
-  background: #f1f8ee;
-  border-color: #c8dfc1;
+  background: #fff5e1;
+  border-color: #ead19b;
 }
 
 .admin-insight-total {

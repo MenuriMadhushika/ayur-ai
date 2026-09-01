@@ -13,23 +13,23 @@
 :root {
 
   /* PRIMARY */
-  --forest: #163F32;
-  --forest-light: #245B48;
-  --forest-dark: #0D2C23;
+  --forest: #2D2A22;
+  --forest-light: #4B4337;
+  --forest-dark: #211E18;
 
   /* NATURAL / AYURVEDA */
-  --sage: #789B89;
-  --sage-light: #E8F0EB;
+  --sage: #C58A78;
+  --sage-light: #F9E9E3;
 
   /* DOSHAS */
-  --vata: #6F927F;
-  --vata-bg: #EEF4F0;
+  --vata: #6F8DA8;
+  --vata-bg: #EAF3F8;
 
   --pitta: #C4775B;
   --pitta-bg: #FAEFEB;
 
-  --kapha: #668B88;
-  --kapha-bg: #EDF4F3;
+  --kapha: #B48A42;
+  --kapha-bg: #FBF0D9;
 
   /* GOLD ACCENT */
   --gold: #B79A5A;
@@ -39,17 +39,17 @@
   /* BACKGROUNDS */
   --white: #FFFFFF;
   --ivory: #FAF9F4;
-  --soft-background: #F5F8F5;
+  --soft-background: #FBFAF6;
 
   /* TEXT */
-  --text-dark: #26332E;
-  --text-primary: #163F32;
-  --text-muted: #718079;
-  --text-light: #A1ADA7;
+  --text-dark: #2D2A22;
+  --text-primary: #2D2A22;
+  --text-muted: #71695F;
+  --text-light: #A49B8E;
 
   /* BORDERS */
-  --border: rgba(22, 63, 50, 0.12);
-  --border-strong: rgba(22, 63, 50, 0.22);
+  --border: rgba(45, 42, 34, 0.12);
+  --border-strong: rgba(45, 42, 34, 0.22);
 }
 
 
@@ -81,6 +81,11 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+::selection {
+  background: rgba(183, 154, 90, 0.28);
+  color: var(--forest-dark);
+}
+
 
 button,
 input,
@@ -109,12 +114,22 @@ a {
 .app {
   min-height: 100vh;
 
-  background: var(--white);
+  background: var(--ivory);
 }
 
 
 main {
   overflow: hidden;
+}
+
+/* One calm, visible keyboard focus treatment across every journey page. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
 }
 
 
@@ -281,7 +296,7 @@ main {
 
   box-shadow:
     0 15px 40px
-    rgba(22, 63, 50, 0.08);
+    rgba(45, 42, 34, 0.08);
 }
 
 
@@ -318,6 +333,122 @@ main {
   line-height: 1.6;
 
   margin-top: 8px;
+}
+
+.home-final-action {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 20px;
+
+  margin-top: 44px;
+
+  padding: 15px 21px;
+
+  border: 1px solid var(--forest);
+
+  border-radius: 999px;
+
+  background: var(--forest);
+
+  color: #fffdf7;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  transition: transform .2s ease, background .2s ease;
+}
+
+.home-final-action:hover {
+
+  transform: translateY(-2px);
+
+  background: var(--forest-light);
+}
+
+/* Home remedy preview */
+.home-remedy-preview {
+  width: min(1160px, calc(100% - 120px));
+  margin: 0 auto 100px;
+  padding: 18px 0 0;
+}
+
+.home-remedy-preview-heading {
+  max-width: 700px;
+}
+
+.home-remedy-preview h2 {
+  font-family: "Cormorant Garamond", serif;
+  color: var(--forest);
+  font-size: clamp(42px, 5vw, 62px);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.home-remedy-preview-heading > p {
+  max-width: 650px;
+  margin-top: 18px;
+  color: var(--text-muted);
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+.home-remedy-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 35px;
+}
+
+.home-preview-card {
+  min-height: 220px;
+  padding: 27px;
+  border: 1px solid;
+  border-radius: 20px;
+}
+
+.home-preview-card > span {
+  color: #af812c;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.7px;
+}
+
+.home-preview-card h3 {
+  margin-top: 24px;
+  color: var(--forest);
+  font-family: "Cormorant Garamond", serif;
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1.05;
+}
+
+.home-preview-card p {
+  margin-top: 12px;
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.preview-blue { border-color: #bfd8e7; background: #eef7fb; }
+.preview-blush { border-color: #f2c9bd; background: #fff2ed; }
+.preview-gold { border-color: #ead19b; background: #fff5e1; }
+
+.home-remedy-preview-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 13px;
+  margin-top: 30px;
+  padding: 14px 20px;
+  border: 1px solid var(--forest);
+  border-radius: 999px;
+  background: var(--forest);
+  color: #fffdf7;
+  font-size: 13px;
+  font-weight: 700;
 }
 
 
@@ -549,7 +680,8 @@ main {
 
 
   .feature-row,
-  .products-grid {
+  .products-grid,
+  .home-remedy-preview-grid {
 
     grid-template-columns:
       1fr;
@@ -578,6 +710,11 @@ main {
       10px
       20px
       60px;
+  }
+
+  .home-remedy-preview {
+    width: calc(100% - 40px);
+    margin-bottom: 60px;
   }
 
 

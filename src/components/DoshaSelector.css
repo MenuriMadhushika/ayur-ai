@@ -1,6 +1,6 @@
 /* =========================================================
    AYURAI — DOSHA SELECTOR
-   Forest • Cream • Natural Ayurvedic Accents
+   Charcoal • Cream • Soft Ayurvedic Accents
    ========================================================= */
 
 
@@ -38,7 +38,7 @@
 
   background: #ffffff;
 
-  border: 1px solid #dfe7e1;
+  border: 1px solid #e5ddd0;
   border-radius: 24px;
 
   overflow: hidden;
@@ -55,7 +55,7 @@
     background 0.35s ease;
 
   box-shadow:
-    0 12px 35px rgba(6, 63, 47, 0.07);
+    0 12px 35px rgba(45, 42, 34, 0.07);
 }
 
 
@@ -74,7 +74,7 @@
   width: 100%;
   height: 4px;
 
-  background: #245c4a;
+  background: #b48845;
 
   transform: scaleX(0);
   transform-origin: left;
@@ -91,10 +91,10 @@
 .dosha-card:hover {
   transform: translateY(-9px);
 
-  border-color: #b9cbc0;
+  border-color: #dfc894;
 
   box-shadow:
-    0 22px 55px rgba(6, 63, 47, 0.13);
+    0 22px 55px rgba(45, 42, 34, 0.13);
 }
 
 .dosha-card:hover::before {
@@ -109,10 +109,10 @@
 .dosha-card.selected {
   transform: translateY(-6px);
 
-  border-color: #245c4a;
+  border-color: #b48845;
 
   box-shadow:
-    0 22px 55px rgba(6, 63, 47, 0.16);
+    0 22px 55px rgba(45, 42, 34, 0.16);
 }
 
 .dosha-card.selected::before {
@@ -209,39 +209,39 @@
    ========================================================= */
 
 .dosha-card.kapha::before {
-  background: #6f8959;
+  background: #b48845;
 }
 
 .dosha-card.kapha .dosha-icon {
-  background: #edf3e9;
-  color: #5d7649;
+  background: #fff1d8;
+  color: #805f2b;
 }
 
 .dosha-card.kapha .dosha-element {
-  color: #5d7649;
+  color: #805f2b;
 }
 
 .dosha-card.kapha .dosha-care {
-  color: #5d7649;
+  color: #805f2b;
 }
 
 .dosha-card.kapha .care-dot {
-  background: #6f8959;
+  background: #b48845;
 }
 
 .dosha-card.kapha .dosha-name {
-  color: #5d7649;
+  color: #805f2b;
 }
 
 .dosha-card.kapha .dosha-explore {
-  color: #5d7649;
-  border-color: #c8d6bd;
+  color: #805f2b;
+  border-color: #e6c987;
 }
 
 .dosha-card.kapha .dosha-explore:hover,
 .dosha-card.kapha.selected .dosha-explore {
-  background: #5d7649;
-  border-color: #5d7649;
+  background: #805f2b;
+  border-color: #805f2b;
   color: #ffffff;
 }
 
@@ -459,7 +459,7 @@
 
   background: #ffffff;
 
-  border: 1px solid #d4e0d8;
+  border: 1px solid #e6d5b2;
 
   border-radius: 22px;
 
@@ -471,7 +471,7 @@
   gap: 30px;
 
   box-shadow:
-    0 14px 40px rgba(6, 63, 47, 0.08);
+    0 14px 40px rgba(45, 42, 34, 0.08);
 
   animation:
     resultAppear 0.5s ease;
@@ -523,7 +523,7 @@
 
   font-size: 34px;
 
-  color: #063f2f;
+  color: #2d2a22;
 
   font-weight: 700;
 
@@ -536,7 +536,7 @@
    ========================================================= */
 
 .dosha-result p {
-  color: #66736d;
+  color: #716a60;
 
   font-size: 13px;
 
@@ -557,7 +557,7 @@
 
   border-radius: 28px;
 
-  background: #063f2f;
+  background: #2d2a22;
 
   color: #ffffff;
 
@@ -578,17 +578,17 @@
     all 0.3s ease;
 
   box-shadow:
-    0 8px 25px rgba(6, 63, 47, 0.18);
+    0 8px 25px rgba(45, 42, 34, 0.18);
 }
 
 
 .result-button:hover {
-  background: #0b4d3b;
+  background: #4b4337;
 
   transform: translateY(-3px);
 
   box-shadow:
-    0 14px 32px rgba(6, 63, 47, 0.25);
+    0 14px 32px rgba(45, 42, 34, 0.25);
 }
 
 

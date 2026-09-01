@@ -36,9 +36,9 @@
 }
 
 .theme-kapha {
-  --accent: #7f9b72;
-  --accent-dark: #5e7b54;
-  --accent-soft: #eaf2e7;
+  --accent: #b48845;
+  --accent-dark: #835f28;
+  --accent-soft: #fbf0da;
 }
 
 /* =========================================================
@@ -144,7 +144,7 @@
 }
 
 .score-chip.kapha strong {
-  color: #7f9b72;
+  color: #b48845;
 }
 
 /* =========================================================
@@ -193,11 +193,11 @@
   background:
     radial-gradient(
       circle at 100% 0,
-      rgba(127, 155, 114, 0.16) 0,
-      rgba(127, 155, 114, 0.16) 17%,
+      rgba(203, 167, 91, 0.18) 0,
+      rgba(203, 167, 91, 0.18) 17%,
       transparent 17.5%
     ),
-    #eff5ed;
+    #fff5e2;
 }
 
 .result-card-top {
@@ -308,7 +308,7 @@
 }
 
 .dosha-bar-fill.kapha {
-  background: #7f9b72;
+  background: #b48845;
 }
 
 .lifestyle-message {
@@ -320,7 +320,7 @@
 .small-note {
   display: block;
   margin-top: 18px;
-  color: #6e7b69;
+  color: #71695f;
   font-size: 10px;
   line-height: 1.6;
 }

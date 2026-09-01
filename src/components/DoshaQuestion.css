@@ -212,7 +212,7 @@
 }
 
 .dosha-result-page.dosha-kapha {
-  --theme-color: #7f9b72;
+  --theme-color: #b48845;
   --theme-light: #eff5ed;
 }
 
@@ -411,7 +411,7 @@
   width: 23px;
   height: 23px;
   border-radius: 50%;
-  background: #7f9b72;
+  background: #b48845;
   color: white;
   font-size: 0.78rem;
   font-weight: 700;

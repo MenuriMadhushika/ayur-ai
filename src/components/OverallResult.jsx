@@ -5,6 +5,8 @@ import "./OverallResult.css";
 import { createOverallResult } from "../utils/api";
 import { getCurrentUserId } from "../utils/userSession";
 import { formatSkinType } from "../utils/skinTypeInfo";
+import { getAssessmentStatus } from "../utils/assessmentStatus";
+import { getPrimaryDosha, isMixedDosha } from "../utils/doshaInfo";
 
 const OverallResult = () => {
   const navigate = useNavigate();
@@ -14,6 +16,10 @@ const OverallResult = () => {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const assessmentStatus = getAssessmentStatus();
+  const missingSkinProfile = !assessmentStatus.skinScanCompleted;
+  const missingDoshaTest = !assessmentStatus.doshaCompleted;
+  const hasMissingStep = missingSkinProfile || missingDoshaTest;
 
   useEffect(() => {
     const loadResult = async () => {
@@ -61,16 +67,34 @@ const OverallResult = () => {
   }
 
   if (error || !result) {
+    const nextStep = missingSkinProfile ? "/skin-scan" : "/dosha-test";
+
     return (
       <main className="overall-page">
         <section className="overall-error-card">
           <span>AYURAI · ASSESSMENT</span>
-          <h1>Unable to load your result</h1>
-          <p>{error}</p>
+          <h1>
+            {hasMissingStep
+              ? "One gentle step remains"
+              : "Unable to load your result"}
+          </h1>
+          <p>
+            {hasMissingStep
+              ? `Complete your ${missingSkinProfile ? "Skin Profile" : "Dosha Test"} to see your combined result and matched home remedies.`
+              : error}
+          </p>
 
-          <button type="button" onClick={() => window.location.reload()}>
-            TRY AGAIN
-          </button>
+          {hasMissingStep ? (
+            <button type="button" onClick={() => navigate(nextStep)}>
+              {missingSkinProfile
+                ? "COMPLETE SKIN PROFILE"
+                : "COMPLETE DOSHA TEST"}
+            </button>
+          ) : (
+            <button type="button" onClick={() => window.location.reload()}>
+              TRY AGAIN
+            </button>
+          )}
 
           <button type="button" onClick={() => navigate("/")}>
             BACK TO HOME
@@ -81,7 +105,12 @@ const OverallResult = () => {
   }
 
   const dominantDosha = result.dominantDosha || "Balance";
-  const theme = dominantDosha.toLowerCase();
+  const primaryDosha = getPrimaryDosha(dominantDosha) || "Balance";
+  const theme = primaryDosha.toLowerCase();
+  const blendedPattern = isMixedDosha(dominantDosha);
+  const sensitiveSkin = String(result.estimatedSkinType || "")
+    .toLowerCase()
+    .includes("sensitive");
 
   const scores = [
     {
@@ -113,7 +142,7 @@ const OverallResult = () => {
         </div>
 
         <h1>
-          Your dominant Dosha is{" "}
+          Your {blendedPattern ? "wellness blend is" : "wellness pattern is"}{" "}
           <em>{dominantDosha}</em>
         </h1>
 
@@ -152,9 +181,11 @@ const OverallResult = () => {
           </div>
 
           <div className="skin-detail">
-            <span>Visible characteristics</span>
+            <span>Your care priority</span>
             <strong>
-              {result.visibleCharacteristics || "Not available"}
+              {sensitiveSkin
+                ? "Keep routines minimal, soothing, and patch-test first."
+                : "Choose simple, consistent care and notice how your skin feels."}
             </strong>
           </div>
 
@@ -167,7 +198,7 @@ const OverallResult = () => {
             <span className="result-tag">DOSHA BALANCE</span>
           </div>
 
-          <h2>Your Dosha balance</h2>
+          <h2>Your Dosha pattern</h2>
 
           <div className="dosha-bars">
             {scores.map((score) => (
@@ -188,8 +219,9 @@ const OverallResult = () => {
           </div>
 
           <p>
-            Your current result shows a stronger{" "}
-            <strong>{dominantDosha}</strong> pattern.
+            {blendedPattern
+              ? "Your answers show a close blend of these wellness patterns."
+              : <>Your answers currently show a stronger <strong>{dominantDosha}</strong> wellness pattern.</>}
           </p>
         </article>
 
@@ -219,7 +251,7 @@ const OverallResult = () => {
         </div>
 
         <h2>
-          A balanced path for your{" "}
+          A gentle path for your{" "}
           <em>{dominantDosha}</em> nature
         </h2>
 
@@ -240,7 +272,7 @@ const OverallResult = () => {
           className="overall-primary-action"
           onClick={() => navigate("/home-remedies")}
         >
-          VIEW SUITABLE HOME REMEDIES <span>→</span>
+          VIEW RECOMMENDED REMEDIES <span>→</span>
         </button>
 
         <button

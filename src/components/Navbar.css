@@ -2,7 +2,7 @@
    AYURAI — PREMIUM NAVBAR
    AI × AYURVEDA × NATURAL LUXURY
 
-   Ivory / Charcoal / Sage / Muted Gold
+   Ivory / Charcoal / Soft Blush / Muted Gold
 ========================================================= */
 
 
@@ -29,7 +29,7 @@
 
   box-shadow:
     0 8px 30px
-    rgba(22, 63, 50, 0.035);
+    rgba(45, 42, 34, 0.035);
 }
 
 
@@ -87,7 +87,7 @@
 }
 
 .logo-ayur {
-  color: #173f33;
+  color: #2d2a22;
 }
 
 .logo-ai {
@@ -147,7 +147,7 @@
   display: inline-flex;
   align-items: center;
 
-  color: #707a74;
+  color: #716a60;
 
   text-decoration: none;
 
@@ -169,13 +169,13 @@
 }
 
 .nav-link:hover {
-  color: #173f33;
+  color: #2d2a22;
 
   transform: translateY(-1px);
 }
 
 .nav-link.active {
-  color: #173f33;
+  color: #2d2a22;
 
   font-weight: 600;
 }
@@ -299,7 +299,7 @@
 
   box-shadow:
     0 8px 22px
-    rgba(22, 63, 50, 0.09);
+    rgba(45, 42, 34, 0.09);
 }
 
 .profile-button:hover .profile-icon {
@@ -362,7 +362,7 @@
 
   border-radius: 999px;
 
-  background: #173f33;
+  background: #2d2a22;
 
   transition:
     transform 0.35s ease,
@@ -422,7 +422,7 @@
 
   box-shadow:
     0 20px 40px
-    rgba(22, 63, 50, 0.07);
+    rgba(45, 42, 34, 0.07);
 }
 
 
@@ -456,7 +456,7 @@
 
   border-bottom:
     1px solid
-    rgba(22, 63, 50, 0.065);
+    rgba(45, 42, 34, 0.065);
 
   color: #68756e;
 
@@ -482,13 +482,13 @@
 }
 
 .mobile-nav-link:hover {
-  color: #173f33;
+  color: #2d2a22;
 
   padding-left: 8px;
 }
 
 .mobile-nav-link.active {
-  color: #173f33;
+  color: #2d2a22;
 
   font-weight: 600;
 
@@ -749,7 +749,7 @@
 
   box-shadow:
     0 18px 35px
-    rgba(22, 63, 50, 0.12);
+    rgba(45, 42, 34, 0.12);
 
   z-index: 1100;
 
@@ -772,7 +772,7 @@
 
   background: transparent;
 
-  color: #536159;
+  color: #716a60;
 
   cursor: pointer;
 
@@ -794,7 +794,7 @@
 
 .profile-dropdown a:hover {
   background: #edf3ee;
-  color: #173f33;
+  color: #2d2a22;
 }
 
 .profile-dropdown button {
@@ -835,7 +835,7 @@
   border: none;
   border-top:
     1px solid
-    rgba(22, 63, 50, 0.065);
+    rgba(45, 42, 34, 0.065);
 
   background: transparent;
 

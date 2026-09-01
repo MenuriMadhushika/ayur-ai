@@ -6,11 +6,12 @@ import {
   getSkinScanResult,
   getCurrentUserId,
 } from "../utils/assessmentStatus";
-import { getDoshaInfo } from "../utils/doshaInfo";
+import { getDoshaInfo, getPrimaryDosha } from "../utils/doshaInfo";
 import {
   getAllHomeRemedies,
   getLatestDoshaAssessment,
   getLatestSkinScan,
+  getPersonalizedHomeRemedies,
 } from "../utils/api";
 
 /* =========================================================
@@ -167,7 +168,7 @@ const RITUAL_SCENES = [
 ];
 
 const getThemeClass = (dosha) =>
-  `dosha-${String(dosha || "").toLowerCase()}`;
+  `dosha-${getPrimaryDosha(dosha).toLowerCase()}`;
 
 const toList = (value, splitBy = /\r?\n/) =>
   String(value || "")
@@ -220,6 +221,7 @@ const HomeRemedy = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [savedRemedyIds, setSavedRemedyIds] = useState([]);
   const [completedRemedyIds, setCompletedRemedyIds] = useState([]);
+  const [backendRecommendation, setBackendRecommendation] = useState(null);
 
   const userId = getCurrentUserId();
   const storageKey = `ayurai-remedies-${userId || "session"}`;
@@ -320,6 +322,7 @@ const HomeRemedy = () => {
     null;
 
   const dominantInfo = getDoshaInfo(dominantDosha);
+  const primaryDosha = getPrimaryDosha(dominantDosha);
 
   const currentSkinType =
     assessment?.skinScanResult?.skinType ||
@@ -333,11 +336,51 @@ const HomeRemedy = () => {
     .trim()
     .toLowerCase();
 
+  // The highlighted ritual comes from the backend after both assessments
+  // are saved, so the user sees the same recommendation on every device.
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadBackendRecommendation = async () => {
+      if (!primaryDosha || !normalizedSkinType) {
+        setBackendRecommendation(null);
+        return;
+      }
+
+      try {
+        const response = await getPersonalizedHomeRemedies(
+          primaryDosha,
+          normalizedSkinType
+        );
+
+        if (!cancelled) {
+          setBackendRecommendation(
+            response.length ? mapApiRemedy(response[0]) : null
+          );
+        }
+      } catch {
+        if (!cancelled) {
+          setBackendRecommendation(null);
+        }
+      }
+    };
+
+    loadBackendRecommendation();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [primaryDosha, normalizedSkinType]);
+
   /* Prefer a remedy matching both the user's wellness pattern and skin type. */
   const recommendedRemedy = useMemo(() => {
-    if (!dominantDosha) return null;
+    if (!primaryDosha) return null;
 
-    const matchesPattern = (remedy) => remedy.dosha === dominantDosha;
+    if (backendRecommendation) {
+      return backendRecommendation;
+    }
+
+    const matchesPattern = (remedy) => remedy.dosha === primaryDosha;
     const matchesSkinType = (remedy) => {
       const remedySkinType = String(remedy.skinType || "")
         .trim()
@@ -356,7 +399,7 @@ const HomeRemedy = () => {
         (remedy) => matchesPattern(remedy) && matchesSkinType(remedy)
       ) || remedies.find(matchesPattern) || null
     );
-  }, [dominantDosha, normalizedSkinType, remedies]);
+  }, [backendRecommendation, normalizedSkinType, primaryDosha, remedies]);
 
   const filteredRemedies = useMemo(() => {
     const search = searchText.toLowerCase().trim();

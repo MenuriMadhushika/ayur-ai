@@ -5,39 +5,30 @@ import "./HowItWorks.css";
 const steps = [
   {
     number: "01",
-    icon: "🌿",
-    title: "Discover",
+    icon: "💆‍♀️",
+    title: "Skin Profile",
     description:
-      "Begin your AyurAI journey by understanding your skin and natural Ayurvedic balance.",
-    action: "/dosha-test",
-    button: "Discover Dosha",
+      "Choose the skin type that best describes how your skin feels on most days.",
+    action: "/skin-scan",
+    button: "Start Skin Profile",
   },
   {
     number: "02",
-    icon: "✨",
-    title: "AI Skin Scan",
+    icon: "🔮",
+    title: "Dosha Test",
     description:
-      "Upload your skin image and let AyurAI analyze visible skin characteristics.",
-    action: "/skin-scan",
-    button: "Start Skin Scan",
-  },
-  {
-    number: "03",
-    icon: "🧘",
-    title: "Find Your Balance",
-    description:
-      "Understand your dominant Dosha and how it may relate to your skin needs.",
+      "Answer a short questionnaire to learn your Ayurvedic wellness pattern.",
     action: "/dosha-test",
     button: "Take Dosha Test",
   },
   {
-    number: "04",
-    icon: "🍯",
-    title: "Personalized Care",
+    number: "03",
+    icon: "🎯",
+    title: "Your Result & Remedies",
     description:
-      "Explore Ayurvedic home remedies and care suggestions suited to your results.",
-    action: "/home-remedies",
-    button: "View Remedies",
+      "Complete both steps, then see your combined result and matched home remedies.",
+    action: "/overall-result",
+    button: "View My Result",
   },
 ];
 
