@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -48,15 +49,16 @@ public class SecurityConfig {
                         .requestMatchers("/api/admin/**")
                         .hasRole("ADMIN")
 
-                        // Existing AyurAI user features remain available.
+                        // Registration and sign-in are the only public account endpoints.
+                        .requestMatchers(HttpMethod.POST, "/api/users")
+                        .permitAll()
                         .requestMatchers(
                                 "/api/auth/**",
-                                "/api/users/**",
-                                "/api/skin-scans/**",
-                                "/api/dosha-assessments/**",
-                                "/api/home-remedies/**",
-                                "/api/overall-results/**"
+                                "/api/home-remedies/**"
                         ).permitAll()
+
+                        .requestMatchers(HttpMethod.GET, "/api/users")
+                        .hasRole("ADMIN")
 
                         .anyRequest().authenticated()
                 )

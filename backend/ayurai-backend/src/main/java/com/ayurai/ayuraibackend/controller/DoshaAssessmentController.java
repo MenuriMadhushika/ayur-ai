@@ -2,9 +2,12 @@ package com.ayurai.ayuraibackend.controller;
 
 import com.ayurai.ayuraibackend.dto.DoshaAssessmentRequest;
 import com.ayurai.ayuraibackend.dto.DoshaAssessmentResponse;
+import com.ayurai.ayuraibackend.entity.User;
 import com.ayurai.ayuraibackend.service.DoshaAssessmentService;
+import com.ayurai.ayuraibackend.service.UserAccessService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,12 +23,15 @@ import java.util.List;
 public class DoshaAssessmentController {
 
     private final DoshaAssessmentService doshaAssessmentService;
+    private final UserAccessService userAccessService;
 
     public DoshaAssessmentController(
-            DoshaAssessmentService doshaAssessmentService) {
+            DoshaAssessmentService doshaAssessmentService,
+            UserAccessService userAccessService) {
 
         this.doshaAssessmentService =
                 doshaAssessmentService;
+        this.userAccessService = userAccessService;
     }
 
     // =========================================================
@@ -34,7 +40,10 @@ public class DoshaAssessmentController {
 
     @PostMapping
     public ResponseEntity<DoshaAssessmentResponse> createAssessment(
-            @Valid @RequestBody DoshaAssessmentRequest request) {
+            @Valid @RequestBody DoshaAssessmentRequest request,
+            @AuthenticationPrincipal User authenticatedUser) {
+
+        userAccessService.requireOwner(authenticatedUser, request.getUserId());
 
         DoshaAssessmentResponse response =
                 doshaAssessmentService.createAssessment(request);
@@ -49,7 +58,10 @@ public class DoshaAssessmentController {
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<DoshaAssessmentResponse>>
     getUserAssessments(
-            @PathVariable Long userId) {
+            @PathVariable Long userId,
+            @AuthenticationPrincipal User authenticatedUser) {
+
+        userAccessService.requireOwner(authenticatedUser, userId);
 
         return ResponseEntity.ok(
                 doshaAssessmentService
@@ -64,7 +76,10 @@ public class DoshaAssessmentController {
     @GetMapping("/user/{userId}/latest")
     public ResponseEntity<DoshaAssessmentResponse>
     getLatestAssessment(
-            @PathVariable Long userId) {
+            @PathVariable Long userId,
+            @AuthenticationPrincipal User authenticatedUser) {
+
+        userAccessService.requireOwner(authenticatedUser, userId);
 
         return ResponseEntity.ok(
                 doshaAssessmentService

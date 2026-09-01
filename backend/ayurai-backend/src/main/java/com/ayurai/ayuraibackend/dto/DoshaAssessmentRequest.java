@@ -1,6 +1,8 @@
 package com.ayurai.ayuraibackend.dto;
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.util.List;
 
@@ -10,7 +12,8 @@ public class DoshaAssessmentRequest {
     private Long userId;
 
     @NotNull(message = "Answers are required")
-    private List<String> answers;
+    @Size(min = 8, max = 8, message = "Please answer all 8 Dosha questions")
+    private List<@NotBlank(message = "Each Dosha answer is required") String> answers;
 
     public DoshaAssessmentRequest() {
     }

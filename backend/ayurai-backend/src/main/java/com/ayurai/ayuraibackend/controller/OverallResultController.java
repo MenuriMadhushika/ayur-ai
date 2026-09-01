@@ -2,9 +2,12 @@ package com.ayurai.ayuraibackend.controller;
 
 import com.ayurai.ayuraibackend.dto.OverallResultRequest;
 import com.ayurai.ayuraibackend.dto.OverallResultResponse;
+import com.ayurai.ayuraibackend.entity.User;
 import com.ayurai.ayuraibackend.service.OverallResultService;
+import com.ayurai.ayuraibackend.service.UserAccessService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,11 +25,14 @@ import java.util.List;
 public class OverallResultController {
 
     private final OverallResultService overallResultService;
+    private final UserAccessService userAccessService;
 
     public OverallResultController(
-            OverallResultService overallResultService) {
+            OverallResultService overallResultService,
+            UserAccessService userAccessService) {
 
         this.overallResultService = overallResultService;
+        this.userAccessService = userAccessService;
     }
 
     // =========================================================
@@ -36,7 +42,10 @@ public class OverallResultController {
 
     @PostMapping
     public ResponseEntity<OverallResultResponse> createOverallResult(
-            @Valid @RequestBody OverallResultRequest request) {
+            @Valid @RequestBody OverallResultRequest request,
+            @AuthenticationPrincipal User authenticatedUser) {
+
+        userAccessService.requireOwner(authenticatedUser, request.getUserId());
 
         OverallResultResponse response =
                 overallResultService.createOverallResult(request);
@@ -51,7 +60,10 @@ public class OverallResultController {
 
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<OverallResultResponse>> getUserOverallResults(
-            @PathVariable Long userId) {
+            @PathVariable Long userId,
+            @AuthenticationPrincipal User authenticatedUser) {
+
+        userAccessService.requireOwner(authenticatedUser, userId);
 
         return ResponseEntity.ok(
                 overallResultService.getUserOverallResults(userId)
@@ -65,7 +77,10 @@ public class OverallResultController {
 
     @GetMapping("/user/{userId}/latest")
     public ResponseEntity<OverallResultResponse> getLatestOverallResult(
-            @PathVariable Long userId) {
+            @PathVariable Long userId,
+            @AuthenticationPrincipal User authenticatedUser) {
+
+        userAccessService.requireOwner(authenticatedUser, userId);
 
         return ResponseEntity.ok(
                 overallResultService.getLatestOverallResult(userId)

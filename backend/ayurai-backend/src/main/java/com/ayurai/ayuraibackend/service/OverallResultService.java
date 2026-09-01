@@ -254,14 +254,16 @@ public class OverallResultService {
                     "your assessed";
         }
 
-        return "Based on your AI-estimated skin " +
-                "characteristics and Dosha assessment, " +
-                "your current assessment indicates " +
-                dominantDosha +
-                " as your dominant Dosha. " +
-                "Your skin scan provides AI-estimated " +
-                "visible characteristics to support " +
-                "your Ayurvedic skincare journey.";
+        String patternDescription = dominantDosha.contains("-")
+                ? "a blended " + dominantDosha.replace("-", " and ")
+                : dominantDosha;
+
+        return "Based on your saved skin profile and Dosha " +
+                "questionnaire, your current result indicates " +
+                patternDescription +
+                " Ayurvedic wellness pattern. " +
+                "Use this combined result to explore gentle, " +
+                "personalized skincare guidance.";
     }
 
     // =========================================================
@@ -283,12 +285,10 @@ public class OverallResultService {
                     "to products and environmental changes.";
         }
 
-        return "Your AI-estimated skin characteristics " +
-                "suggest focusing on a gentle and " +
-                "consistent skincare routine. " +
-                "Estimated skin profile: " +
+        return "Your saved skin type is " +
                 skinType +
-                ".";
+                ". Focus on a gentle, consistent routine and " +
+                "adjust products according to how your skin feels.";
     }
 
     // =========================================================
@@ -308,8 +308,10 @@ public class OverallResultService {
                     "and sufficient rest.";
         }
 
+        String primaryDosha = dominantDosha.split("-")[0];
+
         if ("Vata".equalsIgnoreCase(
-                dominantDosha)) {
+                primaryDosha)) {
 
             return "Maintain a regular daily routine, " +
                     "prioritize adequate rest and hydration, " +
@@ -317,7 +319,7 @@ public class OverallResultService {
         }
 
         if ("Pitta".equalsIgnoreCase(
-                dominantDosha)) {
+                primaryDosha)) {
 
             return "Favor balanced routines, adequate " +
                     "rest, hydration and practices that " +
@@ -325,7 +327,7 @@ public class OverallResultService {
         }
 
         if ("Kapha".equalsIgnoreCase(
-                dominantDosha)) {
+                primaryDosha)) {
 
             return "Maintain a consistent daily routine, " +
                     "regular movement, balanced meals and " +
@@ -356,9 +358,12 @@ public class OverallResultService {
                     "medical diagnosis.";
         }
 
+        String patternDescription = dominantDosha.contains("-")
+                ? "a blend of " + dominantDosha.replace("-", " and ")
+                : dominantDosha + " as the stronger pattern";
+
         return "Your assessment indicates " +
-                dominantDosha +
-                " as the dominant Dosha. " +
+                patternDescription + ". " +
                 "Use this result as a wellness-oriented " +
                 "guide for exploring Ayurvedic practices. " +
                 "It is not a medical diagnosis.";
