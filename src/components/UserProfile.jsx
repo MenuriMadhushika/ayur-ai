@@ -755,7 +755,7 @@ const UserProfile = () => {
                   ? `conic-gradient(
                       #6f8da8 0 ${vata}%,
                       #c9785d ${vata}% ${vata + pitta}%,
-                      #7f9b72 ${vata + pitta}% 100%
+                      #b48a42 ${vata + pitta}% 100%
                     )`
                   : "#e5dfd2",
             }}

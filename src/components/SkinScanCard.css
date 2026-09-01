@@ -194,6 +194,122 @@
   line-height: 1.7;
 }
 
+/* ---------- SIMPLE SKIN PROFILE CHOICE ---------- */
+
+.skin-profile-choice-card {
+  grid-template-columns: .8fr 1.2fr;
+  min-height: 500px;
+}
+
+.profile-choice-copy {
+  justify-content: flex-start;
+}
+
+.skin-type-picker {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 52px;
+  background: #fbfaf6;
+}
+
+.skin-type-picker-heading > span {
+  color: #a88435;
+  font-family: Arial, sans-serif;
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .16em;
+}
+
+.skin-type-picker-heading p {
+  margin: 8px 0 22px;
+  color: #716b60;
+  font-family: Arial, sans-serif;
+  font-size: .88rem;
+}
+
+.skin-type-choice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 11px;
+}
+
+.skin-type-choice-grid button {
+  min-height: 110px;
+  padding: 17px;
+  border: 1px solid #e3d5ba;
+  border-radius: 13px;
+  background: #fffdf8;
+  color: #39342c;
+  cursor: pointer;
+  text-align: left;
+  transition: transform .2s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease;
+}
+
+.skin-type-choice-grid button:hover {
+  transform: translateY(-2px);
+  border-color: #c7a35c;
+  box-shadow: 0 10px 20px rgba(74, 56, 21, .07);
+}
+
+.skin-type-choice-grid button.selected {
+  border-color: #a88435;
+  background: #f8edd2;
+  box-shadow: inset 0 0 0 1px rgba(168, 132, 53, .15);
+}
+
+.skin-type-choice-grid strong,
+.skin-type-choice-grid span {
+  display: block;
+}
+
+.skin-type-choice-grid strong {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.22rem;
+  font-weight: 500;
+}
+
+.skin-type-choice-grid span {
+  margin-top: 7px;
+  color: #756d60;
+  font-family: Arial, sans-serif;
+  font-size: .75rem;
+  line-height: 1.5;
+}
+
+.skin-profile-error {
+  margin: 14px 0 0;
+  color: #a04837;
+  font-family: Arial, sans-serif;
+  font-size: .78rem;
+}
+
+.save-skin-profile-button {
+  width: 100%;
+  margin-top: 20px;
+  padding: 16px 20px;
+  border: 1px solid #2e2a23;
+  border-radius: 5px;
+  background: #2e2a23;
+  color: #fffdf8;
+  cursor: pointer;
+  font-family: Arial, sans-serif;
+  font-size: .71rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  transition: transform .2s ease, background .2s ease;
+}
+
+.save-skin-profile-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  background: #a88435;
+}
+
+.save-skin-profile-button:disabled {
+  cursor: wait;
+  opacity: .72;
+}
+
 /* ---------- UPLOAD AREA ---------- */
 
 .upload-wrapper {
@@ -619,7 +735,7 @@
 }
 
 .complete-message.overall-ready {
-  border-color: rgba(127, 155, 114, 0.35);
+  border-color: rgba(111, 141, 168, 0.35);
   background: #eff5ed;
 }
 
@@ -795,6 +911,10 @@
     padding: 40px 27px;
   }
 
+  .skin-type-picker {
+    padding: 40px 27px;
+  }
+
   .assessment-status-grid {
     grid-template-columns: 1fr;
     gap: 10px;
@@ -836,6 +956,10 @@
 
   .scan-info h3 {
     font-size: 2rem;
+  }
+
+  .skin-type-choice-grid {
+    grid-template-columns: 1fr;
   }
 }
 /* Clickable camera icon before photo upload. */

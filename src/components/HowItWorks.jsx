@@ -5,7 +5,7 @@ import "./HowItWorks.css";
 const steps = [
   {
     number: "01",
-    icon: "🌿",
+    icon: "💆‍♀️",
     title: "Skin Profile",
     description:
       "Choose the skin type that best describes how your skin feels on most days.",
@@ -14,7 +14,7 @@ const steps = [
   },
   {
     number: "02",
-    icon: "✨",
+    icon: "🔮",
     title: "Dosha Test",
     description:
       "Answer a short questionnaire to learn your Ayurvedic wellness pattern.",
@@ -23,21 +23,12 @@ const steps = [
   },
   {
     number: "03",
-    icon: "🧘",
-    title: "View Your Result",
+    icon: "🎯",
+    title: "Your Result & Remedies",
     description:
-      "Complete both assessments in either order, then see your combined Ayurvedic result.",
+      "Complete both steps, then see your combined result and matched home remedies.",
     action: "/overall-result",
-    button: "View Overall Result",
-  },
-  {
-    number: "04",
-    icon: "🍯",
-    title: "Personalized Care",
-    description:
-      "Explore gentle home-care rituals recommended from your combined results.",
-    action: "/home-remedies",
-    button: "View Remedies",
+    button: "View My Result",
   },
 ];
 

@@ -16,8 +16,8 @@
   --pitta-main: #c9785d;
   --pitta-soft: #fdf0eb;
 
-  --kapha-main: #7f9b72;
-  --kapha-soft: #eff5ed;
+  --kapha-main: #b48845;
+  --kapha-soft: #fff1d8;
 }
 
 /* ---------- PAGE ---------- */
@@ -28,7 +28,7 @@
   background:
     radial-gradient(circle at 8% 8%, rgba(201, 162, 74, 0.1), transparent 27%),
     radial-gradient(circle at 92% 32%, rgba(111, 141, 168, 0.08), transparent 25%),
-    radial-gradient(circle at 50% 90%, rgba(127, 155, 114, 0.07), transparent 25%),
+    radial-gradient(circle at 50% 90%, rgba(201, 120, 93, 0.07), transparent 25%),
     var(--profile-bg);
   color: var(--profile-text);
 }
@@ -247,12 +247,12 @@
 
 .hydration-stat {
   background: var(--vata-soft);
-  color: #54776f;
+  color: #526d86;
 }
 
 .concern-stat {
   background: var(--kapha-soft);
-  color: #587052;
+  color: #805f2b;
 }
 
 /* ---------- DOSHA / SKIN BALANCE ---------- */
@@ -751,7 +751,7 @@
   padding: 7px 12px;
   border-radius: 999px;
   background: var(--kapha-soft);
-  color: #597052;
+  color: #805f2b;
   font-family: Arial, sans-serif;
   font-size: 0.65rem;
   font-weight: 700;

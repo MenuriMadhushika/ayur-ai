@@ -1,56 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./Hero.css";
 
 /* =========================================================
    AYURAI — HOME HERO
-   Animated journey: Scan → Balance → Personalized care
+   Animated journey: Skin Profile → Balance → Personalized care
    ========================================================= */
-
-const JOURNEY_STEPS = [
-  {
-    number: "01",
-    title: "Know your skin type",
-    description: "Record the skin type that feels most true for you on most days.",
-    visual: "scan",
-    label: "SKIN PROFILE",
-  },
-  {
-    number: "02",
-    title: "Discover your balance",
-    description: "Explore your Ayurvedic wellness pattern through a short questionnaire.",
-    visual: "balance",
-    label: "WELLNESS PATTERN",
-  },
-  {
-    number: "03",
-    title: "Personalize your care",
-    description: "Find gentle routines suited to your skin journey.",
-    visual: "care",
-    label: "PERSONAL CARE",
-  },
-];
 
 const Hero = () => {
   const navigate = useNavigate();
-  const [activeStep, setActiveStep] = useState(0);
 
-  const currentStep = JOURNEY_STEPS[activeStep];
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setActiveStep((current) => (current + 1) % JOURNEY_STEPS.length);
-    }, 3600);
-
-    return () => clearInterval(timer);
-  }, []);
-
-  const openSkinScan = () => navigate("/skin-scan");
+  const openSkinProfile = () => navigate("/skin-scan");
 
   const handleCardKeyDown = (event) => {
     if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
-      openSkinScan();
+      openSkinProfile();
     }
   };
 
@@ -84,20 +49,12 @@ const Hero = () => {
             <button
               type="button"
               className="hero-primary-btn"
-              onClick={openSkinScan}
+              onClick={openSkinProfile}
             >
               <span>Start Skin Profile</span>
               <span className="primary-arrow">→</span>
             </button>
 
-            <button
-              type="button"
-              className="hero-secondary-btn"
-              onClick={() => navigate("/dosha-test")}
-            >
-              <span className="secondary-icon">✦</span>
-              <span>Take Dosha Test</span>
-            </button>
           </div>
 
           <div className="hero-note">
@@ -141,12 +98,12 @@ const Hero = () => {
           <span className="visual-dot dot-four" />
 
           <div
-            className="ai-visual-card clickable-scan-card"
-            onClick={openSkinScan}
+            className="ai-visual-card calm-journey-card"
+            onClick={openSkinProfile}
             onKeyDown={handleCardKeyDown}
             role="button"
             tabIndex={0}
-            aria-label="Open Skin Scan"
+            aria-label="Open Skin Profile"
           >
             <div className="visual-card-header">
               <div className="visual-brand">
@@ -154,112 +111,43 @@ const Hero = () => {
                 <span>AYURAI</span>
               </div>
 
-              <span className="visual-label">{currentStep.label}</span>
+              <span className="visual-label">YOUR GENTLE PATH</span>
             </div>
 
             <div className="journey-visual-area">
-              {currentStep.visual === "scan" && (
-                <div className="scan-visual">
-                  <div className="face-halo" />
-                  <div className="face-halo-inner" />
+              <div className="scan-visual calm-profile-visual">
+                <div className="face-halo" />
+                <div className="face-halo-inner" />
 
-                  <div className="face-shape">
-                    <div className="face-eye face-eye-left" />
-                    <div className="face-eye face-eye-right" />
-                    <div className="face-nose" />
-                    <div className="face-mouth" />
-
-                    <span className="face-point face-point-one" />
-                    <span className="face-point face-point-two" />
-                    <span className="face-point face-point-three" />
-                    <span className="face-point face-point-four" />
-
-                    <div className="face-grid" />
-                    <div className="scan-beam" />
-                  </div>
-
-                  <span className="journey-visual-caption">
-                    SKIN PROFILE CHECK-IN
-                  </span>
+                <div className="face-shape">
+                  <div className="face-eye face-eye-left" />
+                  <div className="face-eye face-eye-right" />
+                  <div className="face-nose" />
+                  <div className="face-mouth" />
                 </div>
-              )}
 
-              {currentStep.visual === "balance" && (
-                <div className="balance-visual">
-                  <div className="balance-orbit balance-orbit-one" />
-                  <div className="balance-orbit balance-orbit-two" />
-
-                  <div className="balance-node balance-vata">
-                    <span>Vata</span>
-                    <strong>Movement</strong>
-                  </div>
-
-                  <div className="balance-node balance-pitta">
-                    <span>Pitta</span>
-                    <strong>Warmth</strong>
-                  </div>
-
-                  <div className="balance-node balance-kapha">
-                    <span>Kapha</span>
-                    <strong>Steadiness</strong>
-                  </div>
-
-                  <span className="journey-visual-caption">
-                    YOUR SKIN BALANCE
-                  </span>
-                </div>
-              )}
-
-              {currentStep.visual === "care" && (
-                <div className="care-visual">
-                  <div className="care-glow" />
-                  <span className="care-leaf">🌿</span>
-
-                  <div className="care-routine-card">
-                    <span>PERSONALIZED CARE</span>
-                    <strong>Gentle routine</strong>
-                    <p>Skin insight · Balance · Care</p>
-                  </div>
-
-                  <span className="care-sparkle sparkle-one">✦</span>
-                  <span className="care-sparkle sparkle-two">✦</span>
-                  <span className="care-sparkle sparkle-three">✦</span>
-
-                  <span className="journey-visual-caption">
-                    CARE MADE FOR YOU
-                  </span>
-                </div>
-              )}
+                <span className="journey-visual-caption">
+                  YOUR SKIN PROFILE
+                </span>
+              </div>
             </div>
 
-            <div className="insight-panel">
+            <div className="insight-panel journey-overview">
               <div className="insight-heading">
                 <span>Your AyurAI Journey</span>
-                <small>
-                  {String(activeStep + 1).padStart(2, "0")} / 03
-                </small>
+                <small>3 SIMPLE STEPS</small>
               </div>
 
-              <div className="journey-progress">
-                <div
-                  className="journey-progress-fill"
-                  style={{
-                    width: `${((activeStep + 1) / JOURNEY_STEPS.length) * 100}%`,
-                  }}
-                />
-              </div>
-
-              <div className="journey-step">
-                <div className="journey-number">{currentStep.number}</div>
-
-                <div className="journey-content">
-                  <strong>{currentStep.title}</strong>
-                  <p>{currentStep.description}</p>
-                </div>
+              <div className="journey-overview-steps">
+                <span className="journey-overview-step current"><b>01</b> Skin Profile</span>
+                <span className="journey-overview-connector">→</span>
+                <span className="journey-overview-step"><b>02</b> Dosha Test</span>
+                <span className="journey-overview-connector">→</span>
+                <span className="journey-overview-step"><b>03</b> Remedies</span>
               </div>
             </div>
 
-            <div className="card-click-note">CLICK TO START SKIN SCAN →</div>
+            <div className="card-click-note">CLICK TO START SKIN PROFILE →</div>
           </div>
 
           <div className="floating-label floating-label-top">

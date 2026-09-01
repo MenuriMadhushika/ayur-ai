@@ -74,8 +74,8 @@
 }
 
 .compact-recommendation.dosha-kapha {
-  border-color: #c8dcc3;
-  background: #f1f8ef;
+  border-color: #ead19b;
+  background: #fff5e1;
 }
 
 .compact-recommendation-main > span,
@@ -227,8 +227,8 @@
 }
 
 .remedy-card.dosha-kapha {
-  border-color: #c7ddc3;
-  background: #f1f8ef;
+  border-color: #ead19b;
+  background: #fff5e1;
 }
 
 .recommended-badge {
@@ -540,7 +540,7 @@
 }
 
 .ritual-stage.dosha-kapha {
-  background: #f0f8ee;
+  background: #fff5e1;
 }
 
 .ritual-scene-icon {

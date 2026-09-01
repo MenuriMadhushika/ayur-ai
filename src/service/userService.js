@@ -1,3 +1,8 @@
+import {
+  getAuthenticatedHeaders,
+  getAuthenticatedJsonHeaders,
+} from "../utils/api";
+
 const API_URL = "http://localhost:8081/api/users";
 
 // =========================================================
@@ -5,7 +10,9 @@ const API_URL = "http://localhost:8081/api/users";
 // =========================================================
 
 export const getUserById = async (userId) => {
-  const response = await fetch(`${API_URL}/${userId}`);
+  const response = await fetch(`${API_URL}/${userId}`, {
+    headers: getAuthenticatedHeaders(),
+  });
 
   if (!response.ok) {
     throw new Error("Failed to load user");
@@ -23,9 +30,7 @@ export const updateUser = async (userId, userData) => {
   const response = await fetch(`${API_URL}/${userId}`, {
     method: "PUT",
 
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: getAuthenticatedJsonHeaders(),
 
     body: JSON.stringify(userData),
   });

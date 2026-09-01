@@ -4,14 +4,13 @@ import {
   Route,
   Navigate,
   useLocation,
+  useNavigate,
 } from "react-router-dom";
 
 import "./App.css";
 
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
-import DoshaSelector from "./components/DoshaSelector";
-import SkinScanCard from "./components/SkinScanCard";
 import DoshaQuestion from "./components/DoshaQuestion";
 import UserProfile from "./components/UserProfile";
 import HomeRemedy from "./components/HomeRemedy";
@@ -25,70 +24,103 @@ import AdminDashboard from "./pages/AdminDashboard";
 import AdminLayout from "./pages/AdminLayout";
 
 function Home() {
+  const navigate = useNavigate();
+
   return (
     <main>
       <Hero />
 
-      <section className="intro-section">
-        <div className="section-label">
-          AYURVEDIC SKINCARE
-        </div>
-
-        <h2>Discover Your Ayurvedic Skin Balance</h2>
-
-        <p className="section-description">
-          Ayurveda describes three natural energies called
-          Doshas. Discover yours and understand what your
-          skin truly needs.
-        </p>
-
+      <section className="intro-section home-journey">
         <HowItWorks />
-        <DoshaSelector />
       </section>
 
-      <SkinScanCard />
-
-      <section className="personalized-section">
+      <section className="personalized-section home-value-section">
         <div className="personalized-content">
           <span className="section-label">
-            PERSONALIZED CARE
+            WHY AYURAI
           </span>
 
-          <h2>Beauty Guided by Ayurveda</h2>
+          <h2>Simple guidance for your skin journey.</h2>
 
           <p>
-            AyurAI combines Ayurvedic principles with
-            intelligent technology to help you understand
-            your skin and discover personalized Ayurvedic care.
+            Start with what you already know about your skin. AyurAI then
+            combines your Skin Profile and Ayurvedic wellness pattern to
+            suggest gentle, educational home-care ideas.
           </p>
 
           <div className="feature-row">
             <div className="feature-item">
               <span className="feature-number">01</span>
-              <h3>Discover</h3>
+              <h3>Clear</h3>
                 <p>
-                  Explore your skin type and Ayurvedic wellness pattern.
+                  Understand your usual skin type without complicated terms.
                 </p>
             </div>
 
             <div className="feature-item">
               <span className="feature-number">02</span>
-              <h3>Understand</h3>
+              <h3>Personal</h3>
               <p>
-                Record your skin type and explore your
-                Ayurvedic wellness pattern.
+                See your Skin Profile and wellness pattern together.
               </p>
             </div>
 
             <div className="feature-item">
               <span className="feature-number">03</span>
-              <h3>Personalize</h3>
+              <h3>Gentle</h3>
               <p>
-                Receive Ayurvedic home-care recommendations.
+                Explore home remedies chosen for your personal result.
               </p>
             </div>
           </div>
+
+          <button
+            type="button"
+            className="home-final-action"
+            onClick={() => navigate("/skin-scan")}
+          >
+            Start your Skin Profile <span>→</span>
+          </button>
         </div>
+      </section>
+
+      <section className="home-remedy-preview">
+        <div className="home-remedy-preview-heading">
+          <span className="section-label">GENTLE HOME REMEDIES</span>
+          <h2>A few calm rituals to explore.</h2>
+          <p>
+            These are simple examples. After your Skin Profile and Dosha Test,
+            AyurAI highlights ideas that better match your personal result.
+          </p>
+        </div>
+
+        <div className="home-remedy-preview-grid">
+          <article className="home-preview-card preview-blue">
+            <span>DRY-FEELING SKIN</span>
+            <h3>Honey & Oat Hydration</h3>
+            <p>A soft, comforting home ritual to try once or twice a week.</p>
+          </article>
+
+          <article className="home-preview-card preview-blush">
+            <span>SENSITIVE-FEELING SKIN</span>
+            <h3>Oat & Aloe Comfort</h3>
+            <p>A minimal, gentle ritual with a patch test before you begin.</p>
+          </article>
+
+          <article className="home-preview-card preview-gold">
+            <span>WARM OR OILY-FEELING SKIN</span>
+            <h3>Aloe & Cucumber Cooling Care</h3>
+            <p>A light, refreshing ritual for days when your skin needs less.</p>
+          </article>
+        </div>
+
+        <button
+          type="button"
+          className="home-remedy-preview-action"
+          onClick={() => navigate("/home-remedies")}
+        >
+          Explore home remedies <span>→</span>
+        </button>
       </section>
     </main>
   );
