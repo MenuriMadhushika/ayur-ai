@@ -70,7 +70,7 @@ function AdminDashboard({ view = "dashboard" }) {
   const [loadingDashboard, setLoadingDashboard] =
     useState(true);
   const [loadingInsights, setLoadingInsights] = useState(false);
-  const [loadingUsers, setLoadingUsers] = useState(false);
+  const [, setLoadingUsers] = useState(false);
   const [loadingActivityId, setLoadingActivityId] =
     useState(null);
   const [loadingRemedies, setLoadingRemedies] =
@@ -154,7 +154,7 @@ function AdminDashboard({ view = "dashboard" }) {
     };
 
     loadWorkspacePage();
-  }, [view]);
+  }, [view, isUsersPage, isAssessmentsPage, isRemediesPage]);
 
   const filteredUsers = useMemo(() => {
     const query = searchTerm.trim().toLowerCase();
@@ -177,7 +177,7 @@ function AdminDashboard({ view = "dashboard" }) {
     });
   }, [users, searchTerm]);
 
-  const handleUsersClick = async () => {
+  const _handleUsersClick = async () => {
     if (showUsers) {
       setShowUsers(false);
       setSearchTerm("");
@@ -221,7 +221,7 @@ function AdminDashboard({ view = "dashboard" }) {
     }
   };
 
-  const handleInsightsClick = async (insightType) => {
+  const _handleInsightsClick = async (insightType) => {
     if (showInsights && activeInsight === insightType) {
       setShowInsights(false);
       setActiveInsight(null);
@@ -257,7 +257,7 @@ function AdminDashboard({ view = "dashboard" }) {
     setRemedies(orderedRemedies);
   };
 
-  const handleRemediesClick = async () => {
+  const _handleRemediesClick = async () => {
     if (showRemedies) {
       setShowRemedies(false);
       setShowRemedyForm(false);
@@ -399,7 +399,7 @@ function AdminDashboard({ view = "dashboard" }) {
     }
   };
 
-  const handleLogout = () => {
+  const _handleLogout = () => {
     localStorage.removeItem("ayuraiUser");
     localStorage.removeItem("ayuraiUserId");
     localStorage.removeItem("ayuraiToken");
@@ -450,12 +450,12 @@ function AdminDashboard({ view = "dashboard" }) {
     },
   ];
 
-  const insightDetails = {
+  const _insightDetails = {
     skin: {
-      eyebrow: "SKIN PROFILE INSIGHTS",
+      eyebrow: "SKIN SCAN INSIGHTS",
       title: "Saved skin types",
       description:
-        "Anonymous totals from user-selected skin profiles.",
+        "Anonymous totals from user-selected skin scans.",
       counts: insights?.skinTypeCounts || {},
     },
     dosha: {
@@ -469,7 +469,7 @@ function AdminDashboard({ view = "dashboard" }) {
       eyebrow: "OVERALL RESULT INSIGHTS",
       title: "Personalized results created",
       description:
-        "A result is created only after both the Skin Profile and Dosha Test are complete.",
+        "A result is created only after both the Skin Scan and Dosha Test are complete.",
       counts: {
         "Completed overall results": insights?.totalOverallResults || 0,
       },
@@ -580,9 +580,9 @@ function AdminDashboard({ view = "dashboard" }) {
           ) : (
             <div className="admin-assessment-grid">
               <article className="admin-insights-panel">
-                <p>SKIN PROFILE INSIGHTS</p>
+                <p>SKIN SCAN INSIGHTS</p>
                 <h2>Saved skin types</h2>
-                <span>Anonymous totals from user-selected skin profiles.</span>
+                <span>Anonymous totals from user-selected skin scans.</span>
                 <div className="admin-insight-counts">
                   {Object.entries(insights?.skinTypeCounts || {}).map(([label, count]) => (
                     <article key={label}><span>{formatSkinType(label)}</span><strong>{count}</strong></article>
@@ -1094,12 +1094,12 @@ function AdminDashboard({ view = "dashboard" }) {
                   <strong>
                     {selectedActivity.latestEstimatedSkinType
                       ? formatSkinType(selectedActivity.latestEstimatedSkinType)
-                      : "No skin profile saved"}
+                      : "No skin scan saved"}
                   </strong>
                 </div>
 
                 <div>
-                  <span>Latest skin profile status</span>
+                  <span>Latest skin scan status</span>
                   <strong>
                     {selectedActivity.latestAnalysisStatus ||
                       "Not available"}

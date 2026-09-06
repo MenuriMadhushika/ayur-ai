@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://localhost:8081/api";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8081/api";
 
 // =========================================================
 // COMMON REQUEST HELPERS
@@ -213,6 +213,18 @@ export const getLatestOverallResult = async (userId) => {
     throw new Error(await getErrorMessage(response));
   }
 
+  return response.json();
+};
+
+export const analyzeSkinPhoto = async (userId, image) => {
+  const formData = new FormData();
+  formData.append("image", image);
+  const response = await fetch(`${API_BASE_URL}/skin-scans/analyze/user/${userId}`, {
+    method: "POST",
+    headers: getAuthenticatedHeaders(),
+    body: formData,
+  });
+  if (!response.ok) throw new Error(await getErrorMessage(response));
   return response.json();
 };
 

@@ -432,7 +432,7 @@ const DoshaQuestion = () => {
               <span className="status-check">
                 {skinScanDone ? "✓" : "02"}
               </span>
-              <strong>Skin Profile</strong>
+              <strong>Skin Scan</strong>
               <span>{skinScanDone ? "Completed" : "Still required"}</span>
             </div>
           </div>
@@ -448,8 +448,8 @@ const DoshaQuestion = () => {
 
             <p>
               {bothDone
-                ? "Your Skin Profile and Dosha Test are complete. View your personalized Overall Result and suitable home remedies next."
-                : "Complete your Skin Profile next to unlock your personalized Overall Result and suitable home remedies."}
+                ? "Your Skin Scan and Dosha Test are complete. View your personalized Overall Result and suitable home remedies next."
+                : "Complete your Skin Scan next to unlock your personalized Overall Result and suitable home remedies."}
             </p>
           </div>
 
@@ -463,7 +463,7 @@ const DoshaQuestion = () => {
             >
               {bothDone
                 ? "VIEW OVERALL RESULT →"
-                : "CONTINUE TO SKIN PROFILE →"}
+                : "CONTINUE TO SKIN SCAN →"}
             </button>
 
             <button

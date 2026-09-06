@@ -164,7 +164,7 @@ const DoshaSelector = () => {
 
             <p className="result-description">
               Ready to discover your personalized
-              Ayurvedic skin profile?
+              Ayurvedic skin scan?
             </p>
 
           </div>

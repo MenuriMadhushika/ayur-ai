@@ -26,7 +26,7 @@ const profileIcons = [
 ];
 
 /* Home suggestions shown after the Dosha Test. */
-const remediesByDosha = {
+const _remediesByDosha = {
   Vata: [
     {
       icon: "🌿🥥",
@@ -507,7 +507,7 @@ const UserProfile = () => {
   const nextAssessmentPath = skinCompleted ? "/dosha-test" : "/skin-scan";
   const nextAssessmentLabel = skinCompleted
     ? "Complete Dosha Test"
-    : "Complete Skin Profile";
+    : "Complete Skin Scan";
 
   const doshaDate = formatDate(doshaResult?.completedAt);
   const skinDate = formatDate(skinScanResult?.completedAt);
@@ -526,7 +526,7 @@ const UserProfile = () => {
         </h1>
 
         <p>
-          Keep your skin profile, Dosha result, and personalized care journey
+          Keep your skin scan, Dosha result, and personalized care journey
           in one calm place.
         </p>
       </header>
@@ -715,7 +715,7 @@ const UserProfile = () => {
           <article className="profile-stat skin-stat">
             <span>YOUR SKIN TYPE</span>
             <strong>{skinType}</strong>
-            <small>Selected in your skin profile</small>
+            <small>Selected in your skin scan</small>
           </article>
 
           <article className="profile-stat hydration-stat">
@@ -814,8 +814,8 @@ const UserProfile = () => {
 
       <section className="profile-section">
         <div className="profile-section-heading">
-          <span>03 · LATEST SKIN PROFILE</span>
-          <h2>Your Latest Skin Profile</h2>
+          <span>03 · LATEST SKIN SCAN</span>
+          <h2>Your Latest Skin Scan</h2>
         </div>
 
         <div className="latest-analysis-card">
@@ -834,7 +834,7 @@ const UserProfile = () => {
             className="view-analysis-button"
             onClick={() => navigate("/skin-scan")}
           >
-            View Skin Profile →
+            View Skin Scan →
           </button>
         </div>
       </section>
@@ -859,7 +859,7 @@ const UserProfile = () => {
               <span>YOUR COMBINED RESULT IS READY</span>
               <h3>See remedies matched to both results.</h3>
               <p>
-                Explore gentle home remedies selected for your skin profile
+                Explore gentle home remedies selected for your skin scan
                 and Ayurvedic wellness pattern.
               </p>
             </div>
@@ -876,7 +876,7 @@ const UserProfile = () => {
               <h3>Complete both assessments for recommendations.</h3>
               <p>
                 AyurAI recommends home-care rituals only after it has both
-                your skin profile and your Ayurvedic wellness pattern.
+                your skin scan and your Ayurvedic wellness pattern.
               </p>
             </div>
 
@@ -946,7 +946,7 @@ const UserProfile = () => {
               </div>
 
               <div className="history-info">
-                <h3>Skin Profile</h3>
+                <h3>Skin Scan</h3>
                 <p>
                   {skinType} · {concern}
                 </p>

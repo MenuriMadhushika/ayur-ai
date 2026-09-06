@@ -7,6 +7,15 @@ import {
 
 import "./Navbar.css";
 
+const profileIcons = {
+  lotus: "🪷",
+  leaf: "🍃",
+  flower: "🌺",
+  sun: "☀️",
+  butterfly: "🦋",
+  botanical: "🌿",
+};
+
 const Navbar = () => {
   const navigate = useNavigate();
 
@@ -20,15 +29,6 @@ const Navbar = () => {
   // =========================================================
   // PROFILE ICONS
   // =========================================================
-
-  const profileIcons = {
-    lotus: "🪷",
-    leaf: "🍃",
-    flower: "🌺",
-    sun: "☀️",
-    butterfly: "🦋",
-    botanical: "🌿",
-  };
 
   // =========================================================
   // LOAD SAVED PROFILE ICON
@@ -146,7 +146,7 @@ const Navbar = () => {
             className={navClass}
             onClick={closeMenus}
           >
-            Skin Profile
+            Skin Scan
           </NavLink>
 
           <NavLink
@@ -270,7 +270,7 @@ const Navbar = () => {
             className={mobileNavClass}
           >
             <span className="mobile-link-number">03</span>
-            <span>Skin Profile</span>
+            <span>Skin Scan</span>
           </NavLink>
 
           <NavLink
