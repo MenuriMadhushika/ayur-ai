@@ -80,14 +80,14 @@ const OverallResult = () => {
           </h1>
           <p>
             {hasMissingStep
-              ? `Complete your ${missingSkinProfile ? "Skin Profile" : "Dosha Test"} to see your combined result and matched home remedies.`
+              ? `Complete your ${missingSkinProfile ? "Skin Scan" : "Dosha Test"} to see your combined result and matched home remedies.`
               : error}
           </p>
 
           {hasMissingStep ? (
             <button type="button" onClick={() => navigate(nextStep)}>
               {missingSkinProfile
-                ? "COMPLETE SKIN PROFILE"
+                ? "COMPLETE SKIN SCAN"
                 : "COMPLETE DOSHA TEST"}
             </button>
           ) : (
@@ -148,7 +148,7 @@ const OverallResult = () => {
 
         <p className="overall-hero-text">
           {result.summary ||
-            "Your Skin Profile and Dosha Test have been combined into one personalized wellness result. Explore suitable home remedies next."}
+            "Your Skin Scan and Dosha Test have been combined into one personalized wellness result. Explore suitable home remedies next."}
         </p>
 
         <div className="score-chips">
@@ -171,7 +171,7 @@ const OverallResult = () => {
             <span className="result-tag">SKIN SNAPSHOT</span>
           </div>
 
-          <h2>Your skin profile</h2>
+          <h2>Your skin scan</h2>
 
           <div className="skin-detail">
             <span>Your skin type</span>

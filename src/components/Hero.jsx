@@ -4,7 +4,7 @@ import "./Hero.css";
 
 /* =========================================================
    AYURAI — HOME HERO
-   Animated journey: Skin Profile → Balance → Personalized care
+   Animated journey: Skin Scan → Balance → Personalized care
    ========================================================= */
 
 const Hero = () => {
@@ -40,7 +40,7 @@ const Hero = () => {
           </h1>
 
           <p className="hero-description">
-            Start with a simple skin profile and Ayurvedic wellness
+            Start with a simple skin scan and Ayurvedic wellness
             questionnaire, then explore gentle care ideas suited to your
             unique journey.
           </p>
@@ -51,7 +51,7 @@ const Hero = () => {
               className="hero-primary-btn"
               onClick={openSkinProfile}
             >
-              <span>Start Skin Profile</span>
+              <span>Start Skin Scan</span>
               <span className="primary-arrow">→</span>
             </button>
 
@@ -103,7 +103,7 @@ const Hero = () => {
             onKeyDown={handleCardKeyDown}
             role="button"
             tabIndex={0}
-            aria-label="Open Skin Profile"
+            aria-label="Open Skin Scan"
           >
             <div className="visual-card-header">
               <div className="visual-brand">
@@ -127,7 +127,7 @@ const Hero = () => {
                 </div>
 
                 <span className="journey-visual-caption">
-                  YOUR SKIN PROFILE
+                  YOUR SKIN SCAN
                 </span>
               </div>
             </div>
@@ -139,7 +139,7 @@ const Hero = () => {
               </div>
 
               <div className="journey-overview-steps">
-                <span className="journey-overview-step current"><b>01</b> Skin Profile</span>
+                <span className="journey-overview-step current"><b>01</b> Skin Scan</span>
                 <span className="journey-overview-connector">→</span>
                 <span className="journey-overview-step"><b>02</b> Dosha Test</span>
                 <span className="journey-overview-connector">→</span>
@@ -147,14 +147,14 @@ const Hero = () => {
               </div>
             </div>
 
-            <div className="card-click-note">CLICK TO START SKIN PROFILE →</div>
+            <div className="card-click-note">CLICK TO START SKIN SCAN →</div>
           </div>
 
           <div className="floating-label floating-label-top">
             <span className="floating-icon">🌿</span>
             <div>
               <small>SKINCARE</small>
-              <strong>Skin Profile</strong>
+              <strong>Skin Scan</strong>
             </div>
           </div>
 

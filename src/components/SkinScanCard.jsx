@@ -1,226 +1,204 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-
+import React, { useEffect, useRef, useState } from "react";
 import "./SkinScanCard.css";
-
-import {
-  saveSkinScanResult,
-  getAssessmentStatus,
-} from "../utils/assessmentStatus";
-import { createSkinScan } from "../utils/api";
+import { analyzeSkinPhoto, getUserSkinScans } from "../utils/api";
+import { saveSkinScanResult } from "../utils/assessmentStatus";
 import { getCurrentUserId } from "../utils/userSession";
-import { SKIN_TYPES } from "../utils/skinTypeInfo";
+
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
+const ACCEPTED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
 const SkinScanCard = () => {
-  const navigate = useNavigate();
-  const [selectedSkinType, setSelectedSkinType] = useState("");
-  const [isSaving, setIsSaving] = useState(false);
-  const [isComplete, setIsComplete] = useState(false);
-  const [doshaCompleted, setDoshaCompleted] = useState(false);
+  const inputRef = useRef(null);
+  const [photo, setPhoto] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState("");
   const [error, setError] = useState("");
+  const [notice, setNotice] = useState("");
+  const [stage, setStage] = useState("photo");
+  const [result, setResult] = useState(null);
+  const [history, setHistory] = useState([]);
+  const [historyLoading, setHistoryLoading] = useState(true);
+  const [historyError, setHistoryError] = useState("");
 
-  const checkAssessmentStatus = () => {
-    const status = getAssessmentStatus();
-    setDoshaCompleted(Boolean(status.doshaCompleted || status.doshaTestCompleted));
+  const loadHistory = async () => {
+    const userId = getCurrentUserId();
+    if (!userId) {
+      setHistoryLoading(false);
+      return;
+    }
+    setHistoryError("");
+    try {
+      setHistory(await getUserSkinScans(userId));
+    } catch (loadError) {
+      setHistoryError(loadError.message || "Unable to load your scan history.");
+    } finally {
+      setHistoryLoading(false);
+    }
   };
 
   useEffect(() => {
-    checkAssessmentStatus();
-    window.addEventListener("ayurai-assessment-updated", checkAssessmentStatus);
-
-    return () => {
-      window.removeEventListener("ayurai-assessment-updated", checkAssessmentStatus);
-    };
+    loadHistory();
   }, []);
 
-  const handleSave = async () => {
-    if (!selectedSkinType || isSaving) {
-      setError("Choose the option that feels most true for your skin on most days.");
+  useEffect(() => {
+    if (!photo) {
+      setPreviewUrl("");
+      return undefined;
+    }
+    const nextPreviewUrl = URL.createObjectURL(photo);
+    setPreviewUrl(nextPreviewUrl);
+    return () => URL.revokeObjectURL(nextPreviewUrl);
+  }, [photo]);
+
+  const choosePhoto = (file) => {
+    setError("");
+    setNotice("");
+    if (!file) return;
+    if (!ACCEPTED_TYPES.includes(file.type)) {
+      setError("Please choose a JPG, PNG, or WebP image.");
       return;
     }
+    if (file.size > MAX_FILE_SIZE) {
+      setError("Please choose an image smaller than 5 MB.");
+      return;
+    }
+    setPhoto(file);
+    setStage("review");
+  };
 
+  const removePhoto = () => {
+    setPhoto(null);
+    setError("");
+    setNotice("");
+    setStage("photo");
+    setResult(null);
+    if (inputRef.current) inputRef.current.value = "";
+  };
+
+  const handleAnalyze = async () => {
+    if (!photo) {
+      setError("Add a clear photo before starting the scan.");
+      return;
+    }
+    setError("");
+    setNotice("");
+    setStage("analyzing");
     try {
-      setError("");
-      setIsSaving(true);
-
       const userId = getCurrentUserId();
-      if (!userId) {
-        throw new Error("User session not found.");
-      }
-
-      const backendResult = await createSkinScan({
-        userId,
-        imagePath: null,
-        estimatedSkinType: selectedSkinType,
-        visibleCharacteristics: `Skin Profile check-in based on the user's selected ${selectedSkinType} skin type.`,
-        analysisStatus: "COMPLETED",
-      });
-
+      if (!userId) throw new Error("Your session has expired. Please sign in again.");
+      const prediction = await analyzeSkinPhoto(userId, photo);
+      setResult(prediction);
       saveSkinScanResult({
         completed: true,
-        completedAt: new Date().toISOString(),
-        skinType: backendResult.estimatedSkinType,
-        hydration: "Not available",
-        concern: "Not available",
-        texture: backendResult.visibleCharacteristics,
+        completedAt: prediction.createdAt || new Date().toISOString(),
+        skinType: prediction.estimatedCategory,
+        concern: prediction.estimatedCategory || "Uncertain",
+        texture: prediction.message,
+        confidence: prediction.modelScore,
+        modelVersion: prediction.modelVersion,
       });
-
-      checkAssessmentStatus();
-      setIsComplete(true);
-    } catch (saveError) {
-      console.error("Skin Profile save error:", saveError);
-      setError("We could not save your Skin Profile. Please check that the backend is running and try again.");
-    } finally {
-      setIsSaving(false);
+      await loadHistory();
+      setStage("result");
+    } catch (analysisError) {
+      setError(analysisError.message || "Skin analysis is unavailable. Make sure all three services are running.");
+      setStage("review");
     }
   };
 
-  const handleNextAssessment = () => {
-    const status = getAssessmentStatus();
-    navigate(status.skinScanCompleted && doshaCompleted ? "/overall-result" : "/dosha-test");
-  };
-
-  const nextButtonText = doshaCompleted
-    ? "VIEW OVERALL RESULT"
-    : "CONTINUE TO DOSHA TEST";
-
-  if (isComplete) {
-    return (
-      <section className="skin-scan-section">
-        <section className="skin-scan-complete">
-          <span className="section-label">SKIN PROFILE COMPLETE</span>
-          <h2>Your skin profile is complete.</h2>
-          <p className="complete-intro">
-            Your usual skin type has been saved. Complete the Dosha Test so
-            AyurAI can prepare your combined result and matched home remedies.
-          </p>
-
-          <div className="assessment-status-grid">
-            <div className="assessment-status completed">
-              <div className="assessment-status-icon">✓</div>
-              <div className="assessment-status-content">
-                <span>01</span>
-                <strong>Skin Profile</strong>
-                <small>Completed</small>
-              </div>
-            </div>
-
-            <div className="assessment-connector"><span /></div>
-
-            <div className={`assessment-status ${doshaCompleted ? "completed" : "pending"}`}>
-              <div className="assessment-status-icon">{doshaCompleted ? "✓" : "02"}</div>
-              <div className="assessment-status-content">
-                <span>02</span>
-                <strong>Dosha Test</strong>
-                <small>{doshaCompleted ? "Completed" : "Still required"}</small>
-              </div>
-            </div>
-          </div>
-
-          <div className={`complete-message ${doshaCompleted ? "overall-ready" : ""}`}>
-            <span>✦</span>
-            <p>
-              <strong>{doshaCompleted ? "Both assessments are complete." : "One more step is required."}</strong>{" "}
-              {doshaCompleted
-                ? "Your personalized Overall Result is ready to view."
-                : "Complete your Dosha Test next to receive your combined result."}
-            </p>
-          </div>
-
-          <div className="complete-action">
-            <button type="button" className="continue-dosha-button" onClick={handleNextAssessment}>
-              {nextButtonText} →
-            </button>
-            <button
-              type="button"
-              className="another-photo-button"
-              onClick={() => {
-                setIsComplete(false);
-                setSelectedSkinType("");
-              }}
-            >
-              Update skin type
-            </button>
-          </div>
-        </section>
-      </section>
-    );
-  }
-
   return (
-    <section className="skin-scan-section">
-      <header className="scan-heading">
-        <span className="section-label">01 · SKIN PROFILE</span>
-        <h2>How does your skin usually feel?</h2>
-        <p>
-          Choose the answer that feels most true on most days. There is no
-          photo, scan, or perfect answer required.
-        </p>
+    <section className="skin-scan-section" aria-labelledby="skin-scan-title">
+      <header className="skin-scan-header">
+        <div>
+          <span className="skin-scan-eyebrow">AI-ASSISTED SKIN CHECK</span>
+          <h1 id="skin-scan-title">Understand what your skin <em>may be showing.</em></h1>
+          <p>Upload one clear, unfiltered photo. AyurAI will check for a small set of visible characteristics and provide educational guidance.</p>
+        </div>
+        <div className="scan-progress" aria-label="Skin scan progress">
+          <div className="progress-step active"><span>1</span><small>Photo</small></div><i />
+          <div className={`progress-step ${photo ? "active" : ""}`}><span>2</span><small>Review</small></div><i />
+          <div className={`progress-step ${stage === "result" ? "active" : ""}`}><span>3</span><small>Result</small></div>
+        </div>
       </header>
 
-      <section className="scan-container skin-profile-choice-card">
-        <div className="scan-info profile-choice-copy">
-          <span className="scan-number">A SIMPLE CHECK-IN</span>
-          <h3>Choose what feels familiar.</h3>
-          <p>
-            Think about your skin before makeup or skincare products. You can
-            update this choice later if your skin changes.
-          </p>
-
-          <div className="scan-features">
-            <span>✓ Takes less than a minute</span>
-            <span>✓ Your answer is combined with your Dosha Test</span>
-            <span>✓ Used only for gentle, educational recommendations</span>
-          </div>
-
-          <div className="scan-note">
-            <span>✦</span>
-            <p>
-              Skin type and Ayurvedic wellness patterns are different. This is
-              educational skincare guidance, not a medical diagnosis.
-            </p>
-          </div>
+      <div className="skin-scan-workspace">
+        <div className="photo-panel">
+          {stage === "analyzing" ? (
+            <div className="analysis-state" role="status">
+              <div className="analysis-orbit"><span /></div>
+              <span className="drop-kicker">PREPARING ANALYSIS</span>
+              <h2>Checking your photo.</h2>
+              <p>Confirming image quality and preparing it for the AyurAI model.</p>
+            </div>
+          ) : stage === "result" ? (
+            <div className="result-state">
+              <div className="result-symbol" aria-hidden="true">✦</div>
+              <span className="drop-kicker">{result?.status === "estimated" ? "ESTIMATED RESULT" : "UNCERTAIN RESULT"}</span>
+              <h2>{result?.estimatedCategory ? `${result.estimatedCategory} acne-like appearance` : "A reliable estimate was not possible"}</h2>
+              <p>{result?.message}</p>
+              <div className="future-result-grid">
+                <div><small>ESTIMATED CATEGORY</small><strong>{result?.estimatedCategory || "Uncertain"}</strong></div>
+                <div><small>MODEL SCORE</small><strong>{result?.modelScore == null ? "Not available" : `${Math.round(result.modelScore * 100)}%`}</strong></div>
+              </div>
+              <p>{result?.disclaimer}</p>
+              <button type="button" className="retake-button" onClick={removePhoto}>Use another photo</button>
+            </div>
+          ) : !previewUrl ? (
+            <div className="photo-drop-zone" onDragOver={(event) => event.preventDefault()} onDrop={(event) => { event.preventDefault(); choosePhoto(event.dataTransfer.files?.[0]); }}>
+              <div className="camera-mark" aria-hidden="true"><span /></div>
+              <span className="drop-kicker">ADD YOUR PHOTO</span>
+              <h2>Face the camera in natural light.</h2>
+              <p>Use a front-facing photo without makeup, filters, or harsh shadows.</p>
+              <button type="button" onClick={() => inputRef.current?.click()}>Choose photo</button>
+              <small>JPG, PNG or WebP · Maximum 5 MB</small>
+            </div>
+          ) : (
+            <div className="photo-preview">
+              <img src={previewUrl} alt="Selected skin scan preview" />
+              <div className="preview-bar"><div><span>PHOTO READY</span><strong>{photo.name}</strong></div><button type="button" onClick={removePhoto}>Change</button></div>
+            </div>
+          )}
+          <input ref={inputRef} className="visually-hidden-file" type="file" accept="image/jpeg,image/png,image/webp" capture="user" onChange={(event) => choosePhoto(event.target.files?.[0])} />
         </div>
 
-        <div className="skin-type-picker">
-          <div className="skin-type-picker-heading">
-            <span>YOUR USUAL SKIN TYPE</span>
-            <p>Select one option.</p>
-          </div>
+        <aside className="scan-guidance">
+          <span className="guidance-label">BEFORE YOU SCAN</span>
+          <h2>A better photo gives a more reliable result.</h2>
+          <ul className="photo-checklist">
+            <li><span>01</span><div><strong>Natural light</strong><p>Stand near a window and avoid strong yellow or blue lighting.</p></div></li>
+            <li><span>02</span><div><strong>Clear, bare skin</strong><p>Remove makeup, glasses, and beauty filters before taking the photo.</p></div></li>
+            <li><span>03</span><div><strong>Look straight ahead</strong><p>Keep your face centered, close enough, and fully visible.</p></div></li>
+          </ul>
+          <div className="privacy-note"><span aria-hidden="true">✦</span><p><strong>Your privacy matters.</strong> The final system should process only the image needed for your result and avoid permanent storage unless you agree.</p></div>
+          {error && <p className="scan-message error" role="alert">{error}</p>}
+          {notice && <p className="scan-message notice" role="status">{notice}</p>}
+          {stage !== "result" && (
+            <button type="button" className="analyze-button" disabled={!photo || stage === "analyzing"} onClick={handleAnalyze}>{stage === "analyzing" ? "Preparing scan..." : photo ? "Analyze my photo" : "Add a photo to continue"}<span aria-hidden="true">→</span></button>
+          )}
+          <p className="medical-disclaimer">AyurAI does not diagnose medical conditions. Seek professional care for painful, changing, persistent, or worrying symptoms.</p>
+        </aside>
+      </div>
 
-          <div className="skin-type-choice-grid" role="group" aria-label="Usual skin type">
-            {SKIN_TYPES.map((skinType) => (
-              <button
-                key={skinType.value}
-                type="button"
-                className={selectedSkinType === skinType.value ? "selected" : ""}
-                onClick={() => {
-                  setSelectedSkinType(skinType.value);
-                  setError("");
-                }}
-                aria-pressed={selectedSkinType === skinType.value}
-              >
-                <strong>{skinType.label}</strong>
-                <span>{skinType.description}</span>
-              </button>
+      <section className="scan-history" aria-labelledby="scan-history-title">
+        <div className="scan-history-heading">
+          <div><span className="skin-scan-eyebrow">YOUR PROGRESS</span><h2 id="scan-history-title">Recent Skin Scans</h2></div>
+          <p>Your photos are not stored. Only the educational result and scan date appear here.</p>
+        </div>
+        {historyLoading ? (
+          <p className="history-empty">Loading your scan history…</p>
+        ) : historyError ? (
+          <p className="scan-message error" role="alert">{historyError}</p>
+        ) : history.length === 0 ? (
+          <p className="history-empty">Your completed scans will appear here.</p>
+        ) : (
+          <div className="history-list">
+            {history.slice(0, 6).map((scan) => (
+              <article className="history-card" key={scan.id}>
+                <div><small>{new Date(scan.createdAt).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" })}</small><strong>{scan.estimatedSkinType || "Uncertain"}</strong></div>
+                <span>{(scan.analysisStatus || "completed").toLowerCase()}</span>
+                <p>{scan.visibleCharacteristics || "Educational skin scan completed."}</p>
+              </article>
             ))}
           </div>
-
-          {error && <p className="skin-profile-error">{error}</p>}
-
-          <button
-            type="button"
-            className="save-skin-profile-button"
-            onClick={handleSave}
-            disabled={isSaving}
-          >
-            {isSaving
-              ? "SAVING YOUR PROFILE..."
-              : selectedSkinType
-                ? `CONTINUE WITH ${selectedSkinType.toUpperCase()} SKIN →`
-                : "CHOOSE YOUR SKIN TYPE TO CONTINUE"}
-          </button>
-        </div>
+        )}
       </section>
     </section>
   );

@@ -79,5 +79,6 @@ export const clearCurrentUser = () => {
 
   localStorage.removeItem(USER_KEY);
   localStorage.removeItem("ayuraiUserId");
+  localStorage.removeItem("ayuraiToken");
 
 };

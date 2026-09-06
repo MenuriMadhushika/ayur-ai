@@ -6,11 +6,11 @@ const steps = [
   {
     number: "01",
     icon: "💆‍♀️",
-    title: "Skin Profile",
+    title: "Skin Scan",
     description:
       "Choose the skin type that best describes how your skin feels on most days.",
     action: "/skin-scan",
-    button: "Start Skin Profile",
+    button: "Start Skin Scan",
   },
   {
     number: "02",

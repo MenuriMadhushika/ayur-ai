@@ -1,4 +1,3 @@
-```jsx
 import React, { useMemo, useState } from "react";
 import "./HomeRemedy.css";
 
@@ -717,4 +716,3 @@ function HomeRemedy() {
 }
 
 export default HomeRemedy;
-```

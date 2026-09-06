@@ -44,7 +44,7 @@ function Home() {
 
           <p>
             Start with what you already know about your skin. AyurAI then
-            combines your Skin Profile and Ayurvedic wellness pattern to
+            combines your Skin Scan and Ayurvedic wellness pattern to
             suggest gentle, educational home-care ideas.
           </p>
 
@@ -61,7 +61,7 @@ function Home() {
               <span className="feature-number">02</span>
               <h3>Personal</h3>
               <p>
-                See your Skin Profile and wellness pattern together.
+                See your Skin Scan and wellness pattern together.
               </p>
             </div>
 
@@ -79,7 +79,7 @@ function Home() {
             className="home-final-action"
             onClick={() => navigate("/skin-scan")}
           >
-            Start your Skin Profile <span>→</span>
+            Start your Skin Scan <span>→</span>
           </button>
         </div>
       </section>
@@ -89,7 +89,7 @@ function Home() {
           <span className="section-label">GENTLE HOME REMEDIES</span>
           <h2>A few calm rituals to explore.</h2>
           <p>
-            These are simple examples. After your Skin Profile and Dosha Test,
+            These are simple examples. After your Skin Scan and Dosha Test,
             AyurAI highlights ideas that better match your personal result.
           </p>
         </div>
@@ -224,8 +224,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
-        <Route path="/care-plan" element={<Navigate to="/home-remedies" replace />} />
 
         <Route
           element={
