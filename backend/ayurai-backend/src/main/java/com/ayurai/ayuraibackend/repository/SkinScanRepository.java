@@ -11,6 +11,9 @@ public interface SkinScanRepository
         extends JpaRepository<SkinScan, Long> {
 
     // Get all skin scans belonging to a user
+    List<SkinScan> findByUserOrderByCreatedAtDesc(User user);
+
+    // Retained for administrative summaries that do not require display ordering.
     List<SkinScan> findByUser(User user);
 
     // Get the latest skin scan belonging to a user
