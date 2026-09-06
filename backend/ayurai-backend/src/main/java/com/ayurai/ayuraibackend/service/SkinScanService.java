@@ -99,7 +99,7 @@ public class SkinScanService {
                         new RuntimeException("User not found"));
 
         return skinScanRepository
-                .findByUser(user)
+                .findByUserOrderByCreatedAtDesc(user)
                 .stream()
                 .map(this::convertToResponse)
                 .toList();
