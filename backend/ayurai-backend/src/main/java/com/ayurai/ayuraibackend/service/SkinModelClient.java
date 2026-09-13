@@ -1,6 +1,7 @@
 package com.ayurai.ayuraibackend.service;
 
 import com.ayurai.ayuraibackend.dto.SkinModelPrediction;
+import com.ayurai.ayuraibackend.exception.SkinModelUnavailableException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpEntity;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient;
+import org.springframework.web.client.RestClientException;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -52,6 +54,9 @@ public class SkinModelClient {
             return prediction;
         } catch (IOException error) {
             throw new IllegalArgumentException("Unable to read the uploaded image", error);
+        } catch (RestClientException error) {
+            throw new SkinModelUnavailableException(
+                    "Skin analysis is temporarily unavailable. Please try again shortly.", error);
         }
     }
 }
