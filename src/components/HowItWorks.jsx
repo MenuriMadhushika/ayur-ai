@@ -8,7 +8,7 @@ const steps = [
     icon: "💆‍♀️",
     title: "Skin Scan",
     description:
-      "Choose the skin type that best describes how your skin feels on most days.",
+      "Upload a clear face photo for an educational acne-severity estimate.",
     action: "/skin-scan",
     button: "Start Skin Scan",
   },

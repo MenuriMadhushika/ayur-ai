@@ -4,7 +4,10 @@ import "./OverallResult.css";
 
 import { createOverallResult } from "../utils/api";
 import { getCurrentUserId } from "../utils/userSession";
-import { formatSkinType } from "../utils/skinTypeInfo";
+import {
+  formatAcneSeverity,
+  isHigherAcneSeverity,
+} from "../utils/acneSeverityInfo";
 import { getAssessmentStatus } from "../utils/assessmentStatus";
 import { getPrimaryDosha, isMixedDosha } from "../utils/doshaInfo";
 
@@ -108,9 +111,7 @@ const OverallResult = () => {
   const primaryDosha = getPrimaryDosha(dominantDosha) || "Balance";
   const theme = primaryDosha.toLowerCase();
   const blendedPattern = isMixedDosha(dominantDosha);
-  const sensitiveSkin = String(result.estimatedSkinType || "")
-    .toLowerCase()
-    .includes("sensitive");
+  const higherSeverity = isHigherAcneSeverity(result.estimatedSkinType);
 
   const scores = [
     {
@@ -174,18 +175,18 @@ const OverallResult = () => {
           <h2>Your skin scan</h2>
 
           <div className="skin-detail">
-            <span>Your skin type</span>
+            <span>Estimated acne-like severity</span>
             <strong>
-              {formatSkinType(result.estimatedSkinType)}
+              {formatAcneSeverity(result.estimatedSkinType)}
             </strong>
           </div>
 
           <div className="skin-detail">
             <span>Your care priority</span>
             <strong>
-              {sensitiveSkin
-                ? "Keep routines minimal, soothing, and patch-test first."
-                : "Choose simple, consistent care and notice how your skin feels."}
+              {higherSeverity
+                ? "Consider advice from a qualified healthcare professional."
+                : "Keep care gentle, simple, and non-comedogenic."}
             </strong>
           </div>
 
@@ -272,7 +273,7 @@ const OverallResult = () => {
           className="overall-primary-action"
           onClick={() => navigate("/home-remedies")}
         >
-          VIEW RECOMMENDED REMEDIES <span>→</span>
+          EXPLORE GENERAL WELLNESS IDEAS <span>→</span>
         </button>
 
         <button

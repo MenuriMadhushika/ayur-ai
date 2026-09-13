@@ -53,7 +53,7 @@ function Home() {
               <span className="feature-number">01</span>
               <h3>Clear</h3>
                 <p>
-                  Understand your usual skin type without complicated terms.
+                  See an educational estimate of acne-like severity.
                 </p>
             </div>
 
@@ -69,7 +69,7 @@ function Home() {
               <span className="feature-number">03</span>
               <h3>Gentle</h3>
               <p>
-                Explore home remedies chosen for your personal result.
+                Explore general wellness ideas separately from the AI result.
               </p>
             </div>
           </div>
@@ -90,7 +90,7 @@ function Home() {
           <h2>A few calm rituals to explore.</h2>
           <p>
             These are simple examples. After your Skin Scan and Dosha Test,
-            AyurAI highlights ideas that better match your personal result.
+            explore these optional general wellness ideas separately.
           </p>
         </div>
 

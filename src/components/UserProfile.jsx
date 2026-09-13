@@ -9,7 +9,7 @@ import API_BASE_URL, {
   getAuthenticatedJsonHeaders,
 } from "../utils/api";
 import { getDoshaInfo } from "../utils/doshaInfo";
-import { formatSkinType } from "../utils/skinTypeInfo";
+import { formatAcneSeverity } from "../utils/acneSeverityInfo";
 
 /* =========================================================
    AYURAI — USER PROFILE
@@ -477,17 +477,10 @@ const UserProfile = () => {
   const kapha = Number(percentages.Kapha) || 0;
   const totalPercentage = vata + pitta + kapha;
 
-  const skinType = skinScanResult?.skinType
-    ? formatSkinType(skinScanResult.skinType)
+  const acneSeverity = skinScanResult?.skinType
+    ? formatAcneSeverity(skinScanResult.skinType)
     : "Not analyzed";
   const concern = cleanValue(skinScanResult?.texture);
-
-  const hydration =
-    skinScanResult?.hydration !== null &&
-    skinScanResult?.hydration !== undefined &&
-    skinScanResult?.hydration !== ""
-      ? `${skinScanResult.hydration}%`
-      : "Not available";
 
   const skinCompleted = Boolean(
     assessmentStatus?.skinScanCompleted || skinScanResult?.completed
@@ -526,7 +519,7 @@ const UserProfile = () => {
         </h1>
 
         <p>
-          Keep your skin scan, Dosha result, and personalized care journey
+          Keep your AI Skin Scan and separate Dosha wellness result
           in one calm place.
         </p>
       </header>
@@ -713,21 +706,15 @@ const UserProfile = () => {
           </article>
 
           <article className="profile-stat skin-stat">
-            <span>YOUR SKIN TYPE</span>
-            <strong>{skinType}</strong>
-            <small>Selected in your skin scan</small>
-          </article>
-
-          <article className="profile-stat hydration-stat">
-            <span>HYDRATION</span>
-            <strong>{hydration}</strong>
-            <small>Available when recorded in your profile</small>
+            <span>ACNE-LIKE SEVERITY</span>
+            <strong>{acneSeverity}</strong>
+            <small>Estimated by the AI Skin Scan</small>
           </article>
 
           <article className="profile-stat concern-stat">
             <span>SKIN OBSERVATION</span>
             <strong>{concern}</strong>
-            <small>Saved with your skin-type check-in</small>
+            <small>Saved with your latest AI Skin Scan</small>
           </article>
         </div>
       </section>
@@ -742,7 +729,7 @@ const UserProfile = () => {
           <h2>Your Dosha Result</h2>
           <p>
             Vata, Pitta, and Kapha are Ayurvedic wellness patterns. They are
-            considered separately from your skin type.
+            considered separately from your AI Skin Scan.
           </p>
         </div>
 
@@ -822,8 +809,8 @@ const UserProfile = () => {
           <div className="analysis-symbol">✦</div>
 
           <div className="latest-analysis-content">
-            <span>SKIN-TYPE CHECK-IN</span>
-            <h3>{skinType}</h3>
+            <span>AI ACNE-SEVERITY ESTIMATE</span>
+            <h3>{acneSeverity}</h3>
             <p>
               {concern} · {dominantLabel}
             </p>
@@ -845,10 +832,10 @@ const UserProfile = () => {
 
       <section className="profile-section">
         <div className="profile-section-heading">
-          <span>04 · PERSONALIZED CARE</span>
-          <h2>Personalized Care</h2>
+          <span>04 · WELLNESS LIBRARY</span>
+          <h2>Optional Wellness Ideas</h2>
           <p>
-            Gentle self-care ideas based on your skin type and Ayurvedic wellness pattern.
+            General self-care ideas kept separate from your acne-severity estimate.
           </p>
         </div>
 
@@ -857,10 +844,9 @@ const UserProfile = () => {
             <span className="profile-care-icon">✦</span>
             <div>
               <span>YOUR COMBINED RESULT IS READY</span>
-              <h3>See remedies matched to both results.</h3>
+              <h3>Explore general wellness ideas.</h3>
               <p>
-                Explore gentle home remedies selected for your skin scan
-                and Ayurvedic wellness pattern.
+                Browse optional ideas associated with your Ayurvedic wellness pattern.
               </p>
             </div>
 
@@ -948,7 +934,7 @@ const UserProfile = () => {
               <div className="history-info">
                 <h3>Skin Scan</h3>
                 <p>
-                  {skinType} · {concern}
+                  {acneSeverity} · {concern}
                 </p>
               </div>
 
@@ -966,9 +952,9 @@ const UserProfile = () => {
       </section>
 
       <p className="analysis-disclaimer">
-        AyurAI provides an educational skin-type check-in and Ayurvedic
-        wellness guidance. It does not diagnose, treat, or prevent medical
-        conditions.
+        AyurAI provides an educational acne-like severity estimate and separate
+        Ayurvedic wellness guidance. It does not diagnose, treat, or prevent
+        medical conditions.
       </p>
     </section>
   );

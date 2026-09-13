@@ -3,15 +3,13 @@ import "./HomeRemedy.css";
 import {
   getAssessmentStatus,
   getDoshaResult,
-  getSkinScanResult,
   getCurrentUserId,
 } from "../utils/assessmentStatus";
 import { getDoshaInfo, getPrimaryDosha } from "../utils/doshaInfo";
 import {
   getAllHomeRemedies,
+  getHomeRemediesByDosha,
   getLatestDoshaAssessment,
-  getLatestSkinScan,
-  getPersonalizedHomeRemedies,
 } from "../utils/api";
 
 /* =========================================================
@@ -212,7 +210,6 @@ const mapApiRemedy = (remedy) => {
 const HomeRemedy = () => {
   const [assessment, setAssessment] = useState({});
   const [doshaResult, setDoshaResult] = useState({});
-  const [skinScanResult, setSkinScanResult] = useState({});
   const [remedies, setRemedies] = useState(FALLBACK_REMEDIES);
   const [remedyError, setRemedyError] = useState("");
   const [activeConcern, setActiveConcern] = useState("All");
@@ -230,15 +227,13 @@ const HomeRemedy = () => {
     const loadResults = async () => {
       setAssessment(getAssessmentStatus() || {});
       setDoshaResult(getDoshaResult() || {});
-      setSkinScanResult(getSkinScanResult() || {});
 
       // Load the latest saved assessments as well. This keeps recommendations
       // available after a refresh, a new login, or a different device.
       if (!userId) return;
 
-      const [doshaResponse, skinResponse] = await Promise.allSettled([
+      const [doshaResponse] = await Promise.allSettled([
         getLatestDoshaAssessment(userId),
-        getLatestSkinScan(userId),
       ]);
 
       if (doshaResponse.status === "fulfilled") {
@@ -248,16 +243,6 @@ const HomeRemedy = () => {
         });
       }
 
-      if (skinResponse.status === "fulfilled") {
-        setSkinScanResult({
-          ...skinResponse.value,
-          skinType:
-            skinResponse.value.estimatedSkinType ||
-            skinResponse.value.skinType ||
-            "",
-          completed: true,
-        });
-      }
     };
 
     loadResults().catch(() => {
@@ -324,34 +309,19 @@ const HomeRemedy = () => {
   const dominantInfo = getDoshaInfo(dominantDosha);
   const primaryDosha = getPrimaryDosha(dominantDosha);
 
-  const currentSkinType =
-    assessment?.skinScanResult?.skinType ||
-    assessment?.skinType ||
-    skinScanResult?.skinType ||
-    skinScanResult?.estimatedSkinType ||
-    null;
-
-  const normalizedSkinType = String(currentSkinType || "")
-    .replace(/^AI-estimated\s*/i, "")
-    .trim()
-    .toLowerCase();
-
-  // The highlighted ritual comes from the backend after both assessments
-  // are saved, so the user sees the same recommendation on every device.
+  // Home remedies are optional wellness content. They are matched only to
+  // the separate Dosha questionnaire, never to the acne model output.
   useEffect(() => {
     let cancelled = false;
 
     const loadBackendRecommendation = async () => {
-      if (!primaryDosha || !normalizedSkinType) {
+      if (!primaryDosha) {
         setBackendRecommendation(null);
         return;
       }
 
       try {
-        const response = await getPersonalizedHomeRemedies(
-          primaryDosha,
-          normalizedSkinType
-        );
+        const response = await getHomeRemediesByDosha(primaryDosha);
 
         if (!cancelled) {
           setBackendRecommendation(
@@ -370,9 +340,9 @@ const HomeRemedy = () => {
     return () => {
       cancelled = true;
     };
-  }, [primaryDosha, normalizedSkinType]);
+  }, [primaryDosha]);
 
-  /* Prefer a remedy matching both the user's wellness pattern and skin type. */
+  /* Prefer a general wellness idea matching the user's Dosha pattern. */
   const recommendedRemedy = useMemo(() => {
     if (!primaryDosha) return null;
 
@@ -381,25 +351,8 @@ const HomeRemedy = () => {
     }
 
     const matchesPattern = (remedy) => remedy.dosha === primaryDosha;
-    const matchesSkinType = (remedy) => {
-      const remedySkinType = String(remedy.skinType || "")
-        .trim()
-        .toLowerCase();
-
-      return (
-        !normalizedSkinType ||
-        !remedySkinType ||
-        remedySkinType === "all" ||
-        remedySkinType === normalizedSkinType
-      );
-    };
-
-    return (
-      remedies.find(
-        (remedy) => matchesPattern(remedy) && matchesSkinType(remedy)
-      ) || remedies.find(matchesPattern) || null
-    );
-  }, [backendRecommendation, normalizedSkinType, primaryDosha, remedies]);
+    return remedies.find(matchesPattern) || null;
+  }, [backendRecommendation, primaryDosha, remedies]);
 
   const filteredRemedies = useMemo(() => {
     const search = searchText.toLowerCase().trim();
@@ -471,8 +424,8 @@ const HomeRemedy = () => {
             <strong>{recommendedRemedy.title}</strong>
 
             <p>
-              Recommended because it supports your {currentSkinType || "current"}{" "}
-              skin type and {dominantInfo.label.toLowerCase()}.
+              Suggested as optional wellness content for your{" "}
+              {dominantInfo.label.toLowerCase()} pattern. It is not an acne treatment.
             </p>
           </div>
 
