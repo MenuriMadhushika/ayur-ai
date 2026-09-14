@@ -141,14 +141,6 @@ const formatDate = (value) => {
   };
 };
 
-const cleanValue = (value, fallback = "Not analyzed") => {
-  if (value === null || value === undefined || value === "") {
-    return fallback;
-  }
-
-  return String(value);
-};
-
 /* =========================================================
    COMPONENT
 ========================================================= */
@@ -480,8 +472,6 @@ const UserProfile = () => {
   const acneSeverity = skinScanResult?.skinType
     ? formatAcneSeverity(skinScanResult.skinType)
     : "Not analyzed";
-  const concern = cleanValue(skinScanResult?.texture);
-
   const skinCompleted = Boolean(
     assessmentStatus?.skinScanCompleted || skinScanResult?.completed
   );
@@ -496,11 +486,7 @@ const UserProfile = () => {
     profileIcons.find((item) => item.id === user.icon) ||
     profileIcons[0];
 
-  const assessmentsReady = skinCompleted && doshaCompleted;
-  const nextAssessmentPath = skinCompleted ? "/dosha-test" : "/skin-scan";
-  const nextAssessmentLabel = skinCompleted
-    ? "Complete Dosha Test"
-    : "Complete Skin Scan";
+  const wellnessIdeasReady = doshaCompleted;
 
   const doshaDate = formatDate(doshaResult?.completedAt);
   const skinDate = formatDate(skinScanResult?.completedAt);
@@ -691,7 +677,7 @@ const UserProfile = () => {
       <section className="profile-section">
         <div className="profile-section-heading">
           <span>01 · YOUR INSIGHTS</span>
-          <h2>Understand Your Skin</h2>
+          <h2>Your Results at a Glance</h2>
         </div>
 
         <div className="profile-stats">
@@ -701,7 +687,7 @@ const UserProfile = () => {
             <small>
               {dominantDosha
                 ? dominantInfo.shortLabel
-                : "Complete the Skin Balance Assessment"}
+                : "Complete the Dosha Test"}
             </small>
           </article>
 
@@ -711,11 +697,6 @@ const UserProfile = () => {
             <small>Estimated by the AI Skin Scan</small>
           </article>
 
-          <article className="profile-stat concern-stat">
-            <span>SKIN OBSERVATION</span>
-            <strong>{concern}</strong>
-            <small>Saved with your latest AI Skin Scan</small>
-          </article>
         </div>
       </section>
 
@@ -811,9 +792,7 @@ const UserProfile = () => {
           <div className="latest-analysis-content">
             <span>AI ACNE-SEVERITY ESTIMATE</span>
             <h3>{acneSeverity}</h3>
-            <p>
-              {concern} · {dominantLabel}
-            </p>
+            <p>{skinCompleted ? `Completed ${skinDate.day} ${skinDate.month}` : "No Skin Scan completed"}</p>
           </div>
 
           <button
@@ -839,11 +818,11 @@ const UserProfile = () => {
           </p>
         </div>
 
-        {assessmentsReady ? (
+        {wellnessIdeasReady ? (
           <div className="profile-care-decision profile-care-ready">
             <span className="profile-care-icon">✦</span>
             <div>
-              <span>YOUR COMBINED RESULT IS READY</span>
+              <span>YOUR WELLNESS PATTERN IS READY</span>
               <h3>Explore general wellness ideas.</h3>
               <p>
                 Browse optional ideas associated with your Ayurvedic wellness pattern.
@@ -851,7 +830,7 @@ const UserProfile = () => {
             </div>
 
             <button type="button" onClick={() => navigate("/home-remedies")}>
-              View Recommended Remedies →
+              Explore Wellness Ideas →
             </button>
           </div>
         ) : (
@@ -859,15 +838,15 @@ const UserProfile = () => {
             <span className="profile-care-icon">◌</span>
             <div>
               <span>ONE STEP AT A TIME</span>
-              <h3>Complete both assessments for recommendations.</h3>
+              <h3>Complete the Dosha Test to see suggested ideas.</h3>
               <p>
-                AyurAI recommends home-care rituals only after it has both
-                your skin scan and your Ayurvedic wellness pattern.
+                Wellness ideas are associated only with your Ayurvedic
+                questionnaire result, never with the acne model.
               </p>
             </div>
 
-            <button type="button" onClick={() => navigate(nextAssessmentPath)}>
-              {nextAssessmentLabel} →
+            <button type="button" onClick={() => navigate("/dosha-test")}>
+              Complete Dosha Test →
             </button>
           </div>
         )}
@@ -916,7 +895,7 @@ const UserProfile = () => {
               </div>
 
               <div className="history-info">
-                <h3>Skin Balance Assessment</h3>
+                <h3>Dosha Test</h3>
                 <p>Primary Ayurvedic pattern · {dominantLabel}</p>
               </div>
 
@@ -934,7 +913,7 @@ const UserProfile = () => {
               <div className="history-info">
                 <h3>Skin Scan</h3>
                 <p>
-                  {acneSeverity} · {concern}
+                  Acne-like severity · {acneSeverity}
                 </p>
               </div>
 

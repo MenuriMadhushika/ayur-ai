@@ -43,9 +43,9 @@ function Home() {
           <h2>Simple guidance for your skin journey.</h2>
 
           <p>
-            Start with what you already know about your skin. AyurAI then
-            combines your Skin Scan and Ayurvedic wellness pattern to
-            suggest gentle, educational home-care ideas.
+            Use the Skin Scan for an educational acne-like severity estimate.
+            Separately, use the Dosha Test to explore general Ayurvedic
+            wellness ideas.
           </p>
 
           <div className="feature-row">
@@ -61,7 +61,7 @@ function Home() {
               <span className="feature-number">02</span>
               <h3>Personal</h3>
               <p>
-                See your Skin Scan and wellness pattern together.
+                Keep both independent results in one clear profile.
               </p>
             </div>
 
@@ -89,8 +89,8 @@ function Home() {
           <span className="section-label">GENTLE HOME REMEDIES</span>
           <h2>A few calm rituals to explore.</h2>
           <p>
-            These are simple examples. After your Skin Scan and Dosha Test,
-            explore these optional general wellness ideas separately.
+            These are simple examples you can browse at any time. Your Dosha
+            Test may highlight an optional wellness idea separately.
           </p>
         </div>
 

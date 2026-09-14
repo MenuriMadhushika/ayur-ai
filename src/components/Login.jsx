@@ -134,6 +134,9 @@ function Login() {
   return (
     <main className="login-page">
       <div className="login-card">
+        <Link className="auth-wordmark" to="/" aria-label="AyurAI home">
+          <span>Ayur</span><em>AI</em>
+        </Link>
         <div className="login-header">
           <span className="login-label">
             WELCOME BACK
@@ -144,8 +147,7 @@ function Login() {
           </h1>
 
           <p>
-            Continue your personalized Ayurvedic
-            skincare journey.
+            Continue your Skin Scan and Ayurvedic wellness journey.
           </p>
         </div>
 

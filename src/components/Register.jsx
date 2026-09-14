@@ -149,21 +149,9 @@ function Register() {
 
         {/* BRAND */}
 
-        <div className="auth-brand">
-
-          <span className="auth-brand-mark">
-            ✦
-          </span>
-
-          <span className="auth-brand-name">
-            AYURAI
-          </span>
-
-          <span className="auth-brand-subtitle">
-            AYURVEDIC INTELLIGENCE
-          </span>
-
-        </div>
+        <Link className="auth-wordmark" to="/" aria-label="AyurAI home">
+          <span>Ayur</span><em>AI</em>
+        </Link>
 
         {/* HEADER */}
 
@@ -179,8 +167,8 @@ function Register() {
           </h1>
 
           <p>
-            Begin your personalized Ayurvedic skincare
-            and wellness journey.
+            Create one secure place for your Skin Scan and separate
+            Ayurvedic wellness results.
           </p>
 
         </div>
@@ -320,9 +308,8 @@ function Register() {
         {/* DISCLAIMER */}
 
         <p className="auth-disclaimer">
-          AyurAI provides AI-estimated visual observations
-          and educational Ayurvedic guidance. It is not a
-          medical diagnosis.
+          AyurAI provides an educational acne-like severity estimate and
+          separate Ayurvedic wellness guidance. It is not a medical diagnosis.
         </p>
 
       </section>

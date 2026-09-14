@@ -63,7 +63,7 @@ const OverallResult = () => {
       <main className="overall-page">
         <div className="overall-loading">
           <span>AYURAI</span>
-          <p>Creating your personalized result...</p>
+          <p>Loading your results...</p>
         </div>
       </main>
     );
@@ -83,7 +83,7 @@ const OverallResult = () => {
           </h1>
           <p>
             {hasMissingStep
-              ? `Complete your ${missingSkinProfile ? "Skin Scan" : "Dosha Test"} to see your combined result and matched home remedies.`
+              ? `Complete your ${missingSkinProfile ? "Skin Scan" : "Dosha Test"} to review both independent results in one place.`
               : error}
           </p>
 
@@ -135,7 +135,7 @@ const OverallResult = () => {
     <main className={`overall-page theme-${theme}`}>
       <section className="overall-hero">
         <span className="overall-eyebrow">
-          YOUR PERSONALIZED RESULT
+          YOUR RESULTS
         </span>
 
         <div className="dosha-orb">
@@ -148,8 +148,9 @@ const OverallResult = () => {
         </h1>
 
         <p className="overall-hero-text">
-          {result.summary ||
-            "Your Skin Scan and Dosha Test have been combined into one personalized wellness result. Explore suitable home remedies next."}
+          Your AI Skin Scan and Ayurvedic questionnaire results are shown
+          together for convenience. They are produced independently and are
+          not medically correlated.
         </p>
 
         <div className="score-chips">

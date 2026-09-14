@@ -29,6 +29,13 @@ const STORAGE_KEYS = {
   skinScanCompleted: "ayuraiSkinScanCompleted",
 };
 
+// Assessment cache entries must belong to one account. Using the user ID in
+// every key prevents a new login from reading the previous user's results.
+const getUserScopedKey = (key) => {
+  const userId = localStorage.getItem(STORAGE_KEYS.userId);
+  return `${key}:${userId || "anonymous"}`;
+};
+
 
 /* =========================================================
    SAFE JSON PARSER
@@ -36,7 +43,7 @@ const STORAGE_KEYS = {
 
 const readJSON = (key) => {
   try {
-    const saved = localStorage.getItem(key);
+    const saved = localStorage.getItem(getUserScopedKey(key));
 
     if (!saved) {
       return null;
@@ -65,7 +72,7 @@ const writeJSON = (key, value) => {
   try {
 
     localStorage.setItem(
-      key,
+      getUserScopedKey(key),
       JSON.stringify(value)
     );
 
@@ -209,7 +216,7 @@ const saveBooleanFlag = (key, value) => {
   try {
 
     localStorage.setItem(
-      key,
+      getUserScopedKey(key),
       value ? "true" : "false"
     );
 
@@ -236,7 +243,7 @@ const readBooleanFlag = (key) => {
   try {
 
     return (
-      localStorage.getItem(key) === "true"
+      localStorage.getItem(getUserScopedKey(key)) === "true"
     );
 
   } catch {
@@ -338,11 +345,11 @@ export const clearDoshaResult = () => {
   try {
 
     localStorage.removeItem(
-      STORAGE_KEYS.doshaResult
+      getUserScopedKey(STORAGE_KEYS.doshaResult)
     );
 
     localStorage.removeItem(
-      STORAGE_KEYS.doshaCompleted
+      getUserScopedKey(STORAGE_KEYS.doshaCompleted)
     );
 
     notifyAssessmentUpdated();
@@ -431,11 +438,11 @@ export const clearSkinScanResult = () => {
   try {
 
     localStorage.removeItem(
-      STORAGE_KEYS.skinScanResult
+      getUserScopedKey(STORAGE_KEYS.skinScanResult)
     );
 
     localStorage.removeItem(
-      STORAGE_KEYS.skinScanCompleted
+      getUserScopedKey(STORAGE_KEYS.skinScanCompleted)
     );
 
     notifyAssessmentUpdated();
@@ -557,19 +564,19 @@ export const clearAllAssessmentResults = () => {
   try {
 
     localStorage.removeItem(
-      STORAGE_KEYS.doshaResult
+      getUserScopedKey(STORAGE_KEYS.doshaResult)
     );
 
     localStorage.removeItem(
-      STORAGE_KEYS.skinScanResult
+      getUserScopedKey(STORAGE_KEYS.skinScanResult)
     );
 
     localStorage.removeItem(
-      STORAGE_KEYS.doshaCompleted
+      getUserScopedKey(STORAGE_KEYS.doshaCompleted)
     );
 
     localStorage.removeItem(
-      STORAGE_KEYS.skinScanCompleted
+      getUserScopedKey(STORAGE_KEYS.skinScanCompleted)
     );
 
     notifyAssessmentUpdated();

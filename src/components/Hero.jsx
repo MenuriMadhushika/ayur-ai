@@ -159,7 +159,7 @@ const Hero = () => {
           </div>
 
           <div className="floating-label floating-label-bottom">
-            <span className="floating-icon">✦</span>
+            <span className="floating-icon">🫚</span>
             <div>
               <small>AYURVEDA</small>
               <strong>Natural Balance</strong>

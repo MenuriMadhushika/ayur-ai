@@ -443,7 +443,7 @@ function AdminDashboard({ view = "dashboard" }) {
       label: "Overall results",
       value: dashboard?.totalOverallResults,
       description:
-        "Combined skin scan and Dosha results.",
+        "Independent Skin Scan and Dosha results shown together.",
       color: "admin-card-green",
       action: () => navigate("/admin/assessments"),
       actionText: "View assessments →",
@@ -467,7 +467,7 @@ function AdminDashboard({ view = "dashboard" }) {
     },
     overall: {
       eyebrow: "OVERALL RESULT INSIGHTS",
-      title: "Personalized results created",
+      title: "Result summaries created",
       description:
         "A result is created only after both the Skin Scan and Dosha Test are complete.",
       counts: {
@@ -601,7 +601,7 @@ function AdminDashboard({ view = "dashboard" }) {
               </article>
               <article className="admin-insights-panel admin-overall-insight">
                 <p>OVERALL RESULT INSIGHTS</p>
-                <h2>Personalized results created</h2>
+                <h2>Result summaries created</h2>
                 <span>Created after a user completes both required assessments.</span>
                 <strong className="admin-insight-total">{insights?.totalOverallResults ?? dashboard?.totalOverallResults ?? 0}</strong>
               </article>
