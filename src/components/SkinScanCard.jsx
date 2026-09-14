@@ -18,6 +18,7 @@ const SkinScanCard = () => {
   const [history, setHistory] = useState([]);
   const [historyLoading, setHistoryLoading] = useState(true);
   const [historyError, setHistoryError] = useState("");
+  const [consent, setConsent] = useState(false);
 
   const loadHistory = async () => {
     const userId = getCurrentUserId();
@@ -62,21 +63,24 @@ const SkinScanCard = () => {
       return;
     }
     setPhoto(file);
+    setResult(null);
+    setConsent(false);
     setStage("review");
   };
 
-  const removePhoto = () => {
-    setPhoto(null);
-    setError("");
-    setNotice("");
-    setStage("photo");
-    setResult(null);
-    if (inputRef.current) inputRef.current.value = "";
+  const openPhotoPicker = () => {
+    if (!inputRef.current) return;
+    inputRef.current.value = "";
+    inputRef.current.click();
   };
 
   const handleAnalyze = async () => {
     if (!photo) {
       setError("Add a clear photo before starting the scan.");
+      return;
+    }
+    if (!consent) {
+      setError("Confirm that you understand this is an educational, non-diagnostic estimate.");
       return;
     }
     setError("");
@@ -139,7 +143,7 @@ const SkinScanCard = () => {
                 <div><small>MODEL SCORE</small><strong>{result?.modelScore == null ? "Not available" : `${Math.round(result.modelScore * 100)}%`}</strong></div>
               </div>
               <p>{result?.disclaimer}</p>
-              <button type="button" className="retake-button" onClick={removePhoto}>Use another photo</button>
+              <button type="button" className="retake-button" onClick={openPhotoPicker}>Use another photo</button>
             </div>
           ) : !previewUrl ? (
             <div className="photo-drop-zone" onDragOver={(event) => event.preventDefault()} onDrop={(event) => { event.preventDefault(); choosePhoto(event.dataTransfer.files?.[0]); }}>
@@ -147,13 +151,13 @@ const SkinScanCard = () => {
               <span className="drop-kicker">ADD YOUR PHOTO</span>
               <h2>Face the camera in natural light.</h2>
               <p>Use a front-facing photo without makeup, filters, or harsh shadows.</p>
-              <button type="button" onClick={() => inputRef.current?.click()}>Choose photo</button>
+              <button type="button" onClick={openPhotoPicker}>Choose photo</button>
               <small>JPG, PNG or WebP · Maximum 5 MB</small>
             </div>
           ) : (
             <div className="photo-preview">
               <img src={previewUrl} alt="Selected skin scan preview" />
-              <div className="preview-bar"><div><span>PHOTO READY</span><strong>{photo.name}</strong></div><button type="button" onClick={removePhoto}>Change</button></div>
+              <div className="preview-bar"><div><span>PHOTO READY</span><strong>{photo.name}</strong></div><button type="button" onClick={openPhotoPicker}>Change</button></div>
             </div>
           )}
           <input ref={inputRef} className="visually-hidden-file" type="file" accept="image/jpeg,image/png,image/webp" capture="user" onChange={(event) => choosePhoto(event.target.files?.[0])} />
@@ -167,11 +171,14 @@ const SkinScanCard = () => {
             <li><span>02</span><div><strong>Clear, bare skin</strong><p>Remove makeup, glasses, and beauty filters before taking the photo.</p></div></li>
             <li><span>03</span><div><strong>Look straight ahead</strong><p>Keep your face centered, close enough, and fully visible.</p></div></li>
           </ul>
-          <div className="privacy-note"><span aria-hidden="true">✦</span><p><strong>Your privacy matters.</strong> The final system should process only the image needed for your result and avoid permanent storage unless you agree.</p></div>
+          <div className="privacy-note"><span aria-hidden="true">✦</span><p><strong>Your privacy matters.</strong> Your photo is processed only to generate this result and is not permanently stored.</p></div>
           {error && <p className="scan-message error" role="alert">{error}</p>}
           {notice && <p className="scan-message notice" role="status">{notice}</p>}
           {stage !== "result" && (
-            <button type="button" className="analyze-button" disabled={!photo || stage === "analyzing"} onClick={handleAnalyze}>{stage === "analyzing" ? "Preparing scan..." : photo ? "Analyze my photo" : "Add a photo to continue"}<span aria-hidden="true">→</span></button>
+            <>
+              {photo && <label className="scan-consent"><input type="checkbox" checked={consent} onChange={(event) => setConsent(event.target.checked)} /> <span>I understand this result is educational, not a diagnosis, and the photo is processed without being saved.</span></label>}
+              <button type="button" className="analyze-button" disabled={!photo || !consent || stage === "analyzing"} onClick={handleAnalyze}>{stage === "analyzing" ? "Preparing scan..." : photo ? "Analyze my photo" : "Add a photo to continue"}<span aria-hidden="true">→</span></button>
+            </>
           )}
           <p className="medical-disclaimer">AyurAI does not diagnose medical conditions. Seek professional care for painful, changing, persistent, or worrying symptoms.</p>
         </aside>

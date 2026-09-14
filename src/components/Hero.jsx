@@ -60,14 +60,14 @@ const Hero = () => {
           <div className="hero-note">
             <span className="hero-note-icon">✦</span>
             <span>
-              Skin type · Wellness pattern · Gentle care
+              Acne severity · Wellness pattern · General care
             </span>
           </div>
 
           <div className="hero-meta">
             <div className="hero-meta-item">
               <strong>5</strong>
-              <span>Skin Types</span>
+              <span>Severity Levels</span>
             </div>
 
             <span className="hero-meta-divider" />
@@ -159,7 +159,7 @@ const Hero = () => {
           </div>
 
           <div className="floating-label floating-label-bottom">
-            <span className="floating-icon">✦</span>
+            <span className="floating-icon">🫚</span>
             <div>
               <small>AYURVEDA</small>
               <strong>Natural Balance</strong>

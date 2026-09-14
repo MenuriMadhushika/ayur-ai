@@ -5,16 +5,16 @@ import "./HowItWorks.css";
 const steps = [
   {
     number: "01",
-    icon: "💆‍♀️",
+    icon: "◈",
     title: "Skin Scan",
     description:
-      "Choose the skin type that best describes how your skin feels on most days.",
+      "Upload a clear face photo for an educational acne-severity estimate.",
     action: "/skin-scan",
     button: "Start Skin Scan",
   },
   {
     number: "02",
-    icon: "🔮",
+    icon: "☯",
     title: "Dosha Test",
     description:
       "Answer a short questionnaire to learn your Ayurvedic wellness pattern.",
@@ -23,10 +23,10 @@ const steps = [
   },
   {
     number: "03",
-    icon: "🎯",
-    title: "Your Result & Remedies",
+    icon: "→",
+    title: "Review Your Results",
     description:
-      "Complete both steps, then see your combined result and matched home remedies.",
+      "Review your two independent results, then explore optional wellness ideas.",
     action: "/overall-result",
     button: "View My Result",
   },
@@ -52,8 +52,8 @@ const HowItWorks = () => {
         </h2>
 
         <p>
-          From understanding your skin to discovering personalized
-          Ayurvedic care, AyurAI guides you through every step.
+          Use the AI Skin Scan for an acne-like severity estimate and the
+          separate Dosha Test for educational Ayurvedic wellness guidance.
         </p>
 
       </div>

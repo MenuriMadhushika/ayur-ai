@@ -6,8 +6,13 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8081
 
 const getErrorMessage = async (response) => {
   const text = await response.text();
-
-  return text || `Request failed: ${response.status}`;
+  if (!text) return `Request failed: ${response.status}`;
+  try {
+    const body = JSON.parse(text);
+    return body.message || body.detail || text;
+  } catch {
+    return text;
+  }
 };
 
 // Adds the saved login token to protected admin requests.
@@ -154,24 +159,6 @@ export const getAllHomeRemedies = async () => {
 export const getHomeRemediesByDosha = async (dosha) => {
   const response = await fetch(
     `${API_BASE_URL}/home-remedies/dosha/${encodeURIComponent(dosha)}`,
-    { headers: getAuthenticatedHeaders() }
-  );
-
-  if (!response.ok) {
-    throw new Error(await getErrorMessage(response));
-  }
-
-  return response.json();
-};
-
-export const getPersonalizedHomeRemedies = async (
-  dosha,
-  skinType
-) => {
-  const response = await fetch(
-    `${API_BASE_URL}/home-remedies/personalized?dosha=${encodeURIComponent(
-      dosha
-    )}&skinType=${encodeURIComponent(skinType)}`,
     { headers: getAuthenticatedHeaders() }
   );
 
