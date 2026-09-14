@@ -18,6 +18,7 @@ const SkinScanCard = () => {
   const [history, setHistory] = useState([]);
   const [historyLoading, setHistoryLoading] = useState(true);
   const [historyError, setHistoryError] = useState("");
+  const [consent, setConsent] = useState(false);
 
   const loadHistory = async () => {
     const userId = getCurrentUserId();
@@ -71,12 +72,17 @@ const SkinScanCard = () => {
     setNotice("");
     setStage("photo");
     setResult(null);
+    setConsent(false);
     if (inputRef.current) inputRef.current.value = "";
   };
 
   const handleAnalyze = async () => {
     if (!photo) {
       setError("Add a clear photo before starting the scan.");
+      return;
+    }
+    if (!consent) {
+      setError("Confirm that you understand this is an educational, non-diagnostic estimate.");
       return;
     }
     setError("");
@@ -171,7 +177,10 @@ const SkinScanCard = () => {
           {error && <p className="scan-message error" role="alert">{error}</p>}
           {notice && <p className="scan-message notice" role="status">{notice}</p>}
           {stage !== "result" && (
-            <button type="button" className="analyze-button" disabled={!photo || stage === "analyzing"} onClick={handleAnalyze}>{stage === "analyzing" ? "Preparing scan..." : photo ? "Analyze my photo" : "Add a photo to continue"}<span aria-hidden="true">→</span></button>
+            <>
+              {photo && <label className="scan-consent"><input type="checkbox" checked={consent} onChange={(event) => setConsent(event.target.checked)} /> <span>I understand this result is educational, not a diagnosis, and the photo is processed without being saved.</span></label>}
+              <button type="button" className="analyze-button" disabled={!photo || !consent || stage === "analyzing"} onClick={handleAnalyze}>{stage === "analyzing" ? "Preparing scan..." : photo ? "Analyze my photo" : "Add a photo to continue"}<span aria-hidden="true">→</span></button>
+            </>
           )}
           <p className="medical-disclaimer">AyurAI does not diagnose medical conditions. Seek professional care for painful, changing, persistent, or worrying symptoms.</p>
         </aside>

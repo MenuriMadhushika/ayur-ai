@@ -10,7 +10,7 @@ import {
   getAdminUsers,
   updateAdminRemedy,
 } from "../utils/api";
-import { formatSkinType, SKIN_TYPES } from "../utils/skinTypeInfo";
+import { formatAcneSeverity } from "../utils/acneSeverityInfo";
 import "./AdminDashboard.css";
 
 const EMPTY_REMEDY = {
@@ -453,9 +453,9 @@ function AdminDashboard({ view = "dashboard" }) {
   const _insightDetails = {
     skin: {
       eyebrow: "SKIN SCAN INSIGHTS",
-      title: "Saved skin types",
+      title: "Saved acne-severity estimates",
       description:
-        "Anonymous totals from user-selected skin scans.",
+        "Anonymous totals from completed AI Skin Scans.",
       counts: insights?.skinTypeCounts || {},
     },
     dosha: {
@@ -581,11 +581,11 @@ function AdminDashboard({ view = "dashboard" }) {
             <div className="admin-assessment-grid">
               <article className="admin-insights-panel">
                 <p>SKIN SCAN INSIGHTS</p>
-                <h2>Saved skin types</h2>
+                <h2>Saved acne-severity estimates</h2>
                 <span>Anonymous totals from user-selected skin scans.</span>
                 <div className="admin-insight-counts">
                   {Object.entries(insights?.skinTypeCounts || {}).map(([label, count]) => (
-                    <article key={label}><span>{formatSkinType(label)}</span><strong>{count}</strong></article>
+                    <article key={label}><span>{formatAcneSeverity(label)}</span><strong>{count}</strong></article>
                   ))}
                 </div>
               </article>
@@ -731,22 +731,6 @@ function AdminDashboard({ view = "dashboard" }) {
                       Pitta · Ayurvedic pattern
                     </option>
                     <option value="Kapha">Kapha · Ayurvedic pattern</option>
-                  </select>
-                </label>
-
-                <label>
-                  Skin type
-                  <select
-                    name="skinType"
-                    value={remedyForm.skinType}
-                    onChange={handleRemedyChange}
-                  >
-                    <option value="">Any skin type</option>
-                    {SKIN_TYPES.map((skinType) => (
-                      <option key={skinType.value} value={skinType.value}>
-                        {skinType.label}
-                      </option>
-                    ))}
                   </select>
                 </label>
 
@@ -920,7 +904,7 @@ function AdminDashboard({ view = "dashboard" }) {
                   </span>
 
                   <span>
-                    {remedy.skinType || "Any skin type"}
+                    General wellness
                   </span>
 
                   <span>
@@ -1090,10 +1074,10 @@ function AdminDashboard({ view = "dashboard" }) {
 
               <div className="admin-latest-summary">
                 <div>
-                  <span>Latest skin type</span>
+                  <span>Latest acne-like severity</span>
                   <strong>
                     {selectedActivity.latestEstimatedSkinType
-                      ? formatSkinType(selectedActivity.latestEstimatedSkinType)
+                      ? formatAcneSeverity(selectedActivity.latestEstimatedSkinType)
                       : "No skin scan saved"}
                   </strong>
                 </div>
