@@ -9,10 +9,4 @@ public interface HomeRemedyRepository extends JpaRepository<HomeRemedy, Long> {
 
     List<HomeRemedy> findByDoshaIgnoreCase(String dosha);
 
-    List<HomeRemedy> findBySkinTypeIgnoreCase(String skinType);
-
-    List<HomeRemedy> findByDoshaIgnoreCaseAndSkinTypeIgnoreCase(
-            String dosha,
-            String skinType
-    );
 }
