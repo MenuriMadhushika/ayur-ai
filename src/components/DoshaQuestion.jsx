@@ -442,14 +442,14 @@ const DoshaQuestion = () => {
           <div className="dosha-complete-message">
             <strong>
               {bothDone
-                ? "Your personalized result is ready."
+                ? "Both independent results are ready."
                 : "Your Dosha Test has been saved."}
             </strong>
 
             <p>
               {bothDone
-                ? "Your Skin Scan and Dosha Test are complete. View your personalized Overall Result and suitable home remedies next."
-                : "Complete your Skin Scan next to unlock your personalized Overall Result and suitable home remedies."}
+                ? "Your Skin Scan and Dosha Test are complete. Review both results or explore optional wellness ideas next."
+                : "Your Dosha result is ready. You can explore wellness ideas now or complete the separate Skin Scan."}
             </p>
           </div>
 

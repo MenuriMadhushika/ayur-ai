@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+﻿import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import "./UserProfile.css";
@@ -9,41 +9,41 @@ import API_BASE_URL, {
   getAuthenticatedJsonHeaders,
 } from "../utils/api";
 import { getDoshaInfo } from "../utils/doshaInfo";
-import { formatSkinType } from "../utils/skinTypeInfo";
+import { formatAcneSeverity } from "../utils/acneSeverityInfo";
 
 /* =========================================================
-   AYURAI — USER PROFILE
+   AYURAI â€” USER PROFILE
    Loads profile, Skin Scan, and Dosha information.
 ========================================================= */
 
 const profileIcons = [
-  { id: "butterfly", symbol: "🦋", name: "Butterfly" },
-  { id: "lotus", symbol: "🪷", name: "Lotus" },
-  { id: "leaf", symbol: "🍃", name: "Leaf" },
-  { id: "flower", symbol: "🌺", name: "Flower" },
-  { id: "sun", symbol: "☀️", name: "Sun" },
-  { id: "botanical", symbol: "🌿", name: "Botanical" },
+  { id: "butterfly", symbol: "ðŸ¦‹", name: "Butterfly" },
+  { id: "lotus", symbol: "ðŸª·", name: "Lotus" },
+  { id: "leaf", symbol: "ðŸƒ", name: "Leaf" },
+  { id: "flower", symbol: "ðŸŒº", name: "Flower" },
+  { id: "sun", symbol: "â˜€ï¸", name: "Sun" },
+  { id: "botanical", symbol: "ðŸŒ¿", name: "Botanical" },
 ];
 
 /* Home suggestions shown after the Dosha Test. */
 const _remediesByDosha = {
   Vata: [
     {
-      icon: "🌿🥥",
+      icon: "ðŸŒ¿ðŸ¥¥",
       category: "HYDRATING CARE",
       title: "Aloe Vera & Coconut Care",
       description: "A gentle moisturizing ritual for dry-feeling skin.",
       ingredients: "Aloe vera gel + a small amount of coconut oil",
     },
     {
-      icon: "🥒",
+      icon: "ðŸ¥’",
       category: "SOOTHING CARE",
       title: "Cucumber & Aloe Mask",
       description: "A refreshing ritual for comfortable-looking skin.",
       ingredients: "Fresh cucumber + pure aloe vera gel",
     },
     {
-      icon: "🌾🍯",
+      icon: "ðŸŒ¾ðŸ¯",
       category: "GENTLE CARE",
       title: "Oat & Honey Mask",
       description: "A gentle mask for soft and comfortable-looking skin.",
@@ -53,21 +53,21 @@ const _remediesByDosha = {
 
   Pitta: [
     {
-      icon: "🌿",
+      icon: "ðŸŒ¿",
       category: "COOLING CARE",
       title: "Aloe Vera Cooling Care",
       description: "A simple ritual for skin that feels warm or sensitive.",
       ingredients: "Pure aloe vera gel",
     },
     {
-      icon: "🥒",
+      icon: "ðŸ¥’",
       category: "SOOTHING CARE",
       title: "Cucumber & Aloe Mask",
       description: "A refreshing combination for a calm skin feeling.",
       ingredients: "Fresh cucumber + pure aloe vera gel",
     },
     {
-      icon: "🌾🥛",
+      icon: "ðŸŒ¾ðŸ¥›",
       category: "GENTLE CARE",
       title: "Oat & Yogurt Care",
       description: "A gentle home ritual for sensitive-looking skin.",
@@ -77,21 +77,21 @@ const _remediesByDosha = {
 
   Kapha: [
     {
-      icon: "🍃",
+      icon: "ðŸƒ",
       category: "BALANCING CARE",
       title: "Neem & Aloe Care",
       description: "A botanical-inspired ritual for oily-looking skin.",
       ingredients: "Aloe vera gel + a small amount of neem powder",
     },
     {
-      icon: "🪨🌹",
+      icon: "ðŸª¨ðŸŒ¹",
       category: "CLARIFYING CARE",
       title: "Multani Mitti & Rose Water",
       description: "A traditional ritual for excess surface oil.",
       ingredients: "Multani mitti + rose water",
     },
     {
-      icon: "🥒",
+      icon: "ðŸ¥’",
       category: "REFRESHING CARE",
       title: "Cucumber Refresh",
       description: "A light and refreshing ritual for a clean skin feeling.",
@@ -139,14 +139,6 @@ const formatDate = (value) => {
       .toLocaleString("en-US", { month: "short" })
       .toUpperCase(),
   };
-};
-
-const cleanValue = (value, fallback = "Not analyzed") => {
-  if (value === null || value === undefined || value === "") {
-    return fallback;
-  }
-
-  return String(value);
 };
 
 /* =========================================================
@@ -325,7 +317,8 @@ const UserProfile = () => {
         const processedSkin = {
           ...data,
           skinType:
-            data.estimatedSkinType || data.skinType || (data.analysisStatus === "UNCERTAIN" ? "Uncertain" : "Not analyzed"),
+            data.skinType ||
+            (data.skinTypeRequiresReview ? "Uncertain" : "Not analyzed"),
           texture:
             data.visibleCharacteristics || data.texture || "Not analyzed",
           hydration:
@@ -477,18 +470,9 @@ const UserProfile = () => {
   const kapha = Number(percentages.Kapha) || 0;
   const totalPercentage = vata + pitta + kapha;
 
-  const skinType = skinScanResult?.skinType
-    ? formatSkinType(skinScanResult.skinType)
+  const acneSeverity = skinScanResult?.skinType
+    ? formatAcneSeverity(skinScanResult.skinType)
     : "Not analyzed";
-  const concern = cleanValue(skinScanResult?.texture);
-
-  const hydration =
-    skinScanResult?.hydration !== null &&
-    skinScanResult?.hydration !== undefined &&
-    skinScanResult?.hydration !== ""
-      ? `${skinScanResult.hydration}%`
-      : "Not available";
-
   const skinCompleted = Boolean(
     assessmentStatus?.skinScanCompleted || skinScanResult?.completed
   );
@@ -503,11 +487,7 @@ const UserProfile = () => {
     profileIcons.find((item) => item.id === user.icon) ||
     profileIcons[0];
 
-  const assessmentsReady = skinCompleted && doshaCompleted;
-  const nextAssessmentPath = skinCompleted ? "/dosha-test" : "/skin-scan";
-  const nextAssessmentLabel = skinCompleted
-    ? "Complete Dosha Test"
-    : "Complete Skin Scan";
+  const wellnessIdeasReady = doshaCompleted;
 
   const doshaDate = formatDate(doshaResult?.completedAt);
   const skinDate = formatDate(skinScanResult?.completedAt);
@@ -519,14 +499,14 @@ const UserProfile = () => {
       =================================================== */}
 
       <header className="profile-header">
-        <span className="profile-label">AYURAI · MY PROFILE</span>
+        <span className="profile-label">AYURAI Â· MY PROFILE</span>
 
         <h1>
           Your Personal <span>Skin Journey</span>
         </h1>
 
         <p>
-          Keep your skin scan, Dosha result, and personalized care journey
+          Keep your AI Skin Scan and separate Dosha wellness result
           in one calm place.
         </p>
       </header>
@@ -572,7 +552,7 @@ const UserProfile = () => {
               onClick={() => setEditing(false)}
               aria-label="Close profile editor"
             >
-              ×
+              Ã—
             </button>
 
             <div className="profile-modal-header">
@@ -585,7 +565,7 @@ const UserProfile = () => {
               </div>
 
               <div>
-                <span>AYURAI · PERSONAL DETAILS</span>
+                <span>AYURAI Â· PERSONAL DETAILS</span>
                 <h2>Edit Your Profile</h2>
                 <p>Personalize your AyurAI profile.</p>
               </div>
@@ -697,8 +677,8 @@ const UserProfile = () => {
 
       <section className="profile-section">
         <div className="profile-section-heading">
-          <span>01 · YOUR INSIGHTS</span>
-          <h2>Understand Your Skin</h2>
+          <span>01 Â· YOUR INSIGHTS</span>
+          <h2>Your Results at a Glance</h2>
         </div>
 
         <div className="profile-stats">
@@ -708,27 +688,16 @@ const UserProfile = () => {
             <small>
               {dominantDosha
                 ? dominantInfo.shortLabel
-                : "Complete the Skin Balance Assessment"}
+                : "Complete the Dosha Test"}
             </small>
           </article>
 
           <article className="profile-stat skin-stat">
-            <span>YOUR SKIN SCAN RESULT</span>
+            <span>YOUR SKIN TYPE</span>
             <strong>{skinType}</strong>
-            <small>Educational result from your skin scan</small>
+            <small>Estimated by the AI Skin Scan</small>
           </article>
 
-          <article className="profile-stat hydration-stat">
-            <span>HYDRATION</span>
-            <strong>{hydration}</strong>
-            <small>Available when recorded in your profile</small>
-          </article>
-
-          <article className="profile-stat concern-stat">
-            <span>SKIN OBSERVATION</span>
-            <strong>{concern}</strong>
-            <small>Saved with your skin-type check-in</small>
-          </article>
         </div>
       </section>
 
@@ -738,11 +707,11 @@ const UserProfile = () => {
 
       <section className="profile-section">
         <div className="profile-section-heading">
-          <span>02 · AYURVEDIC WELLNESS PATTERN</span>
+          <span>02 Â· AYURVEDIC WELLNESS PATTERN</span>
           <h2>Your Dosha Result</h2>
           <p>
             Vata, Pitta, and Kapha are Ayurvedic wellness patterns. They are
-            considered separately from your skin type.
+            considered separately from your AI Skin Scan.
           </p>
         </div>
 
@@ -814,18 +783,20 @@ const UserProfile = () => {
 
       <section className="profile-section">
         <div className="profile-section-heading">
-          <span>03 · LATEST SKIN SCAN</span>
+          <span>03 Â· LATEST SKIN SCAN</span>
           <h2>Your Latest Skin Scan</h2>
         </div>
 
         <div className="latest-analysis-card">
-          <div className="analysis-symbol">✦</div>
+          <div className="analysis-symbol">âœ¦</div>
 
           <div className="latest-analysis-content">
-            <span>EDUCATIONAL SKIN SCAN</span>
+            <span>YOUR LATEST SKIN TYPE</span>
             <h3>{skinType}</h3>
             <p>
-              {concern} · {dominantLabel}
+              {skinCompleted
+                ? `${acneSeverity} · Completed ${skinDate.day} ${skinDate.month}`
+                : "No Skin Scan completed"}
             </p>
           </div>
 
@@ -834,7 +805,7 @@ const UserProfile = () => {
             className="view-analysis-button"
             onClick={() => navigate("/skin-scan")}
           >
-            View Skin Scan →
+            View Skin Scan â†’
           </button>
         </div>
       </section>
@@ -845,43 +816,42 @@ const UserProfile = () => {
 
       <section className="profile-section">
         <div className="profile-section-heading">
-          <span>04 · PERSONALIZED CARE</span>
-          <h2>Personalized Care</h2>
+          <span>04 Â· WELLNESS LIBRARY</span>
+          <h2>Optional Wellness Ideas</h2>
           <p>
-            Gentle self-care ideas based on your skin type and Ayurvedic wellness pattern.
+            General self-care ideas kept separate from your acne-severity estimate.
           </p>
         </div>
 
-        {assessmentsReady ? (
+        {wellnessIdeasReady ? (
           <div className="profile-care-decision profile-care-ready">
-            <span className="profile-care-icon">✦</span>
+            <span className="profile-care-icon">âœ¦</span>
             <div>
-              <span>YOUR COMBINED RESULT IS READY</span>
-              <h3>See remedies matched to both results.</h3>
+              <span>YOUR WELLNESS PATTERN IS READY</span>
+              <h3>Explore general wellness ideas.</h3>
               <p>
-                Explore gentle home remedies selected for your skin scan
-                and Ayurvedic wellness pattern.
+                Browse optional ideas associated with your Ayurvedic wellness pattern.
               </p>
             </div>
 
             <button type="button" onClick={() => navigate("/home-remedies")}>
-              View Recommended Remedies →
+              Explore Wellness Ideas â†’
             </button>
           </div>
         ) : (
           <div className="profile-care-decision">
-            <span className="profile-care-icon">◌</span>
+            <span className="profile-care-icon">â—Œ</span>
             <div>
               <span>ONE STEP AT A TIME</span>
-              <h3>Complete both assessments for recommendations.</h3>
+              <h3>Complete the Dosha Test to see suggested ideas.</h3>
               <p>
-                AyurAI recommends home-care rituals only after it has both
-                your skin scan and your Ayurvedic wellness pattern.
+                Wellness ideas are associated only with your Ayurvedic
+                questionnaire result, never with the acne model.
               </p>
             </div>
 
-            <button type="button" onClick={() => navigate(nextAssessmentPath)}>
-              {nextAssessmentLabel} →
+            <button type="button" onClick={() => navigate("/dosha-test")}>
+              Complete Dosha Test â†’
             </button>
           </div>
         )}
@@ -893,7 +863,7 @@ const UserProfile = () => {
 
       <section className="dosha-profile-card">
         <div>
-          <span>05 · DOSHA TEST</span>
+          <span>05 Â· DOSHA TEST</span>
           <h2>Your Ayurvedic Wellness Journey</h2>
 
           <p>
@@ -907,7 +877,7 @@ const UserProfile = () => {
           className="retake-button"
           onClick={() => navigate("/dosha-test")}
         >
-          Retake Assessment →
+          Retake Assessment â†’
         </button>
       </section>
 
@@ -917,7 +887,7 @@ const UserProfile = () => {
 
       <section className="profile-section">
         <div className="profile-section-heading">
-          <span>06 · HISTORY</span>
+          <span>06 Â· HISTORY</span>
           <h2>Assessment History</h2>
         </div>
 
@@ -930,8 +900,8 @@ const UserProfile = () => {
               </div>
 
               <div className="history-info">
-                <h3>Skin Balance Assessment</h3>
-                <p>Primary Ayurvedic pattern · {dominantLabel}</p>
+                <h3>Dosha Test</h3>
+                <p>Primary Ayurvedic pattern Â· {dominantLabel}</p>
               </div>
 
               <span className="history-status">Completed</span>
@@ -948,7 +918,7 @@ const UserProfile = () => {
               <div className="history-info">
                 <h3>Skin Scan</h3>
                 <p>
-                  {skinType} · {concern}
+                  Acne-like severity Â· {acneSeverity}
                 </p>
               </div>
 
@@ -958,7 +928,7 @@ const UserProfile = () => {
 
           {!doshaCompleted && !skinCompleted && (
             <div className="empty-history">
-              <span>✦</span>
+              <span>âŒ˜</span>
               <p>Your completed assessments will appear here.</p>
             </div>
           )}
@@ -966,12 +936,15 @@ const UserProfile = () => {
       </section>
 
       <p className="analysis-disclaimer">
-        AyurAI provides an educational skin-type check-in and Ayurvedic
-        wellness guidance. It does not diagnose, treat, or prevent medical
-        conditions.
+        AyurAI provides an educational acne-like severity estimate and separate
+        Ayurvedic wellness guidance. It does not diagnose, treat, or prevent
+        medical conditions.
       </p>
     </section>
   );
 };
 
 export default UserProfile;
+
+
+

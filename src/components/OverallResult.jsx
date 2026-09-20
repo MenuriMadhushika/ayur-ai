@@ -1,12 +1,18 @@
-import React, { useEffect, useRef, useState } from "react";
+﻿import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./OverallResult.css";
 
 import { createOverallResult } from "../utils/api";
 import { getCurrentUserId } from "../utils/userSession";
-import { formatSkinType } from "../utils/skinTypeInfo";
+import {
+  formatAcneSeverity,
+  isHigherAcneSeverity,
+} from "../utils/acneSeverityInfo";
 import { getAssessmentStatus } from "../utils/assessmentStatus";
 import { getPrimaryDosha, isMixedDosha } from "../utils/doshaInfo";
+
+import SkinTypeResult from "./SkinTypeResult";
+import { sensitivityLabel } from "../utils/skinTypeInfo";
 
 const OverallResult = () => {
   const navigate = useNavigate();
@@ -60,7 +66,7 @@ const OverallResult = () => {
       <main className="overall-page">
         <div className="overall-loading">
           <span>AYURAI</span>
-          <p>Creating your personalized result...</p>
+          <p>Loading your results...</p>
         </div>
       </main>
     );
@@ -72,7 +78,7 @@ const OverallResult = () => {
     return (
       <main className="overall-page">
         <section className="overall-error-card">
-          <span>AYURAI · ASSESSMENT</span>
+          <span>AYURAI Â· ASSESSMENT</span>
           <h1>
             {hasMissingStep
               ? "One gentle step remains"
@@ -80,7 +86,7 @@ const OverallResult = () => {
           </h1>
           <p>
             {hasMissingStep
-              ? `Complete your ${missingSkinProfile ? "Skin Scan" : "Dosha Test"} to see your combined result and matched home remedies.`
+              ? `Complete your ${missingSkinProfile ? "Skin Scan" : "Dosha Test"} to review both independent results in one place.`
               : error}
           </p>
 
@@ -108,9 +114,7 @@ const OverallResult = () => {
   const primaryDosha = getPrimaryDosha(dominantDosha) || "Balance";
   const theme = primaryDosha.toLowerCase();
   const blendedPattern = isMixedDosha(dominantDosha);
-  const sensitiveSkin = String(result.estimatedSkinType || "")
-    .toLowerCase()
-    .includes("sensitive");
+  const higherSeverity = isHigherAcneSeverity(result.estimatedSkinType);
 
   const scores = [
     {
@@ -134,7 +138,7 @@ const OverallResult = () => {
     <main className={`overall-page theme-${theme}`}>
       <section className="overall-hero">
         <span className="overall-eyebrow">
-          YOUR PERSONALIZED RESULT
+          YOUR RESULTS
         </span>
 
         <div className="dosha-orb">
@@ -147,8 +151,9 @@ const OverallResult = () => {
         </h1>
 
         <p className="overall-hero-text">
-          {result.summary ||
-            "Your Skin Scan and Dosha Test have been combined into one personalized wellness result. Explore suitable home remedies next."}
+          Your AI Skin Scan and Ayurvedic questionnaire results are shown
+          together for convenience. They are produced independently and are
+          not medically correlated.
         </p>
 
         <div className="score-chips">
@@ -167,25 +172,27 @@ const OverallResult = () => {
       <section className="result-card-grid">
         <article className="result-card skin-card">
           <div className="result-card-top">
-            <span className="result-icon">✦</span>
+            <span className="result-icon">âœ¦</span>
             <span className="result-tag">SKIN SNAPSHOT</span>
           </div>
 
           <h2>Your skin scan</h2>
+          <SkinTypeResult prediction={{ skinType: result.skinType, confidence: result.skinTypeConfidence, requiresReview: result.skinTypeRequiresReview }} />
+          <p>Sensitivity: {sensitivityLabel(result.sensitivityScore)}</p>
 
           <div className="skin-detail">
-            <span>Your skin scan result</span>
+            <span>Estimated acne-like severity</span>
             <strong>
-              {formatSkinType(result.estimatedSkinType, result.analysisStatus)}
+              {formatAcneSeverity(result.estimatedSkinType)}
             </strong>
           </div>
 
           <div className="skin-detail">
             <span>Your care priority</span>
             <strong>
-              {sensitiveSkin
-                ? "Keep routines minimal, soothing, and patch-test first."
-                : "Choose simple, consistent care and notice how your skin feels."}
+              {higherSeverity
+                ? "Consider advice from a qualified healthcare professional."
+                : "Keep care gentle, simple, and non-comedogenic."}
             </strong>
           </div>
 
@@ -194,7 +201,7 @@ const OverallResult = () => {
 
         <article className="result-card dosha-card">
           <div className="result-card-top">
-            <span className="result-icon">◌</span>
+            <span className="result-icon">â—Œ</span>
             <span className="result-tag">DOSHA BALANCE</span>
           </div>
 
@@ -227,7 +234,7 @@ const OverallResult = () => {
 
         <article className="result-card lifestyle-card">
           <div className="result-card-top">
-            <span className="result-icon">☼</span>
+            <span className="result-icon">â˜¼</span>
             <span className="result-tag">DAILY BALANCE</span>
           </div>
 
@@ -247,7 +254,7 @@ const OverallResult = () => {
       <section className="ayurvedic-direction">
         <div className="direction-heading">
           <span>YOUR AYURVEDIC DIRECTION</span>
-          <small>✓ ASSESSMENT COMPLETE</small>
+          <small>âœ“ ASSESSMENT COMPLETE</small>
         </div>
 
         <h2>
@@ -272,7 +279,7 @@ const OverallResult = () => {
           className="overall-primary-action"
           onClick={() => navigate("/home-remedies")}
         >
-          VIEW RECOMMENDED REMEDIES <span>→</span>
+          EXPLORE GENERAL WELLNESS IDEAS <span>â†’</span>
         </button>
 
         <button
@@ -288,3 +295,5 @@ const OverallResult = () => {
 };
 
 export default OverallResult;
+
+

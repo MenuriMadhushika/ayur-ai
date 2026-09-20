@@ -134,19 +134,19 @@ const Navbar = () => {
           </NavLink>
 
           <NavLink
-            to="/dosha-test"
-            className={navClass}
-            onClick={closeMenus}
-          >
-            Dosha Test
-          </NavLink>
-
-          <NavLink
             to="/skin-scan"
             className={navClass}
             onClick={closeMenus}
           >
             Skin Scan
+          </NavLink>
+
+          <NavLink
+            to="/dosha-test"
+            className={navClass}
+            onClick={closeMenus}
+          >
+            Dosha Test
           </NavLink>
 
           <NavLink
@@ -256,21 +256,21 @@ const Navbar = () => {
           </NavLink>
 
           <NavLink
-            to="/dosha-test"
-            onClick={closeMenus}
-            className={mobileNavClass}
-          >
-            <span className="mobile-link-number">02</span>
-            <span>Dosha Test</span>
-          </NavLink>
-
-          <NavLink
             to="/skin-scan"
             onClick={closeMenus}
             className={mobileNavClass}
           >
-            <span className="mobile-link-number">03</span>
+            <span className="mobile-link-number">02</span>
             <span>Skin Scan</span>
+          </NavLink>
+
+          <NavLink
+            to="/dosha-test"
+            onClick={closeMenus}
+            className={mobileNavClass}
+          >
+            <span className="mobile-link-number">03</span>
+            <span>Dosha Test</span>
           </NavLink>
 
           <NavLink

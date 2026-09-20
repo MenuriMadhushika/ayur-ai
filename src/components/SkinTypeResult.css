@@ -1,0 +1,198 @@
+/* =========================================================
+   AYURAI — SKIN TYPE RESULT
+   Primary Result Highlight
+   ========================================================= */
+
+.skin-type-result {
+  width: min(100%, 480px);
+}
+
+
+/* =========================================================
+   RESULT GRID
+   ========================================================= */
+
+.skin-type-result-grid {
+  width: 100%;
+}
+
+
+/* =========================================================
+   PRIMARY RESULT — ESTIMATED SKIN TYPE
+   ========================================================= */
+
+.skin-type-result
+.skin-type-result-grid
+.skin-type-primary-card {
+  position: relative;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fbf7ed 0%,
+      #f4ead3 100%
+    );
+
+  border: 1px solid #c9aa67;
+
+  box-shadow:
+    0 8px 22px rgba(166, 129, 62, 0.09);
+}
+
+
+/* Small decorative gold line */
+
+.skin-type-primary-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 16px;
+  right: 16px;
+
+  width: 24px;
+  height: 2px;
+
+  border-radius: 999px;
+
+  background: #b58b3e;
+}
+
+
+/* Label */
+
+.skin-type-result
+.skin-type-primary-card small {
+  color: #98712d;
+}
+
+
+/* Main Skin Type */
+
+.skin-type-result
+.skin-type-primary-card
+.skin-type-primary-value {
+  color: #28271f;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: 19px;
+  font-weight: 500;
+
+  line-height: 1.2;
+}
+
+
+/* =========================================================
+   AI CONFIDENCE — SECONDARY RESULT
+   ========================================================= */
+
+.skin-type-result
+.skin-type-confidence-card {
+  background: rgba(255, 255, 255, 0.72);
+
+  border-color: #dfd6c6;
+
+  box-shadow: none;
+}
+
+.skin-type-result
+.skin-type-confidence-card small {
+  color: #a6813e;
+}
+
+.skin-type-result
+.skin-type-confidence-card strong {
+  color: #28271f;
+
+  font-family: Arial, sans-serif;
+
+  font-size: 13px;
+  font-weight: 500;
+}
+
+
+/* =========================================================
+   AI CONFIDENCE EXPLANATION
+   ========================================================= */
+
+.skin-type-confidence-help {
+  width: 100%;
+
+  margin-top: -8px;
+
+  text-align: left;
+}
+
+.skin-type-confidence-help > strong {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #28271f;
+
+  font: 700 12px/1.4 Arial, sans-serif;
+}
+
+.skin-type-confidence-help p {
+  margin: 0;
+
+  color: #777266;
+
+  font: 12px/1.6 Arial, sans-serif;
+}
+
+
+/* =========================================================
+   UNCERTAIN / UNAVAILABLE RESULT
+   ========================================================= */
+
+.skin-type-result-message {
+  width: 100%;
+
+  margin-top: -5px;
+  padding: 14px 15px;
+
+  border: 1px solid #e3d7c4;
+  border-radius: 10px;
+
+  background: #f8f4eb;
+
+  text-align: left;
+}
+
+.skin-type-result-message strong {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #28271f;
+
+  font: 700 12px/1.4 Arial, sans-serif;
+}
+
+.skin-type-result-message p {
+  margin: 0;
+
+  color: #777266;
+
+  font: 11px/1.6 Arial, sans-serif;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .skin-type-result
+  .skin-type-primary-card
+  .skin-type-primary-value {
+    font-size: 18px;
+  }
+
+  .skin-type-primary-card::before {
+    width: 18px;
+  }
+}

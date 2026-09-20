@@ -3,6 +3,13 @@
 // Skin type is separate from the Ayurvedic wellness pattern.
 // =========================================================
 
+const labels = {
+  combination: "Combination",
+  dry: "Dry",
+  normal: "Normal",
+  oily: "Oily",
+};
+
 export const SKIN_TYPES = [
   {
     value: "Normal",
@@ -24,12 +31,28 @@ export const SKIN_TYPES = [
     label: "Combination",
     description: "Some areas feel oily while other areas feel dry.",
   },
-  {
-    value: "Sensitive",
-    label: "Sensitive",
-    description: "Skin may easily feel uncomfortable or react to products.",
-  },
 ];
+
+// =========================================================
+// SKIN TYPE LABEL
+// Used for AI skin-type classification result.
+// =========================================================
+
+export function skinTypeLabel(type, requiresReview = false) {
+  if (type === "unavailable" || !type) {
+    return "Not available";
+  }
+
+  if (requiresReview || type === "uncertain") {
+    return "Uncertain";
+  }
+
+  return labels[String(type).toLowerCase()] || "Not available";
+}
+
+// =========================================================
+// SKIN TYPE INFORMATION
+// =========================================================
 
 export const getSkinTypeInfo = (skinType) => {
   const normalized = String(skinType || "")
@@ -48,14 +71,67 @@ export const getSkinTypeInfo = (skinType) => {
   );
 };
 
-// Historical API fields also hold acne-like severity estimates.
+// =========================================================
+// ACNE-LIKE APPEARANCE FORMATTER
+// Historical API fields may contain acne severity estimates.
+// =========================================================
+
 export const formatSkinType = (skinType, analysisStatus) => {
-  if (String(analysisStatus || "").toUpperCase() === "UNCERTAIN") return "Uncertain";
+  if (String(analysisStatus || "").toUpperCase() === "UNCERTAIN") {
+    return "Uncertain";
+  }
+
   const value = String(skinType || "").trim();
-  const severity = ["Mild", "Moderate", "Severe", "Very Severe"].find(
-    (category) => category.toLowerCase() === value.toLowerCase()
+
+  const severity = [
+    "Mild",
+    "Moderate",
+    "Severe",
+    "Very Severe",
+  ].find(
+    (category) =>
+      category.toLowerCase() === value.toLowerCase()
   );
-  if (severity) return `${severity} acne-like appearance`;
-  if (value.toLowerCase() === "uncertain") return "Uncertain";
+
+  if (severity) {
+    return `${severity} acne-like appearance`;
+  }
+
+  if (value.toLowerCase() === "uncertain") {
+    return "Uncertain";
+  }
+
   return getSkinTypeInfo(skinType).label;
 };
+
+// =========================================================
+// SENSITIVITY QUESTIONNAIRE LABEL
+// Sensitivity is based on questionnaire answers,
+// not the image classifier.
+// =========================================================
+
+export function sensitivityLabel(score) {
+  if (score == null) {
+    return "Not assessed";
+  }
+
+  return score >= 2
+    ? "Sensitivity reported"
+    : "Few sensitivity signs reported";
+}
+
+// =========================================================
+// AI CONFIDENCE FORMATTER
+// Example: 0.8137 -> 81%
+// =========================================================
+
+export function confidenceLabel(value) {
+  return (
+    typeof value === "number" &&
+    Number.isFinite(value) &&
+    value >= 0 &&
+    value <= 1
+  )
+    ? `${Math.round(value * 100)}%`
+    : "Not available";
+}

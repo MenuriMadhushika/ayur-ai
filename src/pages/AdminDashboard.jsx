@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+﻿import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   createAdminRemedy,
@@ -10,7 +10,7 @@ import {
   getAdminUsers,
   updateAdminRemedy,
 } from "../utils/api";
-import { formatSkinType, SKIN_TYPES } from "../utils/skinTypeInfo";
+import { formatAcneSeverity } from "../utils/acneSeverityInfo";
 import "./AdminDashboard.css";
 
 const EMPTY_REMEDY = {
@@ -20,10 +20,10 @@ const EMPTY_REMEDY = {
   instructions: "",
   benefits: "",
   importantNote: "",
-  icon: "🌿",
+  icon: "ðŸŒ¿",
   duration: "10 min",
   difficulty: "Easy",
-  frequency: "Use 1–2 times per week",
+  frequency: "Use 1â€“2 times per week",
   dosha: "",
   skinType: "",
   category: "",
@@ -31,9 +31,9 @@ const EMPTY_REMEDY = {
 
 const getFriendlyDosha = (dosha) => {
   const labels = {
-    Vata: "Vata · Ayurvedic pattern",
-    Pitta: "Pitta · Ayurvedic pattern",
-    Kapha: "Kapha · Ayurvedic pattern",
+    Vata: "Vata Â· Ayurvedic pattern",
+    Pitta: "Pitta Â· Ayurvedic pattern",
+    Kapha: "Kapha Â· Ayurvedic pattern",
   };
 
   return labels[dosha] || "Not available";
@@ -301,10 +301,10 @@ function AdminDashboard({ view = "dashboard" }) {
       instructions: remedy.instructions || "",
       benefits: remedy.benefits || "",
       importantNote: remedy.importantNote || "",
-      icon: remedy.icon || "🌿",
+      icon: remedy.icon || "ðŸŒ¿",
       duration: remedy.duration || "10 min",
       difficulty: remedy.difficulty || "Easy",
-      frequency: remedy.frequency || "Use 1–2 times per week",
+      frequency: remedy.frequency || "Use 1â€“2 times per week",
       dosha: remedy.dosha || "",
       skinType: remedy.skinType || "",
       category: remedy.category || "",
@@ -416,7 +416,7 @@ function AdminDashboard({ view = "dashboard" }) {
         "Accounts currently registered in AyurAI.",
       color: "admin-card-gold",
       action: () => navigate("/admin/users"),
-      actionText: "Manage users →",
+      actionText: "Manage users â†’",
     },
     {
       number: "02",
@@ -426,7 +426,7 @@ function AdminDashboard({ view = "dashboard" }) {
         "Saved educational skin scan results.",
       color: "admin-card-blue",
       action: () => navigate("/admin/assessments"),
-      actionText: "View assessments →",
+      actionText: "View assessments â†’",
     },
     {
       number: "03",
@@ -436,26 +436,26 @@ function AdminDashboard({ view = "dashboard" }) {
         "Completed skin-balance assessment responses.",
       color: "admin-card-pink",
       action: () => navigate("/admin/assessments"),
-      actionText: "View assessments →",
+      actionText: "View assessments â†’",
     },
     {
       number: "04",
       label: "Overall results",
       value: dashboard?.totalOverallResults,
       description:
-        "Combined skin scan and Dosha results.",
+        "Independent Skin Scan and Dosha results shown together.",
       color: "admin-card-green",
       action: () => navigate("/admin/assessments"),
-      actionText: "View assessments →",
+      actionText: "View assessments â†’",
     },
   ];
 
   const _insightDetails = {
     skin: {
       eyebrow: "SKIN SCAN INSIGHTS",
-      title: "Saved skin scan results",
+      title: "Saved acne-like severity estimates",
       description:
-        "Anonymous totals from saved educational skin scans.",
+        "Anonymous totals from completed AI Skin Scans.",
       counts: insights?.skinTypeCounts || {},
     },
     dosha: {
@@ -467,7 +467,7 @@ function AdminDashboard({ view = "dashboard" }) {
     },
     overall: {
       eyebrow: "OVERALL RESULT INSIGHTS",
-      title: "Personalized results created",
+      title: "Result summaries created",
       description:
         "A result is created only after both the Skin Scan and Dosha Test are complete.",
       counts: {
@@ -478,7 +478,7 @@ function AdminDashboard({ view = "dashboard" }) {
 
   const pageHeading = {
     dashboard: {
-      eyebrow: "AYURAI · ADMIN",
+      eyebrow: "AYURAI Â· ADMIN",
       title: `Welcome back, ${adminUser.name}`,
       description: "Manage the AyurAI wellness platform from one place.",
     },
@@ -547,7 +547,7 @@ function AdminDashboard({ view = "dashboard" }) {
               <h3>{card.label}</h3>
 
               <strong className="admin-card-value">
-                {loadingDashboard ? "..." : card.value ?? "—"}
+                {loadingDashboard ? "..." : card.value ?? "â€”"}
               </strong>
 
               <p>{card.description}</p>
@@ -581,11 +581,11 @@ function AdminDashboard({ view = "dashboard" }) {
             <div className="admin-assessment-grid">
               <article className="admin-insights-panel">
                 <p>SKIN SCAN INSIGHTS</p>
-                <h2>Saved skin scan results</h2>
-                <span>Anonymous totals from saved educational skin scans.</span>
+                <h2>Saved acne-like severity estimates</h2>
+                <span>Anonymous totals from completed AI Skin Scans.</span>
                 <div className="admin-insight-counts">
                   {Object.entries(insights?.skinTypeCounts || {}).map(([label, count]) => (
-                    <article key={label}><span>{formatSkinType(label)}</span><strong>{count}</strong></article>
+                    <article key={label}><span>{formatAcneSeverity(label)}</span><strong>{count}</strong></article>
                   ))}
                 </div>
               </article>
@@ -601,7 +601,7 @@ function AdminDashboard({ view = "dashboard" }) {
               </article>
               <article className="admin-insights-panel admin-overall-insight">
                 <p>OVERALL RESULT INSIGHTS</p>
-                <h2>Personalized results created</h2>
+                <h2>Result summaries created</h2>
                 <span>Created after a user completes both required assessments.</span>
                 <strong className="admin-insight-total">{insights?.totalOverallResults ?? dashboard?.totalOverallResults ?? 0}</strong>
               </article>
@@ -726,27 +726,11 @@ function AdminDashboard({ view = "dashboard" }) {
                     onChange={handleRemedyChange}
                   >
                     <option value="">Choose a pattern</option>
-                    <option value="Vata">Vata · Ayurvedic pattern</option>
+                    <option value="Vata">Vata Â· Ayurvedic pattern</option>
                     <option value="Pitta">
-                      Pitta · Ayurvedic pattern
+                      Pitta Â· Ayurvedic pattern
                     </option>
-                    <option value="Kapha">Kapha · Ayurvedic pattern</option>
-                  </select>
-                </label>
-
-                <label>
-                  Skin type
-                  <select
-                    name="skinType"
-                    value={remedyForm.skinType}
-                    onChange={handleRemedyChange}
-                  >
-                    <option value="">Any skin type</option>
-                    {SKIN_TYPES.map((skinType) => (
-                      <option key={skinType.value} value={skinType.value}>
-                        {skinType.label}
-                      </option>
-                    ))}
+                    <option value="Kapha">Kapha Â· Ayurvedic pattern</option>
                   </select>
                 </label>
 
@@ -757,7 +741,7 @@ function AdminDashboard({ view = "dashboard" }) {
                     name="icon"
                     value={remedyForm.icon}
                     onChange={handleRemedyChange}
-                    placeholder="Example: 🌿"
+                    placeholder="Example: ðŸŒ¿"
                   />
                 </label>
 
@@ -795,8 +779,8 @@ function AdminDashboard({ view = "dashboard" }) {
                     <option value="Use once per week">
                       Use once per week
                     </option>
-                    <option value="Use 1–2 times per week">
-                      Use 1–2 times per week
+                    <option value="Use 1â€“2 times per week">
+                      Use 1â€“2 times per week
                     </option>
                     <option value="Use 2 times per week">
                       Use 2 times per week
@@ -920,7 +904,7 @@ function AdminDashboard({ view = "dashboard" }) {
                   </span>
 
                   <span>
-                    {remedy.skinType || "Any skin type"}
+                    General wellness
                   </span>
 
                   <span>
@@ -1000,9 +984,9 @@ function AdminDashboard({ view = "dashboard" }) {
                 {filteredUsers.map((user) => (
                   <tr key={user.id}>
                     <td>#{user.id}</td>
-                    <td>{user.name || "—"}</td>
+                    <td>{user.name || "â€”"}</td>
                     <td>{user.email}</td>
-                    <td>{user.age ?? "—"}</td>
+                    <td>{user.age ?? "â€”"}</td>
                     <td>
                       <span
                         className={`admin-role-badge ${
@@ -1090,11 +1074,13 @@ function AdminDashboard({ view = "dashboard" }) {
 
               <div className="admin-latest-summary">
                 <div>
-                  <span>Latest skin scan result</span>
+                  <span>Latest acne-like severity</span>
                   <strong>
                     {selectedActivity.latestEstimatedSkinType
-                      ? formatSkinType(selectedActivity.latestEstimatedSkinType)
-                      : (selectedActivity.latestAnalysisStatus === "UNCERTAIN" ? "Uncertain" : "No skin scan saved")}
+                      ? formatAcneSeverity(selectedActivity.latestEstimatedSkinType)
+                      : selectedActivity.latestAnalysisStatus === "UNCERTAIN"
+                        ? "Uncertain"
+                        : "No skin scan saved"}
                   </strong>
                 </div>
 
@@ -1141,3 +1127,4 @@ function AdminDashboard({ view = "dashboard" }) {
 }
 
 export default AdminDashboard;
+

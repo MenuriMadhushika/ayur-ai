@@ -13,7 +13,7 @@ const DoshaSelector = () => {
       element: "AIR & SPACE",
       type: "Ayurvedic wellness pattern",
       description:
-        "Vata is traditionally associated with movement, lightness, and change. Skin type is considered separately.",
+        "Vata is traditionally associated with movement, lightness, and change. This wellness pattern is separate from the AI Skin Scan.",
       care: "Grounding • Nourishment • Gentle routines",
       accent: "vata",
     },
@@ -24,7 +24,7 @@ const DoshaSelector = () => {
       element: "FIRE & WATER",
       type: "Ayurvedic wellness pattern",
       description:
-        "Pitta is traditionally associated with warmth, focus, and transformation. Skin type is considered separately.",
+        "Pitta is traditionally associated with warmth, focus, and transformation. This wellness pattern is separate from the AI Skin Scan.",
       care: "Cooling • Steady • Calming routines",
       accent: "pitta",
     },
@@ -35,7 +35,7 @@ const DoshaSelector = () => {
       element: "EARTH & WATER",
       type: "Ayurvedic wellness pattern",
       description:
-        "Kapha is traditionally associated with steadiness, nourishment, and calm. Skin type is considered separately.",
+        "Kapha is traditionally associated with steadiness, nourishment, and calm. This wellness pattern is separate from the AI Skin Scan.",
       care: "Refreshing • Balanced • Consistent routines",
       accent: "kapha",
     },
