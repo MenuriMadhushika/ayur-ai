@@ -12,12 +12,12 @@ public class SkinScanRequest {
 
     private String imagePath;
 
-    @NotBlank(message = "Please choose your usual skin type")
-    @Pattern(regexp = "(?i)normal|dry|oily|combination|sensitive",
-            message = "Skin type must be Normal, Dry, Oily, Combination, or Sensitive")
+    @NotBlank(message = "An acne-severity estimate is required")
+    @Pattern(regexp = "(?i)mild|moderate|severe|very severe|uncertain",
+            message = "Severity must be Mild, Moderate, Severe, Very Severe, or Uncertain")
     private String estimatedSkinType;
 
-    @Size(max = 500, message = "Skin profile notes must be 500 characters or fewer")
+    @Size(max = 500, message = "Skin scan notes must be 500 characters or fewer")
     private String visibleCharacteristics;
 
     private String analysisStatus;

@@ -7,6 +7,7 @@ import com.ayurai.ayuraibackend.dto.SkinScanAnalysisResponse;
 import com.ayurai.ayuraibackend.entity.User;
 import com.ayurai.ayuraibackend.service.SkinScanService;
 import com.ayurai.ayuraibackend.service.SkinModelClient;
+import com.ayurai.ayuraibackend.service.SkinScanRateLimitService;
 import com.ayurai.ayuraibackend.service.UserAccessService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -30,13 +31,16 @@ public class SkinScanController {
     private final SkinScanService skinScanService;
     private final UserAccessService userAccessService;
     private final SkinModelClient skinModelClient;
+    private final SkinScanRateLimitService rateLimitService;
 
     public SkinScanController(SkinScanService skinScanService,
                               UserAccessService userAccessService,
-                              SkinModelClient skinModelClient) {
+                              SkinModelClient skinModelClient,
+                              SkinScanRateLimitService rateLimitService) {
         this.skinScanService = skinScanService;
         this.userAccessService = userAccessService;
         this.skinModelClient = skinModelClient;
+        this.rateLimitService = rateLimitService;
     }
 
     @PostMapping(value = "/analyze/user/{userId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -45,6 +49,7 @@ public class SkinScanController {
             @RequestPart("image") MultipartFile image,
             @AuthenticationPrincipal User authenticatedUser) {
         userAccessService.requireOwner(authenticatedUser, userId);
+        rateLimitService.check(userId);
         SkinModelPrediction prediction = skinModelClient.predict(image);
 
         SkinScanRequest request = new SkinScanRequest();

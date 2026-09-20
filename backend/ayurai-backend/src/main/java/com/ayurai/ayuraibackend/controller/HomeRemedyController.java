@@ -43,25 +43,4 @@ public class HomeRemedyController {
         );
     }
 
-    @GetMapping("/skin-type/{skinType}")
-    public ResponseEntity<List<HomeRemedy>> getBySkinType(
-            @PathVariable String skinType) {
-
-        return ResponseEntity.ok(
-                homeRemedyService.getBySkinType(skinType)
-        );
-    }
-
-    @GetMapping("/personalized")
-    public ResponseEntity<List<HomeRemedy>> getPersonalizedRemedies(
-            @RequestParam String dosha,
-            @RequestParam String skinType) {
-
-        return ResponseEntity.ok(
-                homeRemedyService.getByDoshaAndSkinType(
-                        dosha,
-                        skinType
-                )
-        );
-    }
 }

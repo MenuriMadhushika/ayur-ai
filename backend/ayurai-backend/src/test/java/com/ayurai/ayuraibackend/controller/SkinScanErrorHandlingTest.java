@@ -3,6 +3,7 @@ package com.ayurai.ayuraibackend.controller;
 import com.ayurai.ayuraibackend.exception.GlobalExceptionHandler;
 import com.ayurai.ayuraibackend.service.SkinModelClient;
 import com.ayurai.ayuraibackend.service.SkinScanService;
+import com.ayurai.ayuraibackend.service.SkinScanRateLimitService;
 import com.ayurai.ayuraibackend.service.UserAccessService;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -32,7 +33,7 @@ class SkinScanErrorHandlingTest {
         SkinModelClient model=mock(SkinModelClient.class);
         when(model.predict(any())).thenThrow(error);
         var mvc=MockMvcBuilders.standaloneSetup(new SkinScanController(scans,
-                mock(UserAccessService.class),model))
+                mock(UserAccessService.class),model,mock(SkinScanRateLimitService.class)))
                 .setControllerAdvice(new GlobalExceptionHandler()).build();
         mvc.perform(multipart("/api/skin-scans/analyze/user/7")
                 .file(new MockMultipartFile("image","test.png","image/png",new byte[]{1})))
@@ -45,7 +46,7 @@ class SkinScanErrorHandlingTest {
         SkinScanService scans=mock(SkinScanService.class);
         SkinModelClient model=mock(SkinModelClient.class);
         var mvc=MockMvcBuilders.standaloneSetup(new SkinScanController(scans,
-                mock(UserAccessService.class),model))
+                mock(UserAccessService.class),model,mock(SkinScanRateLimitService.class)))
                 .setControllerAdvice(new GlobalExceptionHandler()).build();
         mvc.perform(multipart("/api/skin-scans/analyze/user/7"))
                 .andExpect(status().isBadRequest());

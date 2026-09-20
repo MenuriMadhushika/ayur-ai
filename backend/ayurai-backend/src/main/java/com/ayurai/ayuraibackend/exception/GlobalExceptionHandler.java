@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.security.access.AccessDeniedException;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -14,41 +15,74 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(org.springframework.web.client.ResourceAccessException.class)
-    public ResponseEntity<Map<String, Object>> handleModelUnavailable(
+    public ResponseEntity<Map<String, Object>> handleResourceAccessException(
             org.springframework.web.client.ResourceAccessException exception) {
-        return ResponseEntity.status(503).body(Map.of("status", 503,
-                "message", "Skin analysis is temporarily unavailable. Please try again later."));
+        return ResponseEntity.status(503).body(Map.of(
+                "status", 503,
+                "message", "Skin analysis is temporarily unavailable. Please try again later."
+        ));
     }
 
     @ExceptionHandler(org.springframework.web.client.RestClientResponseException.class)
     public ResponseEntity<Map<String, Object>> handleModelResponse(
             org.springframework.web.client.RestClientResponseException exception) {
+
         int upstream = exception.getStatusCode().value();
+
         int status = switch (upstream) {
             case 400, 413, 415, 422 -> upstream;
             default -> 503;
         };
+
         String message = switch (status) {
             case 400, 422 -> "Please upload a valid JPG, PNG, or WebP image.";
             case 413 -> "Image must be 5 MB or smaller.";
             case 415 -> "Please choose a JPG, PNG, or WebP image.";
             default -> "Skin analysis is temporarily unavailable. Please try again later.";
         };
-        return ResponseEntity.status(status).body(Map.of("status", status, "message", message));
+
+        return ResponseEntity.status(status).body(Map.of(
+                "status", status,
+                "message", message
+        ));
     }
 
     @ExceptionHandler(org.springframework.web.multipart.MaxUploadSizeExceededException.class)
     public ResponseEntity<Map<String, Object>> handleUploadTooLarge(
             org.springframework.web.multipart.MaxUploadSizeExceededException exception) {
-        return ResponseEntity.status(413).body(Map.of("status", 413,
-                "message", "Image must be 5 MB or smaller."));
+
+        return ResponseEntity.status(413).body(Map.of(
+                "status", 413,
+                "message", "Image must be 5 MB or smaller."
+        ));
     }
 
     @ExceptionHandler(org.springframework.web.multipart.support.MissingServletRequestPartException.class)
     public ResponseEntity<Map<String, Object>> handleMissingImage(
             org.springframework.web.multipart.support.MissingServletRequestPartException exception) {
-        return ResponseEntity.badRequest().body(Map.of("status", 400,
-                "message", "Please attach an image before starting the scan."));
+
+        return ResponseEntity.badRequest().body(Map.of(
+                "status", 400,
+                "message", "Please attach an image before starting the scan."
+        ));
+    }
+
+    @ExceptionHandler(SkinModelUnavailableException.class)
+    public ResponseEntity<Map<String, Object>> handleSkinModelUnavailable(
+            SkinModelUnavailableException exception) {
+        return error(HttpStatus.SERVICE_UNAVAILABLE, exception.getMessage());
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<Map<String, Object>> handleAccessDenied(
+            AccessDeniedException exception) {
+        return error(HttpStatus.FORBIDDEN, exception.getMessage());
+    }
+
+    @ExceptionHandler(TooManyScanRequestsException.class)
+    public ResponseEntity<Map<String, Object>> handleTooManyScans(
+            TooManyScanRequestsException exception) {
+        return error(HttpStatus.TOO_MANY_REQUESTS, exception.getMessage());
     }
 
     // Handle validation errors
@@ -91,4 +125,13 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.BAD_REQUEST)
                 .body(response);
     }
+
+    private ResponseEntity<Map<String, Object>> error(HttpStatus status, String message) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("timestamp", LocalDateTime.now());
+        response.put("status", status.value());
+        response.put("message", message);
+        return ResponseEntity.status(status).body(response);
+    }
 }
+

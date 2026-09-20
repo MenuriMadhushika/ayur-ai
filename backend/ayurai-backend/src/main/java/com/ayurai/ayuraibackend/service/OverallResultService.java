@@ -258,12 +258,10 @@ public class OverallResultService {
                 ? "a blended " + dominantDosha.replace("-", " and ")
                 : dominantDosha;
 
-        return "Based on your saved skin profile and Dosha " +
-                "questionnaire, your current result indicates " +
+        return "Your educational acne-severity estimate and Dosha " +
+                "questionnaire are shown together for convenience. Your answers indicate " +
                 patternDescription +
-                " Ayurvedic wellness pattern. " +
-                "Use this combined result to explore gentle, " +
-                "personalized skincare guidance.";
+                " Ayurvedic wellness pattern; it is separate from the AI scan and is not a medical diagnosis.";
     }
 
     // =========================================================
@@ -274,29 +272,27 @@ public class OverallResultService {
             SkinScan skinScan,
             DoshaAssessment doshaAssessment) {
 
-        String skinType =
+        String severity =
                 skinScan.getEstimatedSkinType();
 
         if ("UNCERTAIN".equalsIgnoreCase(skinScan.getAnalysisStatus())) {
             return "The skin scan could not produce a reliable estimate. This educational result is not a medical diagnosis.";
         }
 
-        if (skinType == null ||
-                skinType.isBlank()) {
-
+        if (severity == null || severity.isBlank()) {
             return "Follow a gentle skincare routine " +
                     "and observe how your skin responds " +
                     "to products and environmental changes.";
         }
 
-        if (java.util.Set.of("Mild", "Moderate", "Severe", "Very Severe").contains(skinType)) {
-            return "Your skin scan estimated " + skinType.toLowerCase()
-                    + " acne-like appearance. This educational result is not a medical diagnosis.";
+        if ("severe".equalsIgnoreCase(severity) ||
+                "very severe".equalsIgnoreCase(severity)) {
+            return "The model estimated " + severity +
+                    " acne-like severity. This is not a diagnosis; consider advice from a qualified healthcare professional.";
         }
-        return "Your saved skin type is " +
-                skinType +
-                ". Focus on a gentle, consistent routine and " +
-                "adjust products according to how your skin feels.";
+
+        return "The model estimated " + severity +
+                " acne-like severity. This educational result is not a diagnosis; keep care gentle and non-comedogenic.";
     }
 
     // =========================================================
@@ -378,7 +374,7 @@ public class OverallResultService {
     }
 
     // =========================================================
-    // ENTITY â†’ RESPONSE
+    // ENTITY Ã¢â€ â€™ RESPONSE
     // =========================================================
 
     private OverallResultResponse convertToResponse(
@@ -458,3 +454,5 @@ public class OverallResultService {
         );
     }
 }
+
+
