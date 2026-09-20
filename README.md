@@ -792,9 +792,6 @@ AyurAI currently demonstrates practical experience with:
 **BSc (Hons) Software Engineering Undergraduate**  
 NSBM Green University
 
-**GitHub:** MenuriMadhushika  
-**LinkedIn:** menurimadhushika
-
 ---
 
 # Disclaimer
