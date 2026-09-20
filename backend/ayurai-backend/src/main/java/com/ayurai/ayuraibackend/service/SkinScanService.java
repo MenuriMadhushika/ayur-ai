@@ -46,6 +46,12 @@ public class SkinScanService {
         SkinScan skinScan = new SkinScan();
 
         skinScan.setUser(user);
+        skinScan.setSkinType(request.getSkinType());
+        skinScan.setSkinTypeConfidence(request.getSkinTypeConfidence());
+        skinScan.setSkinTypePredictedClass(request.getSkinTypePredictedClass());
+        skinScan.setSkinTypeRequiresReview(request.getSkinTypeRequiresReview());
+        skinScan.setSensitivityScore(request.getSensitivityScore());
+
 
         skinScan.setImagePath(
                 request.getImagePath()
@@ -190,7 +196,7 @@ public class SkinScanService {
     private SkinScanResponse convertToResponse(
             SkinScan skinScan) {
 
-        return new SkinScanResponse(
+        SkinScanResponse response = new SkinScanResponse(
 
                 skinScan.getId(),
 
@@ -208,5 +214,11 @@ public class SkinScanService {
 
                 skinScan.getUpdatedAt()
         );
+        response.setSkinType(skinScan.getSkinType());
+        response.setSkinTypeConfidence(skinScan.getSkinTypeConfidence());
+        response.setSkinTypePredictedClass(skinScan.getSkinTypePredictedClass());
+        response.setSkinTypeRequiresReview(skinScan.getSkinTypeRequiresReview());
+        response.setSensitivityScore(skinScan.getSensitivityScore());
+        return response;
     }
 }

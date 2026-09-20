@@ -384,7 +384,7 @@ public class OverallResultService {
         SkinScan skin =
                 result.getSkinScan();
 
-        return new OverallResultResponse(
+        OverallResultResponse response = new OverallResultResponse(
 
                 // -------------------------------------------------
                 // BASIC
@@ -450,5 +450,11 @@ public class OverallResultService {
 
                 result.getUpdatedAt()
         );
+        response.setSkinType(skin.getSkinType());
+        response.setSkinTypeConfidence(skin.getSkinTypeConfidence());
+        response.setSkinTypePredictedClass(skin.getSkinTypePredictedClass());
+        response.setSkinTypeRequiresReview(skin.getSkinTypeRequiresReview());
+        response.setSensitivityScore(skin.getSensitivityScore());
+        return response;
     }
 }
