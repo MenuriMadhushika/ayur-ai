@@ -5,7 +5,7 @@ const remedies = [
   {
     id: 1,
     concern: "Acne",
-    icon: "✦",
+    icon: "⌘",
     title: "Turmeric & Honey Care",
     subtitle: "A simple traditional-inspired skin ritual.",
     time: "10–15 min",
@@ -262,7 +262,7 @@ function HomeRemedy() {
         </div>
 
         <div className="hero-orbit">
-          ✦
+          ⌘
         </div>
 
       </section>
@@ -446,7 +446,7 @@ function HomeRemedy() {
       <section className="remedy-guidance">
 
         <div className="guidance-icon">
-          ✦
+          ⌘
         </div>
 
         <div>
@@ -688,7 +688,7 @@ function HomeRemedy() {
 
             <div className="remedy-safety-note">
 
-              <span>✦</span>
+              <span>⌘</span>
 
               <p>
                 {selectedRemedy.note}

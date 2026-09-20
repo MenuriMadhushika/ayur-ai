@@ -189,7 +189,7 @@ function AyurvedicRemedies() {
       <div className="remedies-note">
 
         <span>
-          ✦
+          ⌘
         </span>
 
 

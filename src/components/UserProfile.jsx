@@ -317,7 +317,7 @@ const UserProfile = () => {
         const processedSkin = {
           ...data,
           skinType:
-            data.estimatedSkinType || data.skinType || "Not analyzed",
+            data.estimatedSkinType || "Uncertain",
           texture:
             data.visibleCharacteristics || data.texture || "Not analyzed",
           hydration:
@@ -923,7 +923,7 @@ const UserProfile = () => {
 
           {!doshaCompleted && !skinCompleted && (
             <div className="empty-history">
-              <span>✦</span>
+              <span>⌘</span>
               <p>Your completed assessments will appear here.</p>
             </div>
           )}

@@ -203,9 +203,10 @@ export const getLatestOverallResult = async (userId) => {
   return response.json();
 };
 
-export const analyzeSkinPhoto = async (userId, image) => {
+export const analyzeSkinPhoto = async (userId, image, sensitivityAnswers = null) => {
   const formData = new FormData();
   formData.append("image", image);
+  if (sensitivityAnswers != null) formData.append("sensitivityAnswers", sensitivityAnswers);
   const response = await fetch(`${API_BASE_URL}/skin-scans/analyze/user/${userId}`, {
     method: "POST",
     headers: getAuthenticatedHeaders(),

@@ -420,7 +420,7 @@ const HomeRemedy = () => {
           className={`compact-recommendation ${getThemeClass(dominantDosha)}`}
         >
           <div className="compact-recommendation-main">
-            <span>✦ RECOMMENDED FOR YOU</span>
+            <span>⌘ RECOMMENDED FOR YOU</span>
             <strong>{recommendedRemedy.title}</strong>
 
             <p>
@@ -498,7 +498,7 @@ const HomeRemedy = () => {
               >
                 {recommended && (
                   <span className="recommended-badge">
-                    ✦ Recommended for you
+                    ⌘ Recommended for you
                   </span>
                 )}
 
@@ -517,7 +517,7 @@ const HomeRemedy = () => {
                 </div>
 
                 <div className="card-frequency">
-                  ✦ {remedy.frequency}
+                  ⌘ {remedy.frequency}
                 </div>
 
                 <button
@@ -586,7 +586,7 @@ const HomeRemedy = () => {
             </div>
 
             <div className="weekly-routine-highlight">
-              <span>✦ YOUR GENTLE ROUTINE</span>
+              <span>⌘ YOUR GENTLE ROUTINE</span>
               <strong>{selectedRemedy.frequency}</strong>
               <p>Use this as occasional self-care, not every day.</p>
             </div>

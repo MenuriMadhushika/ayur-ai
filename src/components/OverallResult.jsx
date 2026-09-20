@@ -11,6 +11,9 @@ import {
 import { getAssessmentStatus } from "../utils/assessmentStatus";
 import { getPrimaryDosha, isMixedDosha } from "../utils/doshaInfo";
 
+import SkinTypeResult from "./SkinTypeResult";
+import { sensitivityLabel } from "../utils/skinTypeInfo";
+
 const OverallResult = () => {
   const navigate = useNavigate();
   const userId = getCurrentUserId();
@@ -174,6 +177,8 @@ const OverallResult = () => {
           </div>
 
           <h2>Your skin scan</h2>
+          <SkinTypeResult prediction={{ skinType: result.skinType, confidence: result.skinTypeConfidence, requiresReview: result.skinTypeRequiresReview }} />
+          <p>Sensitivity: {sensitivityLabel(result.sensitivityScore)}</p>
 
           <div className="skin-detail">
             <span>Estimated acne-like severity</span>
