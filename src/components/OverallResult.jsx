@@ -174,9 +174,9 @@ const OverallResult = () => {
           <h2>Your skin scan</h2>
 
           <div className="skin-detail">
-            <span>Your skin type</span>
+            <span>Your skin scan result</span>
             <strong>
-              {formatSkinType(result.estimatedSkinType)}
+              {formatSkinType(result.estimatedSkinType, result.analysisStatus)}
             </strong>
           </div>
 

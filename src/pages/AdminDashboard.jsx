@@ -423,7 +423,7 @@ function AdminDashboard({ view = "dashboard" }) {
       label: "Skin scans",
       value: dashboard?.totalSkinScans,
       description:
-        "Saved user skin-type profiles.",
+        "Saved educational skin scan results.",
       color: "admin-card-blue",
       action: () => navigate("/admin/assessments"),
       actionText: "View assessments →",
@@ -453,9 +453,9 @@ function AdminDashboard({ view = "dashboard" }) {
   const _insightDetails = {
     skin: {
       eyebrow: "SKIN SCAN INSIGHTS",
-      title: "Saved skin types",
+      title: "Saved skin scan results",
       description:
-        "Anonymous totals from user-selected skin scans.",
+        "Anonymous totals from saved educational skin scans.",
       counts: insights?.skinTypeCounts || {},
     },
     dosha: {
@@ -581,8 +581,8 @@ function AdminDashboard({ view = "dashboard" }) {
             <div className="admin-assessment-grid">
               <article className="admin-insights-panel">
                 <p>SKIN SCAN INSIGHTS</p>
-                <h2>Saved skin types</h2>
-                <span>Anonymous totals from user-selected skin scans.</span>
+                <h2>Saved skin scan results</h2>
+                <span>Anonymous totals from saved educational skin scans.</span>
                 <div className="admin-insight-counts">
                   {Object.entries(insights?.skinTypeCounts || {}).map(([label, count]) => (
                     <article key={label}><span>{formatSkinType(label)}</span><strong>{count}</strong></article>
@@ -1090,11 +1090,11 @@ function AdminDashboard({ view = "dashboard" }) {
 
               <div className="admin-latest-summary">
                 <div>
-                  <span>Latest skin type</span>
+                  <span>Latest skin scan result</span>
                   <strong>
                     {selectedActivity.latestEstimatedSkinType
                       ? formatSkinType(selectedActivity.latestEstimatedSkinType)
-                      : "No skin scan saved"}
+                      : (selectedActivity.latestAnalysisStatus === "UNCERTAIN" ? "Uncertain" : "No skin scan saved")}
                   </strong>
                 </div>
 

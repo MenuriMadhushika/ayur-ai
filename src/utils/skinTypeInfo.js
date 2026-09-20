@@ -48,5 +48,14 @@ export const getSkinTypeInfo = (skinType) => {
   );
 };
 
-export const formatSkinType = (skinType) =>
-  getSkinTypeInfo(skinType).label;
+// Historical API fields also hold acne-like severity estimates.
+export const formatSkinType = (skinType, analysisStatus) => {
+  if (String(analysisStatus || "").toUpperCase() === "UNCERTAIN") return "Uncertain";
+  const value = String(skinType || "").trim();
+  const severity = ["Mild", "Moderate", "Severe", "Very Severe"].find(
+    (category) => category.toLowerCase() === value.toLowerCase()
+  );
+  if (severity) return `${severity} acne-like appearance`;
+  if (value.toLowerCase() === "uncertain") return "Uncertain";
+  return getSkinTypeInfo(skinType).label;
+};

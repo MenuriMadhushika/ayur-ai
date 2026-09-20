@@ -23,3 +23,16 @@ dist-ssr
 *.sln
 *.sw?
 backend/ayurai-backend/target/
+
+# Local Python environments, private datasets and user uploads
+.venv/
+__pycache__/
+*.pyc
+.env
+.env.*
+!.env.example
+[Aa][Cc][Nn][Ee]04*/
+[Aa][Cc][Nn][Ee]04*
+datasets/
+uploads/
+user-images/

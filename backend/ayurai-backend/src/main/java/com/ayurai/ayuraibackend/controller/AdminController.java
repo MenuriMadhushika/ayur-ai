@@ -71,7 +71,8 @@ public class AdminController {
         Map<String, Long> skinTypeCounts = skinScanRepository.findAll()
                 .stream()
                 .collect(Collectors.groupingBy(
-                        skinScan -> displayValue(skinScan.getEstimatedSkinType()),
+                        skinScan -> "UNCERTAIN".equalsIgnoreCase(skinScan.getAnalysisStatus())
+                                ? "Uncertain" : displayValue(skinScan.getEstimatedSkinType()),
                         TreeMap::new,
                         Collectors.counting()
                 ));

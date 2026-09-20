@@ -7,7 +7,13 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8081
 const getErrorMessage = async (response) => {
   const text = await response.text();
 
-  return text || `Request failed: ${response.status}`;
+  try {
+    const error = JSON.parse(text);
+    return error.message || (typeof error.detail === "string" ? error.detail : null)
+      || `Request failed: ${response.status}`;
+  } catch {
+    return text || `Request failed: ${response.status}`;
+  }
 };
 
 // Adds the saved login token to protected admin requests.

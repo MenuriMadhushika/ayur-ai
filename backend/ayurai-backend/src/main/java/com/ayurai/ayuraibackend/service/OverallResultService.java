@@ -277,6 +277,10 @@ public class OverallResultService {
         String skinType =
                 skinScan.getEstimatedSkinType();
 
+        if ("UNCERTAIN".equalsIgnoreCase(skinScan.getAnalysisStatus())) {
+            return "The skin scan could not produce a reliable estimate. This educational result is not a medical diagnosis.";
+        }
+
         if (skinType == null ||
                 skinType.isBlank()) {
 
@@ -285,6 +289,10 @@ public class OverallResultService {
                     "to products and environmental changes.";
         }
 
+        if (java.util.Set.of("Mild", "Moderate", "Severe", "Very Severe").contains(skinType)) {
+            return "Your skin scan estimated " + skinType.toLowerCase()
+                    + " acne-like appearance. This educational result is not a medical diagnosis.";
+        }
         return "Your saved skin type is " +
                 skinType +
                 ". Focus on a gentle, consistent routine and " +
@@ -370,7 +378,7 @@ public class OverallResultService {
     }
 
     // =========================================================
-    // ENTITY → RESPONSE
+    // ENTITY â†’ RESPONSE
     // =========================================================
 
     private OverallResultResponse convertToResponse(

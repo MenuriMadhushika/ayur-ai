@@ -325,13 +325,13 @@ const UserProfile = () => {
         const processedSkin = {
           ...data,
           skinType:
-            data.estimatedSkinType || data.skinType || "Not analyzed",
+            data.estimatedSkinType || data.skinType || (data.analysisStatus === "UNCERTAIN" ? "Uncertain" : "Not analyzed"),
           texture:
             data.visibleCharacteristics || data.texture || "Not analyzed",
           hydration:
             data.hydration ?? data.hydrationPercentage ?? null,
           completed:
-            String(data.analysisStatus || "").toUpperCase() === "COMPLETED",
+            ["COMPLETED", "ESTIMATED", "UNCERTAIN"].includes(String(data.analysisStatus || "").toUpperCase()),
           completedAt: data.createdAt || data.completedAt,
         };
 
@@ -713,9 +713,9 @@ const UserProfile = () => {
           </article>
 
           <article className="profile-stat skin-stat">
-            <span>YOUR SKIN TYPE</span>
+            <span>YOUR SKIN SCAN RESULT</span>
             <strong>{skinType}</strong>
-            <small>Selected in your skin scan</small>
+            <small>Educational result from your skin scan</small>
           </article>
 
           <article className="profile-stat hydration-stat">
@@ -822,7 +822,7 @@ const UserProfile = () => {
           <div className="analysis-symbol">✦</div>
 
           <div className="latest-analysis-content">
-            <span>SKIN-TYPE CHECK-IN</span>
+            <span>EDUCATIONAL SKIN SCAN</span>
             <h3>{skinType}</h3>
             <p>
               {concern} · {dominantLabel}

@@ -77,7 +77,7 @@ async def predict(image: UploadFile = File(...)):
                 raise HTTPException(status_code=415, detail="Unsupported image format")
             checked.verify()
         photo = Image.open(io.BytesIO(payload)).convert("RGB")
-    except UnidentifiedImageError as error:
+    except (UnidentifiedImageError, OSError, SyntaxError, Image.DecompressionBombError) as error:
         raise HTTPException(status_code=400, detail="The uploaded file is not a valid image") from error
 
     with torch.inference_mode():
