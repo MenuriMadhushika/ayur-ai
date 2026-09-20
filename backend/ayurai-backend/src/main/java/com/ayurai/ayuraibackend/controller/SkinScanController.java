@@ -43,17 +43,38 @@ public class SkinScanController {
         this.rateLimitService = rateLimitService;
     }
 
+    // Retain the existing Java entry point used by callers/tests.
+    public ResponseEntity<SkinScanAnalysisResponse> analyzeSkinPhoto(
+            Long userId, MultipartFile image, User authenticatedUser) {
+        return analyzeSkinPhoto(userId, image, authenticatedUser, null);
+    }
+
     @PostMapping(value = "/analyze/user/{userId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<SkinScanAnalysisResponse> analyzeSkinPhoto(
             @PathVariable Long userId,
             @RequestPart("image") MultipartFile image,
-            @AuthenticationPrincipal User authenticatedUser) {
+            @AuthenticationPrincipal User authenticatedUser,
+            @RequestParam(required = false) String sensitivityAnswers) {
         userAccessService.requireOwner(authenticatedUser, userId);
+        Integer sensitivityScore = null;
+        if (sensitivityAnswers != null) {
+            if (!sensitivityAnswers.matches("[01]{4}")) {
+                throw new IllegalArgumentException("Sensitivity requires four yes/no answers");
+            }
+            sensitivityScore = (int) sensitivityAnswers.chars().filter(answer -> answer == '1').count();
+        }
         rateLimitService.check(userId);
         SkinModelPrediction prediction = skinModelClient.predict(image);
 
         SkinScanRequest request = new SkinScanRequest();
         request.setUserId(userId);
+        request.setSensitivityScore(sensitivityScore);
+        if (prediction.skinType() != null) {
+            request.setSkinType(prediction.skinType().skinType());
+            request.setSkinTypeConfidence(prediction.skinType().confidence());
+            request.setSkinTypePredictedClass(prediction.skinType().predictedClass());
+            request.setSkinTypeRequiresReview(prediction.skinType().requiresReview());
+        }
         request.setImagePath(null);
         request.setEstimatedSkinType(prediction.estimatedCategory());
         request.setVisibleCharacteristics(prediction.message());
@@ -64,7 +85,7 @@ public class SkinScanController {
                 saved.getId(), saved.getUserId(), prediction.status(),
                 prediction.estimatedCategory(), prediction.modelScore(),
                 prediction.probabilities(), prediction.message(),
-                prediction.disclaimer(), prediction.modelVersion(), saved.getCreatedAt()));
+                prediction.disclaimer(), prediction.modelVersion(), saved.getCreatedAt(), prediction.skinType(), sensitivityScore));
     }
 
     @PostMapping

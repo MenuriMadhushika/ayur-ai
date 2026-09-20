@@ -45,7 +45,7 @@ public class SkinModelClient {
             imageHeaders.setContentType(MediaType.parseMediaType(
                     contentType != null ? contentType : MediaType.APPLICATION_OCTET_STREAM_VALUE));
             body.add("image", new HttpEntity<>(resource, imageHeaders));
-            SkinModelPrediction prediction = restClient.post().uri("/predict")
+            SkinModelPrediction prediction = restClient.post().uri("/predict?include_skin_type=true")
                     .contentType(MediaType.MULTIPART_FORM_DATA).body(body)
                     .retrieve().body(SkinModelPrediction.class);
             if (prediction == null) {

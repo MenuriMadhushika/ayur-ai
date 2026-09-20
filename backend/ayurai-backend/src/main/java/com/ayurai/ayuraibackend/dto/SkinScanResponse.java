@@ -9,6 +9,14 @@ public class SkinScanResponse {
 
     private String imagePath;
     private String estimatedSkinType;
+
+    // Independent of estimatedSkinType, the legacy acne-severity field.
+    private String skinType;
+    private Double skinTypeConfidence;
+    private String skinTypePredictedClass;
+    private Boolean skinTypeRequiresReview;
+    private Integer sensitivityScore;
+
     private String visibleCharacteristics;
     private String analysisStatus;
 
@@ -101,4 +109,15 @@ public class SkinScanResponse {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    public String getSkinType() { return skinType; }
+    public void setSkinType(String value) { this.skinType = value; }
+    public Double getSkinTypeConfidence() { return skinTypeConfidence; }
+    public void setSkinTypeConfidence(Double value) { this.skinTypeConfidence = value; }
+    public String getSkinTypePredictedClass() { return skinTypePredictedClass; }
+    public void setSkinTypePredictedClass(String value) { this.skinTypePredictedClass = value; }
+    public Boolean getSkinTypeRequiresReview() { return skinTypeRequiresReview; }
+    public void setSkinTypeRequiresReview(Boolean value) { this.skinTypeRequiresReview = value; }
+    public Integer getSensitivityScore() { return sensitivityScore; }
+    public void setSensitivityScore(Integer value) { this.sensitivityScore = value; }
 }
